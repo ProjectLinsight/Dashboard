@@ -19,12 +19,13 @@ class PostsController extends Controller{
         
         if(request('image')!=null){
             $imagePath = request('image')->store('uploads','public'); 
+            dd($imagePath);
             auth()->user()->posts()->create([
                 'title' => $data['title'],
                 'description' => $data['description'],
                 'image' => $imagePath 
             ]);   
-        }else {
+        }else{
             auth()->user()->posts()->create($data);
         }  
         return  redirect('/profile/' . auth()->user()->id. '/' . auth()->user()->name);

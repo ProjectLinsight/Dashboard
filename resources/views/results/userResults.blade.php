@@ -139,7 +139,7 @@
                                                         </div>
                                                         <div class="col text-center">
                                                             <h2 style="font-size:calc(1.4em + 0.8vw);"> {{$user->stuData->$totCredits}} </h2>
-                                                            <h6 class="text-muted" style="font-size:calc(0.6em + 0.2vw)"> Total Credits </h6>
+                                                            <h6 class="text-muted" style="font-size:calc(0.6em + 0.2vw)"> TotalCredits </h6>
                                                         </div>
                                                     </div>
                                                     <hr>

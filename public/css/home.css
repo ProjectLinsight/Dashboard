@@ -40,7 +40,7 @@
 }
 
 #wrapper.toggled #page-content-wrapper {
-    position: absolute;
+    position: fixed;
     margin-right: -250px;
 }
 
@@ -113,4 +113,14 @@
     border-bottom: 1px solid rgba(102, 97, 91, 0.3);
 }
 
+@media screen and (max-width:480px){
+    .changeList {
+        display: flex;
+        flex-direction: column-reverse;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal-post { width: 200px; }
+}
      

@@ -53,36 +53,44 @@
                 </div>
             </nav>
 
-            <div class="container-fluid row m-0" >
-                <div class="col-md-12 pb-5">
-                    {{-- <?php $post = App\Post::all() ?> --}}
-
-                    <div class="col-md-8 pb-5 px-5">
-                        {{-- @foreach ($post as $post)
-                        <div class="pb-3">
-                            <div class="p-3 row rounded" style="background:white;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 6px 0 rgba(0, 0, 0, 0.19);">
-                                <div class="col-md-1 pt-3">
-                                    <img class="rounded-circle" style="max-width: 60px"src="https://mdbootstrap.com/img/Photos/Avatars/img (27).jpg" alt="Generic placeholder image">
-                                </div>
-                                <div class="col-md-11">
-                                    <div class="row d-flex justify-content-between align-items-baseline">
-                                        <h5 class="pl-3"><strong>{{$post->user->name}}</strong></h5>
+            <div class="container-fluid row m-0 changeList"  >
+                <div class="col-md-8 py-3">
+                    <hr>
+                    <h1 class="text-center text-dark"> <strong>Timeline </strong> </h1>
+                    <hr>
+                    <?php $post = App\Post::all() ?>
+                    @foreach ($post as $post)
+                    <div class="pb-4">
+                        <div class="p-3 rounded shadow" style="background:white;">
+                            <div class="row d-flex justify-content-between">
+                                <div class=" col-10 d-flex">
+                                    <div class="p-2">
+                                        <img class="rounded-circle" style="max-width: 60px;height:60px"src="https://mdbootstrap.com/img/Photos/Avatars/img (27).jpg" alt="Generic placeholder image">
                                     </div>
-                                    <h6 class="text-muted"> {{$post->created_at}}</h6>
-                                    <div class="p-3 border rounded" style="background: #fefefe">
-                                        <h5><strong>{{ $post->title}}</strong></h5>
-                                        <hr>
-                                        <p style="text-align: justify">{{$post->description}}</p>
-                                        <div class="d-flex justify-content-center">
-                                        <img style="max-height: 400px;" src="/storage/{{$post->image}}" alt="">
+                                    <div class="col-8">
+                                        <div class="row d-flex justify-content-between align-items-baseline">
+                                            <div>
+                                                <h5 class="pt-3" style="font-size:calc(1em + 0.4vw)"><strong>{{$post->user->name}}</strong></h5>
+                                                @if ($post->created_at!==$post->updated_at)
+                                                    <h6 class="text-muted " style="font-size:calc(0.6em + 0.1vw)" data-toggle="tooltip" title="post created : {{$post->created_at}}">  {{$post->updated_at}}</h6>     
+                                                @endif
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <hr>
+                            <div class="p-3 border rounded" style="background: #fefefe">
+                                <h5  style="font-size:calc(1.2em + 0.2vw)"><strong>{{ $post->title}}</strong></h5>
+                                <hr>
+                                <p style="font-size:calc(0.9em + 0.1vw);text-align: justify">{{$post->description}}</p>
+                                <div class="d-flex justify-content-center">
+                                <img style="max-height: 400px;" src="/storage/{{$post->image}}" alt="">
+                                </div>
+                            </div>
                         </div>
-                        @endforeach --}}
-                        <h1 style="padding-top: 150px">dsv </h1>
                     </div>
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -90,8 +98,13 @@
 </div>
 
 
+
+
+
+
+
 {{-- Modal for write post --}}
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" style="width: 100%;height:auto" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
