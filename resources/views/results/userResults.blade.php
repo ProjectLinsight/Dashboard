@@ -147,7 +147,7 @@
                                                         <div class="row ">
                                                             <div class="col-9">
                                                                 <h5 style="font-size:calc(0.8em + 0.3vw)">{{$rs->course->cName}}</h5>
-                                                                <p class="text-muted" style="font-size:calc(0.6em + 0.2vw)">{{$rs->subjectCode}} / {{$rs->course->credits}} / year of examination : {{$rs->yoe}}</p> 
+                                                                <p class="text-muted" style="font-size:calc(0.6em + 0.2vw)">{{$rs->subjectCode}} / {{$rs->course->credits}} credits / year of examination : {{$rs->yoe}}</p> 
                                                             </div>
                                                             <div class="col-3 d-flex justify-content-center">
                                                                 <h2 class="font-weight-bold text-dark" style="font-size:calc(1.2em + 0.4vw);">{{$rs->grade}}</h2>
