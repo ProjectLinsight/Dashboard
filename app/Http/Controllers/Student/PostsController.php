@@ -11,24 +11,36 @@ class PostsController extends Controller{
     }
 
     public function store(){
-        $data = request()->validate([
+       $data = request()->validate([
             'title' => 'required',
             'description' => 'required',
             'image' => ''
         ]);
         
-        if(request('image')!=null){
-            $imagePath = request('image')->store('uploads','public'); 
-            dd($imagePath);
+       if(request('image')!=null){
+           // $imagePath = request('image')->store('uploads'); 
+           // dd($imagePath);
+           $image = request('image');
+           $filename = $image->getClientOriginalName();
+           $image->move(public_path('uploads/post'),$filename);
+           $imagepath= request('image')->getClientOriginalName();
+          
             auth()->user()->posts()->create([
                 'title' => $data['title'],
                 'description' => $data['description'],
-                'image' => $imagePath 
+                'image' => $imagepath 
             ]);   
         }else{
             auth()->user()->posts()->create($data);
         }  
         return  redirect('/profile/' . auth()->user()->id. '/' . auth()->user()->name);
+    
+
+
+
+
+
+
     }
 
     public function edit(\App\Post $post){
