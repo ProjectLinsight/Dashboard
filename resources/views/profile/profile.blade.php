@@ -84,11 +84,12 @@
                             </div>
                             <hr>
                             <div class="p-3 border rounded" style="background: #fefefe">
+                            <img style="max-height: 400px;" src="uploads/post/{{ $post->image }}" alt="">
                                 <h5  style="font-size:calc(1.2em + 0.2vw)"><strong>{{ $post->title}}</strong></h5>
                                 <hr>
                                 <p style="font-size:calc(0.9em + 0.1vw);text-align: justify">{{$post->description}}</p>
                                 <div class="d-flex justify-content-center">
-                                <img style="max-height: 400px;" src="uploads/post/{{ $post->image }}" alt="">
+                              
                                 </div>
                             </div>
                         </div>

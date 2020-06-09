@@ -56,11 +56,15 @@ class PostsController extends Controller{
             'image' => ''
         ]);
         if(request('image')!=null){
-            $oldPath = $post->image ;
+            $image = request('image');
+            $filename = $image->getClientOriginalName();
+            $image->move(public_path('uploads/post'),$filename);
+            $imagepath= request('image')->getClientOriginalName();
+          
             auth()->user()->posts()->where('id', $post->id)->update([
                 'title' => $data['title'],
                 'description' => $data['description'],
-                'image' => $oldPath 
+                'image' => $imagepath
             ]);   
         }else {
             auth()->user()->posts()->where('id', $post->id)->update($data); 
