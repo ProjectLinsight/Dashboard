@@ -31,5 +31,12 @@ Route::get('/profile/{user}/{name}', 'Student\ProfilesController@index')->name('
 Route::post('/post','Student\PostsController@store')->middleware('student');
 Route::get('/post/{post}/{user_id}/edit','Student\PostsController@edit')->name('post.edit')->middleware('student');
 Route::patch('/post/{post}/{user_id}/update','Student\PostsController@update')->name('post.update')->middleware('student');
+Route::get('/user/{user_id}/edit','Student\ProfilesController@edit')->name('profile.edit')->middleware('student');
+Route::patch('/user/{user_id}/update','Student\ProfilesController@update')->name('profile.update')->middleware('student');
 
+//Lecturer
+Route::get('/lecturer/lecturer_home', 'Lecturer\HomeController@index')->middleware('lecturer');
 
+Route::get('/student_enrollment' , function(){
+    return view('lecturer/student_enrollment');
+});
