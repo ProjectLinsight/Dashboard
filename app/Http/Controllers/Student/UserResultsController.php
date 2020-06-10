@@ -15,7 +15,6 @@ class UserResultsController extends Controller{
     }
 
     public function index(User $user){
-        
         $check = Results::where('semester', '1')->where('year','1')->where('index',$user->index)->first();
         if($check!==null){
             $results11 = Results::where('semester', '1')->where('year','1')->where('index',$user->index)->get();
