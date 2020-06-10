@@ -15,7 +15,7 @@ class LoginController extends Controller{
         if(Auth::user()->utype=='Student'){
             return 'home' ;
         }else if(Auth::user()->utype=='Lecturer'){
-            return 'home' ;
+            return '/lecturer/lecturer_home' ;
         }else if(Auth::user()->utype=='Admin'){
             return '/admin/dashboard' ;
         }
