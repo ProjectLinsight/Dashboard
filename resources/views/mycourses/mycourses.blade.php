@@ -31,7 +31,7 @@
                     <hr class="content-center" style="width:75%;background : #555">
                 </li>
                 <li>
-                    <a href="#"><i class="fas fa-id-card pr-2"></i>Contact</a>
+                    <a href="/courses"><i class="fas fa-id-card pr-2"></i>Course Data</a>
                     <hr class="content-center" style="width:75%;background : #555">
                 </li>
                 <li>

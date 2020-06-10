@@ -25,6 +25,7 @@ Route::get('/mycourses/{user}/{name}', 'Student\MycoursesController@index')->nam
 //Route::get('//mycourses/{user}/{name}','Student\MycoursesController@index')->middleware('student');
 Route::get('/results/{user}/{name}','Student\UserResultsController@index');
 Route::get('/profile/{user}/{name}', 'Student\ProfilesController@index')->name('profile.show')->middleware('student');
+route::get('courses','Student\CourseDataController@index')->middleware('student');
 
 
 //Uplaoding Content

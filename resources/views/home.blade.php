@@ -28,7 +28,7 @@
                     <hr class="content-center" style="width:75%;background : #555">
                 </li>
                 <li>
-                    <a href="#"><i class="fas fa-id-card pr-2"></i>Contact</a>
+                    <a href="/courses"><i class="fas fa-id-card pr-2"></i>Course Data</a>
                     <hr class="content-center" style="width:75%;background : #555">
                 </li>
                 <li>
@@ -85,7 +85,7 @@
                                 <hr>
                                 <p style="font-size:calc(0.9em + 0.1vw);text-align: justify">{{$post->description}}</p>
                                 <div class="d-flex justify-content-center">
-                                <img style="max-height: 400px;" src="uploads/post/{{ $post->image }}" alt="">
+                                <img style="width:100%;height:auto;" src="uploads/post/{{ $post->image }}" alt="">
                                
                                 </div>
                             </div>
