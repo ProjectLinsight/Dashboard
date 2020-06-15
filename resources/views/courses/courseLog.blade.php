@@ -78,10 +78,6 @@
                                                 <td class="border" colspan="3"><strong>{{$log->credits}}</strong></td>
                                             </tr>
                                             <tr>
-                                                <td class="border"> Core / Optional </td>
-                                                <td class="border" colspan="3"><strong>{{$category}}</strong></td>
-                                            </tr>
-                                            <tr>
                                                 <td class="border"> Formative Assessment </td>
                                                 <td class="border"><strong>40%</strong></td>
                                                 <td class="border"> Summative Assessment </td>

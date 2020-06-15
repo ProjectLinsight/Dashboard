@@ -53,7 +53,6 @@
                             <div class="card-header bg-info pb-1">
                                 <h4 class="text-white text-center">All Courses</h4>
                             </div>
-                            
 
                             <div class="card-body p-0">
                                 <nav class="nav nav-tabs nav-fill">
@@ -102,44 +101,11 @@
                                                                 <td> <a href="/courses/{{$c->cid}}" style="text-decoration: none;color:black"> {{$c->cName}} </a></td>
                                                                 <td>{{$c->credits}}</td>
                                                                 @if ($flag==0)
-                                                                    <td>{{$c->type}}</td>
+                                                                    <td>{{substr($c->type,0,1)}}</td>
                                                                 @else 
-                                                                    @if ($c->type=="Compulsory")
-                                                                        <td>X</td>
-                                                                        <td>X</td>
-                                                                        <td>X</td>
-                                                                    @else
-                                                                        @if ($c->type=="Optional")
-                                                                            <td>O</td>
-                                                                            <td>O</td>
-                                                                            <td>O</td>            
-                                                                        @else                                                                            
-                                                                            <td>
-                                                                                @if(substr($c->type,3,1)=="1") X
-                                                                                @else
-                                                                                    @if (substr($c->type,3,1)=="X") - 
-                                                                                    @else O 
-                                                                                    @endif
-                                                                                @endif
-                                                                            </td>
-                                                                            <td>
-                                                                                @if(substr($c->type,4,1)=="1") X
-                                                                                @else
-                                                                                    @if (substr($c->type,4,1)=="X") - 
-                                                                                    @else O 
-                                                                                    @endif
-                                                                                @endif
-                                                                            </td>
-                                                                            <td>
-                                                                                @if(substr($c->type,5,1)=="1") X
-                                                                                @else
-                                                                                    @if (substr($c->type,5,1)=="X") - 
-                                                                                    @else O 
-                                                                                    @endif
-                                                                                @endif
-                                                                            </td> 
-                                                                        @endif       
-                                                                    @endif
+                                                                    <td>{{substr($c->type,0,1)}}</td>
+                                                                    <td>{{substr($c->type,1,1)}}</td>
+                                                                    <td>{{substr($c->type,2,1)}}</td>        
                                                                 @endif
                                                                 <td>{{$c->semester}}</td>
                                                             </tr>
@@ -193,34 +159,10 @@
                                                                 <td> <a href="/courses/{{$c->cid}}" style="text-decoration: none;color:black"> {{$c->cName}} </a></td>
                                                                 <td>{{$c->credits}}</td>
                                                                 @if ($flag==0)
-                                                                    <td>{{$c->type}}</td>
+                                                                    <td>{{substr($c->type,0,1)}}</td>
                                                                 @else 
-                                                                    @if ($c->type=="Compulsory")
-                                                                        <td>X</td>
-                                                                        <td>X</td>
-                                                                    @else
-                                                                        @if ($c->type=="Optional")
-                                                                            <td>O</td>
-                                                                            <td>O</td>            
-                                                                        @else                                                                            
-                                                                            <td>
-                                                                                @if(substr($c->type,2,1)=="1") X
-                                                                                @else
-                                                                                    @if (substr($c->type,2,1)=="X") - 
-                                                                                    @else O 
-                                                                                    @endif
-                                                                                @endif
-                                                                            </td>
-                                                                            <td>
-                                                                                @if(substr($c->type,3,1)=="1") X
-                                                                                @else
-                                                                                    @if (substr($c->type,3,1)=="X") - 
-                                                                                    @else O 
-                                                                                    @endif
-                                                                                @endif
-                                                                            </td> 
-                                                                        @endif       
-                                                                    @endif
+                                                                    <td>{{substr($c->type,0,1)}}</td>
+                                                                    <td>{{substr($c->type,1,1)}}</td>       
                                                                 @endif
                                                                 <td>{{$c->semester}}</td>
                                                             </tr>
@@ -233,6 +175,8 @@
                                         </div> 
                                     </div>
                                 </div>
+                                <hr>
+                                <p class="text-center text-muted"> Please note that for the category 'X' stands for cumpulsory '0' for optional and '-'' for not available </p>
                             </div>
                         </div>
                     </div>

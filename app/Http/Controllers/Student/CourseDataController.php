@@ -24,6 +24,18 @@ class CourseDataController extends Controller{
         $cs4 = array();
 
         foreach($courses as $crs){
+            if($crs->type==="Compulsory"){
+                $crs->type="XXX" ;
+            }
+            else if($crs->type==="Optional"){
+                $crs->type="000" ;
+            }
+            else{
+                $crs->type = str_replace("X","-",$crs->type);
+                $crs->type = str_replace("1","X",$crs->type);
+                $crs->type = substr($crs->type,2,3);
+            }
+            
             if(substr($crs->cid,0,1)==="I"){
                 if(substr($crs->cid,2,1)==="1"){
                     array_push($is1,$crs);
