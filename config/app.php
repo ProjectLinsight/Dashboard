@@ -176,6 +176,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        //custom Services
+        // Yajra\DataTables\DataTablesServiceProvider::class
     ],
 
     /*
@@ -228,6 +230,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+        //custom
+        // 'DataTables' => Yajra\DataTables\Facades\DataTables::class,
     ],
 
 ];

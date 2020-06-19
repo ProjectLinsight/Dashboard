@@ -45,63 +45,146 @@
                 </div>
             </nav>
 
-            <div class="container-fluid row m-0" >
+            <div class="container-fluid row m-0 changeList" >
                 <div class="col-md-12 pb-5">
                     <div class="row">
                         <div class="col-md-9">
-                            <div class="p-3">
-                                <div class="card" style="background:white;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 6px 0 rgba(0, 0, 0, 0.19);">
-                                    <div class="card-header text-center bg-dark text-white" >
-                                        <h3 class="pt-3"> Available Courses</h3>
+                            <div class="pb-3">
+                                <div class="card table-card shadow">
+                                    <div class="card-header bg-dark">
+                                        <h3 class="pt-3 text-center text-white"> All Users</h3>
                                     </div>
-                                    <div class="card-body">
-                                        <table class="table" id="table">
-                                            <thead>
-                                                <tr>
-                                                    <th class="text-center">Course Id</th>
-                                                    <th class="text-center">Course Name</th>
-                                                    <th class="text-center">Credits</th>
-                                                    <th class="text-center">Category</th>
-                                                    <th class="text-center">Stream</th>
-                                                    <th class="text-center">Year</th>
-                                                    <th class="text-center">Semester</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($data as $crs)
-                                                <tr class="text-center">
-                                                    <td> {{$crs->cid}} </td>
-                                                    <td> {{$crs->cName}}  </td>
-                                                    <td> {{$crs->credits}} </td>
-                                                    <td> {{$crs->type}} </td>
-                
-                                                    @if (substr($crs['cid'],0,1)==='I')
-                                                        <td> {{substr($crs['cid'],0,2)}} </td>
-                                                        <td> {{substr($crs['cid'],2,1)}}</td>        
-                                                    @elseif(substr($crs['cid'],0,1)==='S')
-                                                        <td> {{substr($crs['cid'],1,2)}} </td>
-                                                        <td> {{substr($crs['cid'],3,1)}}</td>        
-                                                    @else    
-                                                        <td>EN</td>
-                                                        @if (substr($crs['cid'],2,1)==='H')
-                                                            <td>{{substr($crs['cid'],3,1)}}</td>
-                                                        @else
-                                                        <td>{{substr($crs['cid'],2,1)}}</td>
-                                                        @endif
-                                                        
-                                                    @endif
-                                                    <td> {{$crs->semester}}</td>
-                                                </tr>
-                                                @endforeach  
-                                            </tbody>
-                                        </table>       
-                                    </div>              
+        
+                                    <div class="card-body p-0">
+                                        <nav class="nav nav-tabs nav-fill">
+                                            <a class="col-6 nav-item nav-link active" data-toggle="tab" href="#CS">Computer Science</a>
+                                            <a class="col-6 nav-item nav-link" data-toggle="tab" href="#IS">Information Systems</a>
+                                        </nav>
+                                        <div class="tab-content">
+                                            <div id="CS" class="tab-pane fade show active">
+                                                <nav class="nav nav-tabs nav-fill">
+                                                    <a class="col-3 nav-item nav-link active" data-toggle="tab" href="#cs1">1st Year</a>
+                                                    <a class="col-3 nav-item nav-link" data-toggle="tab" href="#cs2">2nd Year</a>
+                                                    <a class="col-3 nav-item nav-link" data-toggle="tab" href="#cs3">3rd Year</a>
+                                                    <a class="col-3 nav-item nav-link" data-toggle="tab" href="#cs4">4th Year</a>
+                                                </nav>
+                                                <div class="tab-content">
+                                                    <?php
+                                                    for($i=1;$i<5;$i++){
+                                                        $tag = 'cs'.(string)$i ;
+                                                        if($i>=3){$flag = 1 ;}
+                                                        else {$flag =0 ;}
+                                                        if($i==1){$show ='show active';}
+                                                        else{$show = '';}
+                                                    ?>
+                                                    <div id="{{$tag}}" class="tab-pane fade {{$show}} ">                 
+                                                        <div class="table-responsive">
+                                                            <table class="table table-hover mb-0 text-center" style="border-collapse: collapse;">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Course Code </th>
+                                                                        <th>Name</th>
+                                                                        <th>Credits</th>
+                                                                        @if ($flag==0)      
+                                                                            <th>Category</th>
+                                                                        @else
+                                                                            <th>Hons CS</th>
+                                                                            <th>Hons SE</th>
+                                                                            <th>General</th>
+                                                                        @endif
+                                                                        <th>Semester</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach(${$tag} as $c)
+                                                                    <tr>
+                                                                        <td> <a href="/courses/{{$c->cid}}" style="text-decoration: none;color:black"> {{$c->cid}} </a></td>
+                                                                        <td> <a href="/courses/{{$c->cid}}" style="text-decoration: none;color:black"> {{$c->cName}} </a></td>
+                                                                        <td>{{$c->credits}}</td>
+                                                                        @if ($flag==0)
+                                                                            <td>{{substr($c->type,0,1)}}</td>
+                                                                        @else 
+                                                                            <td>{{substr($c->type,0,1)}}</td>
+                                                                            <td>{{substr($c->type,1,1)}}</td>
+                                                                            <td>{{substr($c->type,2,1)}}</td>        
+                                                                        @endif
+                                                                        <td>{{$c->semester}}</td>
+                                                                    </tr>
+                                                                    @endforeach
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    <?php
+                                                    }    
+                                                    ?>
+                                                </div>                                      
+                                            </div>
+                                            <div id="IS" class="tab-pane fade">
+                                                <nav class="nav nav-tabs nav-fill">
+                                                    <a class="col-3 nav-item nav-link active" data-toggle="tab" href="#is1">1st Year</a>
+                                                    <a class="col-3 nav-item nav-link" data-toggle="tab" href="#is2">2nd Year</a>
+                                                    <a class="col-3 nav-item nav-link" data-toggle="tab" href="#is3">3rd Year</a>
+                                                    <a class="col-3 nav-item nav-link" data-toggle="tab" href="#is4">4th Year</a>
+                                                </nav>
+                                                <div class="tab-content">
+                                                    <?php
+                                                    for($i=1;$i<5;$i++){
+                                                        $tag = 'is'.(string)$i ;
+                                                        if($i>=3){$flag = 1 ;}
+                                                        else {$flag =0 ;}
+                                                        if($i==1){$show ='show active';}
+                                                        else{$show = '';}
+                                                    ?>
+                                                    <div id="{{$tag}}" class="tab-pane fade {{$show}}">                 
+                                                        <div class="table-responsive">
+                                                            <table class="table table-hover mb-0 text-center" style=" border-collapse: collapse;">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Course Code </th>
+                                                                        <th>Name</th>
+                                                                        <th>Credits</th>
+                                                                        @if ($flag==0)      
+                                                                            <th>Category</th>
+                                                                        @else
+                                                                            <th>Honours</th>
+                                                                            <th>General</th>
+                                                                        @endif
+                                                                        <th>Semester</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach (${$tag} as $c)
+                                                                    <tr>
+                                                                        <td> <a href="/courses/{{$c->cid}}" style="text-decoration: none;color:black"> {{$c->cid}} </a></td>
+                                                                        <td> <a href="/courses/{{$c->cid}}" style="text-decoration: none;color:black"> {{$c->cName}} </a></td>
+                                                                        <td>{{$c->credits}}</td>
+                                                                        @if ($flag==0)
+                                                                            <td>{{substr($c->type,0,1)}}</td>
+                                                                        @else 
+                                                                            <td>{{substr($c->type,0,1)}}</td>
+                                                                            <td>{{substr($c->type,1,1)}}</td>       
+                                                                        @endif
+                                                                        <td>{{$c->semester}}</td>
+                                                                    </tr>
+                                                                    @endforeach
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    <?php } ?>   
+                                                </div> 
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <p class="text-center text-muted"> Please note that for the category 'X' stands for cumpulsory '0' for optional and '-'' for not available </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <div class="p-3">
-                                <div class="card"  style="background:white;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 6px 0 rgba(0, 0, 0, 0.19);">
+                            <div class="pb-3">
+                                <div class="card shadow"  >
                                     <div class="card-header text-center bg-dark text-white" >
                                         <h3 class="pt-3"> Add New Course</h3>
                                     </div>

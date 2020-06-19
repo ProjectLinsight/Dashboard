@@ -29,6 +29,11 @@ class RegisterController extends Controller{
             'index' =>'',
         ]);
     }
+    public function index(){      
+        $users = User::all();
+        $us = "hello" ;
+        return view('admin.user',['users'=> $us]);
+    }
 
     protected function create(array $data){
         if($data['utype']==="Admin"){

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
 use App\StudentData;
+use Datatables ;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -17,8 +18,9 @@ class BulkRegisterController extends Controller{
     public function __construct(){
         $this->middleware('auth');
     }
-    public function index(\App\User $user){        
-        return view('admin.user',compact('user'));
+    public function index(){
+        $users = User::all();
+        return view('admin.user',['users'=> $users]);
     }
 
     public function store(Request $request){

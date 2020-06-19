@@ -17,7 +17,7 @@ Route::post('/admin/results','Admin\ResultsController@store')->middleware('admin
 Route::post('/admin/results/{subjectCode}/{yoe}','Admin\ResultsController@destroy')->middleware('admin');
 Route::post('/admin/user','Admin\BulkRegisterController@store')->middleware('admin');
 Route::get('/admin/user','Admin\BulkRegisterController@index')->middleware('admin');
-
+// Route::get('/admin/user',['uses'=>'Admin\BulkRegisterController@index', 'as'=>'users.index']);
 
 //Students
 Route::get('/home', 'Student\HomeController@index')->name('home')->middleware('student');
