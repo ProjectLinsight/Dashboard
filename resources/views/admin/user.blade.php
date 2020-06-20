@@ -2,11 +2,11 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/home.css') }}" >
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="https://kit.fontawesome.com/d43d952765.js" crossorigin="anonymous"></script>
+
+    {{-- <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"> --}}
+    {{-- <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script> --}}
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="{{ URL::asset('js/home.js') }}"></script>
-
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
-
 @section('content')
 <div class="container-fluid pt-4">
     <div id="wrapper" class="wrapper-content" >
@@ -52,26 +52,78 @@
             <div class="container-fluid" >
                 <div class="row">
                     <div class="col-md-9">
-                        {{-- <form action="">
-                            <script  type="application/javascript">
-                                function searchField(that) {
-                                    if (that.value != null  ) {
-                                        document.getElementById("ifSearched").style.display = "block";
-                                    }else{
-                                        document.getElementById("ifSearched").style.display = "none";
+                        <script type="application/javascript">
+                            (function(){
+                                'use strict';
+                                var $ = jQuery;
+                                $.fn.extend({
+                                    filterTable: function(){
+                                        return this.each(function(){
+                                            $(this).on('keyup', function(e){
+                                                $('.filterTable_no_results').remove();
+                                                var $this = $(this), 
+                                                    search = $this.val().toLowerCase(), 
+                                                    target = $this.attr('data-filters'), 
+                                                    $target = $(target), 
+                                                    $rows = $target.find('tbody tr');
+                                                    
+                                                if(search == '') {
+                                                    $rows.show(); 
+                                                }else {
+                                                    $rows.each(function(){
+                                                        var $this = $(this);
+                                                        $this.text().toLowerCase().indexOf(search) === -1 ? $this.hide() : $this.show();
+                                                    })
+                                                }
+                                            });
+                                        });
                                     }
-                                }
-                            </script>
-                            <input id="search" onchange="searchField(this);" type="text" class="form-control" name="search" required placeholder="Search">
-                            <div class="" id="ifSearched" style="display: none;">
-                                <p>hello </p>
+                                });
+                                $('[data-action="filter"]').filterTable();
+                            })(jQuery);
+                        </script>
+
+                        <div class="card table-card shadow">
+                            <div class="card-header bg-info pt-3">
+                                <div class="row d-flex justify-content-between">
+                                    <div class="col-md-9">
+                                        <h3 class="text-white"> User Information </h3>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control" id="task-table-filter" data-action="filter" data-filters="#task-table" placeholder="Filter Tasks" />
+                                    </div>
+                                </div>
                             </div>
-                        </form>
-                        @foreach ($users as $us)
-                            {{$us['email']}}
-                        @endforeach --}}
-                        
+                            <div class="card-body table-responsive">
+                                <table id=task-table class="table table-hover mb-0 text-center" style="border-collapse: collapse;">
+                                    <thead>
+                                        <tr>
+                                            <th> Name </th>
+                                            <th>Email Address</th>
+                                            <th> User Type </th>
+                                            <th>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <div id="Default" style="display: none;">
+                                            <p>dsfsad </p>
+                                        </div>
+                                        <div>
+                                            @foreach ($users as $user)
+                                            <tr>
+                                                <td>{{$user['name']}}</td>
+                                                <td>{{$user['email']}}</td>
+                                                <td>{{$user['utype']}}</td>
+                                            </tr>
+                                            @endforeach
+                                        </div>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
+
                     <div class="col-md-3">
                         <div class="pb-3">
                             <div class="card shadow">

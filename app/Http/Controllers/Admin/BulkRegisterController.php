@@ -23,6 +23,11 @@ class BulkRegisterController extends Controller{
         return view('admin.user',['users'=> $users]);
     }
 
+    public function getdata(){
+     $students = User::select('email', 'index');
+     return Datatables::of($students)->make(true);
+    }
+
     public function store(Request $request){
         $file = $request->file('users');
         $filename = $file->getClientOriginalName();

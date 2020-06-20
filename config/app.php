@@ -140,6 +140,7 @@ return [
         /*
          * Laravel Framework Service Providers...
          */
+
         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
         Illuminate\Bus\BusServiceProvider::class,
@@ -177,7 +178,6 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         //custom Services
-        // Yajra\DataTables\DataTablesServiceProvider::class
     ],
 
     /*
@@ -231,7 +231,6 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         //custom
-        // 'DataTables' => Yajra\DataTables\Facades\DataTables::class,
     ],
 
 ];
