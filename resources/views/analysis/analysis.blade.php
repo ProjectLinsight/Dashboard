@@ -4,7 +4,7 @@
     <script src="https://kit.fontawesome.com/d43d952765.js" crossorigin="anonymous"></script>
     <script type="text/javascript" src="{{ URL::asset('js/home.js') }}"></script>
 @section('content')
-<div class="container-fluid pt-4">
+<div class="container-fluid pt-5">
     <div id="wrapper" class="wrapper-content" >
         <div id="sidebar-wrapper" class="bg-dark">
             <ul class="sidebar-nav">
@@ -46,12 +46,12 @@
             </nav>
 
             <div class="container-fluid row m-0" >
-                <div class="col-md-12 pb-5 bg-dark">
-                    <h1> hello </h1>
-                </div>
+                @foreach ($statements as $st)
+                    <p> id : {{$st->id}}</p>
+                    <br>
+                    <p>data : {{$st->data}}</p>
+                @endforeach
             </div>
         </div>
     </div>
 </div>
-
-@endsection

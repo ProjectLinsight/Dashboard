@@ -32,7 +32,7 @@
                     <hr class="content-center" style="width:75%;background : #555">
                 </li>
                 <li>
-                    <a href="#"><i class="fas fa-id-card pr-2"></i>Contact</a>
+                    <a href="/admin/analysis"><i class="fas fa-id-card pr-2"></i>Analysis</a>
                     <hr class="content-center" style="width:75%;background : #555">
                 </li>
             </ul>
@@ -90,7 +90,7 @@
                                         <h3 class="text-white"> User Information </h3>
                                     </div>
                                     <div class="col-md-3">
-                                        <input type="text" class="form-control" id="task-table-filter" data-action="filter" data-filters="#task-table" placeholder="Filter Tasks" />
+                                        <input type="text" class="form-control" id="task-table-filter" data-action="filter" data-filters="#task-table" placeholder="Search..." />
                                     </div>
                                 </div>
                             </div>
@@ -125,7 +125,7 @@
                     </div>
 
                     <div class="col-md-3">
-                        <div class="pb-3">
+                        <div class="pb-4">
                             <div class="card shadow">
                                 <div class="card-header bg-info text-center text-white pt-3">
                                     <h3> Add Users Manually <h3>

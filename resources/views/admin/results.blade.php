@@ -16,7 +16,7 @@
                     <hr class="content-center" style="width:75%;background : #555">   
                 </li>
                 <li>
-                    <a href="/register"><i class="fas fa-user pr-2"></i>Manage Users</a>
+                    <a href="/admin/user"><i class="fas fa-user pr-2"></i>Manage Users</a>
                     <hr class="content-center" style="width:75%;background : #555">
                 </li>                
                 <li>
@@ -28,7 +28,7 @@
                     <hr class="content-center" style="width:75%;background : #555">
                 </li>
                 <li>
-                    <a href="#"><i class="fas fa-id-card pr-2"></i>Contact</a>
+                    <a href="/admin/analysis"><i class="fas fa-id-card pr-2"></i>Analysis</a>
                     <hr class="content-center" style="width:75%;background : #555">
                 </li>
             </ul>

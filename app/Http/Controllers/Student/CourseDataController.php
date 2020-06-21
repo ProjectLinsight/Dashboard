@@ -13,7 +13,7 @@ class CourseDataController extends Controller{
 
     public function index(\App\User $user){   
         $courses = Courses::all();
-
+        
         $is1 = array();
         $is2 = array();
         $is3 = array();

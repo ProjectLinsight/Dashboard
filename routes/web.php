@@ -18,6 +18,9 @@ Route::post('/admin/results/{subjectCode}/{yoe}','Admin\ResultsController@destro
 Route::post('/admin/user','Admin\BulkRegisterController@store')->middleware('admin');
 Route::get('/admin/user','Admin\BulkRegisterController@index')->middleware('admin');
 
+//Analysis
+Route::get('/admin/analysis','Analysis\xapiDataController@index')->middleware('admin');
+
 //Students
 Route::get('/home', 'Student\HomeController@index')->name('home')->middleware('student');
 Route::get('/mycourses/{user}/{name}', 'Student\MycoursesController@index')->name('mycourses.show')->middleware('student');
