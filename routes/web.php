@@ -29,7 +29,7 @@ Route::get('/results/{user}/{name}','Student\UserResultsController@index');
 Route::get('/profile/{user}/{name}', 'Student\ProfilesController@index')->name('profile.show')->middleware('student');
 route::get('courses','Student\CourseDataController@index')->middleware('student');
 route::get('courses/{cid}','Student\CourseLogController@index')->middleware('student');
-
+route::get('Mycourses/{course}','Student\PersonalCoursesController@index')->middleware('auth');
 
 //Uplaoding Content
 Route::post('/post','Student\PostsController@store')->middleware('student');
