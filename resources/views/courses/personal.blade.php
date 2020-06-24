@@ -1,8 +1,20 @@
 @extends('layouts.app')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/home.css') }}" >
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="https://kit.fontawesome.com/d43d952765.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript" src="{{ URL::asset('js/home.js') }}"></script>
+    <script type="text/javascript">
+        var analytics = <?php echo $grade; ?>
+        
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+        
+        function drawChart(){
+            var data = google.visualization.arrayToDataTable(analytics);
+            var chart = new google.visualization.PieChart(document.getElementById('pie_chart'));
+            chart.draw(data);
+        }
+    </script>
 @section('content')
 <div class="container-fluid pt-5">
     <div id="wrapper" class="wrapper-content" >
@@ -46,17 +58,24 @@
             </nav>
 
             <div class="container-fluid">
-                <div class="col-md-9">
-                    <hr>
-                    <h1 class="text-center"> {{$crs[0]->cName}} </h1>
-                    <hr>
-                </div>
-                <div class="col-md-3">
-                    <div class="card shadow">
-                        
+                <div class="row">
+                    <div class="col-md-8">
+                        <hr>
+                        <h1 class="text-center"> {{$crs[0]->cName}} </h1>
+                        <hr>
                     </div>
+                    <div class="col-md-4">
+                        <div class="card shadow">
+                            <div class="card-header bg-dark text-center text-white">
+                                <h3 class="pt-2"> Results Overview</h3>
+                            </div>
+                            <div class="card-body">
+                                <div id="pie_chart">
+                                </div>
+                            </div>
+                        </div>
+                    </div>    
                 </div>
-                
             </div>
         </div>
     </div>

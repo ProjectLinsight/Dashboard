@@ -2,7 +2,21 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/home.css') }}" >
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="https://kit.fontawesome.com/d43d952765.js" crossorigin="anonymous"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript" src="{{ URL::asset('js/home.js') }}"></script>
+    <script type="text/javascript">
+        var analytics = <?php echo $grade; ?>
+        
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+        
+        function drawChart(){
+            var data = google.visualization.arrayToDataTable(analytics);
+            var chart = new google.visualization.PieChart(document.getElementById('pie_chart'));
+            chart.draw(data);
+        }
+    </script>
 @section('content')
 <div class="container-fluid pt-4">
     <div id="wrapper" class="wrapper-content" >
@@ -47,8 +61,16 @@
 
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-7">
-                        ads
+                    <div class="col-md-5">
+                        <div class="card shadow">
+                            <div class="card-header bg-info pb-0">
+                                <h4 class="text-white text-center">Results Overview</h4>
+                            </div>
+                            <div class="card-body">
+                                <div id="pie_chart" style="width:auto; height:450px;">
+                                </div>    
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-5">
                         <div class="card shadow">

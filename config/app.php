@@ -178,6 +178,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         //custom Services
+        ConsoleTVs\Charts\ChartsServiceProvider::class,
     ],
 
     /*
@@ -231,6 +232,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         //custom
+        'Charts' => ConsoleTVs\Charts\Facades\Charts::class,
     ],
 
 ];

@@ -1,7 +1,21 @@
 @extends('layouts.app')
 <link rel="stylesheet" type="text/css" href="{{ asset('css/home.css') }}" >
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript" src="{{ URL::asset('js/home.js') }}"></script>
+<script type="text/javascript">
+    var analytics = <?php echo $grade; ?>
+    
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+ 
+    function drawChart(){
+        var data = google.visualization.arrayToDataTable(analytics);
+        var chart = new google.visualization.PieChart(document.getElementById('pie_chart'));
+        chart.draw(data);
+    }
+</script>
+
 @section('content')
 
 <div class="container-fluid pt-5">
@@ -146,7 +160,9 @@
                                                     @foreach ($data[$results] as $rs)
                                                         <div class="row ">
                                                             <div class="col-9">
-                                                                <h5 style="font-size:calc(0.8em + 0.3vw)">{{$rs->course->cName}}</h5>
+                                                                <a href="/results/{{$rs->course->cid}}" style="text-decoration:none;color:black">
+                                                                    <h5  data-toggle="modal" data-target="#resultsview" style="font-size:calc(0.8em + 0.3vw)">{{$rs->course->cName}}</h5>
+                                                                </a>
                                                                 <p class="text-muted" style="font-size:calc(0.6em + 0.2vw)">{{$rs->subjectCode}} / {{$rs->course->credits}} credits / year of examination : {{$rs->yoe}}</p> 
                                                             </div>
                                                             <div class="col-3 d-flex justify-content-center">
@@ -193,6 +209,23 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" style="width: 100%;height:auto" id="resultsview" tabindex="-1" role="dialog" aria-labelledby="resultsviewTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="resultsviewTitle">Post Something</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="pie_chart">
                 </div>
             </div>
         </div>

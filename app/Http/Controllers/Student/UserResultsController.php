@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Results ;
 use App\User ;
+// use Charts;
 use App\StudentData ;
 
 class UserResultsController extends Controller{
@@ -225,11 +226,35 @@ class UserResultsController extends Controller{
         //     // dd($dt[""]);
         //     $dt["rank"]= getRank($dt,$dt["index"],'GPA');
         // }
-                
+
+        $data = DB::table('results')->where('subjectCode', 'IS2102')->select(
+                    DB::raw('grade as grade'),
+                    DB::raw('count(*) as number'))
+                ->groupBy('grade')->get();
+            
+        $array[] = ['grade', 'Number'];
+        foreach($data as $key => $value){
+            $array[++$key] = [$value->grade, $value->number];
+        }
+
         return view('results/userResults',[
             'gpaData' => $gpaData,
             'user'=>$user,
-            'data'=>$getData[0]
-            ]);
+            'data'=>$getData[0],
+            ])->with('grade', json_encode($array));
+    }
+
+    public function getResults($courseCode){
+        $data = DB::table('results')->where('subjectCode',$courseCode)->select(
+                DB::raw('grade as grade'),
+                DB::raw('count(*) as number'))
+            ->groupBy('grade')->get();
+    
+        $array[] = ['grade', 'Number'];
+        foreach($data as $key => $value){
+            $array[++$key] = [$value->grade, $value->number];
+        }
+        dd($array);
+        return view('results/userResults')->with('grade', json_encode($array));
     }
 }
