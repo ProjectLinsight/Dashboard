@@ -46,11 +46,24 @@
             </nav>
 
             <div class="container-fluid row m-0" >
-                @foreach ($statements as $st)
-                    <p> id : {{$st->id}}</p>
-                    <br>
-                    <p>data : {{$st->data}}</p>
+                <table>
+                    <tr><th>User</th>
+                    <th>Location</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Timestamp</th></tr>
+                    @foreach ($xapi as $st)
+                    <tr>
+                    <td>{{$st['user']}} </td>
+                    <td> {{$st['location']}}</td>
+                    <td> {{$st['title']}}</td>
+                    <td> {{$st['description']}}</td>
+                    <td> {{$st['timestamp']}}</td>
+                    </tr>
+                    
                 @endforeach
+                </table>
+                
             </div>
         </div>
     </div>
