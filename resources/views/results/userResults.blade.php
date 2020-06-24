@@ -1,20 +1,7 @@
 @extends('layouts.app')
 <link rel="stylesheet" type="text/css" href="{{ asset('css/home.css') }}" >
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript" src="{{ URL::asset('js/home.js') }}"></script>
-<script type="text/javascript">
-    var analytics = <?php echo $grade; ?>
-    
-    google.charts.load('current', {'packages':['corechart']});
-    google.charts.setOnLoadCallback(drawChart);
- 
-    function drawChart(){
-        var data = google.visualization.arrayToDataTable(analytics);
-        var chart = new google.visualization.PieChart(document.getElementById('pie_chart'));
-        chart.draw(data);
-    }
-</script>
 
 @section('content')
 
@@ -44,13 +31,6 @@
                 <li>
                     <a href="/courses"><i class="fas fa-id-card pr-2"></i>Course Data</a>
                     <hr class="content-center" style="width:75%;background : #555">
-                </li>
-                <li>
-                    <div class="p-3">
-                        <button type="button" class="btn btn-outline-primary btn-block" data-toggle="modal" data-target="#exampleModalCenter">
-                            <h6 class="pt-2"> <i class="far fa-edit pr-2"></i> write post <h6>
-                        </button>
-                    </div>
                 </li>
             </ul>
         </div>
@@ -119,7 +99,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row pt-4">    
+                <div class="row pt-4 d-flex justify-content-center">    
                     <div class="col-md-5" style="font-family:Helvetica;">
                         <?php
                             for($i=3;$i>0;$i--){
@@ -160,8 +140,8 @@
                                                     @foreach ($data[$results] as $rs)
                                                         <div class="row ">
                                                             <div class="col-9">
-                                                                <a href="/results/{{$rs->course->cid}}" style="text-decoration:none;color:black">
-                                                                    <h5  data-toggle="modal" data-target="#resultsview" style="font-size:calc(0.8em + 0.3vw)">{{$rs->course->cName}}</h5>
+                                                                <a href="/courses/{{$rs->course->cid}}" style="text-decoration:none;color:black">
+                                                                    <h5 style="font-size:calc(0.8em + 0.3vw)">{{$rs->course->cName}}</h5>
                                                                 </a>
                                                                 <p class="text-muted" style="font-size:calc(0.6em + 0.2vw)">{{$rs->subjectCode}} / {{$rs->course->credits}} credits / year of examination : {{$rs->yoe}}</p> 
                                                             </div>

@@ -60,22 +60,25 @@
             </nav>
 
             <div class="container-fluid">
+                <hr>
+                <h1 class="text-center">{{$log->cName}}</h1>
+                <hr>
                 <div class="row">
-                    <div class="col-md-5">
+                    <div class="col-md-6">
                         <div class="card shadow">
                             <div class="card-header bg-info pb-0">
                                 <h4 class="text-white text-center">Results Overview</h4>
                             </div>
                             <div class="card-body">
-                                <div id="pie_chart" style="width:auto; height:450px;">
+                                <div id="pie_chart" style="width:auto; height:430px;">
                                 </div>    
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-5">
+                    <div class="col-md-6">
                         <div class="card shadow">
                             <div class="card-header bg-info pb-0">
-                                <h4 class="text-white text-center"> {{$log->cName}}</h4>
+                                <h4 class="text-white text-center"> Course Information </h4>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">

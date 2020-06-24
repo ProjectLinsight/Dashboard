@@ -187,7 +187,7 @@
                                     <h4 class="text-white text-center"> Currently Enrolled Courses </h4>
                                 </div>
                                 <div class="card-body">
-                                    axZ
+                                    To be Added...
                                 </div>
                             </div>
                         </div>
@@ -197,7 +197,7 @@
                                     <h4 class="text-white text-center"> Completed Courses </h4>
                                 </div>
                                 <div class="card-body">
-                                    axZ
+                                    To be Added...
                                 </div>
                             </div>
                         </div>                        
