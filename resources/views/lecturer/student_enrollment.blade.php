@@ -67,12 +67,24 @@
                                         <div class="col-md-6 border-right">
                                             <h4 class="text-center text-dark pb-3"> Add student manually</h4>
                                             <hr>
-                                            <form method="POST" action="{{ route('register') }}">
+                                            <form method="POST" action="/lecturer/enrollment" enctype="multipart/form-data" method="POST">
+                                            
                                                 @csrf
         
                                                 <div class="form-group row d-flex justify-content-center">
                                                     <div class="col-md-10 ">
-                                                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" placeholder="Index No" autofocus>
+                                                        <input id="cid" type="text" class="form-control @error('cid') is-invalid @enderror" name="cid"  autofocus placeholder="Course ID">  
+                                                         @error('name')
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row d-flex justify-content-center">
+                                                    <div class="col-md-10 ">
+                                                    <input id="index" type="text" class="form-control @error('index') is-invalid @enderror" name="index"  autofocus placeholder="Index No">
                                                         @error('name')
                                                             <span class="invalid-feedback" role="alert">
                                                                 <strong>{{ $message }}</strong>
@@ -81,7 +93,7 @@
                                                     </div>
                                                 </div>
                                             
-                                               
+                                              <!--
         
                                                 <div class="form-group d-flex justify-content-center">
                                                     <div class="col-md-11">
@@ -104,7 +116,7 @@
                                                     <div class="col-md-10 ">
                                                         <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password" placeholder="Confirm Password">
                                                     </div>
-                                                </div>
+                                                </div>   -->
         
                                                 <div class="form-group row d-flex justify-content-center">
                                                     <div class="col-md-6 ">

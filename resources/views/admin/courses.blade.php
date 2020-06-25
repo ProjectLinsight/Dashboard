@@ -296,7 +296,58 @@
                                     </div>
                                 </div>
                             </div>
+                      
+                        
+                            <div class="pb-3">
+                                <div class="card shadow"  >
+                                    <div class="card-header text-center bg-dark text-white" >
+                                        <h3 class="pt-3"> Assign lecturers</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <form method="POST" action="/admin/assign" enctype="multipart/form-data" method="POST">
+                                            @csrf
+                                            <div class="form-group content-center">
+                                                <h6 class="pl-3 text-muted"> Course ID :</h6>
+                                                <div class="col-md-12">
+                                                    <input id="cid" type="text" class="form-control @error('cid') is-invalid @enderror" name="cid" >
+                                                    @error('cid')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="form-group content-center">
+                                                <h6 class="pl-3 text-muted"> Lecturer ID :</h6>
+                                                <div class="col-md-12">
+                                                    <input id="lid" type="text" class="form-control @error('cName') is-invalid @enderror" name="lid">
+                                                    @error('cName')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            
+                
+                                        
+                                            <div class="form-group content-center">
+                                                <div class="form-group d-flex justify-content-center">
+                                                    <div class="row col-md-12">
+                                                        <button type="submit" class="btn btn-info btn-block text-white">Assign </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+
+
+
+
+
                     </div>   
                 
                 </div>

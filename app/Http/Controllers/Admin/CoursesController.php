@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Courses;
+use App\LecturerAssigning;
 
 class CoursesController extends Controller{
     public function __construct(){
@@ -91,4 +92,19 @@ class CoursesController extends Controller{
 
         return  redirect('/admin/courses');    
     }
+
+    public function store2(Request $request){
+        $this->validate($request,[
+            'cid' => 'required',
+            'lid' => 'required',
+            
+        ]);
+        $assign = new LecturerAssigning ;
+        $assign->cid = $request->input('cid');
+        $assign->lid = $request->input('lid');
+        $assign->save();
+
+        return  redirect('/admin/courses');    
+    }
+
 }
