@@ -26,14 +26,17 @@ class User extends Authenticatable
         if($this->utype == 'Student') return $this->hasOne(StudentData::class,'index','index');
     }
 
+    public function stu_enrollment(){
+        if($this->utype == 'Student') return $this->hasMany(StudentData::class,'index','index');
+    }
+
     public function posts(){
         return $this->hasMany(Post::class)->orderBy('updated_at','DESC');
     }
 
     public function courses(){
         return $this->hasMany(Courses::class);
-    }
-    
+    }    
 
     public function results(){
         if($this->utype == 'Student') return $this->hasMany(Results::class,'index','index');
