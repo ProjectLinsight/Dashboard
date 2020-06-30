@@ -47,14 +47,24 @@
             </nav>
 
             <div class="container-fluid row m-0" >
+                <div class="col-md-7">
+
+                </div>
                 <div class="col-md-5 pb-5">
                     <div class="pb-3">
                         <div class="card table-card shadow">
-                            <div class="card-header bg-primary">
-                                <h3 class="pt-3 text-center text-white"> All Users</h3>
+                            <div class="card-header bg-info pt-3">
+                                <h3 class="text-white"> Assign Lecturers</h3>
                             </div>
-
                             <div class="card-body p-0">
+                                <script  type="application/javascript">
+                                    function getId(course) {
+                                        console.log(course.cid);
+                                        document.getElementById("ccid").value=course.cid;
+                                        document.getElementById("ccName").value=course.cName;
+                                    }
+                                </script>
+
                                 <nav class="nav nav-tabs nav-fill">
                                     <a class="col-6 nav-item nav-link active" data-toggle="tab" href="#CS">Computer Science</a>
                                     <a class="col-6 nav-item nav-link" data-toggle="tab" href="#IS">Information Systems</a>
@@ -83,15 +93,13 @@
                                                             <tr>
                                                                 <th>Name</th>
                                                                 <th>Semester</th>
-                                                                <th>Assign</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             @foreach(${$tag} as $c)
                                                             <tr>
-                                                                <td data-toggle="modal" data-target="#exampleModalCenter"> {{$c->cName}} </td>
+                                                                <td data-toggle="modal" data-target="#exampleModalCenter" onclick="getId({{$c}})"> {{$c->cName}} </td>
                                                                 <td>{{$c->semester}}</td>
-                                                                <td> <button class="btn btn-outline-primary btn-sm"  data-toggle="modal" data-target="#exampleModalCenter"> Assign </button></td>
                                                             </tr>
                                                             @endforeach
                                                         </tbody>
@@ -121,20 +129,18 @@
                                             ?>
                                             <div id="{{$tag}}" class="tab-pane fade {{$show}}">                 
                                                 <div class="table-responsive">
-                                                    <table class="table table-hover mb-0 text-center" style=" border-collapse: collapse;">
+                                                    <table class="table table-hover mb-0" style=" border-collapse: collapse;">
                                                         <thead>
                                                             <tr>
                                                                 <th>Name</th>
                                                                 <th>Semester</th>
-                                                                <th>Assign</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             @foreach (${$tag} as $c)
-                                                            <tr>
-                                                                <td> <a href="/courses/{{$c->cid}}" style="text-decoration: none;color:black"> {{$c->cName}} </a></td>
+                                                            <tr>    
+                                                                <td data-toggle="modal" data-target="#exampleModalCenter" onclick="getId({{$c}})"> {{$c->cName}} </td>
                                                                 <td>{{$c->semester}}</td>
-                                                                <td> <button class="btn btn-primary btn-sm"  data-toggle="modal" data-target="#exampleModalCenter"> Assign </button></td>
                                                             </tr>
                                                             @endforeach
                                                         </tbody>
@@ -146,7 +152,7 @@
                                     </div>
                                 </div>
                                 <hr>
-                                <p class="text-center text-muted"> Please note that for the category 'X' stands for cumpulsory '0' for optional and '-'' for not available </p>
+                                <p class="text-muted pl-2"> *Tap on course name to assign a lecturer </p>
                             </div>
                         </div>
                     </div>
@@ -173,32 +179,32 @@
                     <div class="form-group content-center">
                         <h6 class="pl-3 text-muted"> Course ID :</h6>
                         <div class="col-md-12">
-                            <input id="cid" type="text" class="form-control @error('cid') is-invalid @enderror" name="cid" >
-                            @error('cid')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
+                            <input id="ccid" type="text" class="form-control" name="cid"  >
                         </div>
                     </div>
                     <div class="form-group content-center">
-                        <h6 class="pl-3 text-muted"> Lecturer ID :</h6>
+                        <h6 class="pl-3 text-muted"> Course Name :</h6>
                         <div class="col-md-12">
-                            <input id="lid" type="text" class="form-control @error('cName') is-invalid @enderror" name="lid">
-                            @error('cName')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
+                            <input id="ccName" type="text" class="form-control" name="cName" >
                         </div>
                     </div>
                     
-
-                
+                    <div class="form-group content-center">
+                        <h6 class="pl-3 text-muted"> Lecturer :</h6>
+                        <div class="col-md-12">
+                            <select name="lid" class="form-control"  value=" {{old('lid')}} " required autocomplete="Lecturer Name">                        
+                                <option selected>Select Lecturer</option>
+                                @foreach ($lec as $l)
+                                    <option value="{{$l->index}}">{{$l->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    
                     <div class="form-group content-center">
                         <div class="form-group d-flex justify-content-center">
                             <div class="row col-md-12">
-                                <button type="submit" class="btn btn-info btn-block text-white">Assign </button>
+                                <button type="submit" class="btn btn-info btn-block text-white"> Assign </button>
                             </div>
                         </div>
                     </div>

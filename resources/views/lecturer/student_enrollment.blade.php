@@ -57,7 +57,15 @@
             <div class="container-fluid row m-0" >
                 <div class="col-md-12 pb-5">
                     <div class="row justify-content-center ">
-                        <div class="col-md-8 px-5">
+                        <div class="col-md-4">
+                            
+                            @foreach (Auth::user()->lecAssigning as $item)
+                                <h5>{{$item->cid}}</h5>
+                                <h5>{{$item->course->cName}}</h5>
+                            @endforeach                
+                        </div>
+
+                        {{-- <div class="col-md-8 px-5">
                             <div class="card shadow">
                                 <div class="card-header bg-dark text-center text-white pt-3">
                                     <h2 class="py-3"> Students Enrollment <h2>
@@ -160,7 +168,7 @@
                                 </div>
                             </div>
                           
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>

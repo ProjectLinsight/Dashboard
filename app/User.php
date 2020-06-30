@@ -29,6 +29,9 @@ class User extends Authenticatable
     public function stu_enrollment(){
         if($this->utype == 'Student') return $this->hasMany(StudentData::class,'index','index');
     }
+    public function lecAssigning(){
+        if($this->utype == 'Lecturer') return $this->hasMany(lecturerAssigning::class,'lid','index');
+    }
 
     public function posts(){
         return $this->hasMany(Post::class)->orderBy('updated_at','DESC');

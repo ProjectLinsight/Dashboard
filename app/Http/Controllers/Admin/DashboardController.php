@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Courses;
+use App\LecturerAssigning;
 
 class DashboardController extends Controller{
     public function __construct(){
@@ -13,6 +14,9 @@ class DashboardController extends Controller{
     }
 
     public function index(\App\User $user){  
+        
+        $lec = DB::table('users')->where('utype','lecturer')->get();
+        
         $courses = Courses::all();
 
         $is1 = array();
@@ -70,6 +74,17 @@ class DashboardController extends Controller{
             'cs2'=> $cs2,
             'cs3'=> $cs3,
             'cs4'=> $cs4,
+            'lec'=> $lec
             ]);
+    }
+
+    public function assignLec(Request $request){
+        
+        $assign = new LecturerAssigning ;
+        $assign->cid = $request->input('cid');
+        $assign->lid = $request->input('lid');
+        $assign->save();
+
+        return  redirect('/admin/dashboard');    
     }
 }

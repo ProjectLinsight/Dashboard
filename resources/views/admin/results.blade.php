@@ -3,6 +3,7 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="https://kit.fontawesome.com/d43d952765.js" crossorigin="anonymous"></script>
     <script type="text/javascript" src="{{ URL::asset('js/home.js') }}"></script>
+
 @section('content')
 <div class="container-fluid pt-4">
     <div id="wrapper" class="wrapper-content" >
@@ -58,9 +59,9 @@
                             @endforeach --}}
                         </div>
                         <div class="col-md-3 ">
-                            <div class="card">
-                                <div class="card-header bg-dark text-center text-white">
-                                    <h3 class="pt-3">Upload Results</h3>
+                            <div class="card shadow">
+                                <div class="card-header bg-info pt-3">
+                                    <h3 class="text-white">Upload Results</h3>
                                 </div>
                                 <div class="card-body">
                                     <p class="text-muted"> Please upload a csv file with the following pattern in it. <br>

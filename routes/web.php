@@ -10,13 +10,13 @@ Auth::routes();
 
 //Admin 
 Route::get('/admin/dashboard','Admin\DashboardController@index')->middleware('admin');
+Route::post('/admin/assign','Admin\DashboardController@assignLec')->middleware('admin');
 Route::get('/admin/courses','Admin\CoursesController@index')->middleware('admin');
 Route::post('/admin/courses','Admin\CoursesController@store')->middleware('admin');
 Route::get('/admin/results','Admin\ResultsController@index')->middleware('admin');
 Route::post('/admin/results','Admin\ResultsController@store')->middleware('admin');
 Route::post('/admin/results/{subjectCode}/{yoe}','Admin\ResultsController@destroy')->middleware('admin');
 Route::post('/admin/user','Admin\BulkRegisterController@store')->middleware('admin');
-Route::post('/admin/assign','Admin\CoursesController@store2')->middleware('admin');
 Route::get('/admin/user','Admin\BulkRegisterController@index')->middleware('admin');
 
 //Analysis

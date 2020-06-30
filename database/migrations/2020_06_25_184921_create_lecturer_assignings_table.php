@@ -11,9 +11,8 @@ class CreateLecturerAssigningsTable extends Migration{
             $table->id();
             $table->string('cid');
             $table->string('lid');
-            $table->string('batch');
-            $table->string('year');
-            $table->string('semeter');
+            // $table->string('batch');
+            // $table->string('semester');
             $table->timestamps();
         });
     }
