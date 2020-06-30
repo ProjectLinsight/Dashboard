@@ -41,4 +41,10 @@ class User extends Authenticatable
     public function results(){
         if($this->utype == 'Student') return $this->hasMany(Results::class,'index','index');
     }
+    public function lecturerDetails(){
+        if($this->utype == 'Lecturer') return $this->hasOne(LecturerDetails::class,'lecturer_code','index');
+    }
+    public function studentDetails(){
+        if($this->utype == 'Student') return $this->hasOne(StudentDetails::class,'index','index');
+    }
 }
