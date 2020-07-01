@@ -61,8 +61,17 @@
                 <div class="row">
                     <div class="col-md-8">
                         <hr>
-                        <h1 class="text-center"> {{$crs[0]->cName}} </h1>
+                        <h1 class="text-center"> {{$crs[0]}} </h1>
                         <hr>
+                        <table>
+                            @foreach($counts as $key => $value)
+                                <tr>
+                                    <td>{{$key}} &emsp; {{$value}}
+
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </table>
                     </div>
                     <div class="col-md-4">
                         <div class="card shadow">

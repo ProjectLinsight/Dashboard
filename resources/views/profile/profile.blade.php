@@ -126,15 +126,9 @@
                             <h4 style="font-size:calc(1.1em + 0.4vw)"> <strong>Currently Enrolled Courses </strong></h4>
                         </div>
                         <div class="col-12 pl-4">
-                            <a href="/Mycourses/IS3103" style="font-size:calc(0.7em + 0.2vw)"> IS3101 - Enterprise Resource Planning Systems </a> <br>
-                            <a href="/Mycourses/IS3103" style="font-size:calc(0.7em + 0.2vw)"> IS3102 - Software Quality Assuarance </a> <br>
-                            <a href="/Mycourses/IS3103" style="font-size:calc(0.7em + 0.2vw)"> IS3103 - Human Computer Interaction </a> <br>
-                            <a href="/Mycourses/IS3103" style="font-size:calc(0.7em + 0.2vw)"> IS3105 - Professional Practice</a> <br>
-                            <a href="/Mycourses/IS3103" style="font-size:calc(0.7em + 0.2vw)"> IS3108 - Middleware Architecture</a> <br>
-                            <a href="/Mycourses/IS3103" style="font-size:calc(0.7em + 0.2vw)"> IS3110 - Research Methods</a> <br>
-                            <a href="/Mycourses/IS3103" style="font-size:calc(0.7em + 0.2vw)"> IS3113 - Group Project II</a> <br>
-                            <a href="/Mycourses/IS3103" style="font-size:calc(0.7em + 0.2vw)"> IS3116 - Database Management Systems II</a> <br>
-                            <a href="/Mycourses/IS3103" style="font-size:calc(0.7em + 0.2vw)"> IS3117 - Machine Learning and Neural Computing </a>
+                            @foreach(Auth::User()->stu_enrollment as $stu_subject)
+                            <a href="/Mycourses/{{$stu_subject->cid}}" style="font-size:calc(0.7em + 0.2vw)"> {{$stu_subject->cid}} - {{$stu_subject->course->cName}}</a><br>
+                            @endforeach
                         </div>
                     </div>
                 </div>
