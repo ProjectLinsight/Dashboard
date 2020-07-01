@@ -16,4 +16,8 @@ class Courses extends Model{
     public function results(){
         return $this->hasMany(Results::class,'subjectCode','cid');
     }
+
+    public function lecAssigning(){
+        return $this->hasMany(AssignLecturer::class,'cid','cid');
+    }
 }

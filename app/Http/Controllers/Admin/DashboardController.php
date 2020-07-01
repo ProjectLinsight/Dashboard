@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Courses;
-use App\LecturerAssigning;
+use App\AssignLecturer;
 
 class DashboardController extends Controller{
     public function __construct(){
@@ -79,10 +79,10 @@ class DashboardController extends Controller{
     }
 
     public function assignLec(Request $request){
-        
-        $assign = new LecturerAssigning ;
+        $assign = new AssignLecturer ;
         $assign->cid = $request->input('cid');
         $assign->lid = $request->input('lid');
+        $assign->year = $request->input('year');
         $assign->save();
 
         return  redirect('/admin/dashboard');    

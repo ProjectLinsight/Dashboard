@@ -13,12 +13,17 @@
                 </li>
                 <li class="pt-3">
                     <a href="/lecturer/lecturer_home"><i class="fas fa-home pr-2"></i>Feed</a>
-                    <hr class="content-center" style="width:75%;background : #555">   
+                    <hr class="content-center" style="width:75%;background : #555">
                 </li>
                 <li>
-                    <a href="#"><i class="fas fa-user pr-2"></i>My Courses</a>
+                    <a data-toggle="collapse" href="#courses" ><i class="fas fa-user pr-2"></i>Courses</a>
+                    <div class="collapse pt-3 pl-5" id="courses">
+                        @foreach (Auth::user()->lecAssigning as $item)
+                            <h6 class="text-white"><a href="/lecturer/{{Auth::user()->id}}/{{$item->cid}}/courses">{{$item->cid}}</a></h6>
+                        @endforeach
+                    </div>
                     <hr class="content-center" style="width:75%;background : #555">
-                </li>                
+                </li>
                 <li>
                     <a href="#"><i class="fas fa-chart-line pr-2"></i>Results</a>
                     <hr class="content-center" style="width:75%;background : #555">

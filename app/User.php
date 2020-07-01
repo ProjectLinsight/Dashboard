@@ -30,7 +30,7 @@ class User extends Authenticatable
         if($this->utype == 'Student') return $this->hasMany(StudentData::class,'index','index');
     }
     public function lecAssigning(){
-        if($this->utype == 'Lecturer') return $this->hasMany(lecturerAssigning::class,'lid','index');
+        if($this->utype == 'Lecturer') return $this->hasMany(AssignLecturer::class,'lid','index');
     }
 
     public function posts(){

@@ -6,8 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Enrollment;
 
-class EnrollmentController extends Controller
-{
+class EnrollmentController extends Controller{
     public function store(Request $request){
         $this->validate($request,[
             'cid' => 'required',

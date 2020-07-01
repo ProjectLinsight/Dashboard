@@ -4,10 +4,10 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLecturerAssigningsTable extends Migration{
+class CreateAssignLecturersTable extends Migration{
     public function up()
     {
-        Schema::create('lecturer_assignings', function (Blueprint $table) {
+        Schema::create('assign_lecturers', function (Blueprint $table) {
             $table->id();
             $table->string('cid');
             $table->string('lid');
@@ -17,6 +17,6 @@ class CreateLecturerAssigningsTable extends Migration{
     }
 
     public function down(){
-        Schema::dropIfExists('lecturer_assignings');
+        Schema::dropIfExists('assign_lecturers');
     }
 }

@@ -188,6 +188,17 @@
                             <input id="ccName" type="text" class="form-control" name="cName" >
                         </div>
                     </div>
+                    <div class="form-group content-center">
+                        <h6 class="pl-3 text-muted"> Year :</h6>
+                        <div class="col-md-12">
+                            <input id="year" type="number" min="2019" max="2030" value="2020" class="form-control @error('year') is-invalid @enderror" value=" {{old('year')}} " required autocomplete="Year" name="year" >
+                            @error('year')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
                     
                     <div class="form-group content-center">
                         <h6 class="pl-3 text-muted"> Lecturer :</h6>
