@@ -17,14 +17,16 @@ class sharedXapi extends Controller{
             $logArray=explode("/",$temp->verb->id);
             if($logArray[sizeof($logArray)-1]==="visited"){
                 $state[$i]['location'] = "outside" ;
+                $state[$i]['verb'] = $logArray[sizeof($logArray)-1];
             }else{
                 $state[$i]['location'] = "inside" ;
+                $state[$i]['verb'] = $logArray[sizeof($logArray)-1];
             }
             $state[$i]['user'] = $temp->actor->account->name ;
             $state[$i]['title'] = $temp->object->definition->name->en ;
             $state[$i]['definition'] = $temp->object->definition ;
             $state[$i]['timestamp'] = $temp->timestamp ;
         }
-        dd($state) ;
+        return($state) ;
     }
 }
