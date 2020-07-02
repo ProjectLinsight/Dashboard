@@ -56,14 +56,76 @@
                 <hr>
                 <h1 class="text-center">{{$crs->cName}}</h1>
                 <hr>
+
                 <div class="row">
                     <div class="col-md-8">
-                        
+                            <div class="card shadow">
+                            <div class="card-header bg-info pb-0">
+                                <h4 class="text-white text-center"> Course Information </h4>
+                            </div>
+                            <div class="card-body">
+                                <form method="POST" action="/lecturer/{{Auth::user()->id}}/{{$item->cid}}/courses/enroll" enctype="multipart/form-data">
+                                    @csrf
+                                
+                                    <div class="table-responsive">
+                                        <table class="table table-hover mb-0" style="border-collapse: collapse;">
+                                            <tbody  style="font-size: calc(0.7em + 0.2vw)">
+                                                <tr>
+                                                    <td class="border"> Course Code </td>
+                                                    <td class="border" colspan="3"><strong>{{$crs->cid}} </strong></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="border"> Course Name </td>
+                                                    <td class="border" colspan="3"><strong>{{$crs->cName}}</strong></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="border"> Year </td>
+                                                    <td class="border"><strong>{{substr(preg_replace("/[^0-9]/","",$crs->cid),0,1)}}</strong></td>
+                                                    <td class="border"> Semester </td>
+                                                    <td class="border"><strong>{{$crs->semester}}</strong></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="border"> Course Credits </td>
+                                                    <td class="border" colspan="3"><strong>{{$crs->credits}}</strong></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="border"> Formative Assessment </td>
+                                                    <td class="border">
+                                                        <input id="aMarks" type="text" class="form-control" name="aMarks" value="{{$crs->assignmentMarks}}"  >
+                                                    </td>
+                                                    <td class="border"> Summative Assessment </td>
+                                                    <td class="border">    
+                                                        <input id="eMarks" type="text" class="form-control" name="eMarks" value="{{$crs->examMarks}}"  >
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="border"> Pre-requisities </td>
+                                                    <td class="border" colspan="3">    
+                                                        <input id="preRequisites" type="text" class="form-control" name="preRequisites" value="{{$crs->prerequisites}}"  >
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="border"> Introduction </td>
+                                                    <td class="border text-justify" colspan="2">
+                                                        <input id="introduction" type="text" class="form-control" name="introduction" value="{{$crs->introduction}}"  >
+                                                    </td>
+                                                    <td class="text-justify">
+                                                        <div class="form-group d-flex justify-content-center">
+                                                            <button type="submit" class="btn btn-info btn-block text-white">Update Course Data</button>
+                                                        </div>
+                                                    </td>
+                                                </tr> 
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-4">
                         <div class="card shadow">
-                            <div class="card-header bg-info text-center text-white pt-3">
-                                <h3> Enroll Students <h3>
+                            <div class="card-header bg-info pb-0">
+                                <h4 class="text-white text-center"> Course Information </h4>
                             </div>
                             <div class="card-body">
                                 <p><strong> Course Code &emsp; &emsp; : </strong> {{$crs->cid}}</p>
@@ -105,16 +167,16 @@
                                 <div class="table-responsive">
                                     <form method="POST" action="/lecturer/{{Auth::user()->id}}/{{$item->cid}}/courses/enroll" enctype="multipart/form-data">
                                         @csrf
-                                        <input id="ccid" type="text" class="form-control" name="cid" value="{{$crs->cid}}"  >
+                                        <input hidden id="ccid" type="text" class="form-control" name="cid" value="{{$crs->cid}}"  >
                                         <table id=task-table class="table table-hover mb-0" style="border-collapse: collapse;">
-                                            <thead class="text-center" style="background: #eee">
-                                                <tr>
-                                                    <th scope="col">Assign</th>
+                                            <thead class="text-center" style="background: #eee;">
+                                                <tr style="display:block;">
+                                                    <th scope="col">#</th>
                                                     <th scope="col">Index Number</th>
                                                     <th scope="col">Email</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
+                                            <tbody style="overflow-y:auto;display:block;height:400px">
                                                 <tr>
                                                     <td>
                                                         <div class="custom-control custom-checkbox">
@@ -132,7 +194,6 @@
                                                         }
                                                     ?>
                                                 </tr>   
-                                                
                                                 @foreach ($stu as $st)
                                                 <tr>
                                                     <td>

@@ -30,7 +30,12 @@
                     <hr class="content-center" style="width:75%;background : #555">   
                 </li>
                 <li>
-                    <a href="/mycourses/{{Auth::user()->id}}/{{Auth::user()->name}}"><i class="fas fa-user pr-2"></i>My Courses</a>
+                    <a data-toggle="collapse" href="#courses" ><i class="fas fa-user pr-2"></i>Courses</a>
+                    <div class="collapse pt-3 pl-5" id="courses">
+                        @foreach (Auth::user()->stu_enrollment as $sub)
+                            <h6 class="text-white"><a href="/Mycourses/{{$sub->cid}}" >{{$sub->cid}}</a></h6>
+                        @endforeach
+                    </div>
                     <hr class="content-center" style="width:75%;background : #555">
                 </li>                
                 <li>
@@ -104,26 +109,18 @@
                                             </tr>
                                             <tr>
                                                 <td class="border"> Formative Assessment </td>
-                                                <td class="border"><strong>40%</strong></td>
+                                                <td class="border"><strong>{{$log->assignmentMarks}}</strong></td>
                                                 <td class="border"> Summative Assessment </td>
-                                                <td class="border"><strong>60%</strong></td>
+                                                <td class="border"><strong>{{$log->examMarks}}</strong></td>
                                             </tr>
                                             <tr>
                                                 <td class="border"> Pre-requisities </td>
-                                                <td class="border" colspan="3"><strong>None</strong></td>
+                                                <td class="border" colspan="3"><strong>{{$log->prerequisites}}</strong></td>
                                             </tr>
                                             <tr>
                                                 <td class="border"> Introduction </td>
                                                 <td class="border text-justify" colspan="3"><strong>
-                                                    In this course, you will learn the principles and methods which can be used to
-                                                    develop effective user interfaces. The course will provide a balance of both
-                                                    practical and theoretical knowledge. Practical concerns will be balanced by
-                                                    discussion of relevant theory from the literature. You will solve problems in
-                                                    take-home and in-class assessments where you will participate in group projects
-                                                    to design, implement, and evaluate user interfaces. Through this course, you
-                                                    will obtain necessary practical skills for designing user interfaces, an
-                                                    understanding of the human side of computing, the background to apply
-                                                    theoretical and empirical techniques in HCI, and a good overview of the field
+                                                    {{$log->introduction}}
                                                 </strong></td>
                                             </tr> 
                                         </tbody>

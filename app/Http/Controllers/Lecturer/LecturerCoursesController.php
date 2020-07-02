@@ -32,6 +32,6 @@ class LecturerCoursesController extends Controller{
             $data->year = "2020" ;
             $data->save();
         }
-        return redirect()->action('${App\Http\Controllers\HomeController@index}');
+        return redirect('lecturer/'.auth()->user()->id.'/'.$request->cid.'/courses');
     }
 }

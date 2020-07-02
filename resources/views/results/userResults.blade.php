@@ -17,7 +17,12 @@
                     <hr class="content-center" style="width:75%;background : #555">
                 </li>
                 <li>
-                    <a href="#"><i class="fas fa-book pr-2"></i>My Courses</a>
+                    <a data-toggle="collapse" href="#courses" ><i class="fas fa-user pr-2"></i>Courses</a>
+                    <div class="collapse pt-3 pl-5" id="courses">
+                        @foreach (Auth::user()->stu_enrollment as $sub)
+                            <h6 class="text-white"><a href="/Mycourses/{{$sub->cid}}" >{{$sub->cid}}</a></h6>
+                        @endforeach
+                    </div>
                     <hr class="content-center" style="width:75%;background : #555">
                 </li>                
                 <li>

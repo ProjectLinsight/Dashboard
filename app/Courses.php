@@ -20,4 +20,8 @@ class Courses extends Model{
     public function lecAssigning(){
         return $this->hasMany(AssignLecturer::class,'cid','cid');
     }
+
+    public function assignment(){
+        return $this->hasMany(Assignments::class,'cid','cid');
+    }
 }

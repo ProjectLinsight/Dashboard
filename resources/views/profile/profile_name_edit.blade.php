@@ -13,7 +13,7 @@
             </div>
             <div class="modal-body">
           <form method="POST" action="/user/{{$user->id}}/update" enctype="multipart/form-data" method="POST">  
-      @csrf
+                @csrf
                     @method('PATCH')
    
                     <div class="form-group d-flex justify-content-center">

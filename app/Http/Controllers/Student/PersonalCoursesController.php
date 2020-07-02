@@ -25,6 +25,7 @@ class PersonalCoursesController extends Controller{
         foreach($data as $key => $value){
             $array[++$key] = [$value->grade, $value->number];
         }
+        
         return view('courses.personal',[
             'crs'=> $Mycourse,
             ])->with('grade', json_encode($array));
