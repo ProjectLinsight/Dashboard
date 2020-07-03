@@ -193,7 +193,7 @@
                                 </div>
                                 <div class="card-body">
                                     @foreach (Auth::user()->stu_enrollment as $sub)
-                                        <a href="/Mycourses/{{$sub->cid}}" ><p>{{$sub->cid}} - {{$sub->courses->cName}}</p></a>
+                                        <a href="/Mycourses/{{$sub->cid}}" ><p>{{$sub->cid}} - {{$sub->course->cName}}</p></a>
                                     @endforeach
                                 </div>
                             </div>

@@ -32,7 +32,8 @@ class PersonalCoursesController extends Controller{
         }
         
         $verb_counts = array_count_values(array_column($my_statements, 'verb'));
-        $log = ($verb_counts['logged-in']);
+        // $log = ($verb_counts['logged-in']);
+       
         // dd($verb_counts['logged-in']);
         // $log = ($verb_counts['logged-in']);
 

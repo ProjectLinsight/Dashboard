@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Student;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\Results ;
 use App\User ;
 // use Charts;
@@ -227,22 +228,67 @@ class UserResultsController extends Controller{
         //     $dt["rank"]= getRank($dt,$dt["index"],'GPA');
         // }
 
-        $data = DB::table('results')->where('subjectCode', 'IS2102')->select(
-                    DB::raw('grade as grade'),
-                    DB::raw('count(*) as number'))
-                ->groupBy('grade')->get();
+        // $data = DB::table('results')->where('subjectCode', 'IS2102')->select(
+        //             DB::raw('grade as grade'),
+        //             DB::raw('count(*) as number'))
+        //         ->groupBy('grade')->get();
             
-        $array[] = ['grade', 'Number'];
-        foreach($data as $key => $value){
-            $array[++$key] = [$value->grade, $value->number];
-        }
+        // $array[] = ['grade', 'Number'];
+        // foreach($data as $key => $value){
+        //     $array[++$key] = [$value->grade, $value->number];
+        // }
 
+        $graph[] = ['grade', 'Number'];
+        $graph = array(
+            "A+" => 0,
+            "A" => 0,
+            "A-" => 0,
+            "B+" => 0,
+            "B" => 0,
+            "B-" => 0,
+            "C+" => 0,
+            "C" => 0,
+            "C-" => 0,
+            "D+" => 0,
+            "D" => 0,
+            "E" => 0,
+            "F" => 0,
+        );
+        $graphResult = DB::table('results')->where('index','=',$user->index)->get();
+        foreach($graphResult as $value){
+            if("A+"==$value->grade){$graph["A+"]++;} 
+            else if("A+"==$value->grade){$graph["A+"]++;} 
+            else if("A"==$value->grade){$graph["A"]++;} 
+            else if("A-"==$value->grade){$graph["A-"]++;} 
+            else if("B+"==$value->grade){$graph["B+"]++;} 
+            else if("B"==$value->grade){$graph["B"]++;} 
+            else if("B-"==$value->grade){$graph["B-"]++;} 
+            else if("C+"==$value->grade){$graph["C+"]++;} 
+            else if("C"==$value->grade){$graph["C"]++;} 
+            else if("C-"==$value->grade){$graph["C-"]++;} 
+            else if("D+"==$value->grade){$graph["D+"]++;} 
+            else if("D"==$value->grade){$graph["D"]++;} 
+            else if("E"==$value->grade){$graph["E"]++;} 
+            else {$graph["F+"]++;} 
+        }
+        // $graph=json_encode($graph);
+        
         return view('results/userResults',[
             'gpaData' => $gpaData,
             'user'=>$user,
             'data'=>$getData[0],
-            ])->with('grade', json_encode($array));
+
+            ])->with('graph', json_encode($graph));;
     }
+
+    // public function chart(){
+    //   $graphResult = DB::table('results')
+    //               ->where('index','=',Auth::user()->index)
+    //               ->orderBy('grade', 'ASC')
+    //               ->get();
+    //               dd($graphResult);
+    //   return response()->json($graphResult);
+    // }
 
     public function getResults($courseCode){
         $data = DB::table('results')->where('subjectCode',$courseCode)->select(

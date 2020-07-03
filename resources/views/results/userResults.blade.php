@@ -1,8 +1,12 @@
 @extends('layouts.app')
 <link rel="stylesheet" type="text/css" href="{{ asset('css/home.css') }}" >
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script type="text/javascript" src="{{ URL::asset('js/home.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
+<script type="text/javascript" src="{{ URL::asset('js/home.js') }}"></script>
+<script type="text/javascript">
+    var list = <?php echo $graph; ?>;
+</script>
 @section('content')
 
 <div class="container-fluid pt-5">
@@ -166,6 +170,44 @@
                         ?>
                     </div>
                     <div class="col-md-5">
+                        
+                        <div class="pb-3">
+                            <div class="card shadow">
+                                <div class="card-header bg-dark">
+                                    <h3 class="text-white pt-3"> Grades Distribution </h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body">
+                                            <canvas id="canvas" height="280" width="600"></canvas>
+                                        </div>
+                                    </div>      
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <script type="text/javascript">
+                            var grade = new Array();
+                            var countx = new Array();
+                            for (var key in list) {
+                                grade.push(key);
+                                countx.push(list[key]);
+                            }
+                            var ctx = document.getElementById("canvas");
+                            var myChart = new Chart(ctx, {
+                                type: 'bar',
+                                data: {
+                                    labels:grade,
+                                    datasets: [{
+                                        label: 'Grade',
+                                        data: countx,
+                                        borderWidth: 1,
+                                        
+                                    }] 
+                                },
+                            });
+                        </script>
+
                         <div class="pb-3">
                             <div class="card shadow">
                                 <div class="card-header bg-dark">
