@@ -27,7 +27,7 @@
                 <div class="d-flex justify-content-center">
                     <div class="col-md-6" style="margin-top: -60px">
                         @auth
-                            <a class="btn btn-lg btn-block btn-outline-primary" href="{{ url('/home/') }}">Return to Home</a>
+                            <a class="btn btn-lg btn-block btn-outline-primary" href="{{ url('/lecturer/lecturer_home/') }}">Return to Home</a>
                         @else
                             <a class="btn btn-lg btn-block btn-outline-primary" href="{{ route('login') }}">Get Started</a>
                         @endauth

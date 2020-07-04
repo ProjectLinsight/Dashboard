@@ -98,6 +98,41 @@
                     </div>
                     @endforeach
                 </div>
+                <div class="col-md-4 pb-3">
+                    <div class="p-3 row rounded d-flex justify-content-center shadow" style="background:white">
+                        <div class="col-4 pt-4 ">
+                            <img class="rounded-circle"  style="max-width: 140px;width:100%;height:auto" src="https://mdbootstrap.com/img/Photos/Avatars/img (27).jpg" alt="">    
+                            @if (Auth::user()->id === Auth::user()->id)
+                                <p class="pt-2 text-center"><a href="" style="font-size:calc(0.8em + 0.1vw)"> Edit Photo</a></p>
+                                @if (Auth::user()->name==="Anonymous User")
+                                    <p class="text-center" style="margin-top:-10px"><a href="/user/{{$user->id}}/edit" style="font-size:calc(0.8em + 0.1vw);"> Setup Username </a></p>
+                                @endif
+                            @endif
+                        </div>  
+                        <div class="col-8 pl-3 pt-4">
+                            <h3 style="font-size:calc(1.3em + 0.4vw)"> <strong> {{Auth::user()->name}}</strong> </h3>
+                            <h6 class="text-muted" style="font-size:calc(0.8em + 0.2vw)"> {{Auth::user()->email}}</h6>
+                            <hr>
+                            <h6 style="font-size:calc(0.8em + 0.2vw)"><strong> {{Auth::user()->posts->count()}} interactions </strong></h6>
+                            <hr>
+                            <div class="row">
+                                <div class="col-12">
+                              <!--   <h6 style="font-size:calc(0.8em + 0.2vw)"><strong> B.Sc. in {{Auth::user()->degree}}</strong></h6>
+                                    <h6 style="font-size:calc(0.8em + 0.2vw)"><strong> {{Auth::user()->year}}</strong></h6> -->
+                                </div>
+                            </div>
+                        </div>
+                        <hr style="width: 93%">
+                        <div class="col-md-12">
+                            <h4 style="font-size:calc(1.1em + 0.4vw)"> <strong>Currently Assigned Courses </strong></h4>
+                        </div>
+                        <div class="col-12 pl-4">
+                        @foreach (Auth::user()->lecAssigning as $item)
+                            <a href="/lecturer/{{Auth::user()->id}}/{{$item->cid}}/courses">{{$item->cid}}</a> <br>
+                        @endforeach
+                        </div> 
+                    </div>
+                </div>
                 
             </div>
         </div>
