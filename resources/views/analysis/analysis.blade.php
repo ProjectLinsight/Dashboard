@@ -50,14 +50,14 @@
                     <tr><th>User</th>
                     <th>Location</th>
                     <th>Title</th>
-                    <th>Description</th>
+                    {{-- <th>Description</th> --}}
                     <th>Timestamp</th></tr>
                     @foreach ($xapi as $st)
                     <tr>
                     <td>{{$st['user']}} </td>
                     <td> {{$st['location']}}</td>
                     <td> {{$st['title']}}</td>
-                    <td> {{$st['description']}}</td>
+                    {{-- <td> {{$st['description']}}</td> --}}
                     <td> {{$st['timestamp']}}</td>
                     </tr>
                     

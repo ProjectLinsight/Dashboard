@@ -89,10 +89,11 @@
                                 <h5  style="font-size:calc(1.2em + 0.2vw)"><strong>{{ $post->title}}</strong></h5>
                                 <hr>
                                 <p style="font-size:calc(0.9em + 0.1vw);text-align: justify">{{$post->description}}</p>
-                                <div class="d-flex justify-content-center">
-                                <img style="width:100%;height:auto;" src="uploads/post/{{ $post->image }}" alt="">
-                               
-                                </div>
+                                @if ($post->image)  
+                                    <div class="d-flex justify-content-center">
+                                        <img style="width:100%;height:auto;" src="uploads/post/{{ $post->image }}" alt="">
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>

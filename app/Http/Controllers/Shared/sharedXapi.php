@@ -24,7 +24,7 @@ class sharedXapi extends Controller{
             }
             $state[$i]['user'] = $temp->actor->account->name ;
             $state[$i]['title'] = $temp->object->definition->name->en ;
-            $state[$i]['definition'] = $temp->object->definition ;
+            // $state[$i]['definition'] = $temp->object->definition ;
             $state[$i]['timestamp'] = $temp->timestamp ;
         }
         return($state) ;

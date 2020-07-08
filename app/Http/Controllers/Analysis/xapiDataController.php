@@ -13,7 +13,7 @@ class xapiDataController extends Controller{
     public function index(){
         $data = new sharedXapi();
         $state = $data->getData();
-        
+        dd($state);
     return view('analysis.analysis',['xapi'=>$state]);
     }
 }
