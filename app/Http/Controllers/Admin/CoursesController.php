@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Courses;
 use App\LecturerAssigning;
 
@@ -106,5 +107,33 @@ class CoursesController extends Controller{
 
         return  redirect('/admin/courses');    
     }
+
+    public function delete($id)
+    { 
+        DB::table('courses')->where('cid',$id)->delete();
+        return redirect ('/admin/courses');
+        
+    }
+
+    public function update(Request $request ,$cid){
+        $this->validate($request,[
+           
+            'credits' => 'required',
+            'type' => 'required',
+            'semester' => 'required'
+        ]);
+       
+        $course = Courses::find($cid);
+        dd( $cid);
+      /*  $course->cid = $request->get('cid');
+        $course->cName = $request->get('cName');
+        $course->credits = $request->get('credits');
+        $course->type = $request->get('type');
+        $course->semester = $request->get('semester');
+        $course->save(); */
+
+        return  redirect('/admin/courses')->with('success','Data Updated');    
+    }
+
 
 }
