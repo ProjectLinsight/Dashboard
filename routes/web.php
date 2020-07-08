@@ -13,7 +13,7 @@ Route::get('/admin/dashboard','Admin\DashboardController@index')->middleware('ad
 Route::post('/admin/assign','Admin\DashboardController@assignLec')->middleware('admin');
 Route::get('/admin/courses','Admin\CoursesController@index')->middleware('admin');
 Route::post('/admin/courses','Admin\CoursesController@store')->middleware('admin');
-Route::post('/admin/courses_delete/{id}','Admin\CoursesController@delete')->middleware('admin');
+Route::get('/admin/courses_delete/{id}','Admin\CoursesController@delete')->middleware('admin');
 Route::post('/admin/courses_update/{cid}','Admin\CoursesController@update')->middleware('admin');
 Route::get('/admin/results','Admin\ResultsController@index')->middleware('admin');
 Route::post('/admin/results','Admin\ResultsController@store')->middleware('admin');

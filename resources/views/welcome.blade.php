@@ -27,7 +27,13 @@
                 <div class="d-flex justify-content-center">
                     <div class="col-md-6" style="margin-top: -60px">
                         @auth
+                            @if (Auth::user()->utype=='Student')
+                            <a class="btn btn-lg btn-block btn-outline-primary" href="{{ url('/home/') }}">Return to Home</a>
+                            @elseif (Auth::user()->utype=='Lecturer')
                             <a class="btn btn-lg btn-block btn-outline-primary" href="{{ url('/lecturer/lecturer_home/') }}">Return to Home</a>
+                            @elseif (Auth::user()->utype=='Admin')
+                            <a class="btn btn-lg btn-block btn-outline-primary" href="{{ url('/admin/dashboard/') }}">Return to Home</a>
+                            @endif
                         @else
                             <a class="btn btn-lg btn-block btn-outline-primary" href="{{ route('login') }}">Get Started</a>
                         @endauth

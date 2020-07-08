@@ -111,7 +111,7 @@ class CoursesController extends Controller{
     public function delete($id)
     { 
         DB::table('courses')->where('cid',$id)->delete();
-        return redirect ('/admin/courses');
+        return redirect ('/admin/courses')->with('success','Course Deleted');
         
     }
 
