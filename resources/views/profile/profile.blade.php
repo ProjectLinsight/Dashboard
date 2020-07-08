@@ -107,11 +107,12 @@
                 <div class="col-md-4 pb-3">
                     <div class="p-3 row rounded d-flex justify-content-center shadow" style="background:white">
                         <div class="col-4 pt-4 ">
-                            <img class="rounded-circle"  style="max-width: 140px;width:100%;height:auto" src="https://mdbootstrap.com/img/Photos/Avatars/img (27).jpg" alt="">    
+                            
+                            <img class="rounded-circle"  style="max-width: 140px;width:100%;height:auto" src="/uploads/photos/{{ $user->image }}" alt="photo">  
                             @if ($user->id === Auth::user()->id)
-                                <p class="pt-2 text-center"><a href="" style="font-size:calc(0.8em + 0.1vw)"> Edit Photo</a></p>
+                                <p class="pt-2 text-center"><a href="" style="font-size:calc(0.8em + 0.1vw)" data-toggle="modal" data-target="#exampleModalCenter02"> Edit Photo</a></p>
                                 @if ($user->name==="Anonymous User")
-                                    <p class="text-center" style="margin-top:-10px"><a href="/user/{{$user->id}}/edit" style="font-size:calc(0.8em + 0.1vw);"> Setup Username </a></p>
+                                   <a href="#"> <p class="text-center" style="margin-top:-10px" data-toggle="modal" data-target="#exampleModalCenter01"> Setup Username</p> </a>
                                 @endif
                             @endif
                         </div>
@@ -201,6 +202,85 @@
                     <div class="form-group d-flex justify-content-center">
                         <div class="col-md-6">
                             <button type="submit" class="btn btn-info btn-block text-white">Share Post</button>
+                        </div>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ---------------------------------------------------------------------->
+{{-- Modal for edit user name --}}
+<div class="modal fade" style="width: 100vw;height:auto" id="exampleModalCenter01" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Edit your User name</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="/user/update_name/{{$user->id}}" enctype="multipart/form-data" method="POST">
+                    @csrf
+
+                    <div class="form-group d-flex justify-content-center">
+                    <div class="col-md-12">
+                            <input id="name" type="text" class="form-control @error('title') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="" autofocus placeholder="{{ $user->name}}">
+                            @error('title')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    
+                    <div class="form-group d-flex justify-content-center">
+                        <div class="col-md-6">
+                            <button type="submit" class="btn btn-info btn-block text-white">Update name</button>
+                        </div>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ---------------------------------------------------------------------->
+{{-- Modal for edit user profile pic --}}
+<div class="modal fade" style="width: 100vw;height:auto" id="exampleModalCenter02" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Edit your Profile photo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="/user/update_photo/{{$user->id}}" enctype="multipart/form-data" method="POST">
+                    @csrf
+
+                    <div class="form-group row  d-flex justify-content-center">
+                        <div class="col-md-12">
+                            <div class="custom-file">
+                                <input type="file" id="image" class="custom-file-label form-control  @error('image') is-invalid @enderror" name="image"  autocomplete="image" autofocus>
+                                <label class="custom-file-label" for="image" data-browse="Bestand kiezen">Upload new photo </label>
+                            </div>
+                            @error('image')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="form-group d-flex justify-content-center">
+                        <div class="col-md-6">
+                            <button type="submit" class="btn btn-info btn-block text-white">Edit</button>
                         </div>
                     </div>
                     
