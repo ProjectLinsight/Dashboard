@@ -14,8 +14,6 @@ class CoursesController extends Controller{
     }
 
     public function index(){
-        // $data = Courses::all();
-        // return view('/admin/courses',['data'=> $data]);
         $courses = Courses::all();
 
         $is1 = array();
@@ -27,7 +25,9 @@ class CoursesController extends Controller{
         $cs3 = array();
         $cs4 = array();
 
+        $courseType[] = ['course', 'type'];
         foreach($courses as $crs){
+            $courseType[$crs->cName]=$crs->type;
             if($crs->type==="Compulsory"){
                 $crs->type="XXX" ;
             }
@@ -63,6 +63,7 @@ class CoursesController extends Controller{
                 }        
             }
         }
+        // dd($courseType);
         return view('/admin/courses',[
             'is1'=> $is1,
             'is2'=> $is2,
@@ -72,7 +73,7 @@ class CoursesController extends Controller{
             'cs2'=> $cs2,
             'cs3'=> $cs3,
             'cs4'=> $cs4,
-            ]);
+            ])->with('courseType', json_encode($courseType));;
     }
 
     public function store(Request $request){
@@ -108,29 +109,27 @@ class CoursesController extends Controller{
         return  redirect('/admin/courses');    
     }
 
-    public function delete($id)
-    { 
+    public function delete($id){ 
         DB::table('courses')->where('cid',$id)->delete();
         return redirect ('/admin/courses')->with('success','Course Deleted');
         
     }
 
-    public function update(Request $request ,$cid){
-        $this->validate($request,[
+    public function update(Request $request){
+        // $this->validate($request,[
            
-            'credits' => 'required',
-            'type' => 'required',
-            'semester' => 'required'
-        ]);
-       
-        $course = Courses::find($cid);
-        dd( $cid);
-      /*  $course->cid = $request->get('cid');
-        $course->cName = $request->get('cName');
-        $course->credits = $request->get('credits');
-        $course->type = $request->get('type');
-        $course->semester = $request->get('semester');
-        $course->save(); */
+        //     'credits' => 'required',
+        //     'type' => 'required',
+        //     'semester' => 'required'
+        // ]);
+        $course = Courses::where('cid',$request->get('updatecid'))
+          ->update([
+            'cid' => $request->get('updatecid'),
+            'cName' => $request->get('updatecName'),
+            'credits' => $request->get('updatecredits'),
+            'type' => $request->get('updatetype'),
+            'semester' => $request->get('updatesemester')
+            ]);
 
         return  redirect('/admin/courses')->with('success','Data Updated');    
     }

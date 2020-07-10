@@ -86,7 +86,7 @@
                             </div>
                             <hr>
                             <div class="p-3 border rounded" style="background: #fefefe">
-                                <h5  style="font-size:calc(1.2em + 0.2vw)"><strong>{{ $post->title}}</strong></h5>
+                                <h5 style="font-size:calc(1.2em + 0.2vw)"><strong>{{ $post->title}}</strong></h5>
                                 <hr>
                                 <p style="font-size:calc(0.9em + 0.1vw);text-align: justify">{{$post->description}}</p>
                                 @if ($post->image)  
@@ -125,7 +125,7 @@
                     @csrf
 
                     <div class="form-group d-flex justify-content-center">
-                    <div class="col-md-12">
+                    <div class="col-md-12 px-0">
                             <input id="title" type="title" class="form-control @error('title') is-invalid @enderror" name="title" value="{{ old('title') }}" required autocomplete="title" autofocus placeholder="Title">
                             @error('title')
                                 <span class="invalid-feedback" role="alert">

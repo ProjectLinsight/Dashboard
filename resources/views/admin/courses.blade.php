@@ -79,7 +79,7 @@
                                                     ?>
                                                     <div id="{{$tag}}" class="tab-pane fade {{$show}} ">                 
                                                         <div class="table-responsive">
-                                                            <table class="table table-hover mb-0 text-center" style="border-collapse: collapse;">
+                                                            <table class="table table-hover mb-0" style="border-collapse: collapse;">
                                                                 <thead>
                                                                     <tr>
                                                                         <th>Course Code </th>
@@ -110,14 +110,11 @@
                                                                         @endif
                                                                         <td>{{$c->semester}}</td>
                                                                         <td>
-                                                                        <button type="button" class="btn btn-secondary btn-xs" data-toggle="modal" data-target="#exampleModalCenter" onclick="getId({{$c}})">
-                                                                            <h7 class="pt-2"> Update <h7>
-                                                                        </button>
+                                                                            <button type="button" class="btn btn-secondary btn-xs" data-toggle="modal" data-target="#exampleModalCenter" onclick="getId({{$c}})"> Update </button>
                                                                         </td>                                                                    
                                                                         <td>
                                                                         <p> <a href = "/admin/courses_delete/{{ $c->cid }}" class = "btn btn-danger btn-xs" role = "button"> Delete </a> </p>
-                                                                        </td>
-                                                                        
+                                                                        </td>        
                                                                     </tr>
                                                                     @endforeach
                                                                 </tbody>
@@ -178,17 +175,12 @@
                                                                         <td>{{$c->semester}}</td>
                                                                        <td>
                                                                         <button type="button" class="btn btn-secondary btn-xs" data-toggle="modal" data-target="#exampleModalCenter" onclick="getId({{$c}})">
-                                                                            <h7 class ="pt-2"> Update <h7>
+                                                                            <h6 class ="pt-2"> Update <h6>
                                                                         </button>
                                                                         </td> 
-                                                                        <!-- <td data-toggle="modal" data-target="#exampleModalCenter" onclick="getId({{$c}})">
-                                                                        <p> <a href = "#" class = "btn btn-secondary btn-xs" role = "button"> Update </a> </p>
-                                                                        </td> -->
                                                                         <td>
                                                                         <p> <a href = "/admin/courses_delete/{{ $c->cid }}" class = "btn btn-danger btn-xs" role = "button" > Delete </a> </p>
                                                                         </td>
-                                                                        
-                                                                        
                                                                     </tr>
                                                                     @endforeach
                                                                 </tbody>
@@ -327,7 +319,8 @@
     </div>
 </div>
 
-{{-- Modal for update courses --}}
+
+
 <div class="modal fade" style="width: 100%;height:auto" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -337,113 +330,84 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+            
             <div class="modal-body">
-             
-               <form method="POST" action="/admin/courses_update/{{$c->cid}}" enctype="multipart/form-data" method="POST" >
-                          @csrf
-                                                <div class="form-group content-center">
-                                                    <h6 class="pl-3 text-muted"> Course ID :</h6>
-                                                    <div class="col-md-12">
-                                                        <input id="cid" type="text" class="form-control @error('cid') is-invalid @enderror" name="cid"  required autocomplete="cid" autofocus placeholder="Course ID">
-                                                        @error('cid')
-                                                            <span class="invalid-feedback" role="alert">
-                                                                <strong>{{ $message }}</strong>
-                                                            </span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="form-group content-center">
-                                                    <h6 class="pl-3 text-muted"> Course Name :</h6>
-                                                    <div class="col-md-12">
-                                                        <input id="cName" type="text" class="form-control @error('cName') is-invalid @enderror" name="cName" value=" {{ $c->cName}} " required autocomplete="Course Name" autofocus placeholder="Course Name">
-                                                        @error('cName')
-                                                            <span class="invalid-feedback" role="alert">
-                                                                <strong>{{ $message }}</strong>
-                                                            </span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="form-group content-center">
-                                                    <h6 class="pl-3 text-muted"> Course Credits :</h6>
-                                                    <div class="col-md-12">
-                                                        <input id="credits" type="number" class="form-control @error('credits') is-invalid @enderror" name="credits" value=" {{old('credits')}} " required autocomplete="Course Credits" autofocus >
-                                                        @error('credits')
-                                                            <span class="invalid-feedback" role="alert">
-                                                                <strong>{{ $message }}</strong>
-                                                            </span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                    
-                                                <div class="form-group content-center">
-                                                    <h6 class="pl-3 text-muted"> Course Type :</h6>
-                                                    <div class="col-md-12">
-                                                        <select name="type" id="type" class="form-control @error('credits') is-invalid @enderror"  value=" {{old('type')}} " required autocomplete="Course Type">
-                                                            <option selected></option>
-                                                            <option value="Compulsory">Compulsory For All</option>
-                                                            <option value="Optional">Optional For All</option>
-                                                            <option value="IS1X ">IS Honours Only</option>
-                                                            <option value="ISX1">IS General Only</option>
-                                                            <option value="IS0X ">IS Honours Optional </option>
-                                                            <option value="ISX0">IS General Optional </option>
-                                                            <option value="IS10">IS Honours Compulsory / Gen-Optional </option>
-                                                            <option value="IS01">IS General Compulsory / Hon-Optional </option>
-                                                            <option value="CS11X">CS & SE Only</option>
-                                                            <option value="CS110">CS & SE Compulsory / Gen-Optional </option>
-                                                            <option value="CS1X1">CS & Gen Only </option>
-                                                            <option value="CS101">CS & Gen Compulsory / SE-Optional </option>
-                                                            <option value="CSX11">SE & Gen Only </option>
-                                                            <option value="CS011">SE & Gen Compulsory / CS-Optional </option>
-                                                            <option value="CS1XX">CS Honours Only</option>
-                                                            <option value="CSX1X">SE Honours Only</option>
-                                                            <option value="CSXX1">CS General Only</option>
-                                                            <option value="CS0XX">CS Honours Opt</option>
-                                                            <option value="CSX0X">SE Honours Opt</option>
-                                                            <option value="CSXX0">CS General Opt</option>
-                                                            <option value="CS100">CS Compulsory / SE & Gen Optional </option>
-                                                            <option value="CS10X">CS Compulsory / SE Optional </option>
-                                                            <option value="CS1X0">CS Compulsory / Gen Optional </option>
-                                                            <option value="CS010">SE Compulsory / CS & Gen Optional </option>
-                                                            <option value="CS01X">SE Compulsory / CS Optional </option>
-                                                            <option value="CSX10">SE Compulsory / Gen Optional </option>
-                                                            <option value="CS001">Gen Compulsory / CS & SE Optional </option>
-                                                            <option value="CSX01">Gen Compulsory / SE Optional </option>
-                                                            <option value="CS0X1">Gen Compulsory / CS Optional </option>
-                                                        </select>
-                                                        @error('type')
-                                                            <span class="invalid-feedback" role="alert">
-                                                                <strong>{{ $message }}</strong>
-                                                            </span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                                
-                                                <div class="form-group content-center">
-                                                    <h6 class="pl-3 text-muted"> Course Semester :</h6>
-                                                    <div class="col-md-12">
-                                                        <select name="semester" id="semester" class="form-control @error('credits') is-invalid @enderror"  value=" {{old('semester')}} " required autocomplete="semester">
-                                                            <option selected></option>
-                                                            <option value="One">One</option>
-                                                            <option value="Two">Two</option>
-                                                            <option value="Spanned">Spanned</option>
-                                                        </select>
-                                                        @error('semester')
-                                                            <span class="invalid-feedback" role="alert">
-                                                                <strong>{{ $message }}</strong>
-                                                            </span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                    
-                                                <div class="form-group content-center">
-                                                    <div class="form-group d-flex justify-content-center">
-                                                        <div class="row col-md-12">
-                                                            <button type="submit" class="btn btn-info btn-block text-white">Update Course </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                        </form>  
-                    
+                <form method="POST" action="/admin/courses/update/" enctype="multipart/form-data" method="POST" >
+                @csrf
+                    <div class="form-group content-center">
+                        <h6 class="pl-3 text-muted"> Course ID :</h6>
+                        <div class="col-md-12">
+                            <input id="updatecid" type="text" class="form-control" name="updatecid"  required autocomplete="cid" autofocus placeholder="Course ID">
+                        </div>
+                    </div>
+                    <div class="form-group content-center">
+                        <h6 class="pl-3 text-muted"> Course Name :</h6>
+                        <div class="col-md-12">
+                            <input name="updatecName" id="updatecName" type="text" class="form-control" required autocomplete="Course Name" autofocus placeholder="Course Name">
+                        </div>
+                    </div>
+                    <div class="form-group content-center">
+                        <h6 class="pl-3 text-muted"> Course Credits :</h6>
+                        <div class="col-md-12">
+                            <input name="updatecredits" id="updatecredits" type="number" class="form-control" required autocomplete="Course Credits" autofocus >
+                        </div>
+                    </div>
+                    <div class="form-group content-center">
+                        <h6 class="pl-3 text-muted"> Course Type :</h6>
+                        <div class="col-md-12">
+                            <select name="updatetype" id="updatetype" class="form-control" required autocomplete="Course Type">
+                                <option selected></option>
+                                <option value="Compulsory">Compulsory For All</option>
+                                <option value="Optional">Optional For All</option>
+                                <option value="IS1X ">IS Honours Only</option>
+                                <option value="ISX1">IS General Only</option>
+                                <option value="IS0X ">IS Honours Optional </option>
+                                <option value="ISX0">IS General Optional </option>
+                                <option value="IS10">IS Honours Compulsory / Gen-Optional </option>
+                                <option value="IS01">IS General Compulsory / Hon-Optional </option>
+                                <option value="CS11X">CS & SE Only</option>
+                                <option value="CS110">CS & SE Compulsory / Gen-Optional </option>
+                                <option value="CS1X1">CS & Gen Only </option>
+                                <option value="CS101">CS & Gen Compulsory / SE-Optional </option>
+                                <option value="CSX11">SE & Gen Only </option>
+                                <option value="CS011">SE & Gen Compulsory / CS-Optional </option>
+                                <option value="CS1XX">CS Honours Only</option>
+                                <option value="CSX1X">SE Honours Only</option>
+                                <option value="CSXX1">CS General Only</option>
+                                <option value="CS0XX">CS Honours Opt</option>
+                                <option value="CSX0X">SE Honours Opt</option>
+                                <option value="CSXX0">CS General Opt</option>
+                                <option value="CS100">CS Compulsory / SE & Gen Optional </option>
+                                <option value="CS10X">CS Compulsory / SE Optional </option>
+                                <option value="CS1X0">CS Compulsory / Gen Optional </option>
+                                <option value="CS010">SE Compulsory / CS & Gen Optional </option>
+                                <option value="CS01X">SE Compulsory / CS Optional </option>
+                                <option value="CSX10">SE Compulsory / Gen Optional </option>
+                                <option value="CS001">Gen Compulsory / CS & SE Optional </option>
+                                <option value="CSX01">Gen Compulsory / SE Optional </option>
+                                <option value="CS0X1">Gen Compulsory / CS Optional </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group content-center">
+                        <h6 class="pl-3 text-muted"> Course Semester :</h6>
+                        <div class="col-md-12">
+                            <select name="updatesemester" id="updatesemester" class="form-control"  value=" {{old('semester')}} " required autocomplete="semester">
+                                <option selected></option>
+                                <option value="One">One</option>
+                                <option value="Two">Two</option>
+                                <option value="Spanned">Spanned</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group content-center">
+                        <div class="form-group d-flex justify-content-center">
+                            <div class="row col-md-12">
+                                <button type="submit" class="btn btn-info btn-block text-white">Update Course </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>      
             </div>
         </div>
     </div>
@@ -451,3 +415,19 @@
 
 
 @endsection
+
+<script type="application/javascript">
+    function getId(course){
+        var list = <?php echo $courseType; ?>;
+        for (var key in list) {
+            if(key == course.cName){
+                var ctype = list[key];
+            }
+        }
+        document.getElementById("updatecid").value=course.cid;
+        document.getElementById("updatecName").value=course.cName;
+        document.getElementById("updatecredits").value=course.credits;
+        document.getElementById("updatetype").value=ctype;
+        document.getElementById("updatesemester").value=course.semester;
+    }
+</script>

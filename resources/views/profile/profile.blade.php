@@ -107,8 +107,11 @@
                 <div class="col-md-4 pb-3">
                     <div class="p-3 row rounded d-flex justify-content-center shadow" style="background:white">
                         <div class="col-4 pt-4 ">
-                            
-                            <img class="rounded-circle"  style="max-width: 140px;width:100%;height:auto" src="/uploads/photos/{{ $user->image }}" alt="photo">  
+                            @if ($user->image)
+                                <img class="rounded-circle"  style="max-width: 140px;width:100%;height:auto" src="/uploads/photos/{{ $user->image }}" alt="photo">  
+                            @else
+                                <img class="rounded-circle"  style="max-width: 140px;width:100%;height:auto" src="https://mdbootstrap.com/img/Photos/Avatars/img (27).jpg" alt="">    
+                            @endif
                             @if ($user->id === Auth::user()->id)
                                 <p class="pt-2 text-center"><a href="" style="font-size:calc(0.8em + 0.1vw)" data-toggle="modal" data-target="#exampleModalCenter02"> Edit Photo</a></p>
                                 @if ($user->name==="Anonymous User")
@@ -164,7 +167,7 @@
                     @csrf
 
                     <div class="form-group d-flex justify-content-center">
-                    <div class="col-md-12">
+                    <div class="col-md-12 px-0">
                             <input id="title" type="title" class="form-control @error('title') is-invalid @enderror" name="title" value="{{ old('title') }}" required autocomplete="title" autofocus placeholder="Title">
                             @error('title')
                                 <span class="invalid-feedback" role="alert">

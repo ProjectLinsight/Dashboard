@@ -23,7 +23,6 @@ class ProfilesController extends Controller{
 
 
     public function update(Request $request,$id){
-       
         $this -> validate($request,[
             'name' =>'required|min:3|max:50|string',
         ]);
@@ -63,7 +62,7 @@ class ProfilesController extends Controller{
             $image->move(public_path('uploads/photos'),$filename);
             $user->image= request('image')->getClientOriginalName();
         }
-        dd($user->image);
+        // dd($user->image);
         $user->save();
            
         
