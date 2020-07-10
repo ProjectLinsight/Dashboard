@@ -93,6 +93,8 @@
                                                                             <th>General</th>
                                                                         @endif
                                                                         <th>Semester</th>
+                                                                        <th></th>
+                                                                        <th></th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
@@ -109,11 +111,11 @@
                                                                             <td>{{substr($c->type,2,1)}}</td>        
                                                                         @endif
                                                                         <td>{{$c->semester}}</td>
-                                                                        <td>
-                                                                            <button type="button" class="btn btn-secondary btn-xs" data-toggle="modal" data-target="#exampleModalCenter" onclick="getId({{$c}})"> Update </button>
+                                                                        <td class="py-1">
+                                                                            <button type="button" class="btn btn-secondary btn-xs" data-toggle="modal" data-target="#exampleModalCenter" onclick="getId({{$c}})"> <i class="fa fa-edit pr-2"></i> Update </button>
                                                                         </td>                                                                    
-                                                                        <td>
-                                                                        <p> <a href = "/admin/courses_delete/{{ $c->cid }}" class = "btn btn-danger btn-xs" role = "button"> Delete </a> </p>
+                                                                        <td class="py-1">
+                                                                            <a href = "/admin/courses_delete/{{ $c->cid }}" class = "btn btn-danger btn-xs" role = "button"> <i class="fa fa-trash pr-2"></i> Delete </a>
                                                                         </td>        
                                                                     </tr>
                                                                     @endforeach
@@ -157,7 +159,8 @@
                                                                             <th>General</th>
                                                                         @endif
                                                                         <th>Semester</th>
-                                                                        
+                                                                        <th></th>
+                                                                        <th></th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
@@ -173,13 +176,11 @@
                                                                             <td>{{substr($c->type,1,1)}}</td>       
                                                                         @endif
                                                                         <td>{{$c->semester}}</td>
-                                                                       <td>
-                                                                        <button type="button" class="btn btn-secondary btn-xs" data-toggle="modal" data-target="#exampleModalCenter" onclick="getId({{$c}})">
-                                                                            <h6 class ="pt-2"> Update <h6>
-                                                                        </button>
-                                                                        </td> 
-                                                                        <td>
-                                                                        <p> <a href = "/admin/courses_delete/{{ $c->cid }}" class = "btn btn-danger btn-xs" role = "button" > Delete </a> </p>
+                                                                        <td class="py-1">
+                                                                            <button type="button" class="btn btn-secondary btn-xs" data-toggle="modal" data-target="#exampleModalCenter" onclick="getId({{$c}})"> <i class="fa fa-edit pr-2"></i> Update </button>
+                                                                        </td>                                                                    
+                                                                        <td class="py-1">
+                                                                            <a href = "/admin/courses_delete/{{ $c->cid }}" class = "btn btn-danger btn-xs" role = "button"> <i class="fa fa-trash pr-2"></i> Delete </a>
                                                                         </td>
                                                                     </tr>
                                                                     @endforeach

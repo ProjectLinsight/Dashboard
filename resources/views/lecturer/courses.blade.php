@@ -64,7 +64,7 @@
                                 <h4 class="text-white text-center"> Course Information </h4>
                             </div>
                             <div class="card-body">
-                                <form method="POST" action="/lecturer/{{Auth::user()->id}}/{{$item->cid}}/courses/enroll" enctype="multipart/form-data">
+                                <form method="POST" action="/lecturer/courses/{{$crs->cid}}/update" enctype="multipart/form-data">
                                     @csrf
                                 
                                     <div class="table-responsive">
@@ -91,23 +91,23 @@
                                                 <tr>
                                                     <td class="border"> Formative Assessment </td>
                                                     <td class="border">
-                                                        <input id="aMarks" type="text" class="form-control" name="aMarks" value="{{$crs->assignmentMarks}}"  >
+                                                        <input required min="0" max="100" id="aMarks" type="number" class="form-control" name="aMarks" value="{{$crs->assignmentMarks}}"  >
                                                     </td>
                                                     <td class="border"> Summative Assessment </td>
                                                     <td class="border">    
-                                                        <input id="eMarks" type="text" class="form-control" name="eMarks" value="{{$crs->examMarks}}"  >
+                                                        <input required min="0" max="100" id="eMarks" type="number" class="form-control" name="eMarks" value="{{$crs->examMarks}}"  >
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td class="border"> Pre-requisities </td>
                                                     <td class="border" colspan="3">    
-                                                        <input id="preRequisites" type="text" class="form-control" name="preRequisites" value="{{$crs->prerequisites}}"  >
+                                                        <input required id="preRequisites" type="text" class="form-control" name="preRequisites" value="{{$crs->prerequisites}}"  >
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td class="border"> Introduction </td>
                                                     <td class="border text-justify" colspan="2">
-                                                        <input id="introduction" type="text" class="form-control" name="introduction" value="{{$crs->introduction}}"  >
+                                                        <input required id="introduction" type="text" class="form-control" name="introduction" value="{{$crs->introduction}}"  >
                                                     </td>
                                                     <td class="text-justify">
                                                         <div class="form-group d-flex justify-content-center">

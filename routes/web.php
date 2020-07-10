@@ -48,6 +48,7 @@ Route::post('/user/update_photo/{user_id}','Student\ProfilesController@update1')
 Route::get('/lecturer/lecturer_home', 'Lecturer\HomeController@index')->middleware('lecturer');
 Route::get('/lecturer/{user}/{course}/courses', 'Lecturer\LecturerCoursesController@index')->middleware('lecturer');
 Route::post('/lecturer/{user}/{course}/courses/enroll', 'Lecturer\LecturerCoursesController@enrollStudents')->middleware('lecturer');
+Route::post('/lecturer/courses/{course}/update', 'Lecturer\LecturerCoursesController@updateCourse')->middleware('lecturer');
     
 // Route::post('/lecturer/enrollment', 'Lecturer\EnrollmentController@store')->middleware('lecturer');
 //Route::post('/admin/user','Admin\BulkRegisterController@store')->middleware('admin');

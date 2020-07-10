@@ -35,4 +35,16 @@ class LecturerCoursesController extends Controller{
     //return view('lecturer/courses');
     return redirect('lecturer/'.auth()->user()->id.'/'.$request->cid.'/courses');
     }
+
+    public function updateCourse(Request $request,$course){
+        $course = Courses::where('cid',$course)
+          ->update([
+            'assignmentMarks' => $request->get('aMarks'),
+            'examMarks' => $request->get('eMarks'),
+            'preRequisites' => $request->get('preRequisites'),
+            'introduction' => $request->get('introduction'),
+            ]);
+
+        return redirect('lecturer/'.auth()->user()->id.'/'.$course.'/courses');    
+    }
 }
