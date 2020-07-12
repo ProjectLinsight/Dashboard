@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Lecturer;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-// use App\Courses;
+use App\Courses;
 // use App\Stu_enrollment;
 
 class LecturerOverviewController extends Controller{
@@ -18,7 +18,7 @@ class LecturerOverviewController extends Controller{
         } 
 
         $stu = DB::table('users')->where('utype','Student')->where('degree',$degree)->get();
-        return view('lecturer/courses',[
+        return view('lecturer/overview',[
             'crs'=>$crs[0],
             'stu'=>$stu,
             ]);
