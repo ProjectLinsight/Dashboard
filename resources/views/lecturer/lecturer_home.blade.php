@@ -19,7 +19,16 @@
                     <a data-toggle="collapse" href="#courses" ><i class="fas fa-user pr-2"></i>Courses</a>
                     <div class="collapse pt-3 pl-5" id="courses">
                         @foreach (Auth::user()->lecAssigning as $item)
-                            <h6 class="text-white"><a href="/lecturer/{{Auth::user()->id}}/{{$item->cid}}/courses">{{$item->cid}}</a></h6>
+                            <h6 class="text-white">
+                            <a data-toggle="collapse" href="#update"  href="/lecturer/{{Auth::user()->id}}/{{$item->cid}}/courses">{{$item->cid}}</a></h6>
+                                <div class="collapse pt-3 pl-5" id="update">
+                                    <h7 class="text-white">
+                                     <a href="/lecturer/{{Auth::user()->id}}/{{$item->cid}}/courses">Update</a></h7>
+                                </div>
+                                <div class="collapse pt-3 pl-5" id="update">
+                                    <h7 class="text-white">
+                                     <a  href="/lecturer/{{Auth::user()->id}}/{{$item->cid}}/overview">Overview</a></h7>
+                                </div>
                         @endforeach
                     </div>
                     <hr class="content-center" style="width:75%;background : #555">
