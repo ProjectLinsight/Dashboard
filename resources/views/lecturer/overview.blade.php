@@ -5,7 +5,7 @@
     <script type="text/javascript" src="{{ URL::asset('js/home.js') }}"></script>
     
 @section('content')
-<div class="container-fluid pt-4">
+<div class="container-fluid pt-5">
     <div id="wrapper" class="wrapper-content" >
         <div id="sidebar-wrapper" class="bg-dark">
             <ul class="sidebar-nav">
@@ -54,172 +54,44 @@
                 </div>
             </nav>
 
-            <!-- <div class="container-fluid m-0"  >
-                <hr>
-                <h1 class="text-center">{{$crs->cName}}</h1>
-                <hr>
-
+            <div class="container-fluid">
+                <hr><h1 class="text-center text-dark">Analytics</h1><hr>
                 <div class="row">
-                    <div class="col-md-8">
+                    <div class="col-md-6">
+                        <div class="pb-3">
                             <div class="card shadow">
-                            <div class="card-header bg-info pb-0">
-                                <h4 class="text-white text-center"> Course Information </h4>
-                            </div>
-                            <div class="card-body">
-                                <form method="POST" action="/lecturer/courses/{{$crs->cid}}/update" enctype="multipart/form-data">
-                                    @csrf
-                                
-                                    <div class="table-responsive">
-                                        <table class="table table-hover mb-0" style="border-collapse: collapse;">
-                                            <tbody  style="font-size: calc(0.7em + 0.2vw)">
-                                                <tr>
-                                                    <td class="border"> Course Code </td>
-                                                    <td class="border" colspan="3"><strong>{{$crs->cid}} </strong></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="border"> Course Name </td>
-                                                    <td class="border" colspan="3"><strong>{{$crs->cName}}</strong></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="border"> Year </td>
-                                                    <td class="border"><strong>{{substr(preg_replace("/[^0-9]/","",$crs->cid),0,1)}}</strong></td>
-                                                    <td class="border"> Semester </td>
-                                                    <td class="border"><strong>{{$crs->semester}}</strong></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="border"> Course Credits </td>
-                                                    <td class="border" colspan="3"><strong>{{$crs->credits}}</strong></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="border"> Formative Assessment </td>
-                                                    <td class="border">
-                                                        <input required min="0" max="100" id="aMarks" type="number" class="form-control" name="aMarks" value="{{$crs->assignmentMarks}}"  >
-                                                    </td>
-                                                    <td class="border"> Summative Assessment </td>
-                                                    <td class="border">    
-                                                        <input required min="0" max="100" id="eMarks" type="number" class="form-control" name="eMarks" value="{{$crs->examMarks}}"  >
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="border"> Pre-requisities </td>
-                                                    <td class="border" colspan="3">    
-                                                        <input required id="preRequisites" type="text" class="form-control" name="preRequisites" value="{{$crs->prerequisites}}"  >
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="border"> Introduction </td>
-                                                    <td class="border text-justify" colspan="2">
-                                                        <input required id="introduction" type="text" class="form-control" name="introduction" value="{{$crs->introduction}}"  >
-                                                    </td>
-                                                    <td class="text-justify">
-                                                        <div class="form-group d-flex justify-content-center">
-                                                            <button type="submit" class="btn btn-info btn-block text-white">Update Course Data</button>
-                                                        </div>
-                                                    </td>
-                                                </tr> 
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </form>
+                                <div class="card-header bg-info pb-1">
+                                    <h4 class="text-white text-center"> Assignment Completion </h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body">
+                                            <canvas id="canvas" height="280" width="600"></canvas>
+                                        </div>
+                                    </div>      
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="card shadow">
-                            <div class="card-header bg-info pb-0">
-                                <h4 class="text-white text-center"> Course Information </h4>
-                            </div>
-                            <div class="card-body">
-                                <p><strong> Course Code &emsp; &emsp; : </strong> {{$crs->cid}}</p>
-                                <p><strong> Course Name &emsp; &emsp;: </strong> {{$crs->cName}}</p>
-                                <p><strong> Year of Lecturing &ensp; : </strong> 2020</p>
-                                <script type="application/javascript">
-                                    (function(){
-                                        'use strict';
-                                        var $ = jQuery;
-                                        $.fn.extend({
-                                            filterTable: function(){
-                                                return this.each(function(){
-                                                    $(this).on('keyup', function(e){
-                                                        $('.filterTable_no_results').remove();
-                                                        var $this = $(this), 
-                                                            search = $this.val().toLowerCase(), 
-                                                            target = $this.attr('data-filters'), 
-                                                            $target = $(target), 
-                                                            $rows = $target.find('tbody tr');
-                                                            
-                                                        if(search == '') {
-                                                            $rows.show(); 
-                                                        }else {
-                                                            $rows.each(function(){
-                                                                var $this = $(this);
-                                                                $this.text().toLowerCase().indexOf(search) === -1 ? $this.hide() : $this.show();
-                                                            })
-                                                        }
-                                                    });
-                                                });
-                                            }
-                                        });
-                                        $('[data-action="filter"]').filterTable();
-                                    })(jQuery);
-                                </script>
-                                <div class="col-md-12 pb-2">
-                                    <input type="text" class="form-control" id="task-table-filter" data-action="filter" data-filters="#task-table" placeholder="Search for students..." />
+                    <div class="col-md-6">
+                    <div class="pb-3">
+                            <div class="card shadow">
+                                <div class="card-header bg-info pb-1">
+                                    <h4 class="text-white text-center"> Activity Completion </h4>
                                 </div>
-                                <div class="table-responsive">
-                                    <form method="POST" action="/lecturer/{{Auth::user()->id}}/{{$item->cid}}/courses/enroll" enctype="multipart/form-data">
-                                        @csrf
-                                        <input hidden id="ccid" type="text" class="form-control" name="cid" value="{{$crs->cid}}"  >
-                                        <table id=task-table class="table table-hover mb-0" style="border-collapse: collapse;">
-                                            <thead class="text-center" style="background: #eee;">
-                                                <tr style="display:block;">
-                                                    <th scope="col">#</th>
-                                                    <th scope="col">Index Number</th>
-                                                    <th scope="col">Email</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody style="overflow-y:auto;display:block;height:400px">
-                                                <tr>
-                                                    <td>
-                                                        <div class="custom-control custom-checkbox">
-                                                            <input onclick="getInput()" type="checkbox" class="custom-control-input" id="checkAll" value="true" >
-                                                            <label class="custom-control-label" for="checkAll"></label>
-                                                        </div>
-                                                    </td>
-                                                    <td colspan="2"> Enroll All</td>
-                                                    <?php
-                                                        $value="eue";
-                                                        if($value=="true"){
-                                                            $status = "checked";
-                                                        } else{
-                                                            $status = "";
-                                                        }
-                                                    ?>
-                                                </tr>   
-                                                @foreach ($stu as $st)
-                                                <tr>
-                                                    <td>
-                                                        <div class="custom-control custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input" value="{{$st->index}}" name="enroll[]" id="{{$st->index}}" {{$status}} >
-                                                            <label class="custom-control-label" for="{{$st->index}}"></label>
-                                                        </div>
-                                                    </td>
-                                                    <td>{{$st->index}}</td>
-                                                    <td>{{$st->email}}</td>
-                                                </tr>    
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                        <div class="form-group d-flex justify-content-center">
-                                            <button type="submit" class="btn btn-info btn-block text-white">Enroll</button>
+                                <div class="card-body">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body">
+                                            <canvas id="canvas" height="280" width="600"></canvas>
                                         </div>
-                                    </form>
+                                    </div>      
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div> -->
+            </div>
+          
         </div>
     </div>
 </div>
