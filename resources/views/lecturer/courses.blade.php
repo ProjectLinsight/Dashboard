@@ -23,12 +23,12 @@
                             <h6 class="text-white">
                             <a data-toggle="collapse" href="#update"  href="/lecturer/{{Auth::user()->id}}/{{$item->cid}}/courses">{{$item->cid}}</a></h6>
                                 <div class="collapse pt-3 pl-5" id="update">
-                                    <h7 class="text-white">
-                                     <a href="/lecturer/{{Auth::user()->id}}/{{$item->cid}}/courses">Update</a></h7>
+                                    <h6 class="text-white">
+                                     <a href="/lecturer/{{Auth::user()->id}}/{{$item->cid}}/courses">Update</a></h6>
                                 </div>
                                 <div class="collapse pt-3 pl-5" id="update">
-                                    <h7 class="text-white">
-                                     <a  href="/lecturer/{{Auth::user()->id}}/{{$item->cid}}/overview">Overview</a></h7>
+                                    <h6 class="text-white">
+                                     <a  href="/lecturer/{{Auth::user()->id}}/{{$item->cid}}/overview">Overview</a></h6>
                                 </div>
                         @endforeach
                     </div>
