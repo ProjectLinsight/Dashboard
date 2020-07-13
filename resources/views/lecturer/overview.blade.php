@@ -65,6 +65,9 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="panel panel-default">
+
+                                    <!-- chart comes here -->
+
                                         <div class="panel-body">
                                             <canvas id="canvas" height="280" width="600"></canvas>
                                         </div>
@@ -81,8 +84,77 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="panel panel-default">
+
+                                    <!-- chart comes here -->
+
                                         <div class="panel-body">
                                             <canvas id="canvas" height="280" width="600"></canvas>
+                                        </div>
+                                    </div>      
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-7"> 
+                        <div class="pb-3">
+                            <div class="card shadow">
+                                <div class="card-header bg-dark pb-1">
+                                    <h4 class="text-white text-center"> Risk of failure </h4>
+                                </div>
+                                <div class="card-body p-0">
+                                    <div class="panel panel-default">
+                                        <nav class="nav nav-tabs nav-fill">
+                                            <a class="col-6 nav-item nav-link active" data-toggle="tab" href="#CS">Computer Science</a>
+                                            <a class="col-6 nav-item nav-link" data-toggle="tab" href="#IS">Information Systems</a>
+                                        </nav>
+                                        <div class="tab-content">
+                                            <div id="CS" class="tab-pane fade show active">
+
+                                            <!-- CS risk of failure list comes here -->
+
+                                            </div>
+                                            <div id="CS" class="tab-pane fade show active">
+
+                                            <!-- IS risk of failure list comes here -->
+
+                                            </div>
+                                        </div>
+                                        <div class="panel-body">
+                                            <canvas id="canvas" height="480" width="600"></canvas>
+                                        </div>
+                                    </div>      
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5"> 
+                        <div class="pb-3">
+                            <div class="card shadow">
+                                <div class="card-header bg-info pb-1">
+                                    <h4 class="text-white text-center"> Assignments & Quizzes </h4>
+                                </div>
+                                <div class="card-body p-0">
+                                    <div class="panel panel-default">
+                                        <nav class="nav nav-tabs nav-fill">
+                                            <a class="col-6 nav-item nav-link active" data-toggle="tab" href="#assignment">Assignments</a>
+                                            <a class="col-6 nav-item nav-link" data-toggle="tab" href="#quiz">Quizzes</a>
+                                        </nav>
+                                        <div class="tab-content">
+                                            <div id="assignment" class="tab-pane fade show active">
+
+                                            <!-- assignment list comes here -->
+
+                                            </div>
+                                            <div id="quiz" class="tab-pane fade show active">
+
+                                            <!-- quizzes list comes here -->
+
+                                            </div>
+                                        </div>
+                                        <div class="panel-body">
+                                            <canvas id="canvas" height="480" width="600"></canvas>
                                         </div>
                                     </div>      
                                 </div>
