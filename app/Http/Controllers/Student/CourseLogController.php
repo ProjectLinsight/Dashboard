@@ -98,7 +98,7 @@ class CourseLogController extends Controller{
             $array[++$key] = [$value->grade, $value->number];
         }
 
-        return view('courses.courseLog',[
+        return view('student.courses.courseLog',[
             'log'=> $log[0],
             ])->with('grade', json_encode($array));
     }

@@ -46,7 +46,7 @@ class PersonalCoursesController extends Controller{
         foreach($data as $key => $value){
             $array[++$key] = [$value->grade, $value->number];
         }
-        return view('courses.personal',[
+        return view('student.courses.personal',[
             'crs'=> $course_name,
             'counts'=> $verb_counts,
             

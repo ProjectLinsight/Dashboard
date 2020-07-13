@@ -59,7 +59,7 @@ class CourseDataController extends Controller{
                 }        
             }
         }
-        return view('courses.courses',[
+        return view('student.courses.courses',[
             'is1'=> $is1,
             'is2'=> $is2,
             'is3'=> $is3,

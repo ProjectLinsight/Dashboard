@@ -12,13 +12,13 @@ class ProfilesController extends Controller{
     }
 
     public function index(\App\User $user){        
-        return view('profile.profile',compact('user'));
+        return view('student.profile.profile',compact('user'));
     }
 
     public function edit(\App\User $user){
         // $this->authorize('update',$post);
        
-        return view('profile.profile_name_edit',compact('user'));
+        return view('student.profile.profile_name_edit',compact('user'));
     }
 
 

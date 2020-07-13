@@ -45,7 +45,7 @@ class PostsController extends Controller{
 
     public function edit(\App\Post $post){
         // $this->authorize('update',$post);
-        return view('posts.edit',compact('post'));
+        return view('student.posts.edit',compact('post'));
     }
 
     public function update(\App\Post $post){
