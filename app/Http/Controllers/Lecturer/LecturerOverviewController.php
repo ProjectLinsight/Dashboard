@@ -37,11 +37,29 @@ class LecturerOverviewController extends Controller{
     //return view('lecturer/courses');
     return redirect('lecturer/'.auth()->user()->id.'/'.$request->cid.'/courses');
     }
-    public function assigmentStat()
+    public function assignmentStat()
     {
         $data = new sharedXapi();
         $state = $data->getData();
-        $count = count($state);
-        
+        $stmt_count = count($state);
+        $stmt_arr = array();
+        for($i=0;$i<$stmt_count;$i++){            
+            $logArray=explode("/",$state[$i]->verb->id);
+            if($logArray[sizeof($logArray)-1]==="scored"){
+                $stmt_arr[$i]['user'] = $state[$i]->actor ;
+                $stmt_arr[$i]['assignment'] = $state[$i]->object->definition ;
+                $stmt_arr[$i]['marks'] = $state[$i]->result->score->raw ;
+
+            // }else{
+            //     $state[$i]['location'] = "inside" ;
+            //     $state[$i]['verb'] = $logArray[sizeof($logArray)-1];
+            // }
+            // $state[$i]['user'] = $temp->actor ;
+            // $state[$i]['title'] = $temp->object->definition->name->en ;
+            // $state[$i]['definition'] = $temp->object->definition ;
+            // $state[$i]['timestamp'] = $temp->timestamp ;
+            }
+        }
+        dd($stmt_arr);
     }
 }
