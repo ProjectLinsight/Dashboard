@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Courses;
+use App\Http\Controllers\Shared\sharedXapi ;
 // use App\Stu_enrollment;
 
 class LecturerOverviewController extends Controller{
@@ -22,6 +23,7 @@ class LecturerOverviewController extends Controller{
             'crs'=>$crs[0],
             'stu'=>$stu,
             ]);
+        
     }
     public function enrollStudents(Request $request){
         for($i=0;$i<sizeof($request->enroll);$i++){
@@ -34,5 +36,12 @@ class LecturerOverviewController extends Controller{
         }
     //return view('lecturer/courses');
     return redirect('lecturer/'.auth()->user()->id.'/'.$request->cid.'/courses');
+    }
+    public function assigmentStat()
+    {
+        $data = new sharedXapi();
+        $state = $data->getData();
+        $count = count($state);
+        
     }
 }
