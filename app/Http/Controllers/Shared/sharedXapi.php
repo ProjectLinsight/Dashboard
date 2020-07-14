@@ -30,6 +30,6 @@ class sharedXapi extends Controller{
             // $state[$i]['definition'] = $temp->object->definition ;
             // $state[$i]['timestamp'] = $temp->timestamp ;
         }
-        dd($stmt_arr) ;
+        return($stmt_arr) ;
     }
 }
