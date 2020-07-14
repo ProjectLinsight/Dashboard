@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Courses;
 use App\Http\Controllers\Shared\sharedXapi ;
+use App\Http\Controllers\Shared\sharedCourseXapi ;
+
 // use App\Stu_enrollment;
 
 class LecturerOverviewController extends Controller{
@@ -49,6 +51,7 @@ class LecturerOverviewController extends Controller{
                 $stmt_arr[$i]['user'] = $state[$i]->actor ;
                 $stmt_arr[$i]['assignment'] = $state[$i]->object->definition ;
                 $stmt_arr[$i]['marks'] = $state[$i]->result->score->raw ;
+                $stmt_arr[$i]['group'] = $state[$i]->context->contextActivities->grouping ;
 
             // }else{
             //     $state[$i]['location'] = "inside" ;
@@ -61,5 +64,8 @@ class LecturerOverviewController extends Controller{
             }
         }
         dd($stmt_arr);
+        // $data2 = new sharedCourseXapi();
+        // $state2 = $data2->getData();
+        // dd($state2);
     }
 }
