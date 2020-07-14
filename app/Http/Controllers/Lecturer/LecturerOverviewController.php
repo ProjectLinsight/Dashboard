@@ -45,6 +45,8 @@ class LecturerOverviewController extends Controller{
         $state = $data->getData();
         $stmt_count = count($state);
         $stmt_arr = array();
+        $max_arr = array();
+        $min_arr = array();
         $min=100;
         $max=0;
         $avg=0;
@@ -53,22 +55,32 @@ class LecturerOverviewController extends Controller{
         for($i=0;$i<$stmt_count;$i++){            
             $logArray=explode("/",$state[$i]->verb->id);
             if($logArray[sizeof($logArray)-1]==="scored"){
-                $stmt_arr[$i]['user'] = $state[$i]->actor ;
-                $stmt_arr[$i]['assignment'] = $state[$i]->object->definition ;
-                $stmt_arr[$i]['marks'] = $state[$i]->result->score->raw ;
-                $stmt_arr[$i]['group'] = $state[$i]->context->contextActivities->grouping ;
+                $stmt_arr[$count]['user'] = $state[$i]->actor ;
+                $stmt_arr[$count]['assignment'] = $state[$i]->object->definition ;
+                $stmt_arr[$count]['marks'] = $state[$i]->result->score->raw ;
+                $stmt_arr[$count]['group'] = $state[$i]->context->contextActivities->grouping ;
                 $sum+=$state[$i]->result->score->raw;
+                if($stmt_arr[$count]['marks']>$max){
+                    $max=$stmt_arr[$count]['marks'];
+                }
+                if($stmt_arr[$count]['marks']<$min){
+                    $min=$stmt_arr[$count]['marks'];
+                }
                 $count+=1;
-                if($stmt_arr[$i]['marks']>$max){
-                    $max=$stmt_arr[$i]['marks'];
-                }
-                if($stmt_arr[$i]['marks']<$min){
-                    $min=$stmt_arr[$i]['marks'];
-                }
+            }
+        }
+        for($i=0;$i<$count;$i++){
+            if($stmt_arr[$i]['marks']===$max){
+                $max_arr[$i]['user'] = $stmt_arr[$i]['user'] ;
+                $max_arr[$i]['marks'] = $stmt_arr[$i]['marks'] ;
+            }
+            if($stmt_arr[$i]['marks']===$min){
+                $min_arr[$i]['user'] = $stmt_arr[$i]['user'] ;
+                $min_arr[$i]['marks'] = $stmt_arr[$i]['marks'] ;
             }
         }
         $avg=$sum/$count;
-        dd($max,$min,$avg,$stmt_arr);
+        dd($max,$max_arr,$min,$min_arr,$avg,$stmt_arr);
         // $data2 = new sharedCourseXapi();
         // $state2 = $data2->getData();
         // dd($state2);
