@@ -45,6 +45,11 @@ class LecturerOverviewController extends Controller{
         $state = $data->getData();
         $stmt_count = count($state);
         $stmt_arr = array();
+        $min=100;
+        $max=0;
+        $avg=0;
+        $sum=0;
+        $count=0;
         for($i=0;$i<$stmt_count;$i++){            
             $logArray=explode("/",$state[$i]->verb->id);
             if($logArray[sizeof($logArray)-1]==="scored"){
@@ -52,18 +57,18 @@ class LecturerOverviewController extends Controller{
                 $stmt_arr[$i]['assignment'] = $state[$i]->object->definition ;
                 $stmt_arr[$i]['marks'] = $state[$i]->result->score->raw ;
                 $stmt_arr[$i]['group'] = $state[$i]->context->contextActivities->grouping ;
-
-            // }else{
-            //     $state[$i]['location'] = "inside" ;
-            //     $state[$i]['verb'] = $logArray[sizeof($logArray)-1];
-            // }
-            // $state[$i]['user'] = $temp->actor ;
-            // $state[$i]['title'] = $temp->object->definition->name->en ;
-            // $state[$i]['definition'] = $temp->object->definition ;
-            // $state[$i]['timestamp'] = $temp->timestamp ;
+                $sum+=$state[$i]->result->score->raw;
+                $count+=1;
+                if($stmt_arr[$i]['marks']>$max){
+                    $max=$stmt_arr[$i]['marks'];
+                }
+                if($stmt_arr[$i]['marks']<$min){
+                    $min=$stmt_arr[$i]['marks'];
+                }
             }
         }
-        dd($stmt_arr);
+        $avg=$sum/$count;
+        dd($max,$min,$avg,$stmt_arr);
         // $data2 = new sharedCourseXapi();
         // $state2 = $data2->getData();
         // dd($state2);
