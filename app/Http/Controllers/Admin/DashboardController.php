@@ -13,10 +13,9 @@ class DashboardController extends Controller{
         $this->middleware('auth');
     }
 
-    public function index(\App\User $user){  
-        
+    public function index(\App\User $user){
         $lec = DB::table('users')->where('utype','lecturer')->get();
-        
+
         $courses = Courses::all();
 
         $is1 = array();
@@ -40,7 +39,7 @@ class DashboardController extends Controller{
                 $crs->type = str_replace("1","X",$crs->type);
                 $crs->type = substr($crs->type,2,3);
             }
-            
+
             if(substr($crs->cid,0,1)==="I"){
                 if(substr($crs->cid,2,1)==="1"){
                     array_push($is1,$crs);
@@ -50,7 +49,7 @@ class DashboardController extends Controller{
                     array_push($is3,$crs);
                 }else if(substr($crs->cid,2,1)==="4"){
                     array_push($is4,$crs);
-                }        
+                }
             }
             else if(substr($crs->cid,0,1)==="S"){
                 if(substr($crs->cid,3,1)==="1"){
@@ -61,7 +60,7 @@ class DashboardController extends Controller{
                     array_push($cs3,$crs);
                 }else if(substr($crs->cid,3,1)==="4"){
                     array_push($cs4,$crs);
-                }        
+                }
             }
         }
 
@@ -83,8 +82,9 @@ class DashboardController extends Controller{
         $assign->cid = $request->input('cid');
         $assign->lid = $request->input('lid');
         $assign->year = $request->input('year');
+        $assign->startDate = $request->input('sDate');
         $assign->save();
 
-        return  redirect('/admin/dashboard');    
+        return  redirect('/admin/dashboard');
     }
 }

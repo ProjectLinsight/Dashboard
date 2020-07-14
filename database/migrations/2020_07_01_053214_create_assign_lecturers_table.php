@@ -12,6 +12,7 @@ class CreateAssignLecturersTable extends Migration{
             $table->string('cid');
             $table->string('lid');
             $table->string('year');
+            $table->string('startDate');
             $table->timestamps();
         });
     }

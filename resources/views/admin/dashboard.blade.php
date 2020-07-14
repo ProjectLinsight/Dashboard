@@ -14,12 +14,12 @@
                 </li>
                 <li class="pt-3">
                     <a href="/admin/dashboard"><i class="fas fa-home pr-2"></i>Dashboard</a>
-                    <hr class="content-center" style="width:75%;background : #555">   
+                    <hr class="content-center" style="width:75%;background : #555">
                 </li>
                 <li>
                     <a href="/admin/user"><i class="fas fa-user pr-2"></i>Manage Users</a>
                     <hr class="content-center" style="width:75%;background : #555">
-                </li>                
+                </li>
                 <li>
                     <a href="/admin/results"><i class="fas fa-chart-line pr-2"></i>Manage Results</a>
                     <hr class="content-center" style="width:75%;background : #555">
@@ -86,7 +86,7 @@
                                                 if($i==1){$show ='show active';}
                                                 else{$show = '';}
                                             ?>
-                                            <div id="{{$tag}}" class="tab-pane fade {{$show}} ">                 
+                                            <div id="{{$tag}}" class="tab-pane fade {{$show}} ">
                                                 <div class="table-responsive">
                                                     <table class="table table-hover mb-0" style="border-collapse: collapse;">
                                                         <thead>
@@ -107,9 +107,9 @@
                                                 </div>
                                             </div>
                                             <?php
-                                            }    
+                                            }
                                             ?>
-                                        </div>                                      
+                                        </div>
                                     </div>
                                     <div id="IS" class="tab-pane fade">
                                         <nav class="nav nav-tabs nav-fill">
@@ -127,7 +127,7 @@
                                                 if($i==1){$show ='show active';}
                                                 else{$show = '';}
                                             ?>
-                                            <div id="{{$tag}}" class="tab-pane fade {{$show}}">                 
+                                            <div id="{{$tag}}" class="tab-pane fade {{$show}}">
                                                 <div class="table-responsive">
                                                     <table class="table table-hover mb-0" style=" border-collapse: collapse;">
                                                         <thead>
@@ -138,7 +138,7 @@
                                                         </thead>
                                                         <tbody>
                                                             @foreach (${$tag} as $c)
-                                                            <tr>    
+                                                            <tr>
                                                                 <td data-toggle="modal" data-target="#exampleModalCenter" onclick="getId({{$c}})"> {{$c->cName}} </td>
                                                                 <td>{{$c->semester}}</td>
                                                             </tr>
@@ -147,8 +147,8 @@
                                                     </table>
                                                 </div>
                                             </div>
-                                            <?php } ?>   
-                                        </div> 
+                                            <?php } ?>
+                                        </div>
                                     </div>
                                 </div>
                                 <hr>
@@ -199,11 +199,18 @@
                             @enderror
                         </div>
                     </div>
-                    
+
+                    <div class="form-group content-center">
+                        <h6 class="pl-3 text-muted"> Start Date :</h6>
+                        <div class="col-md-12">
+                            <input type="date" id="sDate" name="sDate" class="form-control" required min="<?php echo date("Y-m-d"); ?>">
+                        </div>
+                    </div>
+
                     <div class="form-group content-center">
                         <h6 class="pl-3 text-muted"> Lecturer :</h6>
                         <div class="col-md-12">
-                            <select name="lid" class="form-control"  value=" {{old('lid')}} " required autocomplete="Lecturer Name">                        
+                            <select name="lid" class="form-control"  value=" {{old('lid')}} " required autocomplete="Lecturer Name">
                                 <option selected>Select Lecturer</option>
                                 @foreach ($lec as $l)
                                     <option value="{{$l->index}}">{{$l->name}}</option>
@@ -211,7 +218,7 @@
                             </select>
                         </div>
                     </div>
-                    
+
                     <div class="form-group content-center">
                         <div class="form-group d-flex justify-content-center">
                             <div class="row col-md-12">
