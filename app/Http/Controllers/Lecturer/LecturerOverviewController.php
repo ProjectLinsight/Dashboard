@@ -93,14 +93,21 @@ class LecturerOverviewController extends Controller{
         $stmt_count = count($state);
         $comcount=0;
         $count=0;
+        $stmt_arr = array();
         for($i=0;$i<$stmt_count;$i++){
             $logArray=explode("/",$state[$i]->verb->id);
             if($logArray[sizeof($logArray)-1]==="submit"){
                 $comcount+=1;
+                $stmt_arr[$count]['user'] = $state[$i]->actor->account->name ;
+                $stmt_arr[$count]['assignment'] = $state[$i]->object->definition->name->en;
+                $count+=1;
             }
-
+            // elseif($logArray[sizeof($logArray)-1]==="scored"){
+            //     $stmt_arr[$count]['marks'] = $state[$i]->result->score->raw ;
+            //     $stmt_arr[$count]['user'] = $state[$i]->actor ;
+            // }
 
         }
-        dd($comcount);
+        dd($comcount,$stmt_arr);
     }
 }
