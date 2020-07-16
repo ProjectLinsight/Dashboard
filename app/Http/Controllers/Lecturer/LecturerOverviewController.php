@@ -85,4 +85,22 @@ class LecturerOverviewController extends Controller{
         // $state2 = $data2->getData();
         // dd($state2);
     }
+
+    public function assignmentComp()
+    {
+        $data = new sharedXapi();
+        $state = $data->getData();
+        $stmt_count = count($state);
+        $comcount=0;
+        $count=0;
+        for($i=0;$i<$stmt_count;$i++){
+            $logArray=explode("/",$state[$i]->verb->id);
+            if($logArray[sizeof($logArray)-1]==="submit"){
+                $comcount+=1;
+            }
+
+
+        }
+        dd($comcount);
+    }
 }
