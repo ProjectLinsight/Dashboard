@@ -55,8 +55,8 @@ class LecturerOverviewController extends Controller{
         for($i=0;$i<$stmt_count;$i++){            
             $logArray=explode("/",$state[$i]->verb->id);
             if($logArray[sizeof($logArray)-1]==="scored"){
-                $stmt_arr[$count]['user'] = $state[$i]->actor ;
-                $stmt_arr[$count]['assignment'] = $state[$i]->object->definition ;
+                $stmt_arr[$count]['user'] = $state[$i]->actor->account->name ;
+                $stmt_arr[$count]['assignment'] = $state[$i]->object->definition->name->en ;
                 $stmt_arr[$count]['marks'] = $state[$i]->result->score->raw ;
                 $stmt_arr[$count]['group'] = $state[$i]->context->contextActivities->grouping ;
                 $sum+=$state[$i]->result->score->raw;
@@ -72,10 +72,12 @@ class LecturerOverviewController extends Controller{
         for($i=0;$i<$count;$i++){
             if($stmt_arr[$i]['marks']===$max){
                 $max_arr[$i]['user'] = $stmt_arr[$i]['user'] ;
+                $max_arr[$i]['assignment'] = $stmt_arr[$i]['assignment'];
                 $max_arr[$i]['marks'] = $stmt_arr[$i]['marks'] ;
             }
             if($stmt_arr[$i]['marks']===$min){
                 $min_arr[$i]['user'] = $stmt_arr[$i]['user'] ;
+                $min_arr[$i]['assignment'] = $stmt_arr[$i]['assignment'];
                 $min_arr[$i]['marks'] = $stmt_arr[$i]['marks'] ;
             }
         }
