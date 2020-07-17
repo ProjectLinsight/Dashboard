@@ -91,13 +91,16 @@ class LecturerOverviewController extends Controller{
         $data = new sharedXapi();
         $state = $data->getData();
         $stmt_count = count($state);
-        $comcount=0;
         $count=0;
         $stmt_arr = array();
+        $distinct_arr = array();
+        $notcom_array = array();
+        $result = 0;
+        $crs = DB::table('users')->get();
+        $all_count = count($crs);
         for($i=0;$i<$stmt_count;$i++){
             $logArray=explode("/",$state[$i]->verb->id);
             if($logArray[sizeof($logArray)-1]==="submit"){
-                $comcount+=1;
                 $stmt_arr[$count]['user'] = $state[$i]->actor->account->name ;
                 $stmt_arr[$count]['assignment'] = $state[$i]->object->definition->name->en;
                 $count+=1;
@@ -106,8 +109,26 @@ class LecturerOverviewController extends Controller{
             //     $stmt_arr[$count]['marks'] = $state[$i]->result->score->raw ;
             //     $stmt_arr[$count]['user'] = $state[$i]->actor ;
             // }
-
         }
-        dd($comcount,$stmt_arr);
+        //get distinct values
+        $sub_count = 1; 
+        $s = 0;
+        $distinct_arr[$s]['user'] = $stmt_arr[$s]['user'] ;
+        $distinct_arr[$s]['assignment'] = $stmt_arr[$s]['assignment'] ;
+        for ( $i = 1; $i < $count; $i++) 
+        { 
+            for ($j = 0; $j < $i; $j++) {
+                if ($stmt_arr[$i]['user'] == $stmt_arr[$j]['user']) 
+                   break; 
+            }
+            if ($i == $j){ 
+                $sub_count++;
+                $s++;
+                $distinct_arr[$s]['user'] = $stmt_arr[$i]['user'] ;
+                $distinct_arr[$s]['assignment'] = $stmt_arr[$i]['assignment'] ; 
+            }
+        }
+        
+        dd($count,$stmt_arr,$crs,$sub_count,$distinct_arr);
     }
 }
