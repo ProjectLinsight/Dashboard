@@ -13,21 +13,39 @@ class sharedCourseXapi extends Controller{
         $stmt_count = count($statements);
         
         $stmt_arr = array();
+        $state = array();
         for($i=0;$i<$stmt_count;$i++){
             $temp = json_decode($statements[$i]->data);
-            array_push($stmt_arr,$temp);
-            
-            // $logArray=explode("/",$temp->verb->id);
-            if($temp[$i]->object->definition->extensions ==="SCS3109"){
-                $stmt_arr[$i]['user'] = $state[$i]->actor ;
+            // array_push($stmt_arr,$temp);
+            $key = "https://w3id.org/learning-analytics/learning-management-system/external-id";
+            $logArray=explode("/",$temp->verb->id);  
+                if(isset($temp->object->definition->extensions->$key)){
+                    // array_push($stmt_arr,$temp->object->definition->extensions);
+                    // if(isset($temp->object->definition->extensions->$key)){
+                        // array_push($stmt_arr,$temp->object->definition->extensions);
+                        if($temp->object->definition->extensions->$key==="SCS3109"){
+                        //     array_push($state,$temp->actor); 
+                            $state[$i]['user'] = $temp->actor ;
+                            $state[$i]['title'] = $temp->object->definition->name->en ;
+                            $state[$i]['definition'] = $temp->object->definition ;
+                            $state[$i]['course'] = $temp->object->definition->extensions->$key ;
+                            $state[$i]['timestamp'] = $temp->timestamp ;
+                        // }
+                        
+                    }
+                } 
+                // $logArray=explode("/",$temp->verb->id);
+            // if( $stmt_arr[]==="SCS3109"){
+            //     $stmt_arr[$i]['user'] = $state[$i]->actor ;
                 
-            }
+            // }
             // $state[$i]['user'] = $temp->actor ;
             // $state[$i]['title'] = $temp->object->definition->name->en ;
             // $state[$i]['definition'] = $temp->object->definition ;
             // $state[$i]['timestamp'] = $temp->timestamp ;
+            
         }
-        dd($stmt_arr);
-        return($stmt_arr) ;
+        dd($state);
+        return($state) ;
     }
 }
