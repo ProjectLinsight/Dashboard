@@ -34,21 +34,14 @@ class sharedCourseXapi extends Controller{
                             $state[$i]['definition'] = $temp->object->definition ;
                             $state[$i]['course'] = $temp->object->definition->extensions->$key ;
                             $state[$i]['timestamp'] = $temp->timestamp ;
+
+                            $start_date = explode("T",$temp->timestamp);
+                            $state[$i]['date'] = $start_date[0] ;
                         // }
                         
                     }
                 }
-                
-                // $logArray=explode("/",$temp->verb->id);
-            // if( $stmt_arr[]==="SCS3109"){
-            //     $stmt_arr[$i]['user'] = $state[$i]->actor ;
-                
-            // }
-            // $state[$i]['user'] = $temp->actor ;
-            // $state[$i]['title'] = $temp->object->definition->name->en ;
-            // $state[$i]['definition'] = $temp->object->definition ;
-            // $state[$i]['timestamp'] = $temp->timestamp ;
-            
+              
         }
         return($state) ;
     }
