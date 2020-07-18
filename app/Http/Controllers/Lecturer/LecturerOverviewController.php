@@ -55,8 +55,8 @@ class LecturerOverviewController extends Controller{
         for($i=0;$i<$stmt_count;$i++){            
             $logArray=explode("/",$state[$i]->verb->id);
             if($logArray[sizeof($logArray)-1]==="scored"){
-                $stmt_arr[$count]['user'] = $state[$i]->actor ;
-                $stmt_arr[$count]['assignment'] = $state[$i]->object->definition ;
+                $stmt_arr[$count]['user'] = $state[$i]->actor->account->name ;
+                $stmt_arr[$count]['assignment'] = $state[$i]->object->definition->name->en ;
                 $stmt_arr[$count]['marks'] = $state[$i]->result->score->raw ;
                 $stmt_arr[$count]['group'] = $state[$i]->context->contextActivities->grouping ;
                 $sum+=$state[$i]->result->score->raw;
