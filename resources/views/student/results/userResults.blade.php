@@ -28,7 +28,7 @@
                         @endforeach
                     </div>
                     <hr class="content-center" style="width:75%;background : #555">
-                </li>                
+                </li>
                 <li>
                     <a href="/results/{{Auth::user()->id}}/{{Auth::user()->name}}"><i class="fas fa-chart-line pr-2"></i>Results</a>
                     <hr class="content-center" style="width:75%;background : #555">
@@ -59,7 +59,7 @@
                 <div class="row ">
                     <div class="col-md-12">
                         <div class="card bg-dark" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 6px 0 rgba(0, 0, 0, 0.19);">
-                            <div class="p-3 row rounded"> 
+                            <div class="p-3 row rounded">
                                 <div class="col-md-1 pb-2">
                                     <img class="rounded-circle border" style="max-width: 60px"src="https://mdbootstrap.com/img/Photos/Avatars/img (27).jpg" alt="Generic placeholder image">
                                 </div>
@@ -70,10 +70,10 @@
                                     <div class="row pl-3">
                                         <h6  style="font-size:calc(0.6em + 0.2vw)"> Index : {{$user->index}} | Last-updated : {{$user->StuData->updated_at}}</h6>
                                     </div>
-                                </div>  
+                                </div>
                             </div>
                             <div class="d-flex justify-content-center">
-                                <hr style="width:98% ;background: white">  
+                                <hr style="width:98% ;background: white">
                             </div>
                             <div class="row px-4 pb-2 d-flex justify-content-center"  style="font-family:Helvetica;">
                                 <div class="px-2 pb-2 col-md-3 ">
@@ -104,17 +104,17 @@
                                 <p class="text-center text-white">{{$data["class"]}}</p>
                                     </div>
                                 </div>
-                            </div>             
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="row pt-4 d-flex justify-content-center">    
+                <div class="row pt-4 d-flex justify-content-center">
                     <div class="col-md-5" style="font-family:Helvetica;">
                         <?php
                             for($i=3;$i>0;$i--){
                                 for($j=2;$j>0;$j--){
-                                    $gp = "gp". (string)$i .(string)$j ; 
-                                    $rank = "rank". (string)$i .(string)$j ; 
+                                    $gp = "gp". (string)$i .(string)$j ;
+                                    $rank = "rank". (string)$i .(string)$j ;
                                     $totCredits = "totCredits".(string)$i .(string)$j ;
                                     $results = "results".(string)$i .(string)$j ;
                                     if($i==1){$pi = "1st" ;}
@@ -152,12 +152,12 @@
                                                                 <a href="/courses/{{$rs->course->cid}}" style="text-decoration:none;color:black">
                                                                     <h5 style="font-size:calc(0.8em + 0.3vw)">{{$rs->course->cName}}</h5>
                                                                 </a>
-                                                                <p class="text-muted" style="font-size:calc(0.6em + 0.2vw)">{{$rs->subjectCode}} / {{$rs->course->credits}} credits / year of examination : {{$rs->yoe}}</p> 
+                                                                <p class="text-muted" style="font-size:calc(0.6em + 0.2vw)">{{$rs->subjectCode}} / {{$rs->course->credits}} credits / year of examination : {{$rs->yoe}}</p>
                                                             </div>
                                                             <div class="col-3 d-flex justify-content-center">
                                                                 <h2 class="font-weight-bold text-dark" style="font-size:calc(1.2em + 0.4vw);">{{$rs->grade}}</h2>
                                                             </div>
-                                                        </div> 
+                                                        </div>
                                                         <hr style="margin-top: -5px">
                                                     @endforeach
                                                 </div>
@@ -166,11 +166,11 @@
                                     @endif
                                     <?php
                                 }
-                            }    
+                            }
                         ?>
                     </div>
                     <div class="col-md-5">
-                        
+
                         <div class="pb-3">
                             <div class="card shadow">
                                 <div class="card-header bg-dark">
@@ -181,11 +181,11 @@
                                         <div class="panel-body">
                                             <canvas id="canvas" height="280" width="600"></canvas>
                                         </div>
-                                    </div>      
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        
+
                         <script type="text/javascript">
                             var grade = new Array();
                             var countx = new Array();
@@ -202,8 +202,8 @@
                                         label: 'Grade',
                                         data: countx,
                                         borderWidth: 1,
-                                        
-                                    }] 
+
+                                    }]
                                 },
                             });
                         </script>
@@ -219,19 +219,19 @@
                                         <a href="/results/{{$bt["id"]}}/{{$bt["name"]}}" style="text-decoration: none;">
                                             <div class="row d-flex justify-content-between" style="margin-bottom: -20px;color:black">
                                                 <div class="col-2">
-                                                <p> <strong>{{$i}}</strong></p>  
+                                                <p> <strong>{{$i}}</strong></p>
                                                 </div>
                                                 <div class="col-6">
-                                                    <p>  <strong>{{$bt["index"]}} </strong></p>   
+                                                    <p>  <strong>{{$bt["index"]}} </strong></p>
                                                 </div>
                                                 <div class="col-4">
-                                                    <p>  <strong>{{$bt["GPA"]}} </strong> </p>  
+                                                    <p>  <strong>{{$bt["GPA"]}} </strong> </p>
                                                 </div>
                                             </div>
                                             <hr>
                                             <?php $i++ ?>
                                         </a>
-                                    @endforeach        
+                                    @endforeach
                                 </div>
                             </div>
                         </div>

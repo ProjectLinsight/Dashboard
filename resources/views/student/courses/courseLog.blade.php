@@ -7,16 +7,17 @@
     <script type="text/javascript" src="{{ URL::asset('js/home.js') }}"></script>
     <script type="text/javascript">
         var analytics = <?php echo $grade; ?>
-        
+
         google.charts.load('current', {'packages':['corechart']});
         google.charts.setOnLoadCallback(drawChart);
-        
+
         function drawChart(){
             var data = google.visualization.arrayToDataTable(analytics);
             var chart = new google.visualization.PieChart(document.getElementById('pie_chart'));
             chart.draw(data);
         }
     </script>
+
 @section('content')
 <div class="container-fluid pt-4">
     <div id="wrapper" class="wrapper-content" >
@@ -27,7 +28,7 @@
                 </li>
                 <li class="pt-3">
                     <a href="/home"><i class="fas fa-home pr-2"></i>Feed</a>
-                    <hr class="content-center" style="width:75%;background : #555">   
+                    <hr class="content-center" style="width:75%;background : #555">
                 </li>
                 <li>
                     <a data-toggle="collapse" href="#courses" ><i class="fas fa-user pr-2"></i>Courses</a>
@@ -37,7 +38,7 @@
                         @endforeach
                     </div>
                     <hr class="content-center" style="width:75%;background : #555">
-                </li>                
+                </li>
                 <li>
                     <a href="/results/{{Auth::user()->id}}/{{Auth::user()->name}}"><i class="fas fa-chart-line pr-2"></i>Results</a>
                     <hr class="content-center" style="width:75%;background : #555">
@@ -76,7 +77,7 @@
                             </div>
                             <div class="card-body">
                                 <div id="pie_chart" style="width:auto; height:430px;">
-                                </div>    
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -122,7 +123,7 @@
                                                 <td class="border text-justify" colspan="3"><strong>
                                                     {{$log->introduction}}
                                                 </strong></td>
-                                            </tr> 
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>

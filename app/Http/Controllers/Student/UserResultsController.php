@@ -45,7 +45,7 @@ class UserResultsController extends Controller{
         else{
             $results22 = null ;
         }
-        
+
         $check = Results::where('semester', '1')->where('year','3')->where('index',$user->index)->first();
         if($check!==null){
             $results31 = Results::where('semester', '1')->where('year','3')->where('index',$user->index)->get();
@@ -92,8 +92,8 @@ class UserResultsController extends Controller{
         foreach($students as $st){
             if(substr($st->index,0,4)===substr($user->index,0,4)){
                 array_push($batch,$st);
-                $total = $st->totCredits11 + $st->totCredits12 + $st->totCredits21 + $st->totCredits22 + $st->totCredits31 + $st->totCredits32 + $st->totCredits41 + $st->totCredits42 ;    
-                $gp = $st->gpa11 + $st->gpa12 + $st->gpa21 + $st->gpa22 + $st->gpa31 + $st->gpa32 + $st->gpa41 + $st->gpa42 ;    
+                $total = $st->totCredits11 + $st->totCredits12 + $st->totCredits21 + $st->totCredits22 + $st->totCredits31 + $st->totCredits32 + $st->totCredits41 + $st->totCredits42 ;
+                $gp = $st->gpa11 + $st->gpa12 + $st->gpa21 + $st->gpa22 + $st->gpa31 + $st->gpa32 + $st->gpa41 + $st->gpa42 ;
                 if($total!==0.00){$GPA = number_format($gp/$total,4);}
                 if($st->totCredits11!==0.00){$gp11 = number_format($st->gpa11 / $st->totCredits11,4);}
                 if($st->totCredits12!==0.00){$gp12 = number_format($st->gpa12 / $st->totCredits12,4);}
@@ -102,7 +102,7 @@ class UserResultsController extends Controller{
                 if($st->totCredits31!==0.00){$gp31 = number_format($st->gpa31 / $st->totCredits31,4);}
                 if($st->totCredits32!==0.00){$gp32 = number_format($st->gpa32 / $st->totCredits32,4);}
                 if($st->totCredits41!==0.00){$gp41 = number_format($st->gpa41 / $st->totCredits41,4);}
-                if($st->totCredits42!==0.00){$gp42 = number_format($st->gpa42 / $st->totalCredits42,4);}  
+                if($st->totCredits42!==0.00){$gp42 = number_format($st->gpa42 / $st->totalCredits42,4);}
                 array_push($gpaData,[
                     'index' => $st->index,
                     'id' => $st->user->id,
@@ -124,16 +124,16 @@ class UserResultsController extends Controller{
                         $cl = "First Class";
                     } else if ($GPA>=3.30)  {
                         $class = "SU";
-                        $cl = "Second Upper"; 
+                        $cl = "Second Upper";
                     } else if ($GPA>=3.00)  {
                         $class = "SL";
                         $cl = "Second Lower";
                     } else if ($GPA>=2.00)  {
                         $class = "GN";
-                        $cl = "General Degree";  
+                        $cl = "General Degree";
                     } else{
                         $class = "- - ";
-                        $cl = "Not Available";  
+                        $cl = "Not Available";
                     }
                     array_push($getData,[
                         'index' => $st->index,
@@ -179,13 +179,13 @@ class UserResultsController extends Controller{
         }
         function getRank($gpaData,$user,$sem){
             $j=0 ;
-            for($i=0;$i<count($gpaData);$i++){  
+            for($i=0;$i<count($gpaData);$i++){
                 if($i!==0 && $gpaData[$i][$sem]===$gpaData[$i-1][$sem]){}
                 else{$j=$i+1;}
                 if($gpaData[$i]["index"]===$user){
                     return $j ;
-                } 
-            }   
+                }
+            }
         }
         usort($gpaData, sortByGpa('gp11'));
         $gpaData = array_reverse($gpaData);
@@ -232,7 +232,7 @@ class UserResultsController extends Controller{
         //             DB::raw('grade as grade'),
         //             DB::raw('count(*) as number'))
         //         ->groupBy('grade')->get();
-            
+
         // $array[] = ['grade', 'Number'];
         // foreach($data as $key => $value){
         //     $array[++$key] = [$value->grade, $value->number];
@@ -256,24 +256,24 @@ class UserResultsController extends Controller{
         );
         $graphResult = DB::table('results')->where('index','=',$user->index)->get();
         foreach($graphResult as $value){
-            if("A+"==$value->grade){$graph["A+"]++;} 
-            else if("A+"==$value->grade){$graph["A+"]++;} 
-            else if("A"==$value->grade){$graph["A"]++;} 
-            else if("A-"==$value->grade){$graph["A-"]++;} 
-            else if("B+"==$value->grade){$graph["B+"]++;} 
-            else if("B"==$value->grade){$graph["B"]++;} 
-            else if("B-"==$value->grade){$graph["B-"]++;} 
-            else if("C+"==$value->grade){$graph["C+"]++;} 
-            else if("C"==$value->grade){$graph["C"]++;} 
-            else if("C-"==$value->grade){$graph["C-"]++;} 
-            else if("D+"==$value->grade){$graph["D+"]++;} 
-            else if("D"==$value->grade){$graph["D"]++;} 
-            else if("E"==$value->grade){$graph["E"]++;} 
-            else {$graph["F+"]++;} 
+            if("A+"==$value->grade){$graph["A+"]++;}
+            else if("A+"==$value->grade){$graph["A+"]++;}
+            else if("A"==$value->grade){$graph["A"]++;}
+            else if("A-"==$value->grade){$graph["A-"]++;}
+            else if("B+"==$value->grade){$graph["B+"]++;}
+            else if("B"==$value->grade){$graph["B"]++;}
+            else if("B-"==$value->grade){$graph["B-"]++;}
+            else if("C+"==$value->grade){$graph["C+"]++;}
+            else if("C"==$value->grade){$graph["C"]++;}
+            else if("C-"==$value->grade){$graph["C-"]++;}
+            else if("D+"==$value->grade){$graph["D+"]++;}
+            else if("D"==$value->grade){$graph["D"]++;}
+            else if("E"==$value->grade){$graph["E"]++;}
+            else {$graph["F+"]++;}
         }
         // $graph=json_encode($graph);
-        
-        return view('results/userResults',[
+
+        return view('student/results/userResults',[
             'gpaData' => $gpaData,
             'user'=>$user,
             'data'=>$getData[0],
@@ -295,12 +295,12 @@ class UserResultsController extends Controller{
                 DB::raw('grade as grade'),
                 DB::raw('count(*) as number'))
             ->groupBy('grade')->get();
-    
+
         $array[] = ['grade', 'Number'];
         foreach($data as $key => $value){
             $array[++$key] = [$value->grade, $value->number];
         }
         dd($array);
-        return view('results/userResults')->with('grade', json_encode($array));
+        return view('student/results/userResults')->with('grade', json_encode($array));
     }
 }
