@@ -18,7 +18,7 @@
     </script>
 
 @section('content')
-<div class="container-fluid pt-5">
+<div class="container-fluid pt-5" style="font-size: 12px">
     <div id="wrapper" class="wrapper-content" >
         <div id="sidebar-wrapper" class="bg-dark">
             <ul class="sidebar-nav">
@@ -66,10 +66,8 @@
 
             <div class="container-fluid">
                 <div class="row">
-                    <hr>
-                    <h1 class="text-center"> {{$crs[0]}} </h1>
-                    <hr>
                     <div class="col-md-8">
+                        <hr><h1 class="text-center"> {{$crs[0]}} </h1><hr>
                         <div class="pb-3">
                             <div class="card shadow">
                                 <div class="card-header bg-info">
@@ -85,7 +83,6 @@
                             </div>
                         </div>
 
-
                         <table>
                             @foreach($counts as $key => $value)
                                 <tr>
@@ -99,8 +96,8 @@
                     <div class="col-md-4">
 
                         <div class="card shadow">
-                            <div class="card-header bg-dark text-center text-white">
-                                <h3 class="pt-2"> Results Overview</h3>
+                            <div class="card-header bg-info text-center text-white">
+                                <h4 class="my-0"> Results Overview</h4>
                             </div>
                             <div class="card-body">
                                 <div id="pie_chart">

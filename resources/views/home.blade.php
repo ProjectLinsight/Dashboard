@@ -4,26 +4,26 @@
     <script src="https://kit.fontawesome.com/d43d952765.js" crossorigin="anonymous"></script>
     <script type="text/javascript" src="{{ URL::asset('js/home.js') }}"></script>
 @section('content')
-<div class="container-fluid pt-4">
+<div class="container-fluid pt-4" style="font-size: 12px">
     <div id="wrapper" class="wrapper-content" >
         <div id="sidebar-wrapper" class="bg-dark">
             <ul class="sidebar-nav">
                 <li class="sidebar-brand pl-0">
-                    <h6>{{Auth::user()->email}}<h6>
+                    <h6 class="h6-sized pl-3">{{Auth::user()->email}}<h6>
                 </li>
                 <li class="pt-3">
                     <a href="/home"><i class="fas fa-home pr-2"></i>Feed</a>
-                    <hr class="content-center" style="width:75%;background : #555">   
+                    <hr class="content-center" style="width:75%;background : #555">
                 </li>
                 <li>
-                    <a data-toggle="collapse" href="#courses" ><i class="fas fa-user pr-2"></i>Courses</a>
-                    <div class="collapse pt-3 pl-5" id="courses">
+                    <a data-toggle="collapse" href="#courses"> <i class="fas fa-user pr-2"></i> Courses </a>
+                    <div class="collapse pt-1 pl-5" id="courses">
                         @foreach (Auth::user()->stu_enrollment as $sub)
-                            <h6 class="text-white"><a href="/Mycourses/{{$sub->cid}}" >{{$sub->cid}}</a></h6>
+                            <h6 class="h6-sized text-white"><a href="/Mycourses/{{$sub->cid}}" >{{$sub->cid}}</a></h6>
                         @endforeach
                     </div>
                     <hr class="content-center" style="width:75%;background : #555">
-                </li>                
+                </li>
                 <li>
                     <a href="/results/{{Auth::user()->id}}/{{Auth::user()->name}}"><i class="fas fa-chart-line pr-2"></i>Results</a>
                     <hr class="content-center" style="width:75%;background : #555">
@@ -42,7 +42,7 @@
                             <h6 class="pt-2"> <i class="far fa-edit pr-2"></i> write post <h6>
                         </button>
                     </div>
-                    
+
                 </li>
             </ul>
         </div>
@@ -77,7 +77,7 @@
                                             <div>
                                                 <h5 class="pt-3" style="font-size:calc(1em + 0.4vw)"><strong>{{$post->user->name}}</strong></h5>
                                                 @if ($post->created_at!==$post->updated_at)
-                                                    <h6 class="text-muted " style="font-size:calc(0.6em + 0.1vw)" data-toggle="tooltip" title="post created : {{$post->created_at}}">  {{$post->updated_at}}</h6>     
+                                                    <h6 class="text-muted " style="font-size:calc(0.6em + 0.1vw)" data-toggle="tooltip" title="post created : {{$post->created_at}}">  {{$post->updated_at}}</h6>
                                                 @endif
                                             </div>
                                         </div>
@@ -89,7 +89,7 @@
                                 <h5 style="font-size:calc(1.2em + 0.2vw)"><strong>{{ $post->title}}</strong></h5>
                                 <hr>
                                 <p style="font-size:calc(0.9em + 0.1vw);text-align: justify">{{$post->description}}</p>
-                                @if ($post->image)  
+                                @if ($post->image)
                                     <div class="d-flex justify-content-center">
                                         <img style="width:100%;height:auto;" src="uploads/post/{{ $post->image }}" alt="">
                                     </div>
@@ -159,13 +159,13 @@
                             @enderror
                         </div>
                     </div>
-                    
+
                     <div class="form-group d-flex justify-content-center">
                         <div class="col-md-6">
                             <button type="submit" class="btn btn-info btn-block text-white">Share Post</button>
                         </div>
                     </div>
-                    
+
                 </form>
             </div>
         </div>

@@ -9,33 +9,21 @@
     </head>
     <body>
         <div class="container d-flex justify-content-center">
-            {{-- @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home/'.  auth()->user()->id) }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif --}}
 
-            <div class="col-md-8 content-center" style="color:#326A78;font-size: 84px;padding-top:180px">
+            <div class="col-md-6 content-center" style="color:#326A78;font-size: 74px;padding-top:160px">
                 <img style="width: 100%;height:auto" src="images/logo/logo1.png" alt="linsight logo">
                 <div class="d-flex justify-content-center">
                     <div class="col-md-6" style="margin-top: -60px">
                         @auth
                             @if (Auth::user()->utype=='Student')
-                            <a class="btn btn-lg btn-block btn-outline-primary" href="{{ url('/home/') }}">Return to Home</a>
+                            <a class="btn btn-block btn-outline-primary" href="{{ url('/home/') }}">Return to Home</a>
                             @elseif (Auth::user()->utype=='Lecturer')
-                            <a class="btn btn-lg btn-block btn-outline-primary" href="{{ url('/lecturer/lecturer_home/') }}">Return to Home</a>
+                            <a class="btn btn-block btn-outline-primary" href="{{ url('/lecturer/lecturer_home/') }}">Return to Home</a>
                             @elseif (Auth::user()->utype=='Admin')
-                            <a class="btn btn-lg btn-block btn-outline-primary" href="{{ url('/admin/dashboard/') }}">Return to Home</a>
+                            <a class="btn btn-block btn-outline-primary" href="{{ url('/admin/dashboard/') }}">Return to Home</a>
                             @endif
                         @else
-                            <a class="btn btn-lg btn-block btn-outline-primary" href="{{ route('login') }}">Get Started</a>
+                            <a class="btn btn-block btn-outline-primary" href="{{ route('login') }}">Get Started</a>
                         @endauth
                     </div>
                 </div>
