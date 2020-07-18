@@ -186,28 +186,6 @@
                             </div>
                         </div>
 
-                        <script type="text/javascript">
-                            var grade = new Array();
-                            var countx = new Array();
-                            for (var key in list) {
-                                grade.push(key);
-                                countx.push(list[key]);
-                            }
-                            var ctx = document.getElementById("canvas");
-                            var myChart = new Chart(ctx, {
-                                type: 'bar',
-                                data: {
-                                    labels:grade,
-                                    datasets: [{
-                                        label: 'Grade',
-                                        data: countx,
-                                        borderWidth: 1,
-
-                                    }]
-                                },
-                            });
-                        </script>
-
                         <div class="pb-3">
                             <div class="card shadow">
                                 <div class="card-header bg-dark">
@@ -258,3 +236,26 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    var grade = new Array();
+    var countx = new Array();
+    for (var key in list) {
+        grade.push(key);
+        countx.push(list[key]);
+    }
+    var ctx = document.getElementById("canvas");
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels:grade,
+            datasets: [{
+                label: 'Grade',
+                data: countx,
+                borderWidth: 1,
+
+            }]
+        },
+    });
+</script>
+

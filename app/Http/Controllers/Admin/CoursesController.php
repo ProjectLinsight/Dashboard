@@ -39,7 +39,7 @@ class CoursesController extends Controller{
                 $crs->type = str_replace("1","X",$crs->type);
                 $crs->type = substr($crs->type,2,3);
             }
-            
+
             if(substr($crs->cid,0,1)==="I"){
                 if(substr($crs->cid,2,1)==="1"){
                     array_push($is1,$crs);
@@ -49,7 +49,7 @@ class CoursesController extends Controller{
                     array_push($is3,$crs);
                 }else if(substr($crs->cid,2,1)==="4"){
                     array_push($is4,$crs);
-                }        
+                }
             }
             else if(substr($crs->cid,0,1)==="S"){
                 if(substr($crs->cid,3,1)==="1"){
@@ -60,7 +60,7 @@ class CoursesController extends Controller{
                     array_push($cs3,$crs);
                 }else if(substr($crs->cid,3,1)==="4"){
                     array_push($cs4,$crs);
-                }        
+                }
             }
         }
         // dd($courseType);
@@ -90,34 +90,39 @@ class CoursesController extends Controller{
         $course->credits = $request->input('credits');
         $course->type = $request->input('type');
         $course->semester = $request->input('semester');
+        $course->assignmentMarks = "";
+        $course->examMarks = "";
+        $course->prerequisites = "";
+        $course->introduction = "";
+        // dd($course);
         $course->save();
 
-        return  redirect('/admin/courses');    
+        return  redirect('/admin/courses');
     }
 
     public function store2(Request $request){
         $this->validate($request,[
             'cid' => 'required',
             'lid' => 'required',
-            
+
         ]);
         $assign = new LecturerAssigning ;
         $assign->cid = $request->input('cid');
         $assign->lid = $request->input('lid');
         $assign->save();
 
-        return  redirect('/admin/courses');    
+        return  redirect('/admin/courses');
     }
 
-    public function delete($id){ 
+    public function delete($id){
         DB::table('courses')->where('cid',$id)->delete();
         return redirect ('/admin/courses')->with('success','Course Deleted');
-        
+
     }
 
     public function update(Request $request){
         // $this->validate($request,[
-           
+
         //     'credits' => 'required',
         //     'type' => 'required',
         //     'semester' => 'required'
@@ -131,7 +136,7 @@ class CoursesController extends Controller{
             'semester' => $request->get('updatesemester')
             ]);
 
-        return  redirect('/admin/courses')->with('success','Data Updated');    
+        return  redirect('/admin/courses')->with('success','Data Updated');
     }
 
 
