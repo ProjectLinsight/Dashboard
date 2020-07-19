@@ -94,7 +94,6 @@
                         </table>
                     </div>
                     <div class="col-md-4">
-
                         <div class="card shadow">
                             <div class="card-header bg-info text-center text-white">
                                 <h4 class="my-0"> Results Overview</h4>

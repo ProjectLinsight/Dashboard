@@ -31,7 +31,6 @@ class PersonalCoursesController extends Controller{
                 array_push($user_stmts,$st);
             }
         }
-        // dd($user_stmts);
 
         $activity[] = ['activity', 'Number'];
         $activity = array(
@@ -48,6 +47,7 @@ class PersonalCoursesController extends Controller{
             "Other" => 0,
         );
 
+
         foreach($user_stmts as $us){
             if("visited"==$us["verb"]){ $activity["Visited"]++; }
             else if("viewed"==$us["verb"]){ $activity["Viewed"]++; }
@@ -61,7 +61,6 @@ class PersonalCoursesController extends Controller{
             else if("enrolled to"==$us["verb"]){ $activity["Created"]++; }
             else{ $activity["Other"]++; }
         }
-
         $verb_counts = array_count_values(array_column($user_stmts, 'verb'));
         // dd($verb_counts);
 

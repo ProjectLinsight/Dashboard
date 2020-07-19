@@ -2,7 +2,31 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/home.css') }}" >
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="https://kit.fontawesome.com/d43d952765.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
     <script type="text/javascript" src="{{ URL::asset('js/home.js') }}"></script>
+
+<script type="text/javascript">
+    window.onload = function () {
+        var canvas = document.getElementById('activityGraph');
+        new Chart(canvas, {
+            type: 'line',
+            data: {
+                labels: ['w1', 'w2', 'w3', 'w4', 'w5'],
+                datasets: [{
+                    label: 'Subject 1',
+                    data: [10, 19, 14, 26, 9],
+                    borderWidth: 1,
+                    // fill: false
+                },{
+                    label: 'Subject 2',
+                    data: [11, 16, 31, 14, 12],
+                    borderWidth: 1,
+                    // fill: false
+                }]
+            },
+        });
+    }
+</script>
 @section('content')
 <div class="container-fluid pt-4" style="font-size: 12px">
     <div id="wrapper" class="wrapper-content" >
@@ -59,7 +83,7 @@
             </nav>
 
             <div class="container-fluid row m-0 changeList"  >
-                <div class="col-md-8 py-3">
+                <div class="col-md-7 py-3">
                     <hr>
                     <h1 class="text-center text-dark"> <strong>Timeline </strong> </h1>
                     <hr>
@@ -98,6 +122,22 @@
                         </div>
                     </div>
                     @endforeach
+                </div>
+                <div class="col-md-5 py-3">
+                    <div class="pb-3">
+                        <div class="card shadow">
+                            <div class="card-header bg-info">
+                                <h5 class="text-white my-0"> Overall Activity Distribution </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        <canvas id="activityGraph" height="280" width="600"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -173,3 +213,4 @@
 </div>
 
 @endsection
+

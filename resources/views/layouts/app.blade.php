@@ -15,9 +15,9 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md  bg-dark fixed-top scrolling-navbar shadow-sm"  style="font-size: 12px">
+        <nav class="navbar navbar-expand-md  bg-dark fixed-top scrolling-navbar shadow-sm"  style="font-size: 14px">
             <div class="container">
-                <a class="navbar-brand text-white" href="{{ url('/') }}" style="font-size: 12px"> Project Linsight </a>
+                <a class="navbar-brand text-white" href="{{ url('/') }}" style="font-size: 14px"> Project Linsight </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
