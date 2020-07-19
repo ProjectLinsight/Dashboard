@@ -47,16 +47,16 @@ class PersonalCoursesController extends Controller{
         );
 
         foreach($user_stmts as $us){
-            if("visited"==$us["verb"]){ $activity["Visited"]++; }
-            else if("viewed"==$us["verb"]){ $activity["Viewed"]++; }
-            else if("started"==$us["verb"]){ $activity["Started"]++; }
+            if("viewed"==$us["verb"]){ $activity["Viewed"]++; }
+            // else if("visited"==$us["verb"]){ $activity["Visited"]++; }
+            // else if("started"==$us["verb"]){ $activity["Started"]++; }
             else if("completed"==$us["verb"]){ $activity["Completed"]++; }
             else if("submitted"==$us["verb"]){ $activity["Submitted"]++; }
             else if("attained grade for"==$us["verb"]){ $activity["Graded"]++; }
-            else if("logged into"==$us["verb"]){ $activity["Logged In"]++; }
-            else if("logged out of"==$us["verb"]){ $activity["Logged Out"]++; }
+            // else if("logged into"==$us["verb"]){ $activity["Logged In"]++; }
+            // else if("logged out of"==$us["verb"]){ $activity["Logged Out"]++; }
             else if("received"==$us["verb"]){ $activity["Received"]++; }
-            else if("enrolled to"==$us["verb"]){ $activity["Created"]++; }
+            // else if("enrolled to"==$us["verb"]){ $activity["Created"]++; }
             else{ $activity["Other"]++; }
         }
         // $verb_counts = array_count_values(array_column($user_stmts, 'verb'));
