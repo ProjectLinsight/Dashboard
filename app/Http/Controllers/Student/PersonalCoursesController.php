@@ -17,14 +17,12 @@ class PersonalCoursesController extends Controller{
     }
 
     public function index($course){
-
         $my_course = DB::table('stu_enrollments')->where('cid',$course)->where('index',Auth::user()->index)->get();
         $course_name = DB::table('courses')->where('cid',$course)->pluck('cName');
         $reg_no = substr(Auth::user()->email,0,9);
 
         $data = new sharedCourseXapi();
         $cur_course_stmts = $data->getData($course);
-        //dd($cur_course_stmts);
         $user_stmts = Array();
 
         foreach($cur_course_stmts as $st){
@@ -48,7 +46,6 @@ class PersonalCoursesController extends Controller{
             "Other" => 0,
         );
 
-
         foreach($user_stmts as $us){
             if("visited"==$us["verb"]){ $activity["Visited"]++; }
             else if("viewed"==$us["verb"]){ $activity["Viewed"]++; }
@@ -62,11 +59,33 @@ class PersonalCoursesController extends Controller{
             else if("enrolled to"==$us["verb"]){ $activity["Created"]++; }
             else{ $activity["Other"]++; }
         }
-        $verb_counts = array_count_values(array_column($user_stmts, 'verb'));
-        $date_counts = array_count_values(array_column($user_stmts, 'date'));
-        dd($date_counts);
+        // $verb_counts = array_count_values(array_column($user_stmts, 'verb'));
 
+        //Dummy data for start date end date
+        $today = date("Y-m-d");
+        $sDate = strtotime("-1 months", strtotime($today));
+        $eDate = strtotime("+2 months", strtotime($today));
+        $sDate = date("Y-m-d", $sDate);
+        $eDate = date("Y-m-d", $eDate);
+        //End of Dummy data for start date end date
 
+        $loop = $sDate;
+        while($loop!=$eDate){
+            $date_counts[$loop] = 0;
+            $loop = strtotime("+1 day", strtotime($loop));
+            $loop = date("Y-m-d", $loop);
+        }
+
+        foreach($user_stmts as $us){
+            $loop = $sDate;
+            while($loop!=$today){
+                if($loop==$us["date"]){ $date_counts[$loop]++; }
+                $loop = strtotime("+1 day", strtotime($loop));
+                $loop = date("Y-m-d", $loop);
+            }
+        }
+
+        //Results Overview
         $data = DB::table('results')->where('subjectCode',$my_course[0]->cid)->select(
                 DB::raw('grade as grade'),
                 DB::raw('count(*) as number'))
@@ -76,11 +95,15 @@ class PersonalCoursesController extends Controller{
         foreach($data as $key => $value){
             $array[++$key] = [$value->grade, $value->number];
         }
+        //End of Results Overview
+
         return view('student.courses.personal',[
             'crs'=> $course_name,
-            'counts'=> $verb_counts,])
+            // 'counts'=> $verb_counts,
+            ])
             ->with('grade', json_encode($array))
             ->with('activity', json_encode($activity))
+            ->with('date_counts', json_encode($date_counts))
             ;
     }
 

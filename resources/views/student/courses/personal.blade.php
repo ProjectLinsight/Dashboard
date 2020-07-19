@@ -76,24 +76,28 @@
                                 <div class="card-body">
                                     <div class="panel panel-default">
                                         <div class="panel-body">
+                                            <canvas id="dateGraph" height="280" width="600"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="pb-3">
+                            <div class="card shadow">
+                                <div class="card-header bg-info">
+                                    <h4 class="text-white my-0"> Contribution status </h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body">
                                             <canvas id="activityGraph" height="280" width="600"></canvas>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        <table>
-                            @foreach($counts as $key => $value)
-                                <tr>
-                                    <td>{{$key}} &emsp; {{$value}}
-
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </table>
-                    </div>
-                    <div class="col-md-4">
                         <div class="card shadow">
                             <div class="card-header bg-info text-center text-white">
                                 <h4 class="my-0"> Results Overview</h4>
@@ -125,10 +129,30 @@
             data: {
                 labels:act,
                 datasets: [{
-                    label: 'Activity',
+                    label: 'Activity by type',
                     data: countx,
                     borderWidth: 1,
                 }]
             },
+        });
+
+        var date_counts = <?php echo $date_counts; ?>;
+        var date_act = new Array();
+        var date_countx = new Array();
+        for (var key in date_counts) {
+            date_act.push(key);
+            date_countx.push(date_counts[key]);
+        }
+        var dategraph = document.getElementById("dateGraph");
+        var myChart = new Chart(dategraph, {
+            type: 'line',
+            data: {
+                labels:date_act,
+                datasets: [{
+                    label: 'Activity over Time',
+                    data: date_countx,
+                    borderWidth: 1,
+                }]
+            }
         });
 </script>
