@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Shared\sharedCourseXapi ;
+use DateTime;
 use App\Courses ;
 use App\User ;
 
@@ -62,7 +63,9 @@ class PersonalCoursesController extends Controller{
             else{ $activity["Other"]++; }
         }
         $verb_counts = array_count_values(array_column($user_stmts, 'verb'));
-        // dd($verb_counts);
+        $date_counts = array_count_values(array_column($user_stmts, 'date'));
+        dd($date_counts);
+
 
         $data = DB::table('results')->where('subjectCode',$my_course[0]->cid)->select(
                 DB::raw('grade as grade'),
@@ -79,5 +82,12 @@ class PersonalCoursesController extends Controller{
             ->with('grade', json_encode($array))
             ->with('activity', json_encode($activity))
             ;
+    }
+
+    public function datediffInWeeks($date1, $date2)
+    {
+        $first = DateTime::createFromFormat('Y-m-d', $date1);
+        $second = DateTime::createFromFormat('Y-m-d', $date2);
+        return floor($first->diff($second)->days/7);
     }
 }
