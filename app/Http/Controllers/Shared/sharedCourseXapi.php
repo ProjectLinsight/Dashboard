@@ -13,7 +13,7 @@ class sharedCourseXapi extends Controller{
         $newXapi = New sharedXapi();
         $statements = $newXapi->getData();
         $stmt_count = count($statements);
-
+        $count=0;
         $state = array();
         for($i=0;$i<$stmt_count;$i++){
             //$temp = json_decode($statements[$i]->data);
@@ -27,30 +27,60 @@ class sharedCourseXapi extends Controller{
                         // array_push($stmt_arr,$temp->object->definition->extensions);
                         if($temp->object->definition->extensions->$key===$course_id){
                         //     array_push($state,$temp->actor);
-                            $state[$i]['user'] = $temp->actor ;
-                            $state[$i]['verb'] = $temp->verb->display->en;
-                            $state[$i]['title'] = $temp->object->definition->name->en ;
-                            $state[$i]['definition'] = $temp->object->definition ;
-                            $state[$i]['course'] = $temp->object->definition->extensions->$key ;
-                            $state[$i]['timestamp'] = $temp->timestamp ;
-
+                            $state[$count]['user'] = $temp->actor ;
+                            $state[$count]['verb'] = $temp->verb->display->en;
+                            $state[$count]['title'] = $temp->object->definition->name->en ;
+                            $state[$count]['definition'] = $temp->object->definition ;
+                            $state[$count]['course'] = $temp->object->definition->extensions->$key ;
+                            $state[$count]['timestamp'] = $temp->timestamp ;
+                            $state[$count]['type'] = "other";
                             $start_date = explode("T",$temp->timestamp);
-                            $state[$i]['date'] = $start_date[0] ;
+                            $state[$count]['date'] = $start_date[0] ;
+                            $count++;
                         // }
 
                     }
                 }
                 if(isset($temp->context->contextActivities->grouping[1]->definition->extensions->$key)){
                     if($temp->context->contextActivities->grouping[1]->definition->extensions->$key===$course_id){
-                        $state[$i]['user'] = $temp->actor ;
-                        $state[$i]['verb'] = $temp->verb->display->en;
-                        $state[$i]['title'] = $temp->object->definition->name->en ;
-                        $state[$i]['definition'] = $temp->object->definition ;
-                        $state[$i]['course'] = $temp->context->contextActivities->grouping[1]->definition->extensions->$key ;
-                        $state[$i]['timestamp'] = $temp->timestamp ;
-
-                        $start_date = explode("T",$temp->timestamp);
-                        $state[$i]['date'] = $start_date[0] ; 
+                        if($logArray[sizeof($logArray)-1]==="scored"){
+                            $state[$count]['user'] = $temp->actor ;
+                            $state[$count]['verb'] = $temp->verb->display->en;
+                            $state[$count]['title'] = $temp->object->definition->name->en ;
+                            $state[$count]['definition'] = $temp->object->definition ;
+                            $state[$count]['course'] = $temp->context->contextActivities->grouping[1]->definition->extensions->$key ;
+                            $state[$count]['timestamp'] = $temp->timestamp ;
+                            $state[$count]['type'] = "assignment";
+                            $state[$count]['marks'] = $temp->result->score->raw ;
+                            $start_date = explode("T",$temp->timestamp);
+                            $state[$count]['date'] = $start_date[0] ; 
+                            $count++;
+                        }
+                        else if($logArray[sizeof($logArray)-2]==="quiz" && $logArray[sizeof($logArray)-1]==="completed"){
+                            $state[$count]['user'] = $temp->actor ;
+                            $state[$count]['verb'] = $temp->verb->display->en;
+                            $state[$count]['title'] = $temp->object->definition->name->en ;
+                            $state[$count]['definition'] = $temp->object->definition ;
+                            $state[$count]['course'] = $temp->context->contextActivities->grouping[1]->definition->extensions->$key ;
+                            $state[$count]['timestamp'] = $temp->timestamp ;
+                            $state[$count]['type'] = "quiz";
+                            $state[$count]['marks'] = $temp->result->score->raw ;
+                            $start_date = explode("T",$temp->timestamp);
+                            $state[$count]['date'] = $start_date[0] ; 
+                            $count++;
+                        }
+                        else{
+                            $state[$count]['user'] = $temp->actor ;
+                            $state[$count]['verb'] = $temp->verb->display->en;
+                            $state[$count]['title'] = $temp->object->definition->name->en ;
+                            $state[$count]['definition'] = $temp->object->definition ;
+                            $state[$count]['course'] = $temp->context->contextActivities->grouping[1]->definition->extensions->$key ;
+                            $state[$count]['timestamp'] = $temp->timestamp ;
+                            $state[$count]['type'] = "other";
+                            $start_date = explode("T",$temp->timestamp);
+                            $state[$count]['date'] = $start_date[0] ; 
+                            $count++;
+                        }
                     }
                 }
 
