@@ -27,18 +27,7 @@ class LecturerOverviewController extends Controller{
             ]);
         
     }
-    public function enrollStudents(Request $request){
-        for($i=0;$i<sizeof($request->enroll);$i++){
-            $data = new Stu_enrollment ;
-            $data->cid = $request->cid ;
-            $data->index = $request->enroll[$i] ;
-            $data->flag = true ;
-            $data->year = "2020" ;
-            $data->save();
-        }
-    //return view('lecturer/courses');
-    return redirect('lecturer/'.auth()->user()->id.'/'.$request->cid.'/courses');
-    }
+   
     public function assignmentStat()
     {
         $data = new sharedXapi();
@@ -94,6 +83,8 @@ class LecturerOverviewController extends Controller{
         $count=0;
         $stmt_arr = array();
         $distinct_arr = array();
+        $distinctass_arr = array();
+        $ass_list = array();
         $notcom_array = array();
         $result = 0;
         $crs = DB::table('users')->get();
@@ -110,7 +101,7 @@ class LecturerOverviewController extends Controller{
             //     $stmt_arr[$count]['user'] = $state[$i]->actor ;
             // }
         }
-        //get distinct values
+        //get distinct user values
         $sub_count = 1; 
         $s = 0;
         $distinct_arr[$s]['user'] = $stmt_arr[$s]['user'] ;
@@ -118,7 +109,7 @@ class LecturerOverviewController extends Controller{
         for ( $i = 1; $i < $count; $i++) 
         { 
             for ($j = 0; $j < $i; $j++) {
-                if ($stmt_arr[$i]['user'] == $stmt_arr[$j]['user']) 
+                if ($stmt_arr[$i]['user'] == $stmt_arr[$j]['user'] && $stmt_arr[$i]['assignment'] == $stmt_arr[$j]['assignment'] ) 
                    break; 
             }
             if ($i == $j){ 
@@ -128,8 +119,39 @@ class LecturerOverviewController extends Controller{
                 $distinct_arr[$s]['assignment'] = $stmt_arr[$i]['assignment'] ; 
             }
         }
+        //get distinct completed assignments values
+        $ass_count = 1; 
+        $s = 0;
+        $distinctass_arr[$s]['assignment'] = $stmt_arr[$s]['assignment'] ;
+        for ( $i = 1; $i < $count; $i++) 
+        { 
+            for ($j = 0; $j < $i; $j++) {
+                if ($stmt_arr[$i]['assignment'] == $stmt_arr[$j]['assignment']) 
+                   break; 
+            }
+            if ($i == $j){ 
+                $ass_count++;
+                $s++;
+                $distinctass_arr[$s]['assignment'] = $stmt_arr[$i]['assignment'] ; 
+            }
+        }
+        // for ( $i = 0; $i < $ass_count; $i++){
+        //     array_push($ass_list,$distinctass_arr[$i]['assignment']);
+        //     // $ass_list[$i]['Number'] = 0;
+        // }
+        $assignment[] = ['assignment', 'Number'];
+        $assignment = array(
+            'Assignment 1' => 0,
+            'Assignment 2' => 0,
+            'Assignment 3' => 0
+         );
+         foreach($distinct_arr as $us){
+            if("Assignment 1"==$us["assignment"]){ $assignment["Assignment 1"]++; }
+            else if("Assignment 2"==$us["assignment"]){ $assignment["Assignment 2"]++; }
+            else if("Assignment 3"==$us["assignment"]){ $assignment["Assignment 3"]++; }
+        }
         
-        dd($count,$stmt_arr,$crs,$sub_count,$distinct_arr);
+        dd($count,$stmt_arr,$crs,$sub_count,$distinct_arr,$distinctass_arr,$ass_count,$assignment);
     }
 
     public function quizComp()
