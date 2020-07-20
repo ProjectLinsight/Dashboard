@@ -40,6 +40,19 @@ class sharedCourseXapi extends Controller{
 
                     }
                 }
+                if(isset($temp->context->contextActivities->grouping[1]->definition->extensions->$key)){
+                    if($temp->context->contextActivities->grouping[1]->definition->extensions->$key===$course_id){
+                        $state[$i]['user'] = $temp->actor ;
+                        $state[$i]['verb'] = $temp->verb->display->en;
+                        $state[$i]['title'] = $temp->object->definition->name->en ;
+                        $state[$i]['definition'] = $temp->object->definition ;
+                        $state[$i]['course'] = $temp->context->contextActivities->grouping[1]->definition->extensions->$key ;
+                        $state[$i]['timestamp'] = $temp->timestamp ;
+
+                        $start_date = explode("T",$temp->timestamp);
+                        $state[$i]['date'] = $start_date[0] ; 
+                    }
+                }
 
         }
         return($state) ;
