@@ -61,6 +61,10 @@
                     <hr class="content-center" style="width:75%;background : #555">
                 </li>
                 <li>
+                    <a href="/student/analysis"><i class="fas fa-chart-bar pr-2"></i>Analysis</a>
+                    <hr class="content-center" style="width:75%;background : #555">
+                </li>
+                <li>
                     <div class="p-3">
                         <button type="button" class="btn btn-outline-primary btn-block" data-toggle="modal" data-target="#exampleModalCenter">
                             <h6 class="pt-2"> <i class="far fa-edit pr-2"></i> write post <h6>

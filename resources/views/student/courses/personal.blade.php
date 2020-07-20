@@ -50,6 +50,10 @@
                     <a href="/courses"><i class="fas fa-id-card pr-2"></i>Course Data</a>
                     <hr class="content-center" style="width:75%;background : #555">
                 </li>
+                <li>
+                    <a href="/student/analysis"><i class="fas fa-chart-bar pr-2"></i>Analysis</a>
+                    <hr class="content-center" style="width:75%;background : #555">
+                </li>
             </ul>
         </div>
 

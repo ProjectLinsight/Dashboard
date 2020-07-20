@@ -24,6 +24,7 @@ Route::get('/admin/user','Admin\BulkRegisterController@index')->middleware('admi
 //Analysis
 Route::get('/admin/analysis','Analysis\xapiDataController@index')->middleware('admin');
 Route::get('stock/chart','StockController@chart')->middleware('student');
+Route::get('/student/analysis','Analysis\student_dataXapiController@index')->middleware('student');
 
 //Students
 Route::get('/home', 'Student\HomeController@index')->name('home')->middleware('student');
