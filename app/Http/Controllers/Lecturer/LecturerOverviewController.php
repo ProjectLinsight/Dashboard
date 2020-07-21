@@ -14,6 +14,7 @@ use App\Http\Controllers\Shared\sharedCourseXapi ;
 class LecturerOverviewController extends Controller{
     public function index($user,$course){
         $crs = DB::table('courses')->where('cid',$course)->get();
+        $stmt_arr = array();
         if(substr($course,0,1)=='I'){
             $degree = "Information Systems";
         } else if(substr($course,0,1)=='S'){
@@ -21,10 +22,12 @@ class LecturerOverviewController extends Controller{
         } 
 
         $stu = DB::table('users')->where('utype','Student')->where('degree',$degree)->get();
+        $stmt_arr=$this->assignmentComp();
         return view('lecturer/overview',[
             'crs'=>$crs[0],
             'stu'=>$stu,
-            ]);
+            ])
+            ->with('assignment', json_encode($stmt_arr));
         
     }
    
@@ -169,11 +172,15 @@ class LecturerOverviewController extends Controller{
 
         $stu = DB::table('users')->where('utype','Student')->where('degree',$degree)->get();
 
-        return view('lecturer.overview',[
-            'crs'=>$crs[0],
-            'stu'=>$stu,
-            ])
-            ->with('assignment', json_encode($assignment));
+        // return view('lecturer.overview',[
+        //     'crs'=>$crs[0],
+        //     'stu'=>$stu,
+        //     ])
+        //     ->with('assignment', json_encode($assignment));
+        return($assignment);
+
+        // return view('lecturer.overview',[] )
+        //     ->with('assignment', json_encode($assignment));
         
         
         dd($count,$stmt_arr,$crs,$sub_count,$distinct_arr,$distinctass_arr,$ass_count,$assignment);
