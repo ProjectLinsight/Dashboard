@@ -1,8 +1,12 @@
 @extends('layouts.app')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/home.css') }}" >
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="https://kit.fontawesome.com/d43d952765.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+
     <script type="text/javascript" src="{{ URL::asset('js/home.js') }}"></script>
+
     
 @section('content')
 <div class="container-fluid pt-5">
@@ -172,7 +176,7 @@
 
 
 
-<script type="text/javascript">
+<script type="application/javascript">
         var assignment = <?php echo $assignment; ?>;
         var act = new Array();
         var countx = new Array();
