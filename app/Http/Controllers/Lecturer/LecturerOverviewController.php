@@ -85,6 +85,7 @@ class LecturerOverviewController extends Controller{
         $distinct_arr = array();
         $distinctass_arr = array();
         $ass_list = array();
+        $assignment = array();
         $notcom_array = array();
         $result = 0;
         $crs = DB::table('users')->get();
@@ -139,7 +140,10 @@ class LecturerOverviewController extends Controller{
         //     array_push($ass_list,$distinctass_arr[$i]['assignment']);
         //     // $ass_list[$i]['Number'] = 0;
         // }
-        $assignment[] = ['assignment', 'Number'];
+        // $assignment[] = ['name', 'Number'];
+        // foreach($distinctass_arr as $key => $value){
+        //     $assignment[++$key] = [$value->name, $value->Number];
+        // }
         $assignment = array(
             'Assignment 1' => 0,
             'Assignment 2' => 0,
@@ -150,6 +154,10 @@ class LecturerOverviewController extends Controller{
             else if("Assignment 2"==$us["assignment"]){ $assignment["Assignment 2"]++; }
             else if("Assignment 3"==$us["assignment"]){ $assignment["Assignment 3"]++; }
         }
+
+        return view('lecturer.overview',[] )
+            ->with('assignment', json_encode($assignment));
+        
         
         dd($count,$stmt_arr,$crs,$sub_count,$distinct_arr,$distinctass_arr,$ass_count,$assignment);
     }

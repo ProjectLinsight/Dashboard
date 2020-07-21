@@ -69,7 +69,7 @@
                                     <!-- chart comes here -->
 
                                         <div class="panel-body">
-                                            <canvas id="canvas" height="280" width="600"></canvas>
+                                            <canvas id="assignmentGraph" height="280" width="600"></canvas>
                                         </div>
                                     </div>      
                                 </div>
@@ -170,4 +170,31 @@
     </div>
 </div>
 
+
+
+<script type="text/javascript">
+        var assignment = <?php echo $assignment; ?>;
+        var act = new Array();
+        var countx = new Array();
+        for (var key in assignment) {
+            act.push(key);
+            countx.push(assignment[key]);
+        }
+        console.log(countx);
+        console.log(act);
+        var ctx = document.getElementById("assignmentGraph");
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels:act,
+                datasets: [{
+                    label: 'Assignment Completion',
+                    data: countx,
+                    borderWidth: 1,
+                }]
+            },
+        });
+
+        
+</script>
 @endsection
