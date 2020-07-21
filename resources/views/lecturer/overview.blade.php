@@ -73,7 +73,7 @@
                                     <!-- chart comes here -->
 
                                         <div class="panel-body">
-                                            <canvas id="assignmentGraph" height="280" width="600"></canvas>
+                                            <canvas id="assignmentGraph" height="310" width="600"></canvas>
                                         </div>
                                     </div>      
                                 </div>
@@ -84,7 +84,7 @@
                     <div class="pb-3">
                             <div class="card shadow">
                                 <div class="card-header bg-info pb-1">
-                                    <h4 class="text-white text-center"> Activity Completion </h4>
+                                    <h4 class="text-white text-center"> Quiz Completion </h4>
                                 </div>
                                 <div class="card-body">
                                     <div class="panel panel-default">
@@ -92,7 +92,7 @@
                                     <!-- chart comes here -->
 
                                         <div class="panel-body">
-                                            <canvas id="canvas" height="280" width="600"></canvas>
+                                            <canvas id="quizGraph" height="310" width="600"></canvas>
                                         </div>
                                     </div>      
                                 </div>
@@ -197,7 +197,32 @@
                     borderWidth: 1,
                 }]
             },
+        }); 
+        var quiz = <?php echo $quiz; ?>;
+        var qarr = new Array();
+        var countq = new Array();
+        for (var k in quiz) {
+            qarr.push(k);
+            countq.push(quiz[k]);
+        }
+        console.log(countq);
+        console.log(qarr);
+        var quizgraph = document.getElementById("quizGraph");
+        var myChart = new Chart(quizgraph, {
+            type: 'bar',
+            data: {
+                labels:qarr,
+                datasets: [{
+                    label: 'Quiz Completion',
+                    data: countq,
+                    borderWidth: 1,
+                }]
+            },
         });
 
-        
 </script>
+
+        
+
+        
+

@@ -15,6 +15,7 @@ class LecturerOverviewController extends Controller{
     public function index($user,$course){
         $crs = DB::table('courses')->where('cid',$course)->get();
         $stmt_arr = array();
+        $q_arr = array();
         if(substr($course,0,1)=='I'){
             $degree = "Information Systems";
         } else if(substr($course,0,1)=='S'){
@@ -23,11 +24,13 @@ class LecturerOverviewController extends Controller{
 
         $stu = DB::table('users')->where('utype','Student')->where('degree',$degree)->get();
         $stmt_arr=$this->assignmentComp();
+        $q_arr=$this->quizComp();
         return view('lecturer/overview',[
             'crs'=>$crs[0],
             'stu'=>$stu,
             ])
-            ->with('assignment', json_encode($stmt_arr));
+            ->with('assignment', json_encode($stmt_arr))
+            ->with('quiz', json_encode($q_arr));
         
     }
    
@@ -105,7 +108,7 @@ class LecturerOverviewController extends Controller{
             //     $stmt_arr[$count]['user'] = $state[$i]->actor ;
             // }
         }
-        //get distinct user values
+        //get distinct assignment completed users
         $sub_count = 1; 
         $s = 0;
         $distinct_arr[$s]['user'] = $stmt_arr[$s]['user'] ;
@@ -123,7 +126,7 @@ class LecturerOverviewController extends Controller{
                 $distinct_arr[$s]['assignment'] = $stmt_arr[$i]['assignment'] ; 
             }
         }
-        //get distinct completed assignments values
+        //get distinct completed assignment list
         $ass_count = 1; 
         $s = 0;
         $distinctass_arr[$s]['assignment'] = $stmt_arr[$s]['assignment'] ;
@@ -166,12 +169,7 @@ class LecturerOverviewController extends Controller{
        
         
         return($assignment);
-
-        // return view('lecturer.overview',[] )
-        //     ->with('assignment', json_encode($assignment));
-        
-        
-        dd($count,$stmt_arr,$crs,$sub_count,$distinct_arr,$distinctass_arr,$ass_count,$assignment);
+        // dd($count,$stmt_arr,$crs,$sub_count,$distinct_arr,$distinctass_arr,$ass_count,$assignment);
     }
 
     public function quizComp()
@@ -192,15 +190,70 @@ class LecturerOverviewController extends Controller{
                 $general=explode("/",$state[$i]->verb->id);
                 if($general[sizeof($general)-1]==="completed"){
                     $stmt_arr[$count]['user'] = $state[$i]->actor->account->name ; 
-                    $stmt_arr[$count]['assignment'] = $state[$i]->object->definition->name->en;
-                    $stmt_arr[$count]['id'] = $state[$i]->id;
+                    $stmt_arr[$count]['quiz'] = $state[$i]->object->definition->name->en;
+                    // $stmt_arr[$count]['id'] = $state[$i]->id;
                     $count+=1;
                 }
             }
-            //
+        }
+         //get distinct quiz completed users
+         $sub_count = 1; 
+         $s = 0;
+         $distinct_arr[$s]['user'] = $stmt_arr[$s]['user'] ;
+         $distinct_arr[$s]['quiz'] = $stmt_arr[$s]['quiz'] ;
+         for ( $i = 1; $i < $count; $i++) 
+         { 
+             for ($j = 0; $j < $i; $j++) {
+                 if ($stmt_arr[$i]['user'] == $stmt_arr[$j]['user'] && $stmt_arr[$i]['quiz'] == $stmt_arr[$j]['quiz'] ) 
+                    break; 
+             }
+             if ($i == $j){ 
+                 $sub_count++;
+                 $s++;
+                 $distinct_arr[$s]['user'] = $stmt_arr[$i]['user'] ;
+                 $distinct_arr[$s]['quiz'] = $stmt_arr[$i]['quiz'] ; 
+             }
+         }
+        //get distinct completed quiz list
+        $quiz_count = 1; 
+        $s = 0;
+        $distinctquiz_arr[$s]['quiz'] = $stmt_arr[$s]['quiz'] ;
+        for ( $i = 1; $i < $count; $i++) 
+        { 
+            for ($j = 0; $j < $i; $j++) {
+                if ($stmt_arr[$i]['quiz'] == $stmt_arr[$j]['quiz']) 
+                   break; 
+            }
+            if ($i == $j){ 
+                $quiz_count++;
+                $s++;
+                $distinctquiz_arr[$s]['quiz'] = $stmt_arr[$i]['quiz'] ; 
+            }
+        }
+        $quiz = array(
+            'Quiz 1' => 0,
+            'Quiz 2' => 0,
+            'Quiz 3' => 0,
+            'Quiz 4' => 0,
+            'Quiz 5' => 0,
+            'IT General Quiz' => 0
+         );
+         foreach($distinct_arr as $us){
+            if("Quiz 1"==$us["quiz"]){ $quiz["Quiz 1"]++; }
+            else if("Quiz 2"==$us["quiz"]){ $quiz["Quiz 2"]++; }
+            else if("Quiz 3"==$us["quiz"]){ $quiz["Quiz 3"]++; }
+            else if("Quiz 4"==$us["quiz"]){ $quiz["Quiz 4"]++; }
+            else if("Quiz 5"==$us["quiz"]){ $quiz["Quiz 5"]++; }
+            else if("IT General Quiz"==$us["quiz"]){ $quiz["IT General Quiz"]++; }
         }
         
-        
-        dd($count,$stmt_arr);
+        return ($quiz);
+        dd($count,$stmt_arr,$distinctquiz_arr,$quiz_count);
+    }
+
+    public function risk(){
+
+
+
     }
 }
