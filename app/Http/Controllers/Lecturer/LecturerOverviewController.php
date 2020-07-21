@@ -163,13 +163,7 @@ class LecturerOverviewController extends Controller{
             else if("Assignment 5"==$us["assignment"]){ $assignment["Assignment 5"]++; }
             else if("Assignment 6"==$us["assignment"]){ $assignment["Assignment 6"]++; }
         }
-       
-        return view('lecturer.overview',[])
-            ->with('assignment', json_encode($assignment));
-        // return($assignment);
-
-        // return view('lecturer.overview',[] )
-        //     ->with('assignment', json_encode($assignment));
+        return($assignment);
         
         
         dd($count,$stmt_arr,$crs,$sub_count,$distinct_arr,$distinctass_arr,$ass_count,$assignment);
