@@ -75,7 +75,7 @@ class LecturerOverviewController extends Controller{
         // dd($state2);
     }
 
-    public function assignmentComp()
+    public function assignmentComp($user,$course)
     {
         $data = new sharedXapi();
         $state = $data->getData();
@@ -147,15 +147,32 @@ class LecturerOverviewController extends Controller{
         $assignment = array(
             'Assignment 1' => 0,
             'Assignment 2' => 0,
-            'Assignment 3' => 0
+            'Assignment 3' => 0,
+            'Assignment 4' => 0,
+            'Assignment 5' => 0,
+            'Assignment 6' => 0
          );
          foreach($distinct_arr as $us){
             if("Assignment 1"==$us["assignment"]){ $assignment["Assignment 1"]++; }
             else if("Assignment 2"==$us["assignment"]){ $assignment["Assignment 2"]++; }
             else if("Assignment 3"==$us["assignment"]){ $assignment["Assignment 3"]++; }
+            else if("Assignment 4"==$us["assignment"]){ $assignment["Assignment 4"]++; }
+            else if("Assignment 5"==$us["assignment"]){ $assignment["Assignment 5"]++; }
+            else if("Assignment 6"==$us["assignment"]){ $assignment["Assignment 6"]++; }
         }
+        $crs = DB::table('courses')->where('cid',$course)->get();
+        if(substr($course,0,1)=='I'){
+            $degree = "Information Systems";
+        } else if(substr($course,0,1)=='S'){
+            $degree = "Computer Science";
+        } 
 
-        return view('lecturer.overview',[] )
+        $stu = DB::table('users')->where('utype','Student')->where('degree',$degree)->get();
+
+        return view('lecturer.overview',[
+            'crs'=>$crs[0],
+            'stu'=>$stu,
+            ])
             ->with('assignment', json_encode($assignment));
         
         
