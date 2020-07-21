@@ -78,7 +78,7 @@ class LecturerOverviewController extends Controller{
         // dd($state2);
     }
 
-    public function assignmentComp($user,$course)
+    public function assignmentComp()
     {
         $data = new sharedXapi();
         $state = $data->getData();
@@ -163,21 +163,10 @@ class LecturerOverviewController extends Controller{
             else if("Assignment 5"==$us["assignment"]){ $assignment["Assignment 5"]++; }
             else if("Assignment 6"==$us["assignment"]){ $assignment["Assignment 6"]++; }
         }
-        $crs = DB::table('courses')->where('cid',$course)->get();
-        if(substr($course,0,1)=='I'){
-            $degree = "Information Systems";
-        } else if(substr($course,0,1)=='S'){
-            $degree = "Computer Science";
-        } 
-
-        $stu = DB::table('users')->where('utype','Student')->where('degree',$degree)->get();
-
-        // return view('lecturer.overview',[
-        //     'crs'=>$crs[0],
-        //     'stu'=>$stu,
-        //     ])
-        //     ->with('assignment', json_encode($assignment));
-        return($assignment);
+       
+        return view('lecturer.overview',[])
+            ->with('assignment', json_encode($assignment));
+        // return($assignment);
 
         // return view('lecturer.overview',[] )
         //     ->with('assignment', json_encode($assignment));
