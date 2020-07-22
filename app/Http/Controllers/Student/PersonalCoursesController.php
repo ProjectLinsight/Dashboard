@@ -54,10 +54,13 @@ class PersonalCoursesController extends Controller{
             if("viewed"==$us["verb"]){ $activity["Viewed"]++; }
             // else if("visited"==$us["verb"]){ $activity["Visited"]++; }
             // else if("started"==$us["verb"]){ $activity["Started"]++; }
-            else if("completed"==$us["verb"]){ $activity["Completed"]++; }
+            else if("completed"==$us["verb"]){
+                $activity["Completed"]++;
+                array_push($submittedAssignments,$us);
+            }
             else if("submitted"==$us["verb"]){
                 $activity["Submitted"]++;
-                array_push($submittedAssignments,$us);
+                // array_push($submittedAssignments,$us);
             }
             else if("attained grade for"==$us["verb"]){
                 $activity["Graded"]++;
@@ -69,6 +72,8 @@ class PersonalCoursesController extends Controller{
             // else if("enrolled to"==$us["verb"]){ $activity["Created"]++; }
             // else{ $activity["Other"]++; }
         }
+
+        // dd($gradedAssignments);
 
         //Dummy data for start date end date
         $today = date("Y-m-d");

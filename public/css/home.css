@@ -129,3 +129,12 @@
     .modal-post { width: 200px; }
 }
 
+
+.milestone{
+    position:absolute;
+	margin-top:-10px;
+	z-index:1;
+	height:30px;
+	width:30px;
+	border-radius:20px;
+}

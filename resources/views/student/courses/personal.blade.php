@@ -72,7 +72,7 @@
                 <div class="row">
                     <div class="col-md-8">
                         <hr><h1 class="text-center"> {{$crs->cName}} </h1><hr>
-                        <div class="pb-3">
+                        <div class="pb-4">
                             <div class="card shadow">
                                 <div class="card-header bg-info">
                                     <h4 class="text-white my-0"> Activity Distribution </h4>
@@ -82,6 +82,26 @@
                                         <div class="panel-body">
                                             <canvas id="dateGraph" height="280" width="600"></canvas>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pb-4">
+                            <div class="card shadow">
+                                <div class="card-header bg-primary">
+                                    <h4 class="my-0 text-white"> Your Progress </h4>
+                                </div>
+                                <div class="card-body py-5">
+                                    <div class="progress" style="height:10px">
+                                        <?php
+                                            $count = 4 ;
+                                            $temp = 0 ;
+                                            for($i=0;$i<$count;$i++){
+                                                $temp = $temp + 100/($count + 1)  ;
+                                                $padding = strval($temp)."%" ; ?>
+                                            <div class="milestone bg-primary" style="left:{{$padding}}"></div>
+                                        <?php } ?>
+                                        <div class="progress-bar bg-primary" style="width: 30%;"></div>
                                     </div>
                                 </div>
                             </div>
@@ -98,7 +118,7 @@
                                         <?php
                                             $flag = "You have submitted this assignment and grades pending" ;
                                             $color = "bg-primary";
-                                            $icon = "check-cicle";
+                                            $icon = "clock-o";
                                         ?>
                                     @endif
                                 @endforeach
@@ -126,7 +146,13 @@
                                     <div class="card-body">
                                         <div class="collapse" id="collapseExample">
                                             <div class="card card-body">
-                                                <h4>{{$flag}}</h4>
+                                                <h4> <strong> {{$flag}} </strong></h4>
+                                                <hr>
+                                                @if($flag == "Your assignment is Submitted and Graded")
+                                                    <h6> <strong> Assignment Weight  &ensp; : &ensp; </strong> {{$assignment->weight}} out of 100  </h6>
+                                                    <h6> <strong> Marks Obtained  &emsp;  &emsp; : &ensp; </strong> {{$graded['marks']}} out of {{$assignment->maxMarks}} </h6>
+                                                    <br>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
