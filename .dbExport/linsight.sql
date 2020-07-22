@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 02, 2020 at 07:25 PM
+-- Generation Time: Jul 22, 2020 at 05:22 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.5
 
@@ -48,6 +48,7 @@ CREATE TABLE `assign_lecturers` (
   `cid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `lid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `year` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `startDate` date NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -56,8 +57,17 @@ CREATE TABLE `assign_lecturers` (
 -- Dumping data for table `assign_lecturers`
 --
 
-INSERT INTO `assign_lecturers` (`id`, `cid`, `lid`, `year`, `created_at`, `updated_at`) VALUES
-(1, 'SCS3209', 'rja', '2020', '2020-07-01 00:09:40', '2020-07-01 00:09:40');
+INSERT INTO `assign_lecturers` (`id`, `cid`, `lid`, `year`, `startDate`, `created_at`, `updated_at`) VALUES
+(1, 'SCS3209', 'rja', '2020', '0000-00-00', '2020-07-01 00:09:40', '2020-07-01 00:09:40'),
+(2, 'IS3102', 'rja', '2020', '0000-00-00', '2020-07-03 04:56:07', '2020-07-03 04:56:07'),
+(3, 'IS3108', 'rja', '2020', '0000-00-00', '2020-07-03 04:56:45', '2020-07-03 04:56:45'),
+(4, 'IS3117', 'rja', '2020', '0000-00-00', '2020-07-03 04:57:10', '2020-07-03 04:57:10'),
+(5, 'IS3113', 'rja', '2020', '0000-00-00', '2020-07-03 04:57:50', '2020-07-03 04:57:50'),
+(6, 'SCS3201', 'rja', '2020', '0000-00-00', '2020-07-03 04:58:04', '2020-07-03 04:58:04'),
+(7, 'SCS3203', 'rja', '2020', '0000-00-00', '2020-07-03 04:58:14', '2020-07-03 04:58:14'),
+(8, 'SCS3207', 'rja', '2020', '0000-00-00', '2020-07-03 04:58:30', '2020-07-03 04:58:30'),
+(9, 'SCS3214', 'rja', '2020', '0000-00-00', '2020-07-03 04:59:03', '2020-07-03 04:59:03'),
+(10, 'SCS1202', 'rja', '2020', '2020-07-14', '2020-07-13 18:33:49', '2020-07-13 18:33:49');
 
 -- --------------------------------------------------------
 
@@ -104,7 +114,6 @@ INSERT INTO `courses` (`id`, `cName`, `cid`, `credits`, `type`, `semester`, `ass
 (18, 'Machine Learning and Neural Computing', 'IS3117', '2', 'Optional', 'One', '', '', '', '', '2020-05-22 03:46:30', '2020-05-22 03:46:30'),
 (19, 'E-Learning and Instructional Design', 'IS3118', '2', 'Optional', 'One', '', '', '', '', '2020-05-22 03:47:10', '2020-05-22 03:47:10'),
 (20, 'Industrial Placement', 'EN3101', '8', 'Compulsory', 'Two', '', '', '', '', '2020-05-22 03:47:51', '2020-05-22 03:47:51'),
-(21, 'Data Structures and Algorithms I', 'SCS1201', '3', 'Compulsory', 'One', '', '', '', '', '2020-05-22 05:33:21', '2020-05-22 05:33:21'),
 (22, 'Programming Using C', 'SCS1202', '3', 'Compulsory', 'One', '', '', '', '', '2020-05-22 05:33:47', '2020-05-22 05:33:47'),
 (23, 'Database I', 'SCS1203', '3', 'Compulsory', 'One', '', '', '', '', '2020-05-22 05:34:08', '2020-05-22 05:34:08'),
 (24, 'Discrete Mathematics I', 'SCS1204', '2', 'Compulsory', 'One', '', '', '', '', '2020-05-22 05:34:48', '2020-05-22 05:34:48'),
@@ -194,7 +203,7 @@ INSERT INTO `courses` (`id`, `cName`, `cid`, `credits`, `type`, `semester`, `ass
 (108, 'Graph Theory', 'SCS3206', '1', 'CS100', 'One', '', '', '', '', '2020-05-22 07:10:58', '2020-05-22 07:10:58'),
 (109, 'Software Quality Assurance', 'SCS3207', '2', 'CS011', 'One', '', '', '', '', '2020-05-22 07:11:32', '2020-05-22 07:11:32'),
 (110, 'Software Project Management', 'SCS3208', '2', 'CS011', 'One', '', '', '', '', '2020-05-22 07:12:21', '2020-05-22 07:12:21'),
-(111, 'Human Computer Interaction', 'SCS3209', '3', 'CS010', 'One', '', '', '', '', '2020-05-22 07:13:13', '2020-05-22 07:13:13'),
+(111, 'Human Computer Interaction', 'SCS3209', '3', 'CS010', 'One', '50', '50', 'none', 'will be uploaded soon', '2020-05-22 07:13:13', '2020-07-10 14:47:55'),
 (112, 'Systems and Network Administration', 'SCS3210', '3', 'Optional', 'One', '', '', '', '', '2020-05-22 07:13:45', '2020-05-22 07:13:45'),
 (113, 'Compiler Theory', 'SCS3211', '2', 'CS100', 'One', '', '', '', '', '2020-05-22 07:14:21', '2020-05-22 07:14:21'),
 (114, 'Mobile Application Development', 'SCS3212', '3', 'Optional', 'One', '', '', '', '', '2020-05-22 07:15:04', '2020-05-22 07:15:04'),
@@ -228,7 +237,8 @@ INSERT INTO `courses` (`id`, `cName`, `cid`, `credits`, `type`, `semester`, `ass
 (142, 'Philosophy of Science', 'SCS4225', '1', 'Compulsory', 'Two', '', '', '', '', '2020-05-22 07:32:01', '2020-05-22 07:32:01'),
 (143, 'Intelligent Systems', 'SCS4226', '2', 'Optional', 'Two', '', '', '', '', '2020-05-22 07:32:26', '2020-05-22 07:32:26'),
 (144, 'Final Year Project in Software Engineering', 'SCS4223', '8', 'CSX1X', 'Spanned', '', '', '', '', '2020-05-22 07:33:02', '2020-05-22 07:33:02'),
-(145, 'Final Year Project in Computer Science', 'SCS4224', '8', 'CS1XX', 'Spanned', '', '', '', '', '2020-05-22 07:33:28', '2020-05-22 07:33:28');
+(145, 'Final Year Project in Computer Science', 'SCS4224', '8', 'CS1XX', 'Spanned', '', '', '', '', '2020-05-22 07:33:28', '2020-05-22 07:33:28'),
+(0, 'Data Structures and Algorithms I', 'SCS1201', '3', 'Compulsory', 'One', '', '', '', '', '2020-07-18 06:28:13', '2020-07-18 06:28:13');
 
 -- --------------------------------------------------------
 
@@ -370,7 +380,7 @@ CREATE TABLE `posts` (
 
 INSERT INTO `posts` (`id`, `user_id`, `title`, `description`, `image`, `created_at`, `updated_at`) VALUES
 (1, 301, 'First Post', 'This is the first test post. and it comes with an image too. :)', 'logo1.png.png', '2020-06-08 11:24:10', '2020-06-09 22:49:00'),
-(2, 301, 'Second Post', 'This is the second post. there\'s no image thou', 'uploads/WJsyOIKV8gInLBHMVFKiAnFDMJaBMqrrwEya2HvK.png', '2020-06-08 11:26:47', '2020-06-09 22:58:09');
+(2, 301, 'Second Post', 'This is the second post. there\'s no image thou', NULL, '2020-06-08 11:26:47', '2020-06-09 22:58:09');
 
 -- --------------------------------------------------------
 
@@ -9188,7 +9198,15 @@ CREATE TABLE `stu_enrollments` (
 
 INSERT INTO `stu_enrollments` (`id`, `cid`, `index`, `year`, `flag`, `created_at`, `updated_at`) VALUES
 (1, 'IS3103', '17020328', '2020', 1, '2020-06-30 14:24:19', '2020-06-30 14:24:19'),
-(2, 'SCS3209', '17000394', '2020', 1, '2020-07-01 00:48:18', '2020-07-01 00:48:18');
+(2, 'SCS3209', '17000394', '2020', 1, '2020-07-01 00:48:18', '2020-07-01 00:48:18'),
+(4, 'IS3102', '17020255', '2020', 1, '2020-07-03 05:00:10', '2020-07-03 05:00:10'),
+(5, 'IS3108', '17020255', '2020', 1, '2020-07-03 05:00:22', '2020-07-03 05:00:22'),
+(6, 'IS3117', '17020255', '2020', 1, '2020-07-03 05:00:38', '2020-07-03 05:00:38'),
+(7, 'IS3113', '17020255', '2020', 1, '2020-07-03 05:01:05', '2020-07-03 05:01:05'),
+(8, 'SCS3209', '17000394', '2020', 1, '2020-07-03 05:01:29', '2020-07-03 05:01:29'),
+(9, 'SCS3201', '17000394', '2020', 1, '2020-07-03 05:01:41', '2020-07-03 05:01:41'),
+(10, 'SCS3203', '17000394', '2020', 1, '2020-07-03 05:01:58', '2020-07-03 05:01:58'),
+(11, 'SCS3214', '17000394', '2020', 1, '2020-07-03 05:02:14', '2020-07-03 05:02:14');
 
 -- --------------------------------------------------------
 
@@ -9238,7 +9256,7 @@ INSERT INTO `users` (`id`, `name`, `email`, `utype`, `email_verified_at`, `passw
 (298, 'Anonymous User', '2017is021@stu.ucsc.cmb.ac.lk', 'Student', NULL, '$2y$10$ab.OHC7YN.naGd5l0JtegO9IgpNvT0OKEP30bACtYEn6h0cq0Jmom', '2016/2017', 'Information Systems', '17020212', NULL, '2020-06-07 14:02:15', '2020-06-07 14:02:15'),
 (299, 'Anonymous User', '2017is023@stu.ucsc.cmb.ac.lk', 'Student', NULL, '$2y$10$aLSgnbHMf77Iyb/oArlEh.nj2p3PaWyjPv6IbnU3MUrI2IaiuIAWq', '2016/2017', 'Information Systems', '17020239', NULL, '2020-06-07 14:02:15', '2020-06-07 14:02:15'),
 (300, 'Anonymous User', '2017is024@stu.ucsc.cmb.ac.lk', 'Student', NULL, '$2y$10$hATh/5RyHXyupnazlpjYBut8XFy0RSfiyKLs/G5s9zzouAgd65Fv.', '2016/2017', 'Information Systems', '17020247', NULL, '2020-06-07 14:02:15', '2020-06-07 14:02:15'),
-(301, 'Anonymous User', '2017is025@stu.ucsc.cmb.ac.lk', 'Student', NULL, '$2y$10$kcdwTgW6kmcOEcG1Sv5Ryug8O1WnaSbz4oG/lIEy8L24wJSDQn9Re', '2016/2017', 'Information Systems', '17020255', NULL, '2020-06-07 14:02:15', '2020-06-07 14:02:15'),
+(301, 'Raveesha Fernando', '2017is025@stu.ucsc.cmb.ac.lk', 'Student', NULL, '$2y$10$kcdwTgW6kmcOEcG1Sv5Ryug8O1WnaSbz4oG/lIEy8L24wJSDQn9Re', '2016/2017', 'Information Systems', '17020255', NULL, '2020-06-07 14:02:15', '2020-06-07 14:02:15'),
 (302, 'Anonymous User', '2017is026@stu.ucsc.cmb.ac.lk', 'Student', NULL, '$2y$10$5aPip/iyo0b96eEZS8tdTulZBGvYOzqgvtCEHumj7X5H8bymnensq', '2016/2017', 'Information Systems', '17020263', NULL, '2020-06-07 14:02:15', '2020-06-07 14:02:15'),
 (303, 'Anonymous User', '2017is027@stu.ucsc.cmb.ac.lk', 'Student', NULL, '$2y$10$C5eb8DY.fIIYRtw07o8bduSnVbhyXwMiTvBWfiMyCaqLl/yKppUC2', '2016/2017', 'Information Systems', '17020271', NULL, '2020-06-07 14:02:15', '2020-06-07 14:02:15'),
 (304, 'Anonymous User', '2017is028@stu.ucsc.cmb.ac.lk', 'Student', NULL, '$2y$10$DkPN1pufiI5eQLinBavwA.Pt/1fT609luIHUEnrhqtopJQMjOk4MS', '2016/2017', 'Information Systems', '17020281', NULL, '2020-06-07 14:02:16', '2020-06-07 14:02:16'),
@@ -9621,7 +9639,7 @@ ALTER TABLE `assignments`
 -- AUTO_INCREMENT for table `assign_lecturers`
 --
 ALTER TABLE `assign_lecturers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `course_data`
@@ -9663,7 +9681,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `results`
@@ -9687,7 +9705,7 @@ ALTER TABLE `student_details`
 -- AUTO_INCREMENT for table `stu_enrollments`
 --
 ALTER TABLE `stu_enrollments`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `users`

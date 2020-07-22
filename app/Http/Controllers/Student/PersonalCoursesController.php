@@ -31,19 +31,22 @@ class PersonalCoursesController extends Controller{
             }
         }
 
+
         $activity[] = ['activity', 'Number'];
+        $submittedAssignments = array();
+        $gradedAssignments = array();
         $activity = array(
-            "Visited" => 0,
+            // "Visited" => 0,
             "Viewed" => 0,
-            "Started" => 0,
+            // "Started" => 0,
             "Completed" => 0,
             "Submitted" => 0,
             "Graded" => 0,
-            "Logged in" => 0,
-            "Logged out" => 0,
+            // "Logged in" => 0,
+            // "Logged out" => 0,
             "Received" => 0,
-            "Created" => 0,
-            "Other" => 0,
+            // "Created" => 0,
+            // "Other" => 0,
         );
 
         foreach($user_stmts as $us){
@@ -51,26 +54,29 @@ class PersonalCoursesController extends Controller{
             // else if("visited"==$us["verb"]){ $activity["Visited"]++; }
             // else if("started"==$us["verb"]){ $activity["Started"]++; }
             else if("completed"==$us["verb"]){ $activity["Completed"]++; }
-            else if("submitted"==$us["verb"]){ $activity["Submitted"]++; }
-            else if("attained grade for"==$us["verb"]){ $activity["Graded"]++; }
+            else if("submitted"==$us["verb"]){
+                $activity["Submitted"]++;
+                array_push($submittedAssignments,$us);
+            }
+            else if("attained grade for"==$us["verb"]){
+                $activity["Graded"]++;
+                array_push($gradedAssignments,$us);
+            }
             // else if("logged into"==$us["verb"]){ $activity["Logged In"]++; }
             // else if("logged out of"==$us["verb"]){ $activity["Logged Out"]++; }
             else if("received"==$us["verb"]){ $activity["Received"]++; }
             // else if("enrolled to"==$us["verb"]){ $activity["Created"]++; }
-            else{ $activity["Other"]++; }
+            // else{ $activity["Other"]++; }
         }
-        // $verb_counts = array_count_values(array_column($user_stmts, 'verb'));
 
         //Dummy data for start date end date
         $today = date("Y-m-d");
         $sDate = strtotime("-1 months", strtotime($today));
-        $eDate = strtotime("+2 months", strtotime($today));
         $sDate = date("Y-m-d", $sDate);
-        $eDate = date("Y-m-d", $eDate);
         //End of Dummy data for start date end date
 
         $loop = $sDate;
-        while($loop!=$eDate){
+        while($loop!=$today){
             $date_counts[$loop] = 0;
             $loop = strtotime("+1 day", strtotime($loop));
             $loop = date("Y-m-d", $loop);
@@ -99,7 +105,8 @@ class PersonalCoursesController extends Controller{
 
         return view('student.courses.personal',[
             'crs'=> $course_name,
-            // 'counts'=> $verb_counts,
+            'gradedAssignments' => $gradedAssignments,
+            'submittedAssignments' => $submittedAssignments
             ])
             ->with('grade', json_encode($array))
             ->with('activity', json_encode($activity))

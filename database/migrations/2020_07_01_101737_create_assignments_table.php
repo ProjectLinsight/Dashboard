@@ -9,9 +9,10 @@ class CreateAssignmentsTable extends Migration{
         Schema::create('assignments', function (Blueprint $table) {
             $table->id();
             $table->string('cid');
-            $table->string('index');
             $table->string('title');
             $table->string('weight');
+            $table->string('dueDate');
+            $table->string('maxMarks');
             $table->timestamps();
         });
     }

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Courses;
 use App\Stu_enrollment;
+use App\Assignments;
 
 class LecturerCoursesController extends Controller{
     public function index($user,$course){
@@ -15,7 +16,7 @@ class LecturerCoursesController extends Controller{
             $degree = "Information Systems";
         } else if(substr($course,0,1)=='S'){
             $degree = "Computer Science";
-        } 
+        }
 
         $stu = DB::table('users')->where('utype','Student')->where('degree',$degree)->get();
         return view('lecturer/courses',[
@@ -45,6 +46,18 @@ class LecturerCoursesController extends Controller{
             'introduction' => $request->get('introduction'),
             ]);
 
-        return redirect('lecturer/'.auth()->user()->id.'/'.$course.'/courses');    
+        return redirect('lecturer/'.auth()->user()->id.'/'.$course.'/courses');
+    }
+
+    public function addAssignment(Request $request,$course){
+        $assignment = new Assignments ;
+        $assignment->cid = $request->get('cid');
+        $assignment->title = $request->get('assignmentTitle');
+        $assignment->weight = $request->get('aWeight');
+        $assignment->dueDate = $request->get('dueDate');
+        $assignment->maxMarks = $request->get('maxMarks');
+        $assignment->save();
+        // alert("Assignment added successfully!");
+        return redirect('lecturer/'.auth()->user()->id.'/'.$course.'/courses');
     }
 }

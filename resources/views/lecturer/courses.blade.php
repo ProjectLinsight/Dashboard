@@ -3,7 +3,7 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="https://kit.fontawesome.com/d43d952765.js" crossorigin="anonymous"></script>
     <script type="text/javascript" src="{{ URL::asset('js/home.js') }}"></script>
-    
+
 @section('content')
 <div class="container-fluid pt-4">
     <div id="wrapper" class="wrapper-content" >
@@ -40,7 +40,7 @@
                     <a href="/student_enrollment"><i class="fas fa-id-card pr-2"></i>Student Entrollment</a>
                     <hr class="content-center" style="width:75%;background : #555">
                 </li>
-                
+
             </ul>
         </div>
 
@@ -62,66 +62,117 @@
 
                 <div class="row">
                     <div class="col-md-8">
+                        <div class="pb-4">
                             <div class="card shadow">
-                            <div class="card-header bg-info pb-0">
-                                <h4 class="text-white text-center"> Course Information </h4>
+                                <div class="card-header bg-info pb-0">
+                                    <h4 class="text-white text-center"> Course Information </h4>
+                                </div>
+                                <div class="card-body">
+                                    <form method="POST" action="/lecturer/courses/{{$crs->cid}}/update" enctype="multipart/form-data">
+                                        @csrf
+
+                                        <div class="table-responsive">
+                                            <table class="table table-hover mb-0" style="border-collapse: collapse;">
+                                                <tbody  style="font-size: calc(0.7em + 0.2vw)">
+                                                    <tr>
+                                                        <td class="border"> Course Code </td>
+                                                        <td class="border" colspan="3"><strong>{{$crs->cid}} </strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="border"> Course Name </td>
+                                                        <td class="border" colspan="3"><strong>{{$crs->cName}}</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="border"> Year </td>
+                                                        <td class="border"><strong>{{substr(preg_replace("/[^0-9]/","",$crs->cid),0,1)}}</strong></td>
+                                                        <td class="border"> Semester </td>
+                                                        <td class="border"><strong>{{$crs->semester}}</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="border"> Course Credits </td>
+                                                        <td class="border" colspan="3"><strong>{{$crs->credits}}</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="border"> Formative Assessment </td>
+                                                        <td class="border">
+                                                            <input required min="0" max="100" id="aMarks" type="number" class="form-control" name="aMarks" value="{{$crs->assignmentMarks}}"  >
+                                                        </td>
+                                                        <td class="border"> Summative Assessment </td>
+                                                        <td class="border">
+                                                            <input required min="0" max="100" id="eMarks" type="number" class="form-control" name="eMarks" value="{{$crs->examMarks}}"  >
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="border"> Pre-requisities </td>
+                                                        <td class="border" colspan="3">
+                                                            <input required id="preRequisites" type="text" class="form-control" name="preRequisites" value="{{$crs->prerequisites}}"  >
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="border"> Introduction </td>
+                                                        <td class="border text-justify" colspan="2">
+                                                            <input required id="introduction" type="text" class="form-control" name="introduction" value="{{$crs->introduction}}"  >
+                                                        </td>
+                                                        <td class="text-justify">
+                                                            <div class="form-group d-flex justify-content-center">
+                                                                <button type="submit" class="btn btn-info btn-block text-white">Update Course Data</button>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
-                            <div class="card-body">
-                                <form method="POST" action="/lecturer/courses/{{$crs->cid}}/update" enctype="multipart/form-data">
-                                    @csrf
-                                
-                                    <div class="table-responsive">
-                                        <table class="table table-hover mb-0" style="border-collapse: collapse;">
-                                            <tbody  style="font-size: calc(0.7em + 0.2vw)">
-                                                <tr>
-                                                    <td class="border"> Course Code </td>
-                                                    <td class="border" colspan="3"><strong>{{$crs->cid}} </strong></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="border"> Course Name </td>
-                                                    <td class="border" colspan="3"><strong>{{$crs->cName}}</strong></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="border"> Year </td>
-                                                    <td class="border"><strong>{{substr(preg_replace("/[^0-9]/","",$crs->cid),0,1)}}</strong></td>
-                                                    <td class="border"> Semester </td>
-                                                    <td class="border"><strong>{{$crs->semester}}</strong></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="border"> Course Credits </td>
-                                                    <td class="border" colspan="3"><strong>{{$crs->credits}}</strong></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="border"> Formative Assessment </td>
-                                                    <td class="border">
-                                                        <input required min="0" max="100" id="aMarks" type="number" class="form-control" name="aMarks" value="{{$crs->assignmentMarks}}"  >
-                                                    </td>
-                                                    <td class="border"> Summative Assessment </td>
-                                                    <td class="border">    
-                                                        <input required min="0" max="100" id="eMarks" type="number" class="form-control" name="eMarks" value="{{$crs->examMarks}}"  >
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="border"> Pre-requisities </td>
-                                                    <td class="border" colspan="3">    
-                                                        <input required id="preRequisites" type="text" class="form-control" name="preRequisites" value="{{$crs->prerequisites}}"  >
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="border"> Introduction </td>
-                                                    <td class="border text-justify" colspan="2">
-                                                        <input required id="introduction" type="text" class="form-control" name="introduction" value="{{$crs->introduction}}"  >
-                                                    </td>
-                                                    <td class="text-justify">
-                                                        <div class="form-group d-flex justify-content-center">
-                                                            <button type="submit" class="btn btn-info btn-block text-white">Update Course Data</button>
-                                                        </div>
-                                                    </td>
-                                                </tr> 
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </form>
+                        </div>
+                        <div class="pb-3 col-md-6 pl-0">
+                            <div class="card shadow">
+                                <div class="card-header bg-info pb-0">
+                                    <h4 class="text-white text-center"> Add New Assignment </h4>
+                                </div>
+                                <div class="card-body">
+                                    <form method="POST" action="/lecturer/courses/{{$crs->cid}}/addAssignment" enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="form-group content-center">
+                                            <h6 class="pl-3 text-muted"> Course ID :</h6>
+                                            <div class="col-md-12">
+                                                <input id="cid" type="text" class="form-control" name="cid" value="{{$crs->cid}}" required autocomplete="cid" autofocus placeholder="Course ID">
+                                            </div>
+                                        </div>
+                                        <div class="form-group content-center">
+                                            <h6 class="pl-3 text-muted"> Assignment Title :</h6>
+                                            <div class="col-md-12">
+                                                <input id="assignmentTitle" type="text" class="form-control @error('assignmentTitle') is-invalid @enderror" name="assignmentTitle" value=" {{old('assignmentTitle')}} " required autocomplete="Assignment Title" autofocus placeholder="Assignment Title">
+                                            </div>
+                                        </div>
+                                        <div class="form-group content-center">
+                                            <h6 class="pl-3 text-muted"> Due Date : </h6>
+                                            <div class="col-md-12">
+                                                <input type="date" id="dueDate" name="dueDate" class="form-control" required min="<?php echo date("Y-m-d"); ?>">
+                                            </div>
+                                        </div>
+                                        <div class="form-group content-center">
+                                            <h6 class="pl-3 text-muted"> Assignment Weight : </h6>
+                                            <div class="col-md-12">
+                                                <input required min="0" max="100" id="aWeight" type="number" class="form-control" name="aWeight"  >
+                                            </div>
+                                        </div>
+                                        <div class="form-group content-center">
+                                            <h6 class="pl-3 text-muted"> Maximum Marks : </h6>
+                                            <div class="col-md-12">
+                                                <input required min="0" max="100" id="maxMarks" type="number" class="form-control" name="maxMarks"  >
+                                            </div>
+                                        </div>
+                                            <div class="form-group content-center">
+                                                <div class="form-group d-flex justify-content-center">
+                                                    <div class="row col-md-12">
+                                                        <button type="submit" class="btn btn-info btn-block text-white">Add Assignment </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -143,14 +194,14 @@
                                                 return this.each(function(){
                                                     $(this).on('keyup', function(e){
                                                         $('.filterTable_no_results').remove();
-                                                        var $this = $(this), 
-                                                            search = $this.val().toLowerCase(), 
-                                                            target = $this.attr('data-filters'), 
-                                                            $target = $(target), 
+                                                        var $this = $(this),
+                                                            search = $this.val().toLowerCase(),
+                                                            target = $this.attr('data-filters'),
+                                                            $target = $(target),
                                                             $rows = $target.find('tbody tr');
-                                                            
+
                                                         if(search == '') {
-                                                            $rows.show(); 
+                                                            $rows.show();
                                                         }else {
                                                             $rows.each(function(){
                                                                 var $this = $(this);
@@ -196,7 +247,7 @@
                                                             $status = "";
                                                         }
                                                     ?>
-                                                </tr>   
+                                                </tr>
                                                 @foreach ($stu as $st)
                                                 <tr>
                                                     <td>
@@ -207,7 +258,7 @@
                                                     </td>
                                                     <td>{{$st->index}}</td>
                                                     <td>{{$st->email}}</td>
-                                                </tr>    
+                                                </tr>
                                                 @endforeach
                                             </tbody>
                                         </table>

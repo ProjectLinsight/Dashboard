@@ -8,7 +8,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-//Admin 
+//Admin
 Route::get('/admin/dashboard','Admin\DashboardController@index')->middleware('admin');
 Route::post('/admin/assign','Admin\DashboardController@assignLec')->middleware('admin');
 Route::get('/admin/courses','Admin\CoursesController@index')->middleware('admin');
@@ -54,7 +54,8 @@ Route::get('/lecturer/{user}/{course}/assignmentcomplete', 'Lecturer\LecturerOve
 Route::get('/lecturer/{user}/{course}/quizcomplete', 'Lecturer\LecturerOverviewController@quizComp')->middleware('lecturer');
 Route::post('/lecturer/{user}/{course}/courses/enroll', 'Lecturer\LecturerCoursesController@enrollStudents')->middleware('lecturer');
 Route::post('/lecturer/courses/{course}/update', 'Lecturer\LecturerCoursesController@updateCourse')->middleware('lecturer');
-    
+Route::post('/lecturer/courses/{course}/addAssignment', 'Lecturer\LecturerCoursesController@addAssignment')->middleware('lecturer');
+
 // Route::post('/lecturer/enrollment', 'Lecturer\EnrollmentController@store')->middleware('lecturer');
 //Route::post('/admin/user','Admin\BulkRegisterController@store')->middleware('admin');
 

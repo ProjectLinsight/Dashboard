@@ -11,12 +11,11 @@ class sharedXapi extends Controller{
         $statements = DB::connection('mysql2')->table('trax_xapiserver_statements')->get();
         //$stmt_json = json_encode($statements);
         $stmt_count = count($statements);
-        
+
         $stmt_arr = array();
         for($i=0;$i<$stmt_count;$i++){
             $temp = json_decode($statements[$i]->data);
             array_push($stmt_arr,$temp);
-            
         }
         return($stmt_arr) ;
     }

@@ -7,7 +7,7 @@
 
     <script type="text/javascript" src="{{ URL::asset('js/home.js') }}"></script>
 
-    
+
 @section('content')
 <div class="container-fluid pt-5">
     <div id="wrapper" class="wrapper-content" >
@@ -44,7 +44,7 @@
                     <a href="/student_enrollment"><i class="fas fa-id-card pr-2"></i>Student Entrollment</a>
                     <hr class="content-center" style="width:75%;background : #555">
                 </li>
-                
+
             </ul>
         </div>
 
@@ -76,7 +76,7 @@
                                         <div class="panel-body">
                                             <canvas id="assignmentGraph" height="310" width="600"></canvas>
                                         </div>
-                                    </div>      
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -95,16 +95,16 @@
                                         <div class="panel-body">
                                             <canvas id="quizGraph" height="310" width="600"></canvas>
                                         </div>
-                                    </div>      
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <br>
-        
+
                 <div class="row">
-                    <div class="col-md-4"> 
+                    <div class="col-md-4">
                         <div class="pb-3">
                             <div class="card shadow">
                                 <div class="card-header bg-dark pb-1">
@@ -131,12 +131,12 @@
                                         <div class="panel-body">
                                             <canvas id="canvas" height="480" width="600"></canvas>
                                         </div>
-                                    </div>      
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-5"> 
+                    <div class="col-md-5">
                         <div class="pb-3">
                             <div class="card shadow">
                                 <div class="card-header bg-info pb-1">
@@ -163,14 +163,14 @@
                                         <div class="panel-body">
                                             <canvas id="canvas" height="480" width="600"></canvas>
                                         </div>
-                                    </div>      
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-          
+
         </div>
     </div>
 </div>
@@ -198,7 +198,7 @@
                     borderWidth: 1,
                 }]
             },
-        }); 
+        });
         var quiz = <?php echo $quiz; ?>;
         var qarr = new Array();
         var countq = new Array();
@@ -223,7 +223,7 @@
 
 </script>
 
-        
 
-        
+
+
 
