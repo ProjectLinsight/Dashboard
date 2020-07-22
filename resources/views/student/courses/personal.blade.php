@@ -71,7 +71,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-8">
-                        <hr><h1 class="text-center"> {{$crs[0]}} </h1><hr>
+                        <hr><h1 class="text-center"> {{$crs->cName}} </h1><hr>
                         <div class="pb-3">
                             <div class="card shadow">
                                 <div class="card-header bg-info">
@@ -86,9 +86,56 @@
                                 </div>
                             </div>
                         </div>
+                        @foreach ($crs->assignment as $assignment)
+                            <div class="pb-3">
+                                <?php
+                                    $flag = "You haven't submitted this assignment";
+                                    $color = "bg-danger";
+                                    $icon = "exclamation-circle"
+                                ?>
+                                @foreach ($submittedAssignments as $submitted)
+                                    @if($assignment->title==$submitted['title'])
+                                        <?php
+                                            $flag = "You have submitted this assignment and grades pending" ;
+                                            $color = "bg-primary";
+                                            $icon = "check-cicle";
+                                        ?>
+                                    @endif
+                                @endforeach
+                                @foreach ($gradedAssignments as $graded)
+                                    @if($assignment->title==$graded['title'])
+                                        <?php
+                                            $flag = "Your assignment is Submitted and Graded";
+                                            $color = "bg-success";
+                                            $icon = "check-circle";
+                                        ?>
+                                    @endif
+                                @endforeach
+                                <div class="card shadow">
+                                    <div class="card-header text-white {{$color}}  d-flex justify-content-between" style="cursor: pointer;" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                        <div class="row pt-1">
+                                            <h1 class="px-4 pt-1">
+                                                <i class="fa fa-{{$icon}}" aria-hidden="true"></i>
+                                            </h1>
+                                            <h4 class="pt-2">
+                                                {{$assignment->title}}
+                                            </h4>
+                                        </div>
+                                        <h4 class="pt-2"><i class="fa fa-angle-down" aria-hidden="true"></i></h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="collapse" id="collapseExample">
+                                            <div class="card card-body">
+                                                <h4>{{$flag}}</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
                     <div class="col-md-4">
-                        <div class="pb-3">
+                        <div class="pb-4">
                             <div class="card shadow">
                                 <div class="card-header bg-info">
                                     <h4 class="text-white my-0"> Contribution status </h4>

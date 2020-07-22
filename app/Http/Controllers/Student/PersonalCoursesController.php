@@ -18,7 +18,8 @@ class PersonalCoursesController extends Controller{
 
     public function index($course){
         $my_course = DB::table('stu_enrollments')->where('cid',$course)->where('index',Auth::user()->index)->get();
-        $course_name = DB::table('courses')->where('cid',$course)->pluck('cName');
+
+        $course_name  = Courses::where('cid',$course)->get();
         $reg_no = substr(Auth::user()->email,0,9);
 
         $data = new sharedCourseXapi();
@@ -104,7 +105,7 @@ class PersonalCoursesController extends Controller{
         //End of Results Overview
 
         return view('student.courses.personal',[
-            'crs'=> $course_name,
+            'crs'=> $course_name[0],
             'gradedAssignments' => $gradedAssignments,
             'submittedAssignments' => $submittedAssignments
             ])
