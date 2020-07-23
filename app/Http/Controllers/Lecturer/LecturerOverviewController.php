@@ -150,6 +150,7 @@ class LecturerOverviewController extends Controller{
         // foreach($distinctass_arr as $key => $value){
         //     $assignment[++$key] = [$value->name, $value->Number];
         // }
+        $cr = DB::table('assignments')->get('title');
         $assignment = array(
             'Assignment 1' => 0,
             'Assignment 2' => 0,
@@ -168,8 +169,8 @@ class LecturerOverviewController extends Controller{
         }
        
         
-        return($assignment);
-        // dd($count,$stmt_arr,$crs,$sub_count,$distinct_arr,$distinctass_arr,$ass_count,$assignment);
+        // return($assignment);
+        dd($count,$stmt_arr,$crs,$sub_count,$distinct_arr,$distinctass_arr,$ass_count,$assignment,$cr);
     }
 
     public function quizComp()
