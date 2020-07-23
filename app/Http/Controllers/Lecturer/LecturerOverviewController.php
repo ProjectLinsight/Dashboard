@@ -169,8 +169,8 @@ class LecturerOverviewController extends Controller{
         }
        
         
-        // return($assignment);
-        dd($count,$stmt_arr,$crs,$sub_count,$distinct_arr,$distinctass_arr,$ass_count,$assignment,$cr);
+        return($assignment);
+        // dd($count,$stmt_arr,$crs,$sub_count,$distinct_arr,$distinctass_arr,$ass_count,$assignment,$cr);
     }
 
     public function quizComp()
