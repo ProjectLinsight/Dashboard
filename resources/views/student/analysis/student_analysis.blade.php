@@ -79,7 +79,10 @@
                                                             <tr>
                                                                 <td>{{$stmt['title']}}</td>    
                                                                 <td>{{$stmt['url']}}</td>
-                                                                <td>{{$stmt['timestamp']}}</td>                                     
+                                                                <td>{{$stmt['timestamp']}}</td>  
+                                                                <td class="py-1">
+                                                                            <button type="button" class="btn btn-secondary btn-s" data-toggle="modal" data-target="#exampleModalCenter" onclick="getId({{$stmt['title'] }})"> <i class="fas fa-share-square pr-2"></i> Share </button>
+                                                                        </td>                                     
                                                             </tr>
                                                             @endforeach
                                                             
