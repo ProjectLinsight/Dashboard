@@ -14,9 +14,9 @@ class student_dataXapiController extends Controller
     public function index(){
         $data = new sharedOut_side_dataXapi();
         $state = $data->getData();
-        dd($state);
+        //dd($state);
 
-    return view('analysis.student_analysis',['xapi'=>$state]);
+    return view('student.analysis.student_analysis',['xapi'=>$state]);
     }
 
 }
