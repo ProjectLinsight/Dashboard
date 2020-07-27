@@ -272,21 +272,31 @@ class LecturerOverviewController extends Controller{
                 $distinctquiz_arr[$s]['quiz'] = $stmt_arr[$i]['quiz'] ; 
             }
         }
-        $quiz = array(
-            'Quiz 1' => 0,
-            'Quiz 2' => 0,
-            'Quiz 3' => 0,
-            'Quiz 4' => 0,
-            'Quiz 5' => 0,
-            'IT General Quiz' => 0
-         );
-         foreach($distinct_arr as $us){
-            if("Quiz 1"==$us["quiz"]){ $quiz["Quiz 1"]++; }
-            else if("Quiz 2"==$us["quiz"]){ $quiz["Quiz 2"]++; }
-            else if("Quiz 3"==$us["quiz"]){ $quiz["Quiz 3"]++; }
-            else if("Quiz 4"==$us["quiz"]){ $quiz["Quiz 4"]++; }
-            else if("Quiz 5"==$us["quiz"]){ $quiz["Quiz 5"]++; }
-            else if("IT General Quiz"==$us["quiz"]){ $quiz["IT General Quiz"]++; }
+        $cr = DB::table('quiz')->get();
+        $quiz = array();
+        foreach ($cr as $key => $value) { 
+            $quiz[$value->title]=0; 
+        }
+        // $quiz = array(
+        //     'Quiz 1' => 0,
+        //     'Quiz 2' => 0,
+        //     'Quiz 3' => 0,
+        //     'Quiz 4' => 0,
+        //     'Quiz 5' => 0,
+        //     'IT General Quiz' => 0
+        //  );
+        //  foreach($distinct_arr as $us){
+        //     if("Quiz 1"==$us["quiz"]){ $quiz["Quiz 1"]++; }
+        //     else if("Quiz 2"==$us["quiz"]){ $quiz["Quiz 2"]++; }
+        //     else if("Quiz 3"==$us["quiz"]){ $quiz["Quiz 3"]++; }
+        //     else if("Quiz 4"==$us["quiz"]){ $quiz["Quiz 4"]++; }
+        //     else if("Quiz 5"==$us["quiz"]){ $quiz["Quiz 5"]++; }
+        //     else if("IT General Quiz"==$us["quiz"]){ $quiz["IT General Quiz"]++; }
+        // }
+        foreach($distinct_arr as $us){
+            foreach($quiz as $key => $value){
+                if($key==$us["quiz"]){ $quiz[$key]++; } 
+            }
         }
         
         return ($quiz);
