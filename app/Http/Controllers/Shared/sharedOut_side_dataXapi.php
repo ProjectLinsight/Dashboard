@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;use App\Http\Controllers\Shared\sharedXapi;
 use Illuminate\Support\Facades\DB;
 use PhpParser\Node\Expr\New_;
+use App\User;
+use Illuminate\Support\Facades\Auth;
 
 class sharedOut_side_dataXapi extends Controller
 {
@@ -15,7 +17,8 @@ class sharedOut_side_dataXapi extends Controller
         $newXapi = New sharedXapi();
         $statements = $newXapi->getData();
         $stmt_count = count($statements);
-      //  dd($statements);
+        //dd($statements);
+        $reg_no =substr(Auth::user()->email,0,9);
         
         $state = array();
         for($i=0;$i<$stmt_count;$i++){
@@ -26,12 +29,13 @@ class sharedOut_side_dataXapi extends Controller
                 if(isset($temp->verb->display->en)){
                     
                         if($temp->verb->display->en==="Visited"){
+                            if($temp->actor->name=== $reg_no){
                        
-                            $state[$i]['user'] = $temp->actor ;
-                            $state[$i]['title'] = $temp->object->definition->name->en ;
-                            $state[$i]['url'] = $temp->object->definition->description->en ;                            
-                            $state[$i]['timestamp'] = $temp->timestamp ;
-                                              
+                                $state[$i]['user'] = $temp->actor ;
+                                $state[$i]['title'] = $temp->object->definition->name->en ;
+                                $state[$i]['url'] = $temp->object->definition->description->en ;                            
+                                $state[$i]['timestamp'] = $temp->timestamp ;
+                            }                   
                         }
                 }             
         }

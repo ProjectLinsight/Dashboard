@@ -21,6 +21,7 @@ class sharedCourseXapi extends Controller{
             // array_push($stmt_arr,$temp);
             $key = "https://w3id.org/learning-analytics/learning-management-system/short-id";
             $logArray=explode("/",$temp->verb->id);
+            $objArray=explode("/",$temp->object->id);
                 if(isset($temp->object->definition->extensions->$key)){
                     // array_push($stmt_arr,$temp->object->definition->extensions);
                     // if(isset($temp->object->definition->extensions->$key)){
@@ -56,7 +57,7 @@ class sharedCourseXapi extends Controller{
                             $state[$count]['date'] = $start_date[0] ; 
                             $count++;
                         }
-                        else if($logArray[sizeof($logArray)-2]==="quiz" && $logArray[sizeof($logArray)-1]==="completed"){
+                        else if($objArray[sizeof($objArray)-2]==="quiz" && $logArray[sizeof($logArray)-1]==="completed"){
                             $state[$count]['user'] = $temp->actor ;
                             $state[$count]['verb'] = $temp->verb->display->en;
                             $state[$count]['title'] = $temp->object->definition->name->en ;

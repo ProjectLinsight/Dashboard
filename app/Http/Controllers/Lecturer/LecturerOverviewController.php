@@ -150,23 +150,33 @@ class LecturerOverviewController extends Controller{
         // foreach($distinctass_arr as $key => $value){
         //     $assignment[++$key] = [$value->name, $value->Number];
         // }
-        $cr = DB::table('assignments')->get('title');
-        $assignment = array(
-            'Assignment 1' => 0,
-            'Assignment 2' => 0,
-            'Assignment 3' => 0,
-            'Assignment 4' => 0,
-            'Assignment 5' => 0,
-            'Assignment 6' => 0
-         );
-         foreach($distinct_arr as $us){
-            if("Assignment 1"==$us["assignment"]){ $assignment["Assignment 1"]++; }
-            else if("Assignment 2"==$us["assignment"]){ $assignment["Assignment 2"]++; }
-            else if("Assignment 3"==$us["assignment"]){ $assignment["Assignment 3"]++; }
-            else if("Assignment 4"==$us["assignment"]){ $assignment["Assignment 4"]++; }
-            else if("Assignment 5"==$us["assignment"]){ $assignment["Assignment 5"]++; }
-            else if("Assignment 6"==$us["assignment"]){ $assignment["Assignment 6"]++; }
+        $cr = DB::table('assignments')->get();
+        $assignment = array();
+        foreach ($cr as $key => $value) { 
+            $assignment[$value->title]=0; 
         }
+        // $assignment = array(
+        //     'Assignment 1' => 0,
+        //     'Assignment 2' => 0,
+        //     'Assignment 3' => 0,
+        //     'Assignment 4' => 0,
+        //     'Assignment 5' => 0,
+        //     'Assignment 6' => 0
+        //  );
+        //  foreach($distinct_arr as $us){
+        //     if("Assignment 1"==$us["assignment"]){ $assignment["Assignment 1"]++; }
+        //     else if("Assignment 2"==$us["assignment"]){ $assignment["Assignment 2"]++; }
+        //     else if("Assignment 3"==$us["assignment"]){ $assignment["Assignment 3"]++; }
+        //     else if("Assignment 4"==$us["assignment"]){ $assignment["Assignment 4"]++; }
+        //     else if("Assignment 5"==$us["assignment"]){ $assignment["Assignment 5"]++; }
+        //     else if("Assignment 6"==$us["assignment"]){ $assignment["Assignment 6"]++; }
+        // }
+        foreach($distinct_arr as $us){
+            foreach($assignment as $key => $value){
+                if($key==$us["assignment"]){ $assignment[$key]++; } 
+            }
+        }
+
        
         
         return($assignment);
