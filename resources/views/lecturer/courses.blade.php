@@ -126,7 +126,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="pb-3 col-md-6 pl-0">
+                        <div class="pb-3">
                             <div class="card shadow">
                                 <div class="card-header bg-info pb-0">
                                     <h4 class="text-white text-center"> Add New Assignment </h4>
@@ -175,6 +175,56 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="pb-3">
+                            <div class="card shadow">
+                                <div class="card-header bg-info pb-0">
+                                    <h4 class="text-white text-center"> Add New Quiz </h4>
+                                </div>
+                                <div class="card-body">
+                                    <form method="POST" action="/lecturer/courses/{{$crs->cid}}/addQuiz" enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="form-group content-center">
+                                            <h6 class="pl-3 text-muted"> Course ID :</h6>
+                                            <div class="col-md-12">
+                                                <input id="cid" type="text" class="form-control" name="cid" value="{{$crs->cid}}" required autocomplete="cid" autofocus placeholder="Course ID">
+                                            </div>
+                                        </div>
+                                        <div class="form-group content-center">
+                                            <h6 class="pl-3 text-muted"> Quiz Title :</h6>
+                                            <div class="col-md-12">
+                                                <input id="quizTitle" type="text" class="form-control @error('quizTitle') is-invalid @enderror" name="quizTitle" value=" {{old('quizTitle')}} " required autocomplete="Quiz Title" autofocus placeholder="Quiz Title">
+                                            </div>
+                                        </div>
+                                        <div class="form-group content-center">
+                                            <h6 class="pl-3 text-muted"> Due Date : </h6>
+                                            <div class="col-md-12">
+                                                <input type="date" id="dueDate" name="dueDate" class="form-control" required min="<?php echo date("Y-m-d"); ?>">
+                                            </div>
+                                        </div>
+                                        <!-- <div class="form-group content-center">
+                                            <h6 class="pl-3 text-muted"> Assignment Weight : </h6>
+                                            <div class="col-md-12">
+                                                <input required min="0" max="100" id="aWeight" type="number" class="form-control" name="aWeight"  >
+                                            </div>
+                                        </div> -->
+                                        <div class="form-group content-center">
+                                            <h6 class="pl-3 text-muted"> Maximum Marks : </h6>
+                                            <div class="col-md-12">
+                                                <input required min="0" max="100" id="maxMarks" type="number" class="form-control" name="maxMarks"  >
+                                            </div>
+                                        </div>
+                                            <div class="form-group content-center">
+                                                <div class="form-group d-flex justify-content-center">
+                                                    <div class="row col-md-12">
+                                                        <button type="submit" class="btn btn-info btn-block text-white">Add Quiz </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                </div>
+                            </div>
+                        </div>
+                        
                     </div>
                     <div class="col-md-4">
                         <div class="card shadow">

@@ -60,4 +60,15 @@ class LecturerCoursesController extends Controller{
         // alert("Assignment added successfully!");
         return redirect('lecturer/'.auth()->user()->id.'/'.$course.'/courses');
     }
+
+    public function addQuiz(Request $request,$course){
+        $quiz = new Quiz ;
+        $quiz->cid = $request->get('cid');
+        $quiz->title = $request->get('quizTitle');
+        $quiz->dueDate = $request->get('dueDate');
+        $quiz->maxMarks = $request->get('maxMarks');
+        $quiz->save();
+        alert("Quiz added successfully!");
+        return redirect('lecturer/'.auth()->user()->id.'/'.$course.'/courses');
+    }
 }

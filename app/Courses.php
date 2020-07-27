@@ -24,4 +24,7 @@ class Courses extends Model{
     public function assignment(){
         return $this->hasMany(Assignments::class,'cid','cid');
     }
+    public function quiz(){
+        return $this->hasMany(Quiz::class,'cid','cid');
+    }
 }

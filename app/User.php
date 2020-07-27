@@ -53,4 +53,7 @@ class User extends Authenticatable
     public function assignments(){
         if($this->utype == 'Student') return $this->hasMany(Assignments::class,'index','index');
     }
+    public function quiz(){
+        if($this->utype == 'Student') return $this->hasMany(Quiz::class,'index','index');
+    }
 }
