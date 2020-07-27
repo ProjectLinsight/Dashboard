@@ -16,6 +16,7 @@ class LecturerOverviewController extends Controller{
         $crs = DB::table('courses')->where('cid',$course)->get();
         $stmt_arr = array();
         $q_arr = array();
+        $stat = array();
         if(substr($course,0,1)=='I'){
             $degree = "Information Systems";
         } else if(substr($course,0,1)=='S'){
@@ -25,12 +26,14 @@ class LecturerOverviewController extends Controller{
         $stu = DB::table('users')->where('utype','Student')->where('degree',$degree)->get();
         $stmt_arr=$this->assignmentComp();
         $q_arr=$this->quizComp();
+        $stat=$this->assignmentStat();
         return view('lecturer/overview',[
             'crs'=>$crs[0],
             'stu'=>$stu,
             ])
             ->with('assignment', json_encode($stmt_arr))
-            ->with('quiz', json_encode($q_arr));
+            ->with('quiz', json_encode($q_arr))
+            ->with('stats', $stat);
         
     }
    
@@ -47,6 +50,15 @@ class LecturerOverviewController extends Controller{
         $avg=0;
         $sum=0;
         $count=0;
+        $cr = DB::table('assignments')->get();
+        $assignment = array();
+        foreach ($cr as $key => $value) { 
+            $assignment[$value->title]['sum']=0; 
+            $assignment[$value->title]['max']=0; 
+            $assignment[$value->title]['min']=100; 
+            $assignment[$value->title]['avg']=0;
+            $assignment[$value->title]['count']=0;  
+        }
         for($i=0;$i<$stmt_count;$i++){            
             $logArray=explode("/",$state[$i]->verb->id);
             if($logArray[sizeof($logArray)-1]==="scored"){
@@ -75,7 +87,26 @@ class LecturerOverviewController extends Controller{
             }
         }
         $avg=$sum/$count;
-        dd($max,$max_arr,$min,$min_arr,$avg,$stmt_arr);
+
+        foreach($assignment as $key => $value){
+            for($i=0;$i<$count;$i++){
+                if($key==$stmt_arr[$i]['assignment']){
+                    $assignment[$key]['count']++;
+                    $assignment[$key]['sum']+= $stmt_arr[$i]['marks'];
+                    if($stmt_arr[$i]['marks']>$assignment[$key]['max']){
+                        $assignment[$key]['max']=$stmt_arr[$i]['marks'];
+                    }
+                    if($stmt_arr[$i]['marks']<$assignment[$key]['min']){
+                        $assignment[$key]['min']=$stmt_arr[$i]['marks'];
+                    }
+                }
+            }
+            if($assignment[$key]['count']!=0){
+                $assignment[$key]['avg']=$assignment[$key]['sum']/$assignment[$key]['count'];
+            }
+        }
+        return($assignment);
+        // dd($max,$max_arr,$min,$min_arr,$avg,$stmt_arr,$assignment);
         // $data2 = new sharedCourseXapi();
         // $state2 = $data2->getData();
         // dd($state2);

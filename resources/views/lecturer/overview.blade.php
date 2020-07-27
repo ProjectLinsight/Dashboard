@@ -152,6 +152,18 @@
                                             <div id="assignment" class="tab-pane fade show active">
 
                                             <!-- assignment list comes here -->
+                                            @foreach($stats as $key => $value)
+                                                <!-- <h4>{{$key}}</h4>
+                                                <h4>{{$value['avg']}}</h4> -->
+                                                <h6 class="text-black">
+                                                    <a data-toggle="collapse" >{{$key}}</a>
+                                                </h6>
+                                                <div class="collapse pt-0 pl-3" id="{{$item->cid}}">
+                                                    <h6 class="text-black">Max <a>{{$value['avg']}}</a></h6>
+                                                    <h6 class="text-black"> <a>Analytics</a></h6>
+                                                    <!-- <h6 class="text-white"> <a  href="/lecturer/{{Auth::user()->id}}/{{$item->cid}}/overview">Assignment & Quiz</a></h6> -->
+                                                </div>
+                                            @endforeach
 
                                             </div>
                                             <div id="quiz" class="tab-pane fade show active">
@@ -220,6 +232,8 @@
                 }]
             },
         });
+        var stat = $stats;
+        console.log(stat)
 
 </script>
 
