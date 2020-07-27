@@ -55,7 +55,7 @@ Route::get('/lecturer/{user}/{course}/quizcomplete', 'Lecturer\LecturerOverviewC
 Route::post('/lecturer/{user}/{course}/courses/enroll', 'Lecturer\LecturerCoursesController@enrollStudents')->middleware('lecturer');
 Route::post('/lecturer/courses/{course}/update', 'Lecturer\LecturerCoursesController@updateCourse')->middleware('lecturer');
 Route::post('/lecturer/courses/{course}/addAssignment', 'Lecturer\LecturerCoursesController@addAssignment')->middleware('lecturer');
-
+Route::post('/lecturer/courses/{course}/addQuiz', 'Lecturer\LecturerCoursesController@addQuiz')->middleware('lecturer');
 // Route::post('/lecturer/enrollment', 'Lecturer\EnrollmentController@store')->middleware('lecturer');
 //Route::post('/admin/user','Admin\BulkRegisterController@store')->middleware('admin');
 
