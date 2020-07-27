@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Courses;
 use App\Stu_enrollment;
 use App\Assignments;
+use App\Quiz;
 
 class LecturerCoursesController extends Controller{
     public function index($user,$course){
