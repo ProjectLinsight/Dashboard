@@ -58,17 +58,21 @@ class sharedCourseXapi extends Controller{
                             $count++;
                         }
                         else if($objArray[sizeof($objArray)-2]==="quiz" && $logArray[sizeof($logArray)-1]==="completed"){
-                            $state[$count]['user'] = $temp->actor ;
-                            $state[$count]['verb'] = $temp->verb->display->en;
-                            $state[$count]['title'] = $temp->object->definition->name->en ;
-                            $state[$count]['definition'] = $temp->object->definition ;
-                            $state[$count]['course'] = $temp->context->contextActivities->grouping[1]->definition->extensions->$key ;
-                            $state[$count]['timestamp'] = $temp->timestamp ;
-                            $state[$count]['type'] = "quiz";
-                            $state[$count]['marks'] = $temp->result->score->raw ;
-                            $start_date = explode("T",$temp->timestamp);
-                            $state[$count]['date'] = $start_date[0] ; 
-                            $count++;
+                            
+                            if(isset($temp->result->score->raw)){
+                                $state[$count]['user'] = $temp->actor ;
+                                $state[$count]['verb'] = $temp->verb->display->en;
+                                $state[$count]['title'] = $temp->object->definition->name->en ;
+                                $state[$count]['definition'] = $temp->object->definition ;
+                                $state[$count]['course'] = $temp->context->contextActivities->grouping[1]->definition->extensions->$key ;
+                                $state[$count]['timestamp'] = $temp->timestamp ;
+                                $state[$count]['type'] = "quiz";
+                                $state[$count]['marks'] = $temp->result->score->raw ;
+                                $start_date = explode("T",$temp->timestamp);
+                                $state[$count]['date'] = $start_date[0] ; 
+                                $count++;
+                            }
+                            
                         }
                         else{
                             $state[$count]['user'] = $temp->actor ;
