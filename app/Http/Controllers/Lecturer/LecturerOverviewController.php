@@ -272,28 +272,64 @@ class LecturerOverviewController extends Controller{
                 $distinctquiz_arr[$s]['quiz'] = $stmt_arr[$i]['quiz'] ; 
             }
         }
-        $quiz = array(
-            'Quiz 1' => 0,
-            'Quiz 2' => 0,
-            'Quiz 3' => 0,
-            'Quiz 4' => 0,
-            'Quiz 5' => 0,
-            'IT General Quiz' => 0
-         );
-         foreach($distinct_arr as $us){
-            if("Quiz 1"==$us["quiz"]){ $quiz["Quiz 1"]++; }
-            else if("Quiz 2"==$us["quiz"]){ $quiz["Quiz 2"]++; }
-            else if("Quiz 3"==$us["quiz"]){ $quiz["Quiz 3"]++; }
-            else if("Quiz 4"==$us["quiz"]){ $quiz["Quiz 4"]++; }
-            else if("Quiz 5"==$us["quiz"]){ $quiz["Quiz 5"]++; }
-            else if("IT General Quiz"==$us["quiz"]){ $quiz["IT General Quiz"]++; }
+        $cr = DB::table('quiz')->get();
+        $quiz = array();
+        foreach ($cr as $key => $value) { 
+            $quiz[$value->title]=0; 
+        }
+        // $quiz = array(
+        //     'Quiz 1' => 0,
+        //     'Quiz 2' => 0,
+        //     'Quiz 3' => 0,
+        //     'Quiz 4' => 0,
+        //     'Quiz 5' => 0,
+        //     'IT General Quiz' => 0
+        //  );
+        //  foreach($distinct_arr as $us){
+        //     if("Quiz 1"==$us["quiz"]){ $quiz["Quiz 1"]++; }
+        //     else if("Quiz 2"==$us["quiz"]){ $quiz["Quiz 2"]++; }
+        //     else if("Quiz 3"==$us["quiz"]){ $quiz["Quiz 3"]++; }
+        //     else if("Quiz 4"==$us["quiz"]){ $quiz["Quiz 4"]++; }
+        //     else if("Quiz 5"==$us["quiz"]){ $quiz["Quiz 5"]++; }
+        //     else if("IT General Quiz"==$us["quiz"]){ $quiz["IT General Quiz"]++; }
+        // }
+        foreach($distinct_arr as $us){
+            foreach($quiz as $key => $value){
+                if($key==$us["quiz"]){ $quiz[$key]++; } 
+            }
         }
         
         return ($quiz);
-        dd($count,$stmt_arr,$distinctquiz_arr,$quiz_count);
+        // dd($count,$stmt_arr,$distinctquiz_arr,$quiz_count);
     }
 
     public function risk(){
+        $data = new sharedXapi();
+        $state = $data->getData();
+        $stmt_count = count($state);
+        $stmt_arr = array();
+        $sum=0;
+        $count=0;
+        // $cr = DB::table('assignments')->get();
+        // $assignment = array();
+        // foreach ($cr as $key => $value) { 
+        //     $assignment[$value->title]['sum']=0; 
+        //     $assignment[$value->title]['max']=0; 
+        //     $assignment[$value->title]['min']=100; 
+        //     $assignment[$value->title]['avg']=0;
+        //     $assignment[$value->title]['count']=0;  
+        // }
+        for($i=0;$i<$stmt_count;$i++){            
+            $logArray=explode("/",$state[$i]->verb->id);
+            if($logArray[sizeof($logArray)-1]==="scored"){
+                $stmt_arr[$count]['user'] = $state[$i]->actor->account->name ;
+                $stmt_arr[$count]['assignment'] = $state[$i]->object->definition->name->en ;
+                $stmt_arr[$count]['marks'] = $state[$i]->result->score->raw ;
+                $sum+=$state[$i]->result->score->raw;
+                $count+=1;
+            }
+        }
+        dd($count,$stmt_arr,$sum);
 
 
 
