@@ -69,7 +69,7 @@ class LecturerCoursesController extends Controller{
         $quiz->dueDate = $request->get('dueDate');
         $quiz->maxMarks = $request->get('maxMarks');
         $quiz->save();
-        alert("Quiz added successfully!");
+        // alert("Quiz added successfully!");
         return redirect('lecturer/'.auth()->user()->id.'/'.$course.'/courses');
     }
 }
