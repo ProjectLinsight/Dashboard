@@ -298,7 +298,7 @@ class LecturerOverviewController extends Controller{
         $state = $data->getData();
         $stmt_count = count($state);
         $stmt_arr = array();
-        $sum=0;
+        $sum_arr = array();
         $count=0;
         // $cr = DB::table('assignments')->get();
         // $assignment = array();
@@ -315,11 +315,34 @@ class LecturerOverviewController extends Controller{
                 $stmt_arr[$count]['user'] = $state[$i]->actor->account->name ;
                 $stmt_arr[$count]['assignment'] = $state[$i]->object->definition->name->en ;
                 $stmt_arr[$count]['marks'] = $state[$i]->result->score->raw ;
-                $sum+=$state[$i]->result->score->raw;
+                // $sum+=$state[$i]->result->score->raw;
                 $count+=1;
             }
         }
-        dd($count,$stmt_arr,$sum);
+        $sub_count = 1; 
+        $s = 0;
+        // $sum_arr[$s]['sum']=$stmt_arr[$s]['marks'];
+        // $sum_arr[$s]['user'] = $stmt_arr[$s]['user'] ;
+        // $sum_arr[$s]['assignment'] = $stmt_arr[$s]['assignment'] ;
+        // $s=$s+1;
+        for ( $i = 1; $i < $count; $i++) 
+        { 
+            for ($j = 0; $j < $i; $j++) {
+                if ($stmt_arr[$i]['user'] == $stmt_arr[$j]['user'] && $i <> $j ){
+                    $sum_arr[$s]['user'] = $stmt_arr[$i]['user'];
+                    $sum_arr[$s]['assignment 1'] = $stmt_arr[$i]['assignment'];
+                    $sum_arr[$s]['assignment'] = $stmt_arr[$j]['assignment'];
+                    $sum_arr[$s]['sum']=$stmt_arr[$i]['marks']+$stmt_arr[$j]['marks'];
+                }
+            }
+            // if ($i == $j){ 
+            //     $sub_count++;
+            //     $s++;
+            //     $distinct_arr[$s]['user'] = $stmt_arr[$i]['user'] ;
+            //     $distinct_arr[$s]['assignment'] = $stmt_arr[$i]['assignment'] ; 
+            // }
+        }
+        dd($count,$stmt_arr,$sum_arr);
 
 
 
