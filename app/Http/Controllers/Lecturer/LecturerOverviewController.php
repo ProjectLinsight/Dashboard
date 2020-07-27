@@ -290,10 +290,36 @@ class LecturerOverviewController extends Controller{
         }
         
         return ($quiz);
-        dd($count,$stmt_arr,$distinctquiz_arr,$quiz_count);
+        // dd($count,$stmt_arr,$distinctquiz_arr,$quiz_count);
     }
 
     public function risk(){
+        $data = new sharedXapi();
+        $state = $data->getData();
+        $stmt_count = count($state);
+        $stmt_arr = array();
+        $sum=0;
+        $count=0;
+        // $cr = DB::table('assignments')->get();
+        // $assignment = array();
+        // foreach ($cr as $key => $value) { 
+        //     $assignment[$value->title]['sum']=0; 
+        //     $assignment[$value->title]['max']=0; 
+        //     $assignment[$value->title]['min']=100; 
+        //     $assignment[$value->title]['avg']=0;
+        //     $assignment[$value->title]['count']=0;  
+        // }
+        for($i=0;$i<$stmt_count;$i++){            
+            $logArray=explode("/",$state[$i]->verb->id);
+            if($logArray[sizeof($logArray)-1]==="scored"){
+                $stmt_arr[$count]['user'] = $state[$i]->actor->account->name ;
+                $stmt_arr[$count]['assignment'] = $state[$i]->object->definition->name->en ;
+                $stmt_arr[$count]['marks'] = $state[$i]->result->score->raw ;
+                $sum+=$state[$i]->result->score->raw;
+                $count+=1;
+            }
+        }
+        dd($count,$stmt_arr,$sum);
 
 
 
