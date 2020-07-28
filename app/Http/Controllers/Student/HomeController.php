@@ -25,10 +25,11 @@ class HomeController extends Controller{
         $data = new sharedCourseXapi();
         foreach($enrolled_courses as $ec){
             $cur_course_stmts = $data->getData($ec);
-            array_push($enrolled_courses_xapi,$cur_course_stmts);
+            $cur_course_count = count($cur_course_stmts);
+            $enrolled_courses_xapi[$ec] = $cur_course_count;
         }
 
-        dd($enrolled_courses_xapi);
+        // dd($enrolled_courses_xapi);
 
         return view('home');
     }
