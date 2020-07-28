@@ -150,19 +150,36 @@
                                         </nav>
                                         <div class="tab-content">
                                             <div id="assignment" class="tab-pane fade show active">
-
+                                        
                                             <!-- assignment list comes here -->
                                             @foreach($stats as $key => $value)
                                                 <!-- <h4>{{$key}}</h4>
                                                 <h4>{{$value['avg']}}</h4> -->
-                                                <h6 class="text-black">
-                                                    <a data-toggle="collapse" >{{$key}}</a>
+                                                <!-- <h6 class="text-black">
+                                                <a data-toggle="collapse" href="#{{$key}}" role="button" aria-expanded="false" aria-controls="{{$key}}">                                        
+                                                    <a data-toggle="collapse" data-target=#{{$key}}>
+                                                    {{$key}}</a>
                                                 </h6>
-                                                <div class="collapse pt-0 pl-3" id="{{$item->cid}}">
-                                                    <h6 class="text-black">Max <a>{{$value['avg']}}</a></h6>
-                                                    <h6 class="text-black"> <a>Analytics</a></h6>
+                                                <div class="collapse" id="{{$key}}">
+                                                    <div class="card card-body">
+                                                        <h6 class="text-black">Max <a>{{$value['avg']}}</a></h6>
+                                                        <h6 class="text-black"> <a>Analytics</a></h6>
+                                                     </div>
+                                                </div> -->
+                                                <h6 class="text-black">
+                                                    <a data-toggle="collapse" href="#{{$key}}" class="accordion-toggle">{{$key}}</a>
+                                                </h6>
+                                                <div class="collapse pt-0 pl-3" id="{{$key}}" lass="accordian-body collapse">
+                                                    <h6 class="text-black"> <a href="/lecturer/{{Auth::user()->id}}/{{$key}}/courses">Update</a></h6>
+                                                    <h6 class="text-black"> <a  href="/lecturer/{{Auth::user()->id}}/{{$key}}/overview">Analytics</a></h6>
                                                     <!-- <h6 class="text-white"> <a  href="/lecturer/{{Auth::user()->id}}/{{$item->cid}}/overview">Assignment & Quiz</a></h6> -->
                                                 </div>
+
+                                                <!-- <div class="collapse pt-0 pl-3" id="{{$key}}">
+                                                    <h6 class="text-black">Max <a>{{$value['avg']}}</a></h6>
+                                                    <h6 class="text-black"> <a>Analytics</a></h6> -->
+                                                    <!-- <h6 class="text-white"> <a  href="/lecturer/{{Auth::user()->id}}/{{$item->cid}}/overview">Assignment & Quiz</a></h6> -->
+                                                <!-- </div> -->
                                             @endforeach
 
                                             </div>
