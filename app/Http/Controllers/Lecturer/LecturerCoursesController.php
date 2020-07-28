@@ -9,8 +9,12 @@ use App\Courses;
 use App\Stu_enrollment;
 use App\Assignments;
 use App\Quiz;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\NewAssignment;
+use App\User;
 
 class LecturerCoursesController extends Controller{
+
     public function index($user,$course){
         $crs = DB::table('courses')->where('cid',$course)->get();
         if(substr($course,0,1)=='I'){
@@ -25,6 +29,7 @@ class LecturerCoursesController extends Controller{
             'stu'=>$stu,
             ]);
     }
+
     public function enrollStudents(Request $request){
         for($i=0;$i<sizeof($request->enroll);$i++){
             $data = new Stu_enrollment ;
@@ -59,6 +64,21 @@ class LecturerCoursesController extends Controller{
         $assignment->maxMarks = $request->get('maxMarks');
         $assignment->save();
         // alert("Assignment added successfully!");
+
+        //Notifications
+        //$enrolled_students = DB::table('stu_enrollments')->where('cid',$course)->get('index');
+
+        
+        //dd($enrolled_students);
+        // foreach($enrolled_students as $student){
+        //     $user = User::where('index',$student->index);
+        //     dd($user);
+        //     Notification::send($user, new NewAssignment($assignment));
+        // }
+
+        // dd('done');
+
+
         return redirect('lecturer/'.auth()->user()->id.'/'.$course.'/courses');
     }
 
