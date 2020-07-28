@@ -29,7 +29,7 @@ class HomeController extends Controller{
             $enrolled_courses_xapi[$ec] = $cur_course_count;
         }
 
-        // dd($enrolled_courses_xapi);
+        //dd($enrolled_courses_xapi);
 
         return view('home');
     }
