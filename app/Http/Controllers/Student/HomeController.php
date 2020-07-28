@@ -32,7 +32,7 @@ class HomeController extends Controller{
             $startDate = (DB::table('assign_lecturers')->where('cid',$ec)->first())->startDate;
             $startWeek = date("oW", strtotime($startDate));
 
-            for($i=0;$i<16;$i++){
+            for($i=1;$i<16;$i++){
                 ${"$ec"}[$i]= 0 ;
             }
             foreach($data->getData($ec) as $dt){
@@ -41,7 +41,7 @@ class HomeController extends Controller{
             }
         }
 
-        $activityNested[] = ['course', 'arr'];
+        // $activityNested[] = ['course', 'arr'];
         foreach($enrolled_courses as $ec){
             $activityNested["$ec"] = ${"$ec"} ;
         }

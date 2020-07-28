@@ -17,7 +17,7 @@
         var dategraph = document.getElementById("activityGraphPie");
         var myChart = new Chart(dategraph, {
             type: 'doughnut',
-            data: {
+            data:{
                 labels:date_act,
                 datasets: [{
                     label: 'Activity Distribution',
@@ -25,44 +25,53 @@
                     borderWidth: 1,
                     backgroundColor: ["#0074D9", "#FF4136", "#2ECC40", "#FF851B", "#7FDBFF", "#B10DC9", "#FFDC00", "#001f3f", "#39CCCC", "#01FF70", "#85144b", "#F012BE", "#3D9970", "#111111", "#AAAAAA"]
                 }],
-                },
-                options: {
-                    responsive: true,
-                    title:{
-                        display: true,
-                        text: "Activity Distribution"
-                    }
+            },
+            options:{
+                responsive: true,
+                title:{
+                    display: true,
+                    text: "Activity Distribution"
+                }
             }
         });
 
-
         var actOverall = <?php echo $activityOverall; ?>;
-        // var date_act = new Array();
-        // var date_countx = new Array();
-        // for (var key in date_counts) {
-        //     date_act.push(key);
-        //     date_countx.push(date_counts[key]);
-        // }
-        var canvas = document.getElementById('activityGraph');
-        new Chart(canvas, {
-            type: 'line',
-            data: {
-                labels: ['w1', 'w2', 'w3', 'w4', 'w5','w6', 'w7', 'w8', 'w9', 'w10', 'w11', 'w12', 'w13', 'w14', 'w15'],
-                datasets: [{
-                    label: 'Subject 1',
-                    data: [10, 19, 14, 26, 9 ,12 , 45 , 23, 2 , 10, 34, 13, 20,8,14],
-                    borderWidth: 1,
-                    fill: false,
-                    borderColor: ["#0074D9"]
+        var colors = [ '#2685CB', '#4AD95A', '#FEC81B', '#FD8D14', '#CE00E6', '#4B4AD3', '#FC3026', '#B8CCE3', '#6ADC88', '#FEE45F'  ];
+        var courseName = new Array();
+        var courseCount = new Array();
+        var datasetdata = new Array();
+        var i = 0 ;
+        for (var key in actOverall) {
+            eval('var ' + key + '= new Array();');
+            for (var key2 in actOverall[key]) {
+                eval(key).push(actOverall[key][key2]);
+            }
+            datasetdata[i] = {
+                label: key,
+                data: eval(key),
+                borderColor: colors[i],
+                hoverBackgroundColor: colors[i],
+                borderStyle: 'solid',
+                borderWidth: 2,
+                fill : false
+            }
+            i++;
+        }
 
-                },{
-                    label: 'Subject 2',
-                    data: [11, 16, 31, 14, 12, 13, 20, 8, 14, 23, 34, 40,12, 20,9],
-                    borderWidth: 1,
-                    fill: false,
-                    borderColor: ["#FF4136"]
-                }]
+        var actgraph = document.getElementById("activityGraph");
+        var myChart = new Chart(actgraph, {
+            type: 'line',
+            data:{
+                labels:['w1', 'w2', 'w3', 'w4', 'w5','w6', 'w7', 'w8', 'w9', 'w10', 'w11', 'w12', 'w13', 'w14', 'w15'],
+                datasets: datasetdata
             },
+            options:{
+                responsive: true,
+                title:{
+                    display: true,
+                    text: "Activity Distribution"
+                }
+            }
         });
     }
 </script>
