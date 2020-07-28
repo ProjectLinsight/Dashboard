@@ -7,21 +7,60 @@
 
 <script type="text/javascript">
     window.onload = function () {
+        var date_counts = <?php echo $activityCount; ?>;
+        var date_act = new Array();
+        var date_countx = new Array();
+        for (var key in date_counts) {
+            date_act.push(key);
+            date_countx.push(date_counts[key]);
+        }
+        var dategraph = document.getElementById("activityGraphPie");
+        var myChart = new Chart(dategraph, {
+            type: 'doughnut',
+            data: {
+                labels:date_act,
+                datasets: [{
+                    label: 'Activity Distribution',
+                    data: date_countx,
+                    borderWidth: 1,
+                    backgroundColor: ["#0074D9", "#FF4136", "#2ECC40", "#FF851B", "#7FDBFF", "#B10DC9", "#FFDC00", "#001f3f", "#39CCCC", "#01FF70", "#85144b", "#F012BE", "#3D9970", "#111111", "#AAAAAA"]
+                }],
+                },
+                options: {
+                    responsive: true,
+                    title:{
+                        display: true,
+                        text: "Activity Distribution"
+                    }
+            }
+        });
+
+
+        var actOverall = <?php echo $activityOverall; ?>;
+        // var date_act = new Array();
+        // var date_countx = new Array();
+        // for (var key in date_counts) {
+        //     date_act.push(key);
+        //     date_countx.push(date_counts[key]);
+        // }
         var canvas = document.getElementById('activityGraph');
         new Chart(canvas, {
             type: 'line',
             data: {
-                labels: ['w1', 'w2', 'w3', 'w4', 'w5'],
+                labels: ['w1', 'w2', 'w3', 'w4', 'w5','w6', 'w7', 'w8', 'w9', 'w10', 'w11', 'w12', 'w13', 'w14', 'w15'],
                 datasets: [{
                     label: 'Subject 1',
-                    data: [10, 19, 14, 26, 9],
+                    data: [10, 19, 14, 26, 9 ,12 , 45 , 23, 2 , 10, 34, 13, 20,8,14],
                     borderWidth: 1,
-                    // fill: false
+                    fill: false,
+                    borderColor: ["#0074D9"]
+
                 },{
                     label: 'Subject 2',
-                    data: [11, 16, 31, 14, 12],
+                    data: [11, 16, 31, 14, 12, 13, 20, 8, 14, 23, 34, 40,12, 20,9],
                     borderWidth: 1,
-                    // fill: false
+                    fill: false,
+                    borderColor: ["#FF4136"]
                 }]
             },
         });
@@ -85,6 +124,77 @@
                     </div>
                 </div>
             </nav>
+
+            <div class="container-fluid">
+                <div class="pb-3">
+                    <div class="card shadow-sm">
+                        <div class="card-body row">
+                            <div class="col-md-5 px-4 row">
+                                <div class="col-3">
+                                    <img class="rounded-circle" style="max-width: 100%;height:auto"src="https://mdbootstrap.com/img/Photos/Avatars/img (27).jpg" alt="Generic placeholder image">
+                                </div>
+                                <div class="col-9">
+                                    <div class="">
+                                        <h4 style="font-size:calc(1.3em + 0.4vw)"> <strong>{{Auth::user()->name}}</strong> </h4>
+                                        <h6 class="text-muted" style="font-size:calc(0.8em + 0.2vw)"> {{Auth::user()->email}}</h6>
+                                        <hr class="m-0 p-0">
+                                        <h6 class="mt-1" style="font-size:calc(0.8em + 0.2vw)"><strong> B.Sc. in {{Auth::user()->degree}} &ensp; | &ensp; {{Auth::user()->year}}</strong></h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-7 row d-flex justify-content-end pt-3">
+                                <div class="border-right border-left  px-5">
+                                    <div class="d-flex justify-content-end">
+                                        <h3><strong> {{Auth::user()->stu_enrollment->count()}} </strong></h3>
+                                    </div>
+                                    <div class="d-flex justify-content-end">
+                                        <h6 style="font-size:calc(0.8em + 0.2vw)"><strong> Enrolled Courses </strong></h6>
+                                    </div>
+                                </div>
+                                <div class="border-right  px-5">
+                                    <div class="d-flex justify-content-end">
+                                        <h3><strong> 0 </strong></h3>
+                                    </div>
+                                    <div class="d-flex justify-content-end">
+                                        <h6 style="font-size:calc(0.8em + 0.2vw)"><strong> Completed Courses </strong></h6>
+                                    </div>
+                                </div>
+                                <div class="border-right  px-5">
+                                    <div class="d-flex justify-content-end">
+                                        <h3><strong> {{Auth::user()->posts->count()}} </strong></h3>
+                                    </div>
+                                    <div class="d-flex justify-content-end">
+                                        <h6 style="font-size:calc(0.8em + 0.2vw)"><strong> Interactions </strong></h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pb-3">
+                    <div class="card shadow-sm">
+                        <div class="card-header pb-0 bg-primary text-white">
+                            <h4> Overall Activity Distribution </h4>
+                        </div>
+                        <div class="card-body row">
+                            <div class="col-md-5">
+                                <div class="card p-2" style="background: #fefefe">
+                                    <canvas id="activityGraphPie" height="400" width="600"></canvas>
+                                </div>
+                            </div>
+                            <div class="col-md-7 ">
+                                <div class="card p-2" style="background: #fefefe">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body">
+                                            <canvas id="activityGraph"  height="280" width="600"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div class="container-fluid row m-0 changeList"  >
                 <div class="col-md-7 py-3">
