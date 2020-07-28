@@ -32,6 +32,7 @@ class PersonalCoursesController extends Controller{
             }
         }
 
+        //Assignments Data
 
         $activity[] = ['activity', 'Number'];
         $submittedAssignments = array();
@@ -75,6 +76,16 @@ class PersonalCoursesController extends Controller{
 
         // dd($gradedAssignments);
 
+        //Quiz Results
+        $quizArray = Array();
+        foreach($user_stmts as $quiz_stmt){
+            if($quiz_stmt['type']=="quiz"){
+                array_push($quizArray,$quiz_stmt);
+            }
+        }
+
+        //dd($quizArray);
+
         //Dummy data for start date end date
         $today = date("Y-m-d");
         $sDate = strtotime("-1 months", strtotime($today));
@@ -112,7 +123,8 @@ class PersonalCoursesController extends Controller{
         return view('student.courses.personal',[
             'crs'=> $course_name[0],
             'gradedAssignments' => $gradedAssignments,
-            'submittedAssignments' => $submittedAssignments
+            'submittedAssignments' => $submittedAssignments,
+            'quizzes'=>$quizArray
             ])
             ->with('grade', json_encode($array))
             ->with('activity', json_encode($activity))
