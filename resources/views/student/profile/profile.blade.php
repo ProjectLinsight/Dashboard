@@ -23,7 +23,7 @@
                         @endforeach
                     </div>
                     <hr class="content-center" style="width:75%;background : #555">
-                </li>                
+                </li>
                 <li>
                     <a href="/results/{{Auth::user()->id}}/{{Auth::user()->name}}"><i class="fas fa-chart-line pr-2"></i>Results</a>
                     <hr class="content-center" style="width:75%;background : #555">
@@ -79,7 +79,7 @@
                                             <div>
                                                 <h5 class="pt-3" style="font-size:calc(1em + 0.4vw)"><strong>{{ $user->name}}</strong></h5>
                                                 @if ($post->created_at!==$post->updated_at)
-                                                    <h6 class="text-muted " style="font-size:calc(0.6em + 0.1vw)" data-toggle="tooltip" title="post created : {{$post->created_at}}">  {{$post->updated_at}}</h6>     
+                                                    <h6 class="text-muted " style="font-size:calc(0.6em + 0.1vw)" data-toggle="tooltip" title="post created : {{$post->created_at}}">  {{$post->updated_at}}</h6>
                                                 @endif
                                             </div>
                                         </div>
@@ -93,28 +93,28 @@
                             </div>
                             <hr>
                             <div class="p-3 border rounded" style="background: #fefefe">
-                           
+
                                 <h5  style="font-size:calc(1.2em + 0.2vw)"><strong>{{ $post->title}}</strong></h5>
                                 <hr>
                                 <p style="font-size:calc(0.9em + 0.1vw);text-align: justify">{{$post->description}}</p>
                                 @if ($post->image)
                                     <div class="d-flex justify-content-center">
                                         <img style="width:100%;height:auto;" src="/uploads/post/{{ $post->image }}" alt="attachment">
-                                    </div>    
+                                    </div>
                                 @endif
                             </div>
                         </div>
                     </div>
                     @endforeach
-                    
+
                 </div>
                 <div class="col-md-4 pb-3">
                     <div class="p-3 row rounded d-flex justify-content-center shadow" style="background:white">
                         <div class="col-4 pt-4 ">
                             @if ($user->image)
-                                <img class="rounded-circle"  style="max-width: 140px;width:100%;height:auto" src="/uploads/photos/{{ $user->image }}" alt="photo">  
+                                <img class="rounded-circle"  style="max-width: 140px;width:100%;height:auto" src="/uploads/photos/{{ $user->image }}" alt="photo">
                             @else
-                                <img class="rounded-circle"  style="max-width: 140px;width:100%;height:auto" src="https://mdbootstrap.com/img/Photos/Avatars/img (27).jpg" alt="">    
+                                <img class="rounded-circle"  style="max-width: 140px;width:100%;height:auto" src="https://mdbootstrap.com/img/Photos/Avatars/img (27).jpg" alt="">
                             @endif
                             @if ($user->id === Auth::user()->id)
                                 <p class="pt-2 text-center"><a href="" style="font-size:calc(0.8em + 0.1vw)" data-toggle="modal" data-target="#exampleModalCenter02"> Edit Photo</a></p>
@@ -205,13 +205,13 @@
                             @enderror
                         </div>
                     </div>
-                    
+
                     <div class="form-group d-flex justify-content-center">
                         <div class="col-md-6">
                             <button type="submit" class="btn btn-info btn-block text-white">Share Post</button>
                         </div>
                     </div>
-                    
+
                 </form>
             </div>
         </div>
@@ -243,13 +243,13 @@
                         </div>
                     </div>
 
-                    
+
                     <div class="form-group d-flex justify-content-center">
                         <div class="col-md-6">
                             <button type="submit" class="btn btn-info btn-block text-white">Update name</button>
                         </div>
                     </div>
-                    
+
                 </form>
             </div>
         </div>
@@ -290,7 +290,7 @@
                             <button type="submit" class="btn btn-info btn-block text-white">Edit</button>
                         </div>
                     </div>
-                    
+
                 </form>
             </div>
         </div>

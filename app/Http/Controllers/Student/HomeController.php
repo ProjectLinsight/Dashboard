@@ -31,6 +31,6 @@ class HomeController extends Controller{
 
         // dd($enrolled_courses_xapi);
 
-        return view('home');
+        return view('home')->with('activityCount', json_encode($enrolled_courses_xapi));
     }
 }
