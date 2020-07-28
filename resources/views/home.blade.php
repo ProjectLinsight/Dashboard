@@ -7,26 +7,6 @@
 
 <script type="text/javascript">
     window.onload = function () {
-        // ctx = document.getElementById('myChart').getContext('2d');
-        // chart = new Chart(ctx, {
-        //     type: 'pie',
-        //     data: {
-        //         datasets: [{
-        //             label: 'Colors',
-        //             data: [9, 8, 7, 6, 5, 4, 3, 2, 1],
-        //             backgroundColor: ["#0074D9", "#FF4136", "#2ECC40", "#FF851B", "#7FDBFF", "#B10DC9", "#FFDC00", "#001f3f", "#39CCCC", "#01FF70", "#85144b", "#F012BE", "#3D9970", "#111111", "#AAAAAA"]
-        //         }],
-        //         labels: ['a','b','c','d','e','f','g','h','i']
-        //     },
-        //     options: {
-        //         responsive: true,
-        //         title:{
-        //             display: true,
-        //             text: "Color test"
-        //         }
-        //     }
-        // });
-
         var date_counts = <?php echo $activityCount; ?>;
         var date_act = new Array();
         var date_countx = new Array();
@@ -56,7 +36,13 @@
         });
 
 
-
+        var actOverall = <?php echo $activityOverall; ?>;
+        // var date_act = new Array();
+        // var date_countx = new Array();
+        // for (var key in date_counts) {
+        //     date_act.push(key);
+        //     date_countx.push(date_counts[key]);
+        // }
         var canvas = document.getElementById('activityGraph');
         new Chart(canvas, {
             type: 'line',
