@@ -11,14 +11,16 @@ class NewAssignment extends Notification
 {
     use Queueable;
 
+    private $assignmentData;
+
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($assignmentData)
     {
-        //
+        $this->assignmentData = $assignmentData;
     }
 
     /**
@@ -55,7 +57,9 @@ class NewAssignment extends Notification
     public function toDatabase($notifiable)
     {
         return [
-            //
+            'courseID' => $this->assignmentData['cid'],
+            'Title' => $this->assignmentData['title'],
+            'dueOn' =>$this->assignmentData['dueDate']
         ];
     }
 }
