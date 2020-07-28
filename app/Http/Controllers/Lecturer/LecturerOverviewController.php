@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Lecturer;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Courses;
@@ -310,49 +311,86 @@ class LecturerOverviewController extends Controller{
         $stmt_arr = array();
         $sum_arr = array();
         $count=0;
-        // $cr = DB::table('assignments')->get();
-        // $assignment = array();
-        // foreach ($cr as $key => $value) { 
-        //     $assignment[$value->title]['sum']=0; 
-        //     $assignment[$value->title]['max']=0; 
-        //     $assignment[$value->title]['min']=100; 
-        //     $assignment[$value->title]['avg']=0;
-        //     $assignment[$value->title]['count']=0;  
-        // }
         for($i=0;$i<$stmt_count;$i++){            
             $logArray=explode("/",$state[$i]->verb->id);
             if($logArray[sizeof($logArray)-1]==="scored"){
                 $stmt_arr[$count]['user'] = $state[$i]->actor->account->name ;
                 $stmt_arr[$count]['assignment'] = $state[$i]->object->definition->name->en ;
-                $stmt_arr[$count]['marks'] = $state[$i]->result->score->raw ;
-                // $sum+=$state[$i]->result->score->raw;
+                $stmt_arr[$count]['amarks'] = $state[$i]->result->score->raw ;
+                $stmt_arr[$count]['qmarks'] = 0 ;
                 $count+=1;
             }
         }
-        $sub_count = 1; 
-        $s = 0;
-        // $sum_arr[$s]['sum']=$stmt_arr[$s]['marks'];
-        // $sum_arr[$s]['user'] = $stmt_arr[$s]['user'] ;
-        // $sum_arr[$s]['assignment'] = $stmt_arr[$s]['assignment'] ;
-        // $s=$s+1;
-        for ( $i = 1; $i < $count; $i++) 
-        { 
-            for ($j = 0; $j < $i; $j++) {
-                if ($stmt_arr[$i]['user'] == $stmt_arr[$j]['user'] && $i <> $j ){
-                    $sum_arr[$s]['user'] = $stmt_arr[$i]['user'];
-                    $sum_arr[$s]['assignment 1'] = $stmt_arr[$i]['assignment'];
-                    $sum_arr[$s]['assignment'] = $stmt_arr[$j]['assignment'];
-                    $sum_arr[$s]['sum']=$stmt_arr[$i]['marks']+$stmt_arr[$j]['marks'];
+        for($i=0;$i<$stmt_count;$i++){
+            $logArray=explode("/",$state[$i]->object->id);
+            if($logArray[sizeof($logArray)-2]==="quiz"){  
+                $general=explode("/",$state[$i]->verb->id);
+                if($general[sizeof($general)-1]==="completed"){
+                    $stmt_arr[$count]['user'] = $state[$i]->actor->account->name ; 
+                    $stmt_arr[$count]['quiz'] = $state[$i]->object->definition->name->en;
+                    $stmt_arr[$count]['qmarks'] = $state[$i]->result->score->raw ;
+                    $stmt_arr[$count]['amarks'] = 0 ;
+                    $count+=1;
                 }
             }
-            // if ($i == $j){ 
-            //     $sub_count++;
-            //     $s++;
-            //     $distinct_arr[$s]['user'] = $stmt_arr[$i]['user'] ;
-            //     $distinct_arr[$s]['assignment'] = $stmt_arr[$i]['assignment'] ; 
-            // }
         }
-        dd($count,$stmt_arr,$sum_arr);
+        $assRisk=array();
+        $quizRisk=array();
+        $avg=0;
+        $sum=0;
+        $t=0;
+        $ac=0;
+        $qc=0;
+        $cr = DB::table('users')->where('utype','Student')->get();
+        $assignment = array();
+        $reg_no = array();
+        foreach ($cr as $key => $value) { 
+            $reg_no[$t]= substr($value->email,0,9);
+            $t++; 
+        }
+        foreach ($reg_no as $key => $value) { 
+            $assignment[$value]['asssum']=0; 
+            $assignment[$value]['assavg']=0;
+            $assignment[$value]['asscount']=0;  
+            $assignment[$value]['quizsum']=0; 
+            $assignment[$value]['quizavg']=0;
+            $assignment[$value]['quizcount']=0;
+        }
+        foreach($assignment as $key => $value){
+            for($i=0;$i<$count;$i++){
+                if($key==$stmt_arr[$i]['user'] && $stmt_arr[$i]['qmarks']==0){
+                    $assignment[$key]['asscount']++;
+                    $assignment[$key]['asssum']+= $stmt_arr[$i]['amarks'];
+                }
+                if($key==$stmt_arr[$i]['user'] && $stmt_arr[$i]['amarks']==0){
+                    $assignment[$key]['quizcount']++;
+                    $assignment[$key]['quizsum']+= $stmt_arr[$i]['qmarks'];
+                }
+            }
+            if($assignment[$key]['asscount']!=0){
+                $assignment[$key]['assavg']=$assignment[$key]['asssum']/$assignment[$key]['asscount'];
+            }
+            if($assignment[$key]['quizcount']!=0){
+                $assignment[$key]['quizavg']=$assignment[$key]['quizsum']/$assignment[$key]['quizcount'];
+            }
+        }
+        foreach($assignment as $key => $value){
+           if($assignment[$key]['asscount']!=0){
+                if($assignment[$key]['assavg']<50){
+                    $assRisk[$ac]['user']=$key;
+                    $assRisk[$ac]['Assignment avg']=$assignment[$key]['assavg'];
+                    $ac++;
+                }
+            }
+            if($assignment[$key]['quizcount']!=0){
+                if($assignment[$key]['quizavg']<50){
+                    $quizRisk[$qc]['user']=$key;
+                    $quizRisk[$qc]['Quiz avg']=$assignment[$key]['quizavg'];
+                    $qc++;
+                }
+            }
+        }
+        dd($cr,$count,$stmt_arr,$assignment,$assRisk,$quizRisk);
 
 
 
