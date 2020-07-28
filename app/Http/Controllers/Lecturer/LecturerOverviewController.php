@@ -342,11 +342,18 @@ class LecturerOverviewController extends Controller{
         $ac=0;
         $qc=0;
         $cr = DB::table('users')->where('utype','Student')->get();
+        $gr = DB::table('stu_enrollments')->where('cid','SCS3209')->get();
         $assignment = array();
         $reg_no = array();
         foreach ($cr as $key => $value) { 
-            $reg_no[$t]= substr($value->email,0,9);
-            $t++; 
+            foreach($gr as $stu){
+                if($stu->index==$value->index){
+                    $reg=explode("@",$value->email);
+                    $reg_no[$t]= $reg[0];
+                     $t++;
+                }
+            }
+             
         }
         foreach ($reg_no as $key => $value) { 
             $assignment[$value]['asssum']=0; 
