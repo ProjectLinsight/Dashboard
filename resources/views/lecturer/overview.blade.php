@@ -167,13 +167,14 @@
                                                      </div>
                                                 </div> -->
                                                 <h6 class="text-black">
-                                                    <a data-toggle="collapse" href="#{{$key}}" class="accordion-toggle">{{$key}}</a>
+                                                    <a data-toggle="collapse" href="#key">{{$key}}</a>
                                                 </h6>
-                                                <div class="collapse pt-0 pl-3" id="{{$key}}" lass="accordian-body collapse">
-                                                    <h6 class="text-black"> <a href="/lecturer/{{Auth::user()->id}}/{{$key}}/courses">Update</a></h6>
-                                                    <h6 class="text-black"> <a  href="/lecturer/{{Auth::user()->id}}/{{$key}}/overview">Analytics</a></h6>
-                                                    <!-- <h6 class="text-white"> <a  href="/lecturer/{{Auth::user()->id}}/{{$item->cid}}/overview">Assignment & Quiz</a></h6> -->
+                                                <div class="collapse pt-0 pl-3" id="key" >
+                                                    <h6 class="text-black"> Maximum : <a >{{$value['max']}}</a></h6>
+                                                    <h6 class="text-black"> Minimum : <a >{{$value['min']}}</a></h6>
+                                                    <h6 class="text-black"> Average : <a >{{$value['avg']}}</a></h6>
                                                 </div>
+                                                
 
                                                 <!-- <div class="collapse pt-0 pl-3" id="{{$key}}">
                                                     <h6 class="text-black">Max <a>{{$value['avg']}}</a></h6>
