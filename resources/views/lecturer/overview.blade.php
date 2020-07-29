@@ -62,10 +62,10 @@
             <div class="container-fluid">
                 <hr><h1 class="text-center text-dark">Analytics</h1><hr>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-12 py-3">
                         <div class="pb-3">
                             <div class="card shadow">
-                                <div class="card-header bg-info pb-1">
+                                <div class="card-header bg-primary pb-1">
                                     <h4 class="text-white text-center"> Assignment Completion </h4>
                                 </div>
                                 <div class="card-body">
@@ -81,10 +81,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                    <div class="pb-3">
+                </div>
+                <div class="row">
+                    <div class="col-md-12 py-3">
+                        <div class="pb-3">
                             <div class="card shadow">
-                                <div class="card-header bg-info pb-1">
+                                <div class="card-header bg-primary pb-1">
                                     <h4 class="text-white text-center"> Quiz Completion </h4>
                                 </div>
                                 <div class="card-body">
@@ -104,29 +106,28 @@
                 <br>
 
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-7">
                         <div class="pb-3">
                             <div class="card shadow">
-                                <div class="card-header bg-dark pb-1">
+                                <div class="card-header bg-info pb-1">
                                     <h4 class="text-white text-center"> Risk of failure </h4>
                                 </div>
                                 <div class="card-body p-0">
                                     <div class="panel panel-default">
-                                        <nav class="nav nav-tabs nav-fill">
-                                            <a class="col-6 nav-item nav-link active" data-toggle="tab" href="#CS">Computer Science</a>
-                                            <a class="col-6 nav-item nav-link" data-toggle="tab" href="#IS">Information Systems</a>
-                                        </nav>
                                         <div class="tab-content">
-                                            <div id="CS" class="tab-pane fade show active">
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover mb-0 text-center" style="border-collapse: collapse;">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Registration Number</th>
+                                                                <!-- <th>Name</th>   -->
+                                                                <th>Risk Level</th> 
+                                                            </tr>
+                                                        </thead>
 
-                                            <!-- CS risk of failure list comes here -->
-
-                                            </div>
-                                            <div id="CS" class="tab-pane fade show active">
-
-                                            <!-- IS risk of failure list comes here -->
-
-                                            </div>
+                                                       
+                                                    </table>
+                                                </div>
                                         </div>
                                         <div class="panel-body">
                                             <canvas id="canvas" height="480" width="600"></canvas>
@@ -139,7 +140,7 @@
                     <div class="col-md-5">
                         <div class="pb-3">
                             <div class="card shadow">
-                                <div class="card-header bg-info pb-1">
+                                <div class="card-header bg-success pb-1">
                                     <h4 class="text-white text-center"> Assignments & Quizzes </h4>
                                 </div>
                                 <div class="card-body p-0">
@@ -166,15 +167,37 @@
                                                         <h6 class="text-black"> <a>Analytics</a></h6>
                                                      </div>
                                                 </div> -->
-                                                <h6 class="text-black">
-                                                    <a data-toggle="collapse" href="#key">{{$key}}</a>
+                                                <!-- <h6 class="text-black">
+                                                    <a data-toggle="collapse" href="{{$key}}">{{$key}}</a>
                                                 </h6>
-                                                <div class="collapse pt-0 pl-3" id="key" >
+                                                <div class="collapse pt-0 pl-3" id="{{$key}}" >
                                                     <h6 class="text-black"> Maximum : <a >{{$value['max']}}</a></h6>
                                                     <h6 class="text-black"> Minimum : <a >{{$value['min']}}</a></h6>
                                                     <h6 class="text-black"> Average : <a >{{$value['avg']}}</a></h6>
+                                                </div> -->
+                                                <div class="card shadow">
+                                                    <div class="card-header text-white bg-info  d-flex justify-content-between" style="cursor: pointer;" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                                        <div class="row pt-1">
+                                                            <h6 class="pt-1">
+                                                                &ensp; {{$key}}
+                                                            </h6>
+                                                        </div>
+                                                        <h4 class="pt-1"><i class="fa fa-angle-down" aria-hidden="true"></i></h4>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="collapse" id="collapseExample">
+                                                            <div class="card card-body">
+                                                                <hr>
+                                                                @if($value['count'] != 0)
+                                                                    <h6> <strong> Maximum &ensp; : &ensp; </strong> {{$value['max']}} </h6>
+                                                                    <h6> <strong> Minimum &emsp;  : &ensp; </strong> {{$value['min']}} </h6>
+                                                                    <h6> <strong> Average &emsp;  : &ensp; </strong> {{$value['avg']}} </h6>
+                                                                    <br>
+                                                                @endif
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                
 
                                                 <!-- <div class="collapse pt-0 pl-3" id="{{$key}}">
                                                     <h6 class="text-black">Max <a>{{$value['avg']}}</a></h6>
@@ -219,15 +242,29 @@
         console.log(act);
         var ctx = document.getElementById("assignmentGraph");
         var myChart = new Chart(ctx, {
-            type: 'bar',
+            type: 'line',
             data: {
                 labels:act,
                 datasets: [{
                     label: 'Assignment Completion',
                     data: countx,
-                    borderWidth: 1,
+                    borderColor: '#2685CB',
+                    hoverBackgroundColor: '#2685CB',
+                    borderStyle: 'solid',
+                    borderWidth: 2,
+                    fill : false
+                    
                 }]
             },
+            options:{
+                scales: {
+                     yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                            }
+                        }]
+                    }
+            }
         });
         var quiz = <?php echo $quiz; ?>;
         var qarr = new Array();
@@ -240,15 +277,23 @@
         console.log(qarr);
         var quizgraph = document.getElementById("quizGraph");
         var myChart = new Chart(quizgraph, {
-            type: 'bar',
+            type: 'line',
             data: {
                 labels:qarr,
                 datasets: [{
                     label: 'Quiz Completion',
                     data: countq,
-                    borderWidth: 1,
                 }]
             },
+            options:{
+                scales: {
+                     yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                            }
+                        }]
+                    }
+            }
         });
         var stat = $stats;
         console.log(stat)

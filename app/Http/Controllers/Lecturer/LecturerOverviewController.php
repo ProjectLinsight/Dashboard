@@ -317,6 +317,7 @@ class LecturerOverviewController extends Controller{
                 $stmt_arr[$count]['user'] = $state[$i]->actor->account->name ;
                 $stmt_arr[$count]['assignment'] = $state[$i]->object->definition->name->en ;
                 $stmt_arr[$count]['amarks'] = $state[$i]->result->score->raw ;
+                $stmt_arr[$count]['amax'] = $state[$i]->result->score->max ;
                 $stmt_arr[$count]['qmarks'] = 0 ;
                 $count+=1;
             }
@@ -329,18 +330,23 @@ class LecturerOverviewController extends Controller{
                     $stmt_arr[$count]['user'] = $state[$i]->actor->account->name ; 
                     $stmt_arr[$count]['quiz'] = $state[$i]->object->definition->name->en;
                     $stmt_arr[$count]['qmarks'] = $state[$i]->result->score->raw ;
+                    $stmt_arr[$count]['qmax'] = $state[$i]->result->score->max ;
                     $stmt_arr[$count]['amarks'] = 0 ;
                     $count+=1;
                 }
             }
         }
-        $assRisk=array();
-        $quizRisk=array();
+        $assHighRisk=array();
+        $assLowRisk=array();
+        $quizHighRisk=array();
+        $quizLowRisk=array();
         $avg=0;
         $sum=0;
         $t=0;
-        $ac=0;
-        $qc=0;
+        $ahc=0;
+        $alc=0;
+        $qhc=0;
+        $qlc=0;
         $cr = DB::table('users')->where('utype','Student')->get();
         $gr = DB::table('stu_enrollments')->where('cid','SCS3209')->get();
         $assignment = array();
@@ -359,45 +365,59 @@ class LecturerOverviewController extends Controller{
             $assignment[$value]['asssum']=0; 
             $assignment[$value]['assavg']=0;
             $assignment[$value]['asscount']=0;  
+            $assignment[$value]['assmax']=0;
             $assignment[$value]['quizsum']=0; 
             $assignment[$value]['quizavg']=0;
             $assignment[$value]['quizcount']=0;
+            $assignment[$value]['quizmax']=0;
         }
         foreach($assignment as $key => $value){
             for($i=0;$i<$count;$i++){
                 if($key==$stmt_arr[$i]['user'] && $stmt_arr[$i]['qmarks']==0){
                     $assignment[$key]['asscount']++;
+                    $assignment[$key]['assmax']+=$stmt_arr[$i]['amax'];
                     $assignment[$key]['asssum']+= $stmt_arr[$i]['amarks'];
                 }
                 if($key==$stmt_arr[$i]['user'] && $stmt_arr[$i]['amarks']==0){
                     $assignment[$key]['quizcount']++;
+                    $assignment[$key]['quizmax']+=$stmt_arr[$i]['qmax'];
                     $assignment[$key]['quizsum']+= $stmt_arr[$i]['qmarks'];
                 }
             }
-            if($assignment[$key]['asscount']!=0){
-                $assignment[$key]['assavg']=$assignment[$key]['asssum']/$assignment[$key]['asscount'];
+            if($assignment[$key]['assmax']!=0){
+                $assignment[$key]['assavg']=($assignment[$key]['asssum']/$assignment[$key]['assmax'])*100;
             }
-            if($assignment[$key]['quizcount']!=0){
-                $assignment[$key]['quizavg']=$assignment[$key]['quizsum']/$assignment[$key]['quizcount'];
+            if($assignment[$key]['quizmax']!=0){
+                $assignment[$key]['quizavg']=($assignment[$key]['quizsum']/$assignment[$key]['quizmax'])*100;
             }
         }
         foreach($assignment as $key => $value){
            if($assignment[$key]['asscount']!=0){
-                if($assignment[$key]['assavg']<50){
-                    $assRisk[$ac]['user']=$key;
-                    $assRisk[$ac]['Assignment avg']=$assignment[$key]['assavg'];
-                    $ac++;
+                if($assignment[$key]['assavg']<=40 ){
+                    $assHighRisk[$ahc]['user']=$key;
+                    $assHighRisk[$ahc]['Assignment avg']=$assignment[$key]['assavg'];
+                    $ahc++;
+                }
+                if($assignment[$key]['assavg']<=50 && $assignment[$key]['assavg']>40 ){
+                    $assLowRisk[$alc]['user']=$key;
+                    $assLowRisk[$alc]['Assignment avg']=$assignment[$key]['assavg'];
+                    $alc++;
                 }
             }
             if($assignment[$key]['quizcount']!=0){
-                if($assignment[$key]['quizavg']<50){
-                    $quizRisk[$qc]['user']=$key;
-                    $quizRisk[$qc]['Quiz avg']=$assignment[$key]['quizavg'];
-                    $qc++;
+                if($assignment[$key]['quizavg']<=40){
+                    $quizHighRisk[$qhc]['user']=$key;
+                    $quizHighRisk[$qhc]['Quiz avg']=$assignment[$key]['quizavg'];
+                    $qhc++;
+                }
+                if($assignment[$key]['quizavg']<=50 && $assignment[$key]['quizavg']>40){
+                    $quizLowRisk[$qlc]['user']=$key;
+                    $quizLowRisk[$qlc]['Quiz avg']=$assignment[$key]['quizavg'];
+                    $qlc++;
                 }
             }
         }
-        dd($cr,$count,$stmt_arr,$assignment,$assRisk,$quizRisk);
+        dd($cr,$count,$stmt_arr,$assignment,$assHighRisk,$assLowRisk,$quizHighRisk,$quizLowRisk);
 
 
 
