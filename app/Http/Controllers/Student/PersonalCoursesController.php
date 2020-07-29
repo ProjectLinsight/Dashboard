@@ -57,11 +57,11 @@ class PersonalCoursesController extends Controller{
             // else if("started"==$us["verb"]){ $activity["Started"]++; }
             else if("completed"==$us["verb"]){
                 $activity["Completed"]++;
-                array_push($submittedAssignments,$us);
+                // array_push($submittedAssignments,$us);
             }
             else if("submitted"==$us["verb"]){
                 $activity["Submitted"]++;
-                // array_push($submittedAssignments,$us);
+                array_push($submittedAssignments,$us);
             }
             else if("attained grade for"==$us["verb"]){
                 $activity["Graded"]++;
@@ -116,7 +116,21 @@ class PersonalCoursesController extends Controller{
             $weeklyFig[$weekNum]++;
         }
 
-        // dd($weeklyFig);
+
+        $asmnts = DB::table('assignments')->where('cid',$course)->get();
+        $weeklyAssignments = Array();
+        for($i=1;$i<$duration;$i++){
+            ${"week"."$i"} = Array();
+        }
+        foreach($asmnts as $as){
+            $wNo = intval(date("oW",strtotime($as->dueDate))) - intval(date("oW", strtotime($sDate))) + 1;
+            array_push( ${"week"."$wNo"} , $as);
+        }
+        for($i=1;$i<$duration;$i++){
+            $weeklyAssignments[$i]= ${"week"."$i"} ;
+        }
+
+
 
         //Results Overview
         $data = DB::table('results')->where('subjectCode',$my_course[0]->cid)->select(
@@ -130,11 +144,14 @@ class PersonalCoursesController extends Controller{
         }
         //End of Results Overview
 
+
         return view('student.courses.personal',[
             'crs'=> $course_name[0],
             'gradedAssignments' => $gradedAssignments,
             'submittedAssignments' => $submittedAssignments,
-            'quizzes'=>$quizArray
+            'weeklyAssignments' => $weeklyAssignments,
+            'quizzes'=>$quizArray,
+            'duration'=> $duration
             ])
             ->with('grade', json_encode($array))
             ->with('activity', json_encode($activity))

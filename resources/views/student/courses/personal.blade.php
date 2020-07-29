@@ -127,9 +127,45 @@
             </nav>
 
             <div class="container-fluid">
+                <hr>
+                <h1 class="text-center"> {{$crs->cName}} </h1>
+                <hr>
+
+                <div class="pb-4">
+                            <div class="card shadow">
+                                <div class="card-header bg-primary">
+                                    <h4 class="my-0 text-white"> Your Progress </h4>
+                                </div>
+                                <div class="card-body py-5">
+                                    <div class="progress" style="height:4px">
+                                        <?php
+                                            $count = 15 ;
+                                            $temp = 0 ;
+                                            for($i=1;$i<=$count;$i++){
+                                                $temp = $temp + 100/($count + 1);
+                                                $padding = strval($temp)."%" ;
+                                                if($i< $duration && $weeklyAssignments[$i] ){  ?>
+                                                    <div class="py-3">
+                                                        <div class="milestone2" style="left:{{$padding}};cursor: pointer;" >
+                                                            <h5 data-toggle="modal" data-target="#assignmentModel">
+                                                                <i class="fa fa-address-book-o" aria-hidden="true"  data-toggle="tooltip" data-placement="top"  title="{{count($weeklyAssignments[$i])}} Assignment/s"></i></h5>
+                                                        </div>
+                                                    </div>
+                                                <?php } ?>
+                                                    <div class="py-3">
+                                                        <div class="milestone3 d-flex justify-content-center" style="left:{{$padding}};cursor: pointer;" data-toggle="tooltip" data-placement="top"  title="Week {{$i+1}} of 15 " >
+                                                           <p class="text-primary"> <strong> W{{$i}} </strong> </p>
+                                                        </div>
+                                                    </div>
+                                                <div class="milestone bg-primary" style="left:{{$padding}};cursor: pointer;" data-toggle="tooltip" data-placement="top"  title="Week {{$i+1}} of 15 " > </div>
+                                        <?php } ?>
+                                        <div class="progress-bar bg-primary" style="width: 30%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                 <div class="row">
                     <div class="col-md-7">
-                        <hr><h1 class="text-center"> {{$crs->cName}} </h1><hr>
                         <div class="pb-4">
                             <div class="card shadow">
                                 <div class="card-header bg-primary">
@@ -155,26 +191,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="pb-4">
-                            <div class="card shadow">
-                                <div class="card-header bg-primary">
-                                    <h4 class="my-0 text-white"> Your Progress </h4>
-                                </div>
-                                <div class="card-body py-5">
-                                    <div class="progress" style="height:10px">
-                                        <?php
-                                            $count = 4 ;
-                                            $temp = 0 ;
-                                            for($i=0;$i<$count;$i++){
-                                                $temp = $temp + 100/($count + 1)  ;
-                                                $padding = strval($temp)."%" ; ?>
-                                            <div class="milestone bg-primary" style="left:{{$padding}}"></div>
-                                        <?php } ?>
-                                        <div class="progress-bar bg-primary" style="width: 30%;"></div>
                                     </div>
                                 </div>
                             </div>
@@ -255,3 +271,19 @@
     </div>
 </div>
 
+<div class="modal fade bd-example-modal-sm" id="assignmentModel" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content">
+            <div class="p-2">
+                <div class="card bg-success pt-2 px-2 ">
+                    <h6 class="text-white ">  <i class="fa fa-check-circle" aria-hidden="true"></i> Assignment Name </h6>
+                </div>
+            </div>
+            <div class="p-2">
+                <div class="card bg-success pt-2 px-2 ">
+                    <h6 class="text-white ">  <i class="fa fa-check-circle" aria-hidden="true"></i> Assignment Name </h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
