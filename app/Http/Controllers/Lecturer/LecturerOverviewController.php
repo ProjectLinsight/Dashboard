@@ -28,13 +28,15 @@ class LecturerOverviewController extends Controller{
         $stmt_arr=$this->assignmentComp();
         $q_arr=$this->quizComp();
         $stat=$this->assignmentStat();
+        $risk=$this->risk();
         return view('lecturer/overview',[
             'crs'=>$crs[0],
             'stu'=>$stu,
             ])
             ->with('assignment', json_encode($stmt_arr))
             ->with('quiz', json_encode($q_arr))
-            ->with('stats', $stat);
+            ->with('stats', $stat)
+            ->with('risks', $risk);
         
     }
    
@@ -384,15 +386,19 @@ class LecturerOverviewController extends Controller{
             }
         }
         foreach($assignment as $key => $value){
-                if($assignment[$key]['assavg']<=50 || $assignment[$key]['quizavg']<=50 ){
-                    $assignment[$key]['risklevel']= "Yes";
+                if($assignment[$key]['assavg']<=50 && $assignment[$key]['quizavg']<=50 ){
+                    $assignment[$key]['risklevel']= "High";
+                }
+                if($assignment[$key]['assavg']>50 && $assignment[$key]['quizavg']<=50 || $assignment[$key]['assavg']<=50 && $assignment[$key]['quizavg']>50){
+                    $assignment[$key]['risklevel']= "Low";
                 }
                 if($assignment[$key]['assavg']>50 && $assignment[$key]['quizavg']>50 ){
                     $assignment[$key]['risklevel']= "No";
                 }
             
         }
-        dd($cr,$count,$stmt_arr,$assignment);
+        return ($assignment);
+        // dd($cr,$count,$stmt_arr,$assignment);
 
 
 

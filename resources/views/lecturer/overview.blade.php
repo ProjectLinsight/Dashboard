@@ -124,7 +124,17 @@
                                                                 <th>Name</th> 
                                                             </tr>
                                                         </thead>
+                                                        <tbody>
+                                                            @foreach($risks as $key => $value)
+                                                            <tr>
+                                                                @if ($value['risklevel']=='High' || $value['risklevel']=='Low')
+                                                                    <td>{{$key}}</td>
+                                                                    <td>{{$value['risklevel']}}</td>
+                                                                @endif
+                                                            </tr>
+                                                            @endforeach
 
+                                                        </tbody>
                                                        
                                                     </table>
                                                 </div>
