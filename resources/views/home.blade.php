@@ -254,41 +254,46 @@
                             </div>
                             <div class="card-body">
                                 <div class="panel panel-default">
-                                    <div class="panel-body">
-                                        @foreach($assignment as $subid => $value)
-                                            @foreach($value as $keyassign)
-                                                <?php 
-                                                    if($keyassign->submitted == 'true'){
-                                                        $icon = "check-circle";
-                                                        $col = "success";
-                                                    }
-                                                    else{
-                                                        $icon = "exclamation-circle";
-                                                        $col = "danger";    
-                                                    }
-                                                ?>
-                                                <div class="p-0">
-                                                    <div class="card">
-                                                        <div class="row p-2">
-                                                            <div class="col-1">
-                                                                <h1 class="pt-2 text-{{$col}}"> <i class="fa fa-{{$icon}}" aria-hidden="true"></i> </h1>
-                                                            </div>
-                                                            <div class="col-8 pl-4 pr-0 mx-0 pt-2">
-                                                                <h6><strong>{{$keyassign->title}} </strong> </h6>
-                                                                <h6 style="font-size: 0.9em" class="text-muted"><strong>{{$subid}}</strong></h6>
-                                                            </div>
-                                                            <div class="col-3 px-0 pt-2">
-                                                                <h6 style="font-size: 1.0em" class="text-muted">Due Date</h6>
-                                                                <h6 class="pt-2"><strong>{{$keyassign->dueDate}}</strong></h6>
+                                    <nav class="nav nav-tabs nav-fill">
+                                        <a class="col-6 nav-item nav-link active" data-toggle="tab" href="#assignment">Assignments</a>
+                                        <a class="col-6 nav-item nav-link" data-toggle="tab" href="#quiz">Quizzes</a>
+                                    </nav>
+
+                                    <div class="tab-content">
+                                        <div id="assignment" class="tab-pane fade show active">
+                                            @foreach($assignment as $subid => $value)
+                                                @foreach($value as $keyassign)
+                                                    <?php 
+                                                        if($keyassign->submitted == 'true'){
+                                                            $icon = "check-circle";
+                                                            $col = "success";
+                                                        }
+                                                        else{
+                                                            $icon = "exclamation-circle";
+                                                            $col = "danger";    
+                                                        }
+                                                    ?>
+                                                    <div class="p-0">
+                                                        <div class="card">
+                                                            <div class="row p-2">
+                                                                <div class="col-1">
+                                                                    <h1 class="pt-2 text-{{$col}}"> <i class="fa fa-{{$icon}}" aria-hidden="true"></i> </h1>
+                                                                </div>
+                                                                <div class="col-8 pl-4 pr-0 mx-0 pt-2">
+                                                                    <h6><strong>{{$keyassign->title}} </strong> </h6>
+                                                                    <h6 style="font-size: 0.9em" class="text-muted"><strong>{{$subid}}</strong></h6>
+                                                                </div>
+                                                                <div class="col-3 px-0 pt-2">
+                                                                    <h6 style="font-size: 1.0em" class="text-muted">Due Date</h6>
+                                                                    <h6 class="pt-2"><strong>{{$keyassign->dueDate}}</strong></h6>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                @endforeach
                                             @endforeach
-                                        @endforeach
-                                        <canvas id="activityGraph" height="280" width="600"></canvas>
-                                    </div>
-                                    <div class="panel-body">
+                                        </div>
+                                        <div id="quiz" class="tab-pane fade show">
                                         @foreach($quiz as $subid => $value)
                                             @foreach($value as $keyquiz)
                                                 <?php 
@@ -320,8 +325,10 @@
                                                 </div>
                                             @endforeach
                                         @endforeach
-                                        <canvas id="activityGraph" height="280" width="600"></canvas>
+                                        
                                     </div>
+                                    </div>
+                                    
                                 </div>
                             </div>
                         </div>
