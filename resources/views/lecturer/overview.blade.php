@@ -61,8 +61,8 @@
 
             <div class="container-fluid">
                 <hr><h1 class="text-center text-dark">Analytics</h1><hr>
-                <div class="row">
-                    <div class="col-md-6 py-3">
+                <!-- <div class="row"> -->
+                    <div class="col-md-12 py-3">
                         <div class="pb-3">
                             <div class="card shadow">
                                 <div class="card-header bg-primary pb-1">
@@ -74,14 +74,14 @@
                                     <!-- chart comes here -->
 
                                         <div class="panel-body">
-                                            <canvas id="assignmentGraph" height="310" width="600"></canvas>
+                                            <canvas id="assignmentGraph" height="150" width="600"></canvas>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 py-3">
+                    <div class="col-md-12 py-3">
                         <div class="pb-3">
                             <div class="card shadow">
                                 <div class="card-header bg-primary pb-1">
@@ -93,14 +93,14 @@
                                     <!-- chart comes here -->
 
                                         <div class="panel-body">
-                                            <canvas id="quizGraph" height="310" width="600"></canvas>
+                                            <canvas id="quizGraph" height="150" width="600"></canvas>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                <!-- </div> -->
                 <br>
 
                 <div class="row">
@@ -181,27 +181,7 @@
                                         
                                             <!-- assignment list comes here -->
                                             @foreach($stats as $key => $value)
-                                                <!-- <h4>{{$key}}</h4>
-                                                <h4>{{$value['avg']}}</h4> -->
-                                                <!-- <h6 class="text-black">
-                                                <a data-toggle="collapse" href="#{{$key}}" role="button" aria-expanded="false" aria-controls="{{$key}}">                                        
-                                                    <a data-toggle="collapse" data-target=#{{$key}}>
-                                                    {{$key}}</a>
-                                                </h6>
-                                                <div class="collapse" id="{{$key}}">
-                                                    <div class="card card-body">
-                                                        <h6 class="text-black">Max <a>{{$value['avg']}}</a></h6>
-                                                        <h6 class="text-black"> <a>Analytics</a></h6>
-                                                     </div>
-                                                </div> -->
-                                                <!-- <h6 class="text-black">
-                                                    <a data-toggle="collapse" href="{{$key}}">{{$key}}</a>
-                                                </h6>
-                                                <div class="collapse pt-0 pl-3" id="{{$key}}" >
-                                                    <h6 class="text-black"> Maximum : <a >{{$value['max']}}</a></h6>
-                                                    <h6 class="text-black"> Minimum : <a >{{$value['min']}}</a></h6>
-                                                    <h6 class="text-black"> Average : <a >{{$value['avg']}}</a></h6>
-                                                </div> -->
+                                            <div class="p-3">
                                                 <div class="card shadow">
                                                     <div class="card-header text-white bg-info  d-flex justify-content-between" style="cursor: pointer;" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                                                         <div class="row pt-1">
@@ -225,12 +205,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
-                                                <!-- <div class="collapse pt-0 pl-3" id="{{$key}}">
-                                                    <h6 class="text-black">Max <a>{{$value['avg']}}</a></h6>
-                                                    <h6 class="text-black"> <a>Analytics</a></h6> -->
-                                                    <!-- <h6 class="text-white"> <a  href="/lecturer/{{Auth::user()->id}}/{{$item->cid}}/overview">Assignment & Quiz</a></h6> -->
-                                                <!-- </div> -->
+                                            </div>
                                             @endforeach
 
                                             </div>
@@ -238,6 +213,7 @@
 
                                             <!-- quizzes list comes here -->
                                             @foreach($quizstats as $key => $value)
+                                            <div class="p-3">
                                                 <div class="card shadow">
                                                     <div class="card-header text-white bg-info  d-flex justify-content-between" style="cursor: pointer;" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                                                         <div class="row pt-1">
@@ -261,6 +237,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                            </div>
                                             @endforeach
 
                                             </div>
