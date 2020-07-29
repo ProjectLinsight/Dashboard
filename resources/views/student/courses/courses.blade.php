@@ -13,17 +13,17 @@
                 </li>
                 <li class="pt-3">
                     <a href="/home"><i class="fas fa-home pr-2"></i>Feed</a>
-                    <hr class="content-center" style="width:75%;background : #555">   
+                    <hr class="content-center" style="width:75%;background : #555">
                 </li>
                 <li>
-                    <a data-toggle="collapse" href="#courses" ><i class="fas fa-user pr-2"></i>Courses</a>
-                    <div class="collapse pt-3 pl-5" id="courses">
+                    <a data-toggle="collapse" href="#courses"> <i class="fas fa-book pr-2"></i> Courses </a>
+                    <div class="collapse pt-1 pl-5" id="courses">
                         @foreach (Auth::user()->stu_enrollment as $sub)
-                            <h6 class="text-white"><a href="/Mycourses/{{$sub->cid}}" >{{$sub->cid}}</a></h6>
+                            <a style="font-size: 12px" href="/Mycourses/{{$sub->cid}}" > &emsp; {{$sub->cid}}</a>
                         @endforeach
                     </div>
                     <hr class="content-center" style="width:75%;background : #555">
-                </li>                
+                </li>
                 <li>
                     <a href="/results/{{Auth::user()->id}}/{{Auth::user()->name}}"><i class="fas fa-chart-line pr-2"></i>Results</a>
                     <hr class="content-center" style="width:75%;background : #555">
@@ -59,8 +59,8 @@
                 <div class="row">
                     <div class="col-md-7">
                         <div class="card table-card shadow">
-                            <div class="card-header bg-info pb-1">
-                                <h4 class="text-white text-center">All Courses</h4>
+                            <div class="card-header bg-primary pb-1">
+                                <h4 class="text-white">All Courses</h4>
                             </div>
 
                             <div class="card-body p-0">
@@ -85,7 +85,7 @@
                                                 if($i==1){$show ='show active';}
                                                 else{$show = '';}
                                             ?>
-                                            <div id="{{$tag}}" class="tab-pane fade {{$show}} ">                 
+                                            <div id="{{$tag}}" class="tab-pane fade {{$show}} ">
                                                 <div class="table-responsive">
                                                     <table class="table table-hover mb-0 text-center" style="border-collapse: collapse;">
                                                         <thead>
@@ -93,7 +93,7 @@
                                                                 <th>Course Code </th>
                                                                 <th>Name</th>
                                                                 <th>Credits</th>
-                                                                @if ($flag==0)      
+                                                                @if ($flag==0)
                                                                     <th>Category</th>
                                                                 @else
                                                                     <th>Hons CS</th>
@@ -111,10 +111,10 @@
                                                                 <td>{{$c->credits}}</td>
                                                                 @if ($flag==0)
                                                                     <td>{{substr($c->type,0,1)}}</td>
-                                                                @else 
+                                                                @else
                                                                     <td>{{substr($c->type,0,1)}}</td>
                                                                     <td>{{substr($c->type,1,1)}}</td>
-                                                                    <td>{{substr($c->type,2,1)}}</td>        
+                                                                    <td>{{substr($c->type,2,1)}}</td>
                                                                 @endif
                                                                 <td>{{$c->semester}}</td>
                                                             </tr>
@@ -124,9 +124,9 @@
                                                 </div>
                                             </div>
                                             <?php
-                                            }    
+                                            }
                                             ?>
-                                        </div>                                      
+                                        </div>
                                     </div>
                                     <div id="IS" class="tab-pane fade">
                                         <nav class="nav nav-tabs nav-fill">
@@ -144,7 +144,7 @@
                                                 if($i==1){$show ='show active';}
                                                 else{$show = '';}
                                             ?>
-                                            <div id="{{$tag}}" class="tab-pane fade {{$show}}">                 
+                                            <div id="{{$tag}}" class="tab-pane fade {{$show}}">
                                                 <div class="table-responsive">
                                                     <table class="table table-hover mb-0 text-center" style=" border-collapse: collapse;">
                                                         <thead>
@@ -152,7 +152,7 @@
                                                                 <th>Course Code </th>
                                                                 <th>Name</th>
                                                                 <th>Credits</th>
-                                                                @if ($flag==0)      
+                                                                @if ($flag==0)
                                                                     <th>Category</th>
                                                                 @else
                                                                     <th>Honours</th>
@@ -169,9 +169,9 @@
                                                                 <td>{{$c->credits}}</td>
                                                                 @if ($flag==0)
                                                                     <td>{{substr($c->type,0,1)}}</td>
-                                                                @else 
+                                                                @else
                                                                     <td>{{substr($c->type,0,1)}}</td>
-                                                                    <td>{{substr($c->type,1,1)}}</td>       
+                                                                    <td>{{substr($c->type,1,1)}}</td>
                                                                 @endif
                                                                 <td>{{$c->semester}}</td>
                                                             </tr>
@@ -180,8 +180,8 @@
                                                     </table>
                                                 </div>
                                             </div>
-                                            <?php } ?>   
-                                        </div> 
+                                            <?php } ?>
+                                        </div>
                                     </div>
                                 </div>
                                 <hr>
@@ -193,11 +193,12 @@
                         <div class="pb-3">
                             <div class="card shadow">
                                 <div class="card-header bg-success pb-1">
-                                    <h4 class="text-white text-center"> Currently Enrolled Courses </h4>
+                                    <h4 class="text-white"> Currently Enrolled Courses </h4>
                                 </div>
                                 <div class="card-body">
                                     @foreach (Auth::user()->stu_enrollment as $sub)
-                                        <a href="/Mycourses/{{$sub->cid}}" ><p>{{$sub->cid}} - {{$sub->course->cName}}</p></a>
+                                        <a class="m-0 p-0" href="/Mycourses/{{$sub->cid}}" style="text-decoration: none;color:black" ><h6 class="m-0 p-0">{{$sub->cid}} - {{$sub->course->cName}}</h6></a>
+                                        <hr class="m-1 p-1">
                                     @endforeach
                                 </div>
                             </div>
@@ -211,7 +212,7 @@
                                     To be Added...
                                 </div>
                             </div>
-                        </div>                        
+                        </div>
                     </div>
                 </div>
             </div>

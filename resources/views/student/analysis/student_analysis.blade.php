@@ -13,17 +13,17 @@
                 </li>
                 <li class="pt-3">
                     <a href="/home"><i class="fas fa-home pr-2"></i>Feed</a>
-                    <hr class="content-center" style="width:75%;background : #555">   
+                    <hr class="content-center" style="width:75%;background : #555">
                 </li>
                 <li>
-                    <a data-toggle="collapse" href="#courses" ><i class="fas fa-user pr-2"></i>Courses</a>
-                    <div class="collapse pt-3 pl-5" id="courses">
+                    <a data-toggle="collapse" href="#courses"> <i class="fas fa-book pr-2"></i> Courses </a>
+                    <div class="collapse pt-1 pl-5" id="courses">
                         @foreach (Auth::user()->stu_enrollment as $sub)
-                            <h6 class="text-white"><a href="/Mycourses/{{$sub->cid}}" >{{$sub->cid}}</a></h6>
+                            <a style="font-size: 12px" href="/Mycourses/{{$sub->cid}}" > &emsp; {{$sub->cid}}</a>
                         @endforeach
                     </div>
                     <hr class="content-center" style="width:75%;background : #555">
-                </li>                
+                </li>
                 <li>
                     <a href="/results/{{Auth::user()->id}}/{{Auth::user()->name}}"><i class="fas fa-chart-line pr-2"></i>Results</a>
                     <hr class="content-center" style="width:75%;background : #555">
@@ -55,7 +55,7 @@
             </nav>
 
             <div class="container-fluid">
-              
+
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card table-card shadow">
@@ -63,39 +63,39 @@
                                 <h4 class="text-white text-center">Visited Pages</h4>
                             </div>
 
-                            
-                                
-                               
+
+
+
                                                     <table class="table table-hover mb-0 text-center" style="border-collapse: collapse;">
                                                         <thead>
                                                             <tr>
                                                                 <th>Title</th>
-                                                                <th>Url</th>  
-                                                                <th>Time</th> 
+                                                                <th>Url</th>
+                                                                <th>Time</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             @foreach($xapi as $stmt)
                                                             <tr>
-                                                                <td>{{$stmt['title']}}</td>    
+                                                                <td>{{$stmt['title']}}</td>
                                                                 <td>{{$stmt['url']}}</td>
-                                                                <td>{{$stmt['timestamp']}}</td>  
+                                                                <td>{{$stmt['timestamp']}}</td>
                                                                 <td class="py-1">
                                                                             <button type="button" class="btn btn-secondary btn-s" data-toggle="modal" data-target="#exampleModalCenter" onclick="getId({{$stmt['title'] }})"> <i class="fas fa-share-square pr-2"></i> Share </button>
-                                                                        </td>                                     
+                                                                        </td>
                                                             </tr>
                                                             @endforeach
-                                                            
+
                                                         </tbody>
                                                     </table>
                                                 </div>
                                             </div>
-                                           
-                                        </div>                                      
-                                   
-                                   
+
+                                        </div>
+
+
                                     </div>
-                                </div>                            
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -154,13 +154,13 @@
                             @enderror
                         </div>
                     </div>
-                    
+
                     <div class="form-group d-flex justify-content-center">
                         <div class="col-md-6">
                             <button type="submit" class="btn btn-info btn-block text-white">Share Post</button>
                         </div>
                     </div>
-                    
+
                 </form>
             </div>
         </div>
