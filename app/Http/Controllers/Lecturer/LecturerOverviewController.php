@@ -395,17 +395,9 @@ class LecturerOverviewController extends Controller{
                 }
             }
         }
-        $assHighRisk=array();
-        $assLowRisk=array();
-        $quizHighRisk=array();
-        $quizLowRisk=array();
         $avg=0;
         $sum=0;
         $t=0;
-        $ahc=0;
-        $alc=0;
-        $qhc=0;
-        $qlc=0;
         $cr = DB::table('users')->where('utype','Student')->get();
         $gr = DB::table('stu_enrollments')->where('cid','SCS3209')->get();
         $assignment = array();
@@ -451,32 +443,15 @@ class LecturerOverviewController extends Controller{
             }
         }
         foreach($assignment as $key => $value){
-           if($assignment[$key]['asscount']!=0){
-                if($assignment[$key]['assavg']<=40 ){
-                    $assHighRisk[$ahc]['user']=$key;
-                    $assHighRisk[$ahc]['Assignment avg']=$assignment[$key]['assavg'];
-                    $ahc++;
+                if($assignment[$key]['assavg']<=50 || $assignment[$key]['quizavg']<=50 ){
+                    $assignment[$key]['risklevel']= "Yes";
                 }
-                if($assignment[$key]['assavg']<=50 && $assignment[$key]['assavg']>40 ){
-                    $assLowRisk[$alc]['user']=$key;
-                    $assLowRisk[$alc]['Assignment avg']=$assignment[$key]['assavg'];
-                    $alc++;
+                if($assignment[$key]['assavg']>50 && $assignment[$key]['quizavg']>50 ){
+                    $assignment[$key]['risklevel']= "No";
                 }
-            }
-            if($assignment[$key]['quizcount']!=0){
-                if($assignment[$key]['quizavg']<=40){
-                    $quizHighRisk[$qhc]['user']=$key;
-                    $quizHighRisk[$qhc]['Quiz avg']=$assignment[$key]['quizavg'];
-                    $qhc++;
-                }
-                if($assignment[$key]['quizavg']<=50 && $assignment[$key]['quizavg']>40){
-                    $quizLowRisk[$qlc]['user']=$key;
-                    $quizLowRisk[$qlc]['Quiz avg']=$assignment[$key]['quizavg'];
-                    $qlc++;
-                }
-            }
+            
         }
-        dd($cr,$count,$stmt_arr,$assignment,$assHighRisk,$assLowRisk,$quizHighRisk,$quizLowRisk);
+        dd($cr,$count,$stmt_arr,$assignment);
 
 
 
