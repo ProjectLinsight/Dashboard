@@ -317,6 +317,7 @@ class LecturerOverviewController extends Controller{
                 $stmt_arr[$count]['user'] = $state[$i]->actor->account->name ;
                 $stmt_arr[$count]['assignment'] = $state[$i]->object->definition->name->en ;
                 $stmt_arr[$count]['amarks'] = $state[$i]->result->score->raw ;
+                $stmt_arr[$count]['amax'] = $state[$i]->result->score->max ;
                 $stmt_arr[$count]['qmarks'] = 0 ;
                 $count+=1;
             }
@@ -329,6 +330,7 @@ class LecturerOverviewController extends Controller{
                     $stmt_arr[$count]['user'] = $state[$i]->actor->account->name ; 
                     $stmt_arr[$count]['quiz'] = $state[$i]->object->definition->name->en;
                     $stmt_arr[$count]['qmarks'] = $state[$i]->result->score->raw ;
+                    $stmt_arr[$count]['qmax'] = $state[$i]->result->score->max ;
                     $stmt_arr[$count]['amarks'] = 0 ;
                     $count+=1;
                 }
@@ -359,26 +361,30 @@ class LecturerOverviewController extends Controller{
             $assignment[$value]['asssum']=0; 
             $assignment[$value]['assavg']=0;
             $assignment[$value]['asscount']=0;  
+            $assignment[$value]['assmax']=0;
             $assignment[$value]['quizsum']=0; 
             $assignment[$value]['quizavg']=0;
             $assignment[$value]['quizcount']=0;
+            $assignment[$value]['quizmax']=0;
         }
         foreach($assignment as $key => $value){
             for($i=0;$i<$count;$i++){
                 if($key==$stmt_arr[$i]['user'] && $stmt_arr[$i]['qmarks']==0){
                     $assignment[$key]['asscount']++;
+                    $assignment[$key]['assmax']+=$stmt_arr[$i]['amax'];
                     $assignment[$key]['asssum']+= $stmt_arr[$i]['amarks'];
                 }
                 if($key==$stmt_arr[$i]['user'] && $stmt_arr[$i]['amarks']==0){
                     $assignment[$key]['quizcount']++;
+                    $assignment[$key]['quizmax']+=$stmt_arr[$i]['qmax'];
                     $assignment[$key]['quizsum']+= $stmt_arr[$i]['qmarks'];
                 }
             }
-            if($assignment[$key]['asscount']!=0){
-                $assignment[$key]['assavg']=$assignment[$key]['asssum']/$assignment[$key]['asscount'];
+            if($assignment[$key]['assmax']!=0){
+                $assignment[$key]['assavg']=($assignment[$key]['asssum']/$assignment[$key]['assmax'])*100;
             }
-            if($assignment[$key]['quizcount']!=0){
-                $assignment[$key]['quizavg']=$assignment[$key]['quizsum']/$assignment[$key]['quizcount'];
+            if($assignment[$key]['quizmax']!=0){
+                $assignment[$key]['quizavg']=($assignment[$key]['quizsum']/$assignment[$key]['quizmax'])*100;
             }
         }
         foreach($assignment as $key => $value){

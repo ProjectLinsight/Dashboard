@@ -104,7 +104,7 @@
                 <br>
 
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="pb-3">
                             <div class="card shadow">
                                 <div class="card-header bg-dark pb-1">
@@ -136,7 +136,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-5">
+                    <div class="col-md-6">
                         <div class="pb-3">
                             <div class="card shadow">
                                 <div class="card-header bg-info pb-1">
@@ -167,9 +167,9 @@
                                                      </div>
                                                 </div> -->
                                                 <h6 class="text-black">
-                                                    <a data-toggle="collapse" href="#key">{{$key}}</a>
+                                                    <a data-toggle="collapse" href="{{$key}}">{{$key}}</a>
                                                 </h6>
-                                                <div class="collapse pt-0 pl-3" id="key" >
+                                                <div class="collapse pt-0 pl-3" id="{{$key}}" >
                                                     <h6 class="text-black"> Maximum : <a >{{$value['max']}}</a></h6>
                                                     <h6 class="text-black"> Minimum : <a >{{$value['min']}}</a></h6>
                                                     <h6 class="text-black"> Average : <a >{{$value['avg']}}</a></h6>
