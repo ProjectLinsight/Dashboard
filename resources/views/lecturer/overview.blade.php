@@ -62,7 +62,7 @@
             <div class="container-fluid">
                 <hr><h1 class="text-center text-dark">Analytics</h1><hr>
                 <div class="row">
-                    <div class="col-md-12 py-3">
+                    <div class="col-md-6 py-3">
                         <div class="pb-3">
                             <div class="card shadow">
                                 <div class="card-header bg-primary pb-1">
@@ -81,9 +81,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 py-3">
+                    <div class="col-md-6 py-3">
                         <div class="pb-3">
                             <div class="card shadow">
                                 <div class="card-header bg-primary pb-1">
@@ -122,6 +120,7 @@
                                                                 <th>Registration Number</th>
                                                                 <!-- <th>Name</th>   -->
                                                                 <th>Risk Level</th> 
+                                                                <th>Risk Level</th> 
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -130,6 +129,24 @@
                                                                 @if ($value['risklevel']=='High' || $value['risklevel']=='Low')
                                                                     <td>{{$key}}</td>
                                                                     <td>{{$value['risklevel']}}</td>
+                                                                    @if ($value['risklevel']=='High')
+                                                                        <?php
+                                                                            $color = "bg-danger";
+                                                                            $percentage = 100;
+                                                                        ?>
+                                                                        @endif
+                                                                    @if ($value['risklevel']=='Low')
+                                                                        <?php
+                                                                            $color = "bg-warning";
+                                                                            $percentage = 50;
+                                                                        ?>
+                                                                        @endif
+                                                                    <td>
+                                                                    <div class="progress">
+                                                                        <div class="progress-bar progress-bar-striped {{$color}} progress-bar-animated" role="progressbar" aria-valuenow="{{$percentage}}" aria-valuemin="0" aria-valuemax="100" style="width: {{$percentage}}%"></div>
+                                                                    </div>
+                                                                    </td>
+
                                                                 @endif
                                                             </tr>
                                                             @endforeach
@@ -318,6 +335,11 @@
                 datasets: [{
                     label: 'Quiz Completion',
                     data: countq,
+                    borderColor: '#2685CB',
+                    hoverBackgroundColor: '#2685CB',
+                    borderStyle: 'solid',
+                    borderWidth: 2,
+                    fill : false
                 }]
             },
             options:{
