@@ -14,10 +14,10 @@ class HomeController extends Controller{
     }
 
     public function index(){
-        $my_statements = DB::table('stu_enrollments')->select('cid')->where('index',Auth::user()->index)->get()->toArray();
+        $my_enrolled_courses= DB::table('stu_enrollments')->select('cid')->where('index',Auth::user()->index)->get()->toArray();
         $enrolled_courses = Array();
         $enrolled_courses_xapi = Array();
-        foreach($my_statements as $en){
+        foreach($my_enrolled_courses as $en){
             $temp = $en->cid;
             array_push($enrolled_courses,$temp);
         }
@@ -47,9 +47,37 @@ class HomeController extends Controller{
         }
         // dd($activityNested);
 
+        //Assignemt Reminders 
+
+        $all_assignments = Array();
+        foreach($enrolled_courses as $subject){
+            $subject_assignments = DB::table('assignments')->where('cid',$subject)->get(['title','weight','dueDate'])->toArray();
+            if(count($subject_assignments)>0){
+                $all_assignments[$subject] = $subject_assignments;
+            }
+        }
+
+        //dd($all_assignments);
+
+        //Quiz Reminders
+        $all_quizzes = Array();
+        foreach($enrolled_courses as $subject){
+            $subject_quiz = DB::table('quiz')->where('cid',$subject)->get(['title','dueDate','maxMarks'])->toArray();
+            if(count($subject_quiz)>0){
+                $all_quizzes[$subject] = $subject_quiz;
+            }
+            
+        }
+
+        //dd($all_quizzes);
+
+
         return view('home')
             ->with('activityCount', json_encode($enrolled_courses_xapi))
             ->with('activityOverall', json_encode($activityNested))
+            ->with('quiz',$all_quizzes)
+            ->with('assignment',$all_assignments)
+
         ;
     }
 }

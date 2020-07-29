@@ -255,6 +255,12 @@
                             <div class="card-body">
                                 <div class="panel panel-default">
                                     <div class="panel-body">
+                                        @foreach($assignment as $key => $value)
+                                        <h4>{{$key}}</h4>
+                                            @foreach($value as $key2)
+                                            <h6>{{$key2->title}} is due on {{$key2->dueDate}}</h6>
+                                            @endforeach
+                                        @endforeach
                                         <canvas id="activityGraph" height="280" width="600"></canvas>
                                     </div>
                                 </div>
