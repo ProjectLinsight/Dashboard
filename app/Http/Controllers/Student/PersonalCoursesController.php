@@ -86,12 +86,18 @@ class PersonalCoursesController extends Controller{
 
         //dd($quizArray);
 
-        //Dummy data for start date end date
         $today = date("Y-m-d");
-        $sDate = strtotime("-1 months", strtotime($today));
-        $sDate = date("Y-m-d", $sDate);
-        //End of Dummy data for start date end date
+        $sDate = (DB::table('assign_lecturers')->where('cid',$course)->first())->startDate;
+        $sWeek = date("oW", strtotime($sDate));
+        $duration = intval(date("oW",strtotime($today))) - intval(date("oW", strtotime($sDate))) + 1;
 
+        //weekly figures
+        $weeklyFig = Array();
+        for($i=1;$i<$duration;$i++){
+            $weeklyFig[$i]= 0 ;
+        }
+
+        //daily figures
         $loop = $sDate;
         while($loop!=$today){
             $date_counts[$loop] = 0;
@@ -106,7 +112,11 @@ class PersonalCoursesController extends Controller{
                 $loop = strtotime("+1 day", strtotime($loop));
                 $loop = date("Y-m-d", $loop);
             }
+            $weekNum = intval(date("oW",strtotime($us["date"]))) - intval(date("oW", strtotime($sDate))) + 1;
+            $weeklyFig[$weekNum]++;
         }
+
+        // dd($weeklyFig);
 
         //Results Overview
         $data = DB::table('results')->where('subjectCode',$my_course[0]->cid)->select(
@@ -129,6 +139,7 @@ class PersonalCoursesController extends Controller{
             ->with('grade', json_encode($array))
             ->with('activity', json_encode($activity))
             ->with('date_counts', json_encode($date_counts))
+            ->with('week_counts', json_encode($weeklyFig))
             ;
     }
 

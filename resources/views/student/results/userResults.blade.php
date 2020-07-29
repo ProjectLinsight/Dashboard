@@ -74,7 +74,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card bg-dark shadow">
+                        <div class="card bg-primary shadow">
                             <div class="p-3 row rounded">
                                 <div class="col-md-1 pb-2">
                                     <img class="rounded-circle border" style="max-width: 60px"src="https://mdbootstrap.com/img/Photos/Avatars/img (27).jpg" alt="Generic placeholder image">
@@ -93,28 +93,28 @@
                             </div>
                             <div class="row px-4 pb-2 d-flex justify-content-center"  style="font-family:Helvetica;">
                                 <div class="px-2 pb-2 col-md-3 ">
-                                    <div class="p-3 card border shadow text-white bg-dark rounded" style="background: #fefefe">
+                                    <div class="p-3 card border shadow text-white bg-primary rounded" style="background: #fefefe">
                                         <h1 class="text-center" style="font-size: calc(2em + 1.5vw);"><strong>{{$data["GPA"]}}</strong></h1>
                                         <hr style="background: #fefefe">
                                         <p class="text-center text-white" style="font-size: calc(0.6em + 0.4vw);">Current GPA</p>
                                     </div>
                                 </div>
                                 <div class="px-2 pb-2 col-md-3 ">
-                                    <div class="p-3 card border shadow text-white bg-dark rounded" style="background: #fefefe">
+                                    <div class="p-3 card border shadow text-white bg-primary rounded" style="background: #fefefe">
                                         <h1 class="text-center" style="font-size: calc(2em + 1.5vw)"><strong>#{{$data["rank"]}}</strong></h1>
                                         <hr style="background: #fefefe">
                                         <p class="text-center text-white" style="font-size: calc(0.6em + 0.4vw);">Current Rank</p>
                                     </div>
                                 </div>
                                 <div class="px-2 pb-2 col-md-3 ">
-                                    <div class="p-3 card border shadow text-white bg-dark rounded" style="background: #fefefe">
+                                    <div class="p-3 card border shadow text-white bg-primary rounded" style="background: #fefefe">
                                         <h1 class="text-center" style="font-size: calc(2em + 1.5vw)"><strong>{{$data["credits"]}}</strong></h1>
                                         <hr style="background: #fefefe">
                                         <p class="text-center text-white" style="font-size: calc(0.6em + 0.4vw);">Total Credits</p>
                                     </div>
                                 </div>
                                 <div class="px-2 pb-2 col-md-3 ">
-                                <div class="p-3 card border shadow text-white bg-dark rounded">
+                                <div class="p-3 card border shadow text-white bg-primary rounded">
                                         <h3 class="text-center" style="font-size: calc(2em + 1.5vw)"><strong>{{$data["sclass"]}}</strong></h3>
                                         <hr style="background: #fefefe">
                                 <p class="text-center text-white" style="font-size: calc(0.6em + 0.4vw);">{{$data["class"]}}</p>
@@ -143,7 +143,7 @@
                                     @if ($data[$results]!==null)
                                         <div class="pb-3">
                                             <div class="card shadow">
-                                                <div class="card-header bg-dark">
+                                                <div class="card-header bg-primary">
                                                     <h4 class="text-white pb-0 mb-0" style="font-size:calc(1.2em + 0.4vw)"> {{$pi}} Year {{$pj}} Semester</h4>
                                                 </div>
                                                 <div class="card-body">
@@ -188,7 +188,7 @@
                     <div class="col-md-6">
                         <div class="pb-3">
                             <div class="card shadow">
-                                <div class="card-header bg-dark">
+                                <div class="card-header bg-primary">
                                     <h4 class="text-white pb-0 mb-0"> Grades Distribution </h4>
                                 </div>
                                 <div class="card-body">
@@ -203,7 +203,7 @@
 
                         <div class="pb-3">
                             <div class="card shadow">
-                                <div class="card-header bg-dark">
+                                <div class="card-header bg-primary">
                                     <h4 class="text-white pb-0 mb-0"> Batch Ranking </h4>
                                 </div>
                                 <div class="card-body">
@@ -268,7 +268,7 @@
                 label: 'Grade',
                 data: countx,
                 borderWidth: 1,
-                backgroundColor: ["#0074D9", "#FF4136", "#2ECC40", "#FF851B", "#7FDBFF", "#B10DC9", "#FFDC00", "#001f3f", "#39CCCC", "#01FF70", "#85144b", "#F012BE", "#3D9970", "#111111", "#AAAAAA"]
+                // backgroundColor: ["#0074D9", "#FF4136", "#2ECC40", "#FF851B", "#7FDBFF", "#B10DC9", "#FFDC00", "#001f3f", "#39CCCC", "#01FF70", "#85144b", "#F012BE", "#3D9970", "#111111", "#AAAAAA"]
             }]
         },
     });

@@ -5,17 +5,75 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
     <script type="text/javascript" src="{{ URL::asset('js/home.js') }}"></script>
     <script type="text/javascript">
-        var analytics = <?php echo $grade; ?>
+        window.onload = function () {
+            var activity = <?php echo $activity; ?>;
+            var act = new Array();
+            var countx = new Array();
+            for (var key in activity) {
+                act.push(key);
+                countx.push(activity[key]);
+            }
+            var ctx = document.getElementById("activityGraph");
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels:act,
+                    datasets: [{
+                        label: 'Activity by type',
+                        data: countx,
+                        borderWidth: 1,
+                        backgroundColor: ["#0074D9", "#FF4136", "#2ECC40", "#FF851B", "#7FDBFF", "#B10DC9", "#FFDC00", "#001f3f", "#39CCCC", "#01FF70", "#85144b", "#F012BE", "#3D9970", "#111111", "#AAAAAA"]
+                    }]
+                },
+            });
 
-        google.charts.load('current', {'packages':['corechart']});
-        google.charts.setOnLoadCallback(drawChart);
+            var date_counts = <?php echo $date_counts; ?>;
+            var date_act = new Array();
+            var date_countx = new Array();
+            for (var key in date_counts) {
+                date_act.push(key);
+                date_countx.push(date_counts[key]);
+            }
+            var dategraph = document.getElementById("dateGraph");
+            var myChart = new Chart(dategraph, {
+                type: 'line',
+                data: {
+                    labels:date_act,
+                    datasets: [{
+                        label: 'Activity over Time (Daily)',
+                        data: date_countx,
+                        borderWidth: 1,
+                        borderColor : "#0074D9",
+                        backgroundColor : ['rgba(0, 116, 217, 0.4)' ]
+                    }]
+                }
+            });
 
-        function drawChart(){
-            var data = google.visualization.arrayToDataTable(analytics);
-            var chart = new google.visualization.PieChart(document.getElementById('pie_chart'));
-            chart.draw(data);
+            var week_counts = <?php echo $week_counts; ?>;
+            var week_act = new Array();
+            var week_countx = new Array();
+            for (var key in week_counts) {
+                week_act.push("W"+key);
+                week_countx.push(week_counts[key]);
+            }
+            console.log(week_countx);
+            var weekgraph = document.getElementById("weekGraph");
+            var myChart = new Chart(weekgraph, {
+                type: 'line',
+                data: {
+                    labels:week_act,
+                    datasets: [{
+                        label: 'Activity over Time (Weekly)',
+                        data: week_countx,
+                        borderWidth: 1,
+                        borderColor : "#0074D9",
+                        backgroundColor : ['rgba(0, 116, 217, 0.4)' ]
+                    }]
+                }
+            });
         }
     </script>
+
 
 @section('content')
 <div class="container-fluid pt-5" style="font-size: 12px">
@@ -70,17 +128,32 @@
 
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-8">
+                    <div class="col-md-7">
                         <hr><h1 class="text-center"> {{$crs->cName}} </h1><hr>
                         <div class="pb-4">
                             <div class="card shadow">
-                                <div class="card-header bg-info">
+                                <div class="card-header bg-primary">
                                     <h4 class="text-white my-0"> Activity Distribution </h4>
                                 </div>
                                 <div class="card-body">
-                                    <div class="panel panel-default">
-                                        <div class="panel-body">
-                                            <canvas id="dateGraph" height="280" width="600"></canvas>
+                                    <nav class="nav nav-tabs nav-fill">
+                                        <a class="col-6 nav-item nav-link active" data-toggle="tab" href="#dailyTab">Daily</a>
+                                        <a class="col-6 nav-item nav-link" data-toggle="tab" href="#weeklyTab">Weekly</a>
+                                    </nav>
+                                    <div class="tab-content">
+                                        <div id="dailyTab" class="tab-pane fade show active">
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    <canvas id="dateGraph" height="300px" width="600"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="weeklyTab" class="tab-pane fade show">
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    <canvas id="weekGraph" height="300px" width="600"></canvas>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -160,27 +233,18 @@
                             </div>
                         @endforeach
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-5">
                         <div class="pb-4">
                             <div class="card shadow">
-                                <div class="card-header bg-info">
-                                    <h4 class="text-white my-0"> Contribution status </h4>
+                                <div class="card-header bg-primary">
+                                    <h4 class="text-white my-0 py-0"> Contribution to the Course </h4>
                                 </div>
                                 <div class="card-body">
                                     <div class="panel panel-default">
                                         <div class="panel-body">
-                                            <canvas id="activityGraph" height="280" width="600"></canvas>
+                                            <canvas id="activityGraph" height="380px" width="600"></canvas>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card shadow">
-                            <div class="card-header bg-info text-center text-white">
-                                <h4 class="my-0"> Results Overview</h4>
-                            </div>
-                            <div class="card-body">
-                                <div id="pie_chart">
                                 </div>
                             </div>
                         </div>
@@ -191,45 +255,3 @@
     </div>
 </div>
 
-<script type="text/javascript">
-        var activity = <?php echo $activity; ?>;
-        var act = new Array();
-        var countx = new Array();
-        for (var key in activity) {
-            act.push(key);
-            countx.push(activity[key]);
-        }
-        console.log(countx);
-        var ctx = document.getElementById("activityGraph");
-        var myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels:act,
-                datasets: [{
-                    label: 'Activity by type',
-                    data: countx,
-                    borderWidth: 1,
-                }]
-            },
-        });
-
-        var date_counts = <?php echo $date_counts; ?>;
-        var date_act = new Array();
-        var date_countx = new Array();
-        for (var key in date_counts) {
-            date_act.push(key);
-            date_countx.push(date_counts[key]);
-        }
-        var dategraph = document.getElementById("dateGraph");
-        var myChart = new Chart(dategraph, {
-            type: 'line',
-            data: {
-                labels:date_act,
-                datasets: [{
-                    label: 'Activity over Time',
-                    data: date_countx,
-                    borderWidth: 1,
-                }]
-            }
-        });
-</script>
