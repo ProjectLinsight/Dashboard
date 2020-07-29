@@ -167,15 +167,37 @@
                                                         <h6 class="text-black"> <a>Analytics</a></h6>
                                                      </div>
                                                 </div> -->
-                                                <h6 class="text-black">
+                                                <!-- <h6 class="text-black">
                                                     <a data-toggle="collapse" href="{{$key}}">{{$key}}</a>
                                                 </h6>
                                                 <div class="collapse pt-0 pl-3" id="{{$key}}" >
                                                     <h6 class="text-black"> Maximum : <a >{{$value['max']}}</a></h6>
                                                     <h6 class="text-black"> Minimum : <a >{{$value['min']}}</a></h6>
                                                     <h6 class="text-black"> Average : <a >{{$value['avg']}}</a></h6>
+                                                </div> -->
+                                                <div class="card shadow">
+                                                    <div class="card-header text-white bg-info  d-flex justify-content-between" style="cursor: pointer;" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                                        <div class="row pt-1">
+                                                            <h6 class="pt-1">
+                                                                &ensp; {{$key}}
+                                                            </h6>
+                                                        </div>
+                                                        <h4 class="pt-1"><i class="fa fa-angle-down" aria-hidden="true"></i></h4>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="collapse" id="collapseExample">
+                                                            <div class="card card-body">
+                                                                <hr>
+                                                                @if($value['count'] != 0)
+                                                                    <h6> <strong> Maximum &ensp; : &ensp; </strong> {{$value['max']}} </h6>
+                                                                    <h6> <strong> Minimum &emsp;  : &ensp; </strong> {{$value['min']}} </h6>
+                                                                    <h6> <strong> Average &emsp;  : &ensp; </strong> {{$value['avg']}} </h6>
+                                                                    <br>
+                                                                @endif
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                
 
                                                 <!-- <div class="collapse pt-0 pl-3" id="{{$key}}">
                                                     <h6 class="text-black">Max <a>{{$value['avg']}}</a></h6>
@@ -226,8 +248,23 @@
                 datasets: [{
                     label: 'Assignment Completion',
                     data: countx,
+                    borderColor: '#2685CB',
+                    hoverBackgroundColor: '#2685CB',
+                    borderStyle: 'solid',
+                    borderWidth: 2,
+                    fill : false
+                    
                 }]
             },
+            options:{
+                scales: {
+                     yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                            }
+                        }]
+                    }
+            }
         });
         var quiz = <?php echo $quiz; ?>;
         var qarr = new Array();
@@ -248,6 +285,15 @@
                     data: countq,
                 }]
             },
+            options:{
+                scales: {
+                     yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                            }
+                        }]
+                    }
+            }
         });
         var stat = $stats;
         console.log(stat)
