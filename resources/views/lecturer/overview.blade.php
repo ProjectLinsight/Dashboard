@@ -209,7 +209,7 @@
                                             @endforeach
 
                                             </div>
-                                            <div id="quiz" class="tab-pane fade show active">
+                                            <div id="quiz" class="tab-pane fade show">
 
                                             <!-- quizzes list comes here -->
                                             @foreach($quizstats as $key => $value)
