@@ -119,18 +119,30 @@ class PersonalCoursesController extends Controller{
 
         $asmnts = DB::table('assignments')->where('cid',$course)->get();
         $weeklyAssignments = Array();
+        $subAssignments = Array();
         for($i=1;$i<$duration;$i++){
             ${"week"."$i"} = Array();
+            ${"weekSub"."$i"} = Array();
         }
+        $temp = false ;
         foreach($asmnts as $as){
+            foreach($submittedAssignments as $sa){
+                if($sa["title"] == $as->title){
+                    $temp = true ;
+                    continue ;
+                }
+            }
             $wNo = intval(date("oW",strtotime($as->dueDate))) - intval(date("oW", strtotime($sDate))) + 1;
-            array_push( ${"week"."$wNo"} , $as);
+            if($temp){array_push( ${"weekSub"."$wNo"} , $as);}
+            else{array_push( ${"week"."$wNo"} , $as);}
+            $temp = false ;
         }
         for($i=1;$i<$duration;$i++){
             $weeklyAssignments[$i]= ${"week"."$i"} ;
+            $subAssignments[$i]= ${"weekSub"."$i"} ;
         }
 
-
+        // dd($weeklyAssignments);
 
         //Results Overview
         $data = DB::table('results')->where('subjectCode',$my_course[0]->cid)->select(
@@ -150,6 +162,7 @@ class PersonalCoursesController extends Controller{
             'gradedAssignments' => $gradedAssignments,
             'submittedAssignments' => $submittedAssignments,
             'weeklyAssignments' => $weeklyAssignments,
+            'subAssignments' => $subAssignments,
             'quizzes'=>$quizArray,
             'duration'=> $duration
             ])

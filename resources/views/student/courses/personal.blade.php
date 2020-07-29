@@ -144,11 +144,12 @@
                                             for($i=1;$i<=$count;$i++){
                                                 $temp = $temp + 100/($count + 1);
                                                 $padding = strval($temp)."%" ;
-                                                if($i< $duration && $weeklyAssignments[$i] ){  ?>
+                                                if($i< $duration && $subAssignments[$i]){  ?>
                                                     <div class="py-3">
                                                         <div class="milestone2" style="left:{{$padding}};cursor: pointer;" >
-                                                            <h5 data-toggle="modal" data-target="#assignmentModel">
-                                                                <i class="fa fa-address-book-o" aria-hidden="true"  data-toggle="tooltip" data-placement="top"  title="{{count($weeklyAssignments[$i])}} Assignment/s"></i></h5>
+                                                            <h5 class="text-success" data-toggle="modal" data-target="#assignmentModel">
+                                                                <i class="fa fa-address-book-o" aria-hidden="true"  data-toggle="tooltip" data-placement="top"  title="{{count($weeklyAssignments[$i])}} Assignment/s"></i>
+                                                            </h5>
                                                         </div>
                                                     </div>
                                                 <?php } ?>
