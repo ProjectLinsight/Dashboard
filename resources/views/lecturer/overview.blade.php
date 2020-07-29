@@ -121,7 +121,7 @@
                                                             <tr>
                                                                 <th>Registration Number</th>
                                                                 <!-- <th>Name</th>   -->
-                                                                <th>Name</th> 
+                                                                <th>Risk Level</th> 
                                                             </tr>
                                                         </thead>
                                                         <tbody>
