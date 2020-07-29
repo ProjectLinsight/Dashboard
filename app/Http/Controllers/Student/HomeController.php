@@ -7,6 +7,8 @@ use App\Http\Controllers\Shared\sharedCourseXapi ;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use phpDocumentor\Reflection\Types\True_;
+use PhpParser\Node\Expr\Cast\Array_;
 
 class HomeController extends Controller{
     public function __construct(){
@@ -14,6 +16,7 @@ class HomeController extends Controller{
     }
 
     public function index(){
+        $reg_no = substr(Auth::user()->email,0,9);
         $my_enrolled_courses= DB::table('stu_enrollments')->select('cid')->where('index',Auth::user()->index)->get()->toArray();
         $enrolled_courses = Array();
         $enrolled_courses_xapi = Array();
@@ -45,7 +48,7 @@ class HomeController extends Controller{
         foreach($enrolled_courses as $ec){
             $activityNested["$ec"] = ${"$ec"} ;
         }
-        // dd($activityNested);
+        //dd($activityNested);
 
         //Assignemt Reminders 
 
@@ -53,10 +56,12 @@ class HomeController extends Controller{
         foreach($enrolled_courses as $subject){
             $subject_assignments = DB::table('assignments')->where('cid',$subject)->get(['title','weight','dueDate'])->toArray();
             if(count($subject_assignments)>0){
+                foreach($subject_assignments as $st){
+                    $st->submitted=false;
+                }
                 $all_assignments[$subject] = $subject_assignments;
             }
         }
-
         //dd($all_assignments);
 
         //Quiz Reminders
@@ -64,13 +69,85 @@ class HomeController extends Controller{
         foreach($enrolled_courses as $subject){
             $subject_quiz = DB::table('quiz')->where('cid',$subject)->get(['title','dueDate','maxMarks'])->toArray();
             if(count($subject_quiz)>0){
+                foreach($subject_quiz as $sq){
+                    $sq->submitted=false;
+                }
                 $all_quizzes[$subject] = $subject_quiz;
             }
             
         }
 
-        //dd($all_quizzes);
+        $enrolled_xapi = Array();
+        $xapi_data = new sharedCourseXapi();
+        foreach($enrolled_courses as $ec){
+            $enrolled_xapi[$ec] = Array();
+            $cur_course_stmts = $xapi_data->getData($ec);
+            foreach($cur_course_stmts as $st){
+                if($st['user']->account->name == $reg_no && $st['verb']==="submitted"){
+                    array_push($enrolled_xapi[$ec],$st);
+                }
+            }
+        }
 
+        //dd($enrolled_xapi);
+
+
+        foreach($all_assignments as $assignment=>$assignment_data){
+            foreach($enrolled_xapi as $exapi=>$exapi_data){
+                
+                if($assignment===$exapi){
+                    foreach($assignment_data as $ad){
+                
+                        foreach($exapi_data as $ed){
+                            
+                            if($ad->title== $ed['title'] && $ed['verb']==="submitted"){
+                                $ad->submitted=true;
+                            }
+                            else{
+                                $ad->submitted=false;
+                            }
+                            
+                        }
+                        
+                    }
+                }
+            }
+        }
+
+        //dd($all_assignments);
+
+        $enrolled_qxapi = Array();
+        $xapi_qdata = new sharedCourseXapi();
+        foreach($enrolled_courses as $ec){
+            $enrolled_qxapi[$ec] = Array();
+            $cur_course_stmts = $xapi_qdata->getData($ec);
+            foreach($cur_course_stmts as $st){
+                if($st['user']->account->name == $reg_no && $st['type']==="quiz"){
+                    array_push($enrolled_qxapi[$ec],$st);
+                }
+            }
+        }
+
+        //dd($enrolled_qxapi);
+
+        foreach($all_quizzes as $quiz=>$quiz_data){
+            foreach($enrolled_qxapi as $qxapi=>$qxapi_data){
+                if($quiz===$qxapi){
+                    foreach($quiz_data as $qd){
+                        foreach($qxapi_data as $ed){
+                            if($qd->title== $ed['title'] && $ed['type']==="quiz" && $ed['verb']==="completed"){
+                                $qd->submitted=true;
+                            }
+                            else{
+                                $qd->submitted=false;
+                            }
+                        }
+                    }
+                } 
+            }
+        }
+
+        //dd($all_quizzes);
 
         return view('home')
             ->with('activityCount', json_encode($enrolled_courses_xapi))

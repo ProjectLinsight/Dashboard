@@ -255,20 +255,65 @@
                             <div class="card-body">
                                 <div class="panel panel-default">
                                     <div class="panel-body">
-                                        @foreach($assignment as $key => $value)
-                                            @foreach($value as $key2)
+                                        @foreach($assignment as $subid => $value)
+                                            @foreach($value as $keyassign)
+                                                <?php 
+                                                    if($keyassign->submitted == 'true'){
+                                                        $icon = "check-circle";
+                                                        $col = "success";
+                                                    }
+                                                    else{
+                                                        $icon = "exclamation-circle";
+                                                        $col = "danger";    
+                                                    }
+                                                ?>
                                                 <div class="p-0">
                                                     <div class="card">
                                                         <div class="row p-2">
                                                             <div class="col-1">
-                                                                <h1 class="pt-2 text-success"> <i class="fa fa-check-circle" aria-hidden="true"></i> </h1>
+                                                                <h1 class="pt-2 text-{{$col}}"> <i class="fa fa-{{$icon}}" aria-hidden="true"></i> </h1>
                                                             </div>
                                                             <div class="col-8 pl-4 pr-0 mx-0 pt-2">
-                                                                <h6><strong>{{$key2->title}} </strong> </h6>
-                                                                <h6 style="font-size: 0.9em" class="text-muted"><strong>{{$key}}</strong></h6>
+                                                                <h6><strong>{{$keyassign->title}} </strong> </h6>
+                                                                <h6 style="font-size: 0.9em" class="text-muted"><strong>{{$subid}}</strong></h6>
                                                             </div>
-                                                            <div class="col-3 px-0">
-                                                                <h6 class="pt-2"><strong>{{$key2->dueDate}}</strong></h6>
+                                                            <div class="col-3 px-0 pt-2">
+                                                                <h6 style="font-size: 1.0em" class="text-muted">Due Date</h6>
+                                                                <h6 class="pt-2"><strong>{{$keyassign->dueDate}}</strong></h6>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        @endforeach
+                                        <canvas id="activityGraph" height="280" width="600"></canvas>
+                                    </div>
+                                    <div class="panel-body">
+                                        @foreach($quiz as $subid => $value)
+                                            @foreach($value as $keyquiz)
+                                                <?php 
+                                                    if($keyquiz->submitted == 'true'){
+                                                        $icon = "check-circle";
+                                                        $col = "success";
+                                                    }
+                                                    else{
+                                                        $icon = "exclamation-circle";
+                                                        $col = "danger";    
+                                                    }
+                                                ?>
+                                                <div class="p-0">
+                                                    <div class="card">
+                                                        <div class="row p-2">
+                                                            <div class="col-1">
+                                                                <h1 class="pt-2 text-{{$col}}"> <i class="fa fa-{{$icon}}" aria-hidden="true"></i> </h1>
+                                                            </div>
+                                                            <div class="col-8 pl-4 pr-0 mx-0 pt-2">
+                                                                <h6><strong>{{$keyquiz->title}} </strong> </h6>
+                                                                <h6 style="font-size: 0.9em" class="text-muted"><strong>{{$subid}}</strong></h6>
+                                                            </div>
+                                                            <div class="col-3 px-0 pt-2">
+                                                                <h6 style="font-size: 1.0em" class="text-muted">Due Date</h6>
+                                                                <h6 class="pt-2"><strong>{{$keyquiz->dueDate}}</strong></h6>
                                                             </div>
                                                         </div>
                                                     </div>
