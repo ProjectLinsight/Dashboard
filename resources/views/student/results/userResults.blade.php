@@ -62,12 +62,24 @@
             <div class="container-fluid" >
                 <div class="row ">
                     <div class="col-md-12">
-                        <div class="card bg-dark" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 6px 0 rgba(0, 0, 0, 0.19);">
+                        <div class ="pb-3">
+                            <div class=" p-3 d-flex justify-content-between card bg-danger text-white shadow">
+                                <div class="row mb-0 pb-0">
+                                    <div class="col-1 mb-0 pb-0 d-flex justify-content-end">
+                                        <h2 class=" mb-0 pb-0"> <i class="fa fa-exclamation-circle"></i> </h2>
+                                    </div>
+                                    <div class="col-11">
+                                        <h6 class=" mb-0 pb-0"> Please note that these reports are generated upon the results that have been upladed and is not the final or approved GPA of the students and this may get changed at anytime. </h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card bg-dark shadow">
                             <div class="p-3 row rounded">
                                 <div class="col-md-1 pb-2">
                                     <img class="rounded-circle border" style="max-width: 60px"src="https://mdbootstrap.com/img/Photos/Avatars/img (27).jpg" alt="Generic placeholder image">
                                 </div>
-                                <div class="col-md-11 text-white">
+                                <div class="col-md-11 pt-2 text-white">
                                     <div class="row d-flex justify-content-between align-items-baseline">
                                         <h5 class="pl-3"><strong>{{$user->name}}</strong></h5>
                                     </div>
@@ -77,35 +89,35 @@
                                 </div>
                             </div>
                             <div class="d-flex justify-content-center">
-                                <hr style="width:98% ;background: white">
+                                <hr class=" mt-0 pt-0" style="width:98% ;background: white">
                             </div>
                             <div class="row px-4 pb-2 d-flex justify-content-center"  style="font-family:Helvetica;">
                                 <div class="px-2 pb-2 col-md-3 ">
                                     <div class="p-3 card border shadow text-white bg-dark rounded" style="background: #fefefe">
-                                        <h1 class="text-center" style="font-size: 450%;"><strong>{{$data["GPA"]}}</strong></h1>
+                                        <h1 class="text-center" style="font-size: calc(2em + 1.5vw);"><strong>{{$data["GPA"]}}</strong></h1>
                                         <hr style="background: #fefefe">
-                                        <p class="text-center text-white">Current GPA</p>
+                                        <p class="text-center text-white" style="font-size: calc(0.6em + 0.4vw);">Current GPA</p>
                                     </div>
                                 </div>
                                 <div class="px-2 pb-2 col-md-3 ">
                                     <div class="p-3 card border shadow text-white bg-dark rounded" style="background: #fefefe">
-                                        <h1 class="text-center" style="font-size: 450%"><strong>#{{$data["rank"]}}</strong></h1>
+                                        <h1 class="text-center" style="font-size: calc(2em + 1.5vw)"><strong>#{{$data["rank"]}}</strong></h1>
                                         <hr style="background: #fefefe">
-                                        <p class="text-center text-white">Current Rank</p>
+                                        <p class="text-center text-white" style="font-size: calc(0.6em + 0.4vw);">Current Rank</p>
                                     </div>
                                 </div>
                                 <div class="px-2 pb-2 col-md-3 ">
                                     <div class="p-3 card border shadow text-white bg-dark rounded" style="background: #fefefe">
-                                        <h1 class="text-center" style="font-size: 450%"><strong>{{$data["credits"]}}</strong></h1>
+                                        <h1 class="text-center" style="font-size: calc(2em + 1.5vw)"><strong>{{$data["credits"]}}</strong></h1>
                                         <hr style="background: #fefefe">
-                                        <p class="text-center text-white">Total Credits</p>
+                                        <p class="text-center text-white" style="font-size: calc(0.6em + 0.4vw);">Total Credits</p>
                                     </div>
                                 </div>
                                 <div class="px-2 pb-2 col-md-3 ">
                                 <div class="p-3 card border shadow text-white bg-dark rounded">
-                                        <h3 class="text-center" style="font-size: 450%"><strong>{{$data["sclass"]}}</strong></h3>
+                                        <h3 class="text-center" style="font-size: calc(2em + 1.5vw)"><strong>{{$data["sclass"]}}</strong></h3>
                                         <hr style="background: #fefefe">
-                                <p class="text-center text-white">{{$data["class"]}}</p>
+                                <p class="text-center text-white" style="font-size: calc(0.6em + 0.4vw);">{{$data["class"]}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -113,7 +125,7 @@
                     </div>
                 </div>
                 <div class="row pt-4 d-flex justify-content-center">
-                    <div class="col-md-5" style="font-family:Helvetica;">
+                    <div class="col-md-6" style="font-family:Helvetica;">
                         <?php
                             for($i=3;$i>0;$i--){
                                 for($j=2;$j>0;$j--){
@@ -132,20 +144,20 @@
                                         <div class="pb-3">
                                             <div class="card shadow">
                                                 <div class="card-header bg-dark">
-                                                    <h3 class="text-white pt-3" style="font-size:calc(1.4em + 0.4vw)"> {{$pi}} Year {{$pj}} Semester</h3>
+                                                    <h4 class="text-white pb-0 mb-0" style="font-size:calc(1.2em + 0.4vw)"> {{$pi}} Year {{$pj}} Semester</h4>
                                                 </div>
                                                 <div class="card-body">
                                                     <div class="row d-flex justify-content-center">
                                                         <div class="col text-center">
-                                                            <h2 style="font-size:calc(1.4em + 0.8vw);">{{$data[$gp]}} </h2>
+                                                            <h2 style="font-size:calc(1.2em + 0.8vw);">{{$data[$gp]}} </h2>
                                                             <h6 class="text-muted" style="font-size:calc(0.6em + 0.2vw)"> Semester GPA </h6>
                                                         </div>
                                                         <div class="col text-center">
-                                                            <h2 style="font-size:calc(1.4em + 0.8vw);">{{$data[$rank]}}</h2>
+                                                            <h2 style="font-size:calc(1.2em + 0.8vw);">{{$data[$rank]}}</h2>
                                                             <h6 class="text-muted" style="font-size:calc(0.6em + 0.2vw)"> Semester Rank </h6>
                                                         </div>
                                                         <div class="col text-center">
-                                                            <h2 style="font-size:calc(1.4em + 0.8vw);"> {{$user->stuData->$totCredits}} </h2>
+                                                            <h2 style="font-size:calc(1.2em + 0.8vw);"> {{$user->stuData->$totCredits}} </h2>
                                                             <h6 class="text-muted" style="font-size:calc(0.6em + 0.2vw)"> TotalCredits </h6>
                                                         </div>
                                                     </div>
@@ -173,12 +185,11 @@
                             }
                         ?>
                     </div>
-                    <div class="col-md-5">
-
+                    <div class="col-md-6">
                         <div class="pb-3">
                             <div class="card shadow">
                                 <div class="card-header bg-dark">
-                                    <h3 class="text-white pt-3"> Grades Distribution </h3>
+                                    <h4 class="text-white pb-0 mb-0"> Grades Distribution </h4>
                                 </div>
                                 <div class="card-body">
                                     <div class="panel panel-default">
@@ -193,21 +204,21 @@
                         <div class="pb-3">
                             <div class="card shadow">
                                 <div class="card-header bg-dark">
-                                    <h3 class="text-white pt-3"> Batch Ranking </h3>
+                                    <h4 class="text-white pb-0 mb-0"> Batch Ranking </h4>
                                 </div>
                                 <div class="card-body">
                                     <?php $i = 1?>
                                     @foreach ($gpaData as $bt)
                                         <a href="/results/{{$bt["id"]}}/{{$bt["name"]}}" style="text-decoration: none;">
                                             <div class="row d-flex justify-content-between" style="margin-bottom: -20px;color:black">
-                                                <div class="col-2">
-                                                <p> <strong>{{$i}}</strong></p>
+                                                <div class="col-2 pb-0 mb-0">
+                                                <p style="font-size:calc(0.6em + 0.3vw)"> <strong>{{$i}}</strong></p>
                                                 </div>
-                                                <div class="col-6">
-                                                    <p>  <strong>{{$bt["index"]}} </strong></p>
+                                                <div class="col-6 pb-0 mb-0">
+                                                    <p style="font-size:calc(0.6em + 0.3vw)"> <strong>{{$bt["index"]}} </strong></p>
                                                 </div>
-                                                <div class="col-4">
-                                                    <p>  <strong>{{$bt["GPA"]}} </strong> </p>
+                                                <div class="col-4 pr-5 d-flex justify-content-end">
+                                                    <p style="font-size:calc(0.6em + 0.3vw)"> <strong>{{$bt["GPA"]}} </strong> </p>
                                                 </div>
                                             </div>
                                             <hr>
@@ -257,7 +268,7 @@
                 label: 'Grade',
                 data: countx,
                 borderWidth: 1,
-
+                backgroundColor: ["#0074D9", "#FF4136", "#2ECC40", "#FF851B", "#7FDBFF", "#B10DC9", "#FFDC00", "#001f3f", "#39CCCC", "#01FF70", "#85144b", "#F012BE", "#3D9970", "#111111", "#AAAAAA"]
             }]
         },
     });

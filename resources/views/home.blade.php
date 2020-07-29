@@ -88,10 +88,10 @@
                     <hr class="content-center" style="width:75%;background : #555">
                 </li>
                 <li>
-                    <a data-toggle="collapse" href="#courses"> <i class="fas fa-user pr-2"></i> Courses </a>
+                    <a data-toggle="collapse" href="#courses"> <i class="fas fa-book pr-2"></i> Courses </a>
                     <div class="collapse pt-1 pl-5" id="courses">
                         @foreach (Auth::user()->stu_enrollment as $sub)
-                            <h6 class="h6-sized text-white"><a href="/Mycourses/{{$sub->cid}}" >{{$sub->cid}}</a></h6>
+                            <a style="font-size: 12px" href="/Mycourses/{{$sub->cid}}" > &emsp; {{$sub->cid}}</a>
                         @endforeach
                     </div>
                     <hr class="content-center" style="width:75%;background : #555">
@@ -154,7 +154,7 @@
                             <div class="col-md-7 row d-flex justify-content-end pt-3">
                                 <div class="border-right border-left  px-5">
                                     <div class="d-flex justify-content-end">
-                                        <h3><strong> {{Auth::user()->stu_enrollment->count()}} </strong></h3>
+                                        <h1><strong> {{Auth::user()->stu_enrollment->count()}} </strong></h1>
                                     </div>
                                     <div class="d-flex justify-content-end">
                                         <h6 style="font-size:calc(0.8em + 0.2vw)"><strong> Enrolled Courses </strong></h6>
@@ -162,7 +162,7 @@
                                 </div>
                                 <div class="border-right  px-5">
                                     <div class="d-flex justify-content-end">
-                                        <h3><strong> 0 </strong></h3>
+                                        <h1><strong> 0 </strong></h1>
                                     </div>
                                     <div class="d-flex justify-content-end">
                                         <h6 style="font-size:calc(0.8em + 0.2vw)"><strong> Completed Courses </strong></h6>
@@ -170,7 +170,7 @@
                                 </div>
                                 <div class="border-right  px-5">
                                     <div class="d-flex justify-content-end">
-                                        <h3><strong> {{Auth::user()->posts->count()}} </strong></h3>
+                                        <h1><strong> {{Auth::user()->posts->count()}} </strong></h1>
                                     </div>
                                     <div class="d-flex justify-content-end">
                                         <h6 style="font-size:calc(0.8em + 0.2vw)"><strong> Interactions </strong></h6>
@@ -248,9 +248,9 @@
                 </div>
                 <div class="col-md-5 py-3">
                     <div class="pb-3">
-                        <div class="card shadow">
-                            <div class="card-header bg-info">
-                                <h5 class="text-white my-0"> Overall Activity Distribution </h5>
+                        <div class="card shadow-sm">
+                            <div class="card-header bg-primary">
+                                <h4 class="text-white my-0"> Assignments and Quizzes</h4>
                             </div>
                             <div class="card-body">
                                 <div class="panel panel-default">
