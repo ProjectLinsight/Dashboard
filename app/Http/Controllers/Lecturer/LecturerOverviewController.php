@@ -29,6 +29,7 @@ class LecturerOverviewController extends Controller{
         $q_arr=$this->quizComp();
         $stat=$this->assignmentStat();
         $risk=$this->risk();
+        $quizstat=$this->quizStat();
         return view('lecturer/overview',[
             'crs'=>$crs[0],
             'stu'=>$stu,
@@ -36,8 +37,8 @@ class LecturerOverviewController extends Controller{
             ->with('assignment', json_encode($stmt_arr))
             ->with('quiz', json_encode($q_arr))
             ->with('stats', $stat)
-            ->with('risks', $risk);
-        
+            ->with('risks', $risk)
+            ->with('quizstats', $quizstat);
     }
    
     public function assignmentStat()
@@ -114,6 +115,64 @@ class LecturerOverviewController extends Controller{
         // $state2 = $data2->getData();
         // dd($state2);
     }
+
+    public function quizStat()
+    {
+        $data = new sharedCourseXapi();
+        $state = $data->getData('SCS3209');
+        $stmt_count = count($state);
+        $stmt_arr = array();
+        $max_arr = array();
+        $min_arr = array();
+        $min=100;
+        $max=0;
+        $avg=0;
+        $sum=0;
+        $count=0;
+        $cr = DB::table('quiz')->get();
+        $quiz = array();
+        foreach ($cr as $key => $value) { 
+            $quiz[$value->title]['sum']=0; 
+            $quiz[$value->title]['max']=0; 
+            $quiz[$value->title]['min']=100; 
+            $quiz[$value->title]['avg']=0;
+            $quiz[$value->title]['count']=0;  
+        }
+        for($i=0;$i<$stmt_count;$i++){            
+            // $logArray=explode("/",$state[$i]->verb->id);
+            if($state[$i]['type']==="quiz"){
+                $stmt_arr[$count]['user'] = $state[$i]['user'] ;
+                $stmt_arr[$count]['assignment'] = $state[$i]['title'] ;
+                $stmt_arr[$count]['marks'] = $state[$i]['marks'] ;
+                $stmt_arr[$count]['maxmark'] = $state[$i]['maxmarks'] ;
+                $count+=1;
+            }
+        }
+
+        foreach($quiz as $key => $value){
+            for($i=0;$i<$count;$i++){
+                if($key==$stmt_arr[$i]['assignment']){
+                    $quiz[$key]['count']++;
+                    $quiz[$key]['sum']+= $stmt_arr[$i]['marks'];
+                    if($stmt_arr[$i]['marks']>$quiz[$key]['max']){
+                        $quiz[$key]['max']=$stmt_arr[$i]['marks'];
+                    }
+                    if($stmt_arr[$i]['marks']<$quiz[$key]['min']){
+                        $quiz[$key]['min']=$stmt_arr[$i]['marks'];
+                    }
+                }
+            }
+            if($quiz[$key]['count']!=0){
+                $quiz[$key]['avg']=$quiz[$key]['sum']/$quiz[$key]['count'];
+            }
+        }
+        return($quiz);
+        // dd($max,$max_arr,$min,$min_arr,$avg,$stmt_arr,$quiz);
+        // $data2 = new sharedCourseXapi();
+        // $state2 = $data2->getData();
+        // dd($state2);
+    }
+
 
     public function assignmentComp()
     {

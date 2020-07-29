@@ -68,6 +68,7 @@ class sharedCourseXapi extends Controller{
                                 $state[$count]['timestamp'] = $temp->timestamp ;
                                 $state[$count]['type'] = "quiz";
                                 $state[$count]['marks'] = $temp->result->score->raw ;
+                                $state[$count]['maxmarks'] = $temp->result->score->max ;
                                 $start_date = explode("T",$temp->timestamp);
                                 $state[$count]['date'] = $start_date[0] ; 
                                 $count++;

@@ -220,6 +220,31 @@
                                             <div id="quiz" class="tab-pane fade show active">
 
                                             <!-- quizzes list comes here -->
+                                            @foreach($quizstats as $key => $value)
+                                                <div class="card shadow">
+                                                    <div class="card-header text-white bg-info  d-flex justify-content-between" style="cursor: pointer;" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                                        <div class="row pt-1">
+                                                            <h6 class="pt-1">
+                                                                &ensp; {{$key}}
+                                                            </h6>
+                                                        </div>
+                                                        <h4 class="pt-1"><i class="fa fa-angle-down" aria-hidden="true"></i></h4>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="collapse" id="collapseExample">
+                                                            <div class="card card-body">
+                                                                <hr>
+                                                                @if($value['count'] != 0)
+                                                                    <h6> <strong> Maximum &ensp; : &ensp; </strong> {{$value['max']}} </h6>
+                                                                    <h6> <strong> Minimum &emsp;  : &ensp; </strong> {{$value['min']}} </h6>
+                                                                    <h6> <strong> Average &emsp;  : &ensp; </strong> {{$value['avg']}} </h6>
+                                                                    <br>
+                                                                @endif
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endforeach
 
                                             </div>
                                         </div>
