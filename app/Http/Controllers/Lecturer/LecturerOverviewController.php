@@ -38,6 +38,8 @@ class LecturerOverviewController extends Controller{
             ->with('quiz', json_encode($q_arr))
             ->with('stats', $stat)
             ->with('risks', $risk)
+            ->with('user', $user)
+            ->with('course',$course)
             ->with('quizstats', $quizstat);
     }
    
@@ -423,6 +425,7 @@ class LecturerOverviewController extends Controller{
             $assignment[$value]['quizavg']=0;
             $assignment[$value]['quizcount']=0;
             $assignment[$value]['quizmax']=0;
+
         }
         foreach($assignment as $key => $value){
             for($i=0;$i<$count;$i++){

@@ -125,7 +125,7 @@
                                                         </thead>
                                                         <tbody>
                                                             @foreach($risks as $key => $value)
-                                                            <tr>
+                                                            <tr data-href="/lecturer/{{Auth::user()->id}}/{{$course}}/{{$key}}/studentrisk">
                                                                 @if ($value['risklevel']=='High' || $value['risklevel']=='Low')
                                                                     <td>{{$key}}</td>
                                                                     <td>{{$value['risklevel']}}</td>
@@ -152,8 +152,17 @@
                                                             @endforeach
 
                                                         </tbody>
-                                                       
                                                     </table>
+                                                    <script>
+                                                    document.addEventListener("DOMContentLoaded", ()=>{
+                                                        const rows = document.querySelectorAll("tr[data-href]");
+                                                        rows.forEach(row => {
+                                                            row.addEventListener("click", () =>{
+                                                                window.location.href = row.dataset.href;
+                                                            });
+                                                        });
+                                                    });
+                                                    </script>
                                                 </div>
                                         </div>
                                         <div class="panel-body">
