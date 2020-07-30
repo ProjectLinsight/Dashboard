@@ -35,6 +35,7 @@ class sharedCourseXapi extends Controller{
                             $state[$count]['course'] = $temp->object->definition->extensions->$key ;
                             $state[$count]['timestamp'] = $temp->timestamp ;
                             $state[$count]['type'] = "other";
+                            $state[$count]['object'] = $objArray[sizeof($objArray)-2];
                             $start_date = explode("T",$temp->timestamp);
                             $state[$count]['date'] = $start_date[0] ;
                             $count++;

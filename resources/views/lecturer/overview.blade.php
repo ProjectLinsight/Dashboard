@@ -70,28 +70,34 @@
                                 <div class="card-body py-5">
                                     <div class="progress" style="height:4px">
                                         <?php
-                                            $count = 15 ;
+                                            $count = count($notes) ;
                                             $temp = 0 ;
-                                            for($i=1;$i<=$count;$i++){
+                                            foreach($notes as $key => $val){
                                                 $temp = $temp + 100/($count + 1);
                                                 $padding = strval($temp)."%" ;
-                                                if($i< 15){  ?>
+                                                if($val['count']!=$val['enrolled']){
+                                                    $color = "danger";
+                                                }
+                                                else{
+                                                    $color = "success";
+                                                }
+                                                ?>
                                                     <div class="py-3">
                                                         <div class="milestone2" style="left:{{$padding}};cursor: pointer;" >
-                                                            <h5 class="text-success" data-toggle="modal" data-target="#assignmentModel">
+                                                            <h5 class="text-{{$color}}" data-toggle="modal" data-target="#assignmentModel">
                                                                 <i class="fa fa-address-book-o" aria-hidden="true"  data-toggle="tooltip" data-placement="top"  title="Assignment/s"></i>
                                                             </h5>
                                                         </div>
                                                     </div>
-                                                <?php } ?>
+                                                
                                                     <div class="py-3">
-                                                        <div class="milestone3 d-flex justify-content-center" style="left:{{$padding}};cursor: pointer;" data-toggle="tooltip" data-placement="top"  title="Week {{$i+1}} of 15 " >
-                                                           <p class="text-primary"> <strong> W{{$i}} </strong> </p>
+                                                        <div class="milestone3 d-flex justify-content-center" style="left:{{$padding}};cursor: pointer;" data-toggle="tooltip" data-placement="top"  title="{{$key}}" >
+                                                           <p class="text-primary"> <strong> {{$key}} </strong> </p>
                                                         </div>
                                                     </div>
-                                                <div class="milestone bg-primary" style="left:{{$padding}};cursor: pointer;" data-toggle="tooltip" data-placement="top"  title="Week {{$i+1}} of 15 " > </div>
+                                                <div class="milestone bg-{{$color}}" style="left:{{$padding}};cursor: pointer;" data-toggle="tooltip" data-placement="top"  title="{{$key}}" > </div>
                                         <?php } ?>
-                                        <div class="progress-bar bg-primary" style="width: 30%;"></div>
+                                        <!-- <div class="progress-bar bg-primary" style="width: 30%;"></div> -->
                                     </div>
                                 </div>
                             </div>
