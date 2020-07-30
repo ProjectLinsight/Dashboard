@@ -59,6 +59,9 @@
                 </div>
             </nav>
             <h6>{{$crs}},{{$stu}},{{$user}}</h6>
+            @foreach ($risks as $key => $value)
+                <h6>{{$key}} -> {{$value['assavg']}} -> {{$value['risklevel']}}</h6>
+            @endforeach
         </div>
     </div>
 </div>
