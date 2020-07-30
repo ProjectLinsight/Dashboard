@@ -65,7 +65,7 @@
                 <div class="pb-4">
                             <div class="card shadow">
                                 <div class="card-header bg-primary">
-                                    <h4 class="my-0 text-white"> Your Progress </h4>
+                                    <h4 class="my-0 text-white text-center"> Lecture Note Completion </h4>
                                 </div>
                                 <div class="card-body py-5">
                                     <div class="progress" style="height:4px">
@@ -230,7 +230,7 @@
                                         
                                             <!-- assignment list comes here -->
                                             @foreach($stats as $key => $value)
-                                            <div class="p-3">
+                                            <!-- <div class="p-3">
                                                 <div class="card shadow">
                                                     <div class="card-header text-white bg-info  d-flex justify-content-between" style="cursor: pointer;" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                                                         <div class="row pt-1">
@@ -254,7 +254,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> -->
 
                                             <div class="accordion" id="accordionExample">
                                                 <div class="card">
