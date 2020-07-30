@@ -89,7 +89,8 @@ class PersonalCoursesController extends Controller{
         $today = date("Y-m-d");
         $sDate = (DB::table('assign_lecturers')->where('cid',$course)->first())->startDate;
         $sWeek = date("oW", strtotime($sDate));
-        $duration = intval(date("oW",strtotime($today))) - intval(date("oW", strtotime($sDate))) + 1;
+        // $duration = intval(date("oW",strtotime($today))) - intval(date("oW", strtotime($sDate))) + 1;
+        $duration = 15 ;
 
         //weekly figures
         $weeklyFig = Array();
