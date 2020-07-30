@@ -52,6 +52,7 @@ class sharedCourseXapi extends Controller{
                             $state[$count]['course'] = $temp->context->contextActivities->grouping[1]->definition->extensions->$key ;
                             $state[$count]['timestamp'] = $temp->timestamp ;
                             $state[$count]['type'] = "assignment";
+                            $state[$count]['object'] = $objArray[sizeof($objArray)-2];
                             $state[$count]['marks'] = $temp->result->score->raw ;
                             $start_date = explode("T",$temp->timestamp);
                             $state[$count]['date'] = $start_date[0] ; 
@@ -67,6 +68,7 @@ class sharedCourseXapi extends Controller{
                                 $state[$count]['course'] = $temp->context->contextActivities->grouping[1]->definition->extensions->$key ;
                                 $state[$count]['timestamp'] = $temp->timestamp ;
                                 $state[$count]['type'] = "quiz";
+                                $state[$count]['object'] = $objArray[sizeof($objArray)-2];
                                 $state[$count]['marks'] = $temp->result->score->raw ;
                                 $state[$count]['maxmarks'] = $temp->result->score->max ;
                                 $start_date = explode("T",$temp->timestamp);
@@ -83,6 +85,7 @@ class sharedCourseXapi extends Controller{
                             $state[$count]['course'] = $temp->context->contextActivities->grouping[1]->definition->extensions->$key ;
                             $state[$count]['timestamp'] = $temp->timestamp ;
                             $state[$count]['type'] = "other";
+                            $state[$count]['object'] = $objArray[sizeof($objArray)-2];
                             $start_date = explode("T",$temp->timestamp);
                             $state[$count]['date'] = $start_date[0] ; 
                             $count++;

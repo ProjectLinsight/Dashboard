@@ -62,6 +62,40 @@
             <div class="container-fluid">
                 <hr><h1 class="text-center text-dark">Analytics</h1><hr>
                 <!-- <div class="row"> -->
+                <div class="pb-4">
+                            <div class="card shadow">
+                                <div class="card-header bg-primary">
+                                    <h4 class="my-0 text-white"> Your Progress </h4>
+                                </div>
+                                <div class="card-body py-5">
+                                    <div class="progress" style="height:4px">
+                                        <?php
+                                            $count = 15 ;
+                                            $temp = 0 ;
+                                            for($i=1;$i<=$count;$i++){
+                                                $temp = $temp + 100/($count + 1);
+                                                $padding = strval($temp)."%" ;
+                                                if($i< 15){  ?>
+                                                    <div class="py-3">
+                                                        <div class="milestone2" style="left:{{$padding}};cursor: pointer;" >
+                                                            <h5 class="text-success" data-toggle="modal" data-target="#assignmentModel">
+                                                                <i class="fa fa-address-book-o" aria-hidden="true"  data-toggle="tooltip" data-placement="top"  title="Assignment/s"></i>
+                                                            </h5>
+                                                        </div>
+                                                    </div>
+                                                <?php } ?>
+                                                    <div class="py-3">
+                                                        <div class="milestone3 d-flex justify-content-center" style="left:{{$padding}};cursor: pointer;" data-toggle="tooltip" data-placement="top"  title="Week {{$i+1}} of 15 " >
+                                                           <p class="text-primary"> <strong> W{{$i}} </strong> </p>
+                                                        </div>
+                                                    </div>
+                                                <div class="milestone bg-primary" style="left:{{$padding}};cursor: pointer;" data-toggle="tooltip" data-placement="top"  title="Week {{$i+1}} of 15 " > </div>
+                                        <?php } ?>
+                                        <div class="progress-bar bg-primary" style="width: 30%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     <div class="col-md-12 py-3">
                         <div class="pb-3">
                             <div class="card shadow">
