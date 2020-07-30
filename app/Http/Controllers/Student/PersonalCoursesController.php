@@ -157,6 +157,17 @@ class PersonalCoursesController extends Controller{
         }
         //End of Results Overview
 
+        //Viewed Resources
+        $viewed_stmts = Array();
+        foreach($user_stmts as $vs){
+            if($vs['verb']==="viewed" && $vs['object'] != "course"){
+                array_push($viewed_stmts,$vs);
+            }
+        }
+
+        //dd($viewed_stmts);
+
+
 
         return view('student.courses.personal',[
             'crs'=> $course_name[0],
