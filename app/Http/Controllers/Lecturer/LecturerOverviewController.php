@@ -41,7 +41,15 @@ class LecturerOverviewController extends Controller{
             ->with('user', $user)
             ->with('course',$course)
             ->with('quizstats', $quizstat);
+        return view('lecturer/student_risk',[
+            'crs'=>$crs[0],
+            'stu'=>$stu,
+            ])
+            ->with('risks', $risk)
+            ->with('user', $user)
+            ->with('course',$course);
     }
+
    
     public function assignmentStat()
     {

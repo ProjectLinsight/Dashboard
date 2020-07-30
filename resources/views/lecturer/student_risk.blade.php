@@ -58,7 +58,7 @@
                     </div>
                 </div>
             </nav>
-
+            <h6>{{$crs}},{{$stu}},{{$user}}</h6>
         </div>
     </div>
 </div>
