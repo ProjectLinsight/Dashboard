@@ -173,6 +173,13 @@ class LecturerOverviewController extends Controller{
         // dd($state2);
     }
 
+    public function xapitest()
+    {
+        $data = new sharedCourseXapi();
+        $state = $data->getData('SCS3109');
+        dd($state);
+    }
+
 
     public function assignmentComp()
     {
