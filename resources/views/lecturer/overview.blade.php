@@ -287,7 +287,7 @@
 
                                             <!-- quizzes list comes here -->
                                             @foreach($quizstats as $key => $value)
-                                            <div class="p-3">
+                                            <!-- <div class="p-3">
                                                 <div class="card shadow">
                                                     <div class="card-header text-white bg-info  d-flex justify-content-between" style="cursor: pointer;" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                                                         <div class="row pt-1">
@@ -311,7 +311,31 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> -->
+                                            <div class="accordion" id="accordionExample">
+                                                <div class="card">
+                                                    <div class="card-header" id="headingOne">
+                                                    <h5 class="mb-0">
+                                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                        {{$key}}
+                                                        </button>
+                                                    </h5>
+                                                    </div>
+
+                                                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                                    <div class="card-body">
+                                                    @if($value['count'] != 0)
+                                                                    <h6> <strong> Maximum &ensp; : &ensp; </strong> {{$value['max']}} </h6>
+                                                                    <h6> <strong> Minimum &emsp;  : &ensp; </strong> {{$value['min']}} </h6>
+                                                                    <h6> <strong> Average &emsp;  : &ensp; </strong> {{$value['avg']}} </h6>
+                                                                    
+                                                    @endif
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                
+                                                
+                                                </div>
                                             @endforeach
 
                                             </div>
