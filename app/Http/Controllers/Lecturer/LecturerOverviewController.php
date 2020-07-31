@@ -467,6 +467,7 @@ class LecturerOverviewController extends Controller{
                 $stmt_arr[$count]['assignment'] = $state[$i]->object->definition->name->en ;
                 $stmt_arr[$count]['amarks'] = $state[$i]->result->score->raw ;
                 $stmt_arr[$count]['amax'] = $state[$i]->result->score->max ;
+                $stmt_arr[$count]['qmax'] = 0 ;
                 $stmt_arr[$count]['qmarks'] = 0 ;
                 $count+=1;
             }
@@ -480,6 +481,7 @@ class LecturerOverviewController extends Controller{
                     $stmt_arr[$count]['quiz'] = $state[$i]->object->definition->name->en;
                     $stmt_arr[$count]['qmarks'] = $state[$i]->result->score->raw ;
                     $stmt_arr[$count]['qmax'] = $state[$i]->result->score->max ;
+                    $stmt_arr[$count]['amax'] = 0 ;
                     $stmt_arr[$count]['amarks'] = 0 ;
                     $count+=1;
                 }
@@ -517,7 +519,7 @@ class LecturerOverviewController extends Controller{
             for($i=0;$i<$count;$i++){
                 if($key==$stmt_arr[$i]['user'] && $stmt_arr[$i]['qmarks']==0){
                     $assignment[$key]['asscount']++;
-                    $assignment[$key]['assmax']+=$stmt_arr[$i]['amax'];
+                    $assignment[$key]['assmax']+= $stmt_arr[$i]['amax'];
                     $assignment[$key]['asssum']+= $stmt_arr[$i]['amarks'];
                 }
                 if($key==$stmt_arr[$i]['user'] && $stmt_arr[$i]['amarks']==0){

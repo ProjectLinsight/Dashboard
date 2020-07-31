@@ -16,12 +16,253 @@ class StudentRiskController extends Controller{
     public function index($user,$course,$student){
         $crs = DB::table('courses')->where('cid',$course)->get();
         $risk=$this->risk();
+
+        // new part
+
+        // $my_course = DB::table('stu_enrollments')->where('cid',$course)->where('index',Auth::user()->index)->get();
+
+        $course_name  = Courses::where('cid',$course)->get();
+        // $reg_no = substr(Auth::user()->email,0,9);
+
+        $data = new sharedCourseXapi();
+        $cur_course_stmts = $data->getData($course);
+        $user_stmts = Array();
+
+        foreach($cur_course_stmts as $st){
+            if($st['user']->account->name == $student){
+                array_push($user_stmts,$st);
+            }
+        }
+
+        //Assignments Data
+
+        $activity[] = ['activity', 'Number'];
+        $submittedAssignments = array();
+        $gradedAssignments = array();
+        $activity = array(
+            // "Visited" => 0,
+            "Viewed" => 0,
+            // "Started" => 0,
+            "Completed" => 0,
+            "Submitted" => 0,
+            "Graded" => 0,
+            // "Logged in" => 0,
+            // "Logged out" => 0,
+            "Received" => 0,
+            // "Created" => 0,
+            // "Other" => 0,
+        );
+
+        foreach($user_stmts as $us){
+            if("viewed"==$us["verb"]){ $activity["Viewed"]++; }
+            // else if("visited"==$us["verb"]){ $activity["Visited"]++; }
+            // else if("started"==$us["verb"]){ $activity["Started"]++; }
+            else if("completed"==$us["verb"]){
+                $activity["Completed"]++;
+                // array_push($submittedAssignments,$us);
+            }
+            else if("submitted"==$us["verb"]){
+                $activity["Submitted"]++;
+                array_push($submittedAssignments,$us);
+            }
+            else if("attained grade for"==$us["verb"]){
+                $activity["Graded"]++;
+                array_push($gradedAssignments,$us);
+            }
+            // else if("logged into"==$us["verb"]){ $activity["Logged In"]++; }
+            // else if("logged out of"==$us["verb"]){ $activity["Logged Out"]++; }
+            else if("received"==$us["verb"]){ $activity["Received"]++; }
+            // else if("enrolled to"==$us["verb"]){ $activity["Created"]++; }
+            // else{ $activity["Other"]++; }
+        }
+
+        // dd($gradedAssignments);
+
+        //Quiz Results
+        $quizArray = Array();
+        foreach($user_stmts as $quiz_stmt){
+            if($quiz_stmt['type']=="quiz"){
+                array_push($quizArray,$quiz_stmt);
+            }
+        }
+
+        //dd($quizArray);
+
+        $today = date("Y-m-d");
+        $sDate = (DB::table('assign_lecturers')->where('cid',$course)->first())->startDate;
+        $sWeek = date("oW", strtotime($sDate));
+        // $duration = intval(date("oW",strtotime($today))) - intval(date("oW", strtotime($sDate))) + 1;
+        $duration = 15 ;
+
+        //weekly figures
+        $weeklyFig = Array();
+        for($i=1;$i<$duration;$i++){
+            $weeklyFig[$i]= 0 ;
+        }
+
+        //daily figures
+        $loop = $sDate;
+        while($loop!=$today){
+            $date_counts[$loop] = 0;
+            $loop = strtotime("+1 day", strtotime($loop));
+            $loop = date("Y-m-d", $loop);
+        }
+
+        foreach($user_stmts as $us){
+            $loop = $sDate;
+            while($loop!=$today){
+                if($loop==$us["date"]){ $date_counts[$loop]++; }
+                $loop = strtotime("+1 day", strtotime($loop));
+                $loop = date("Y-m-d", $loop);
+            }
+            $weekNum = intval(date("oW",strtotime($us["date"]))) - intval(date("oW", strtotime($sDate))) + 1;
+            $weeklyFig[$weekNum]++;
+        }
+
+
+        $asmnts = DB::table('assignments')->where('cid',$course)->get();
+        $weeklyAssignments = Array();
+        $subAssignments = Array();
+        for($i=1;$i<$duration;$i++){
+            ${"week"."$i"} = Array();
+            ${"weekSub"."$i"} = Array();
+        }
+        $temp = false ;
+        foreach($asmnts as $as){
+            foreach($submittedAssignments as $sa){
+                if($sa["title"] == $as->title){
+                    $temp = true ;
+                    continue ;
+                }
+            }
+            $wNo = intval(date("oW",strtotime($as->dueDate))) - intval(date("oW", strtotime($sDate))) + 1;
+            if($temp){array_push( ${"weekSub"."$wNo"} , $as);}
+            else{array_push( ${"week"."$wNo"} , $as);}
+            $temp = false ;
+        }
+        for($i=1;$i<$duration;$i++){
+            $weeklyAssignments[$i]= ${"week"."$i"} ;
+            $subAssignments[$i]= ${"weekSub"."$i"} ;
+        }
+
+        // dd($weeklyAssignments);
+
+        //Results Overview
+        $data = DB::table('results')->where('subjectCode',$course)->select(
+                DB::raw('grade as grade'),
+                DB::raw('count(*) as number'))
+            ->groupBy('grade')->get();
+
+        $array[] = ['grade', 'Number'];
+        foreach($data as $key => $value){
+            $array[++$key] = [$value->grade, $value->number];
+        }
+        //End of Results Overview
+
+        //Viewed Resources
+        $viewed_stmts = Array();
+        foreach($user_stmts as $vs){
+            if($vs['verb']==="viewed" && $vs['object'] != "course"){
+                array_push($viewed_stmts,$vs);
+            }
+        }
+
+        $note=$this->noteCount($course,$student);
+
         return view('lecturer/student_risk',[
             'crs'=>$course,
+            'crs2'=> $course_name[0],
             'stu'=>$student,
             'user'=>$user,
+            'gradedAssignments' => $gradedAssignments,
+            'submittedAssignments' => $submittedAssignments,
+            'weeklyAssignments' => $weeklyAssignments,
+            'subAssignments' => $subAssignments,
+            'quizzes'=>$quizArray,
+            'duration'=> $duration
             ])
+            ->with('grade', json_encode($array))
+            ->with('activity', json_encode($activity))
+            ->with('date_counts', json_encode($date_counts))
+            ->with('week_counts', json_encode($weeklyFig))
+            ->with('notes', $note)
             ->with('risks', $risk);
+    }
+
+    public function datediffInWeeks($date1, $date2)
+    {
+        $first = DateTime::createFromFormat('Y-m-d', $date1);
+        $second = DateTime::createFromFormat('Y-m-d', $date2);
+        return floor($first->diff($second)->days/7);
+    }
+
+    public function noteCount($course,$student)
+    {
+        $data = new sharedCourseXapi();
+        $state = $data->getData($course);
+        $stmt_count = count($state);
+        $count=0;
+        $lectNotes = array();
+        $distinct_arr = array();
+        $distinctass_arr = array();
+        $stmt_arr = array();
+        $gr = DB::table('stu_enrollments')->where('cid',$course)->get();
+        $enrollCount = count($gr);
+        for($i=0;$i<$stmt_count;$i++){            
+            if($state[$i]['verb']==="viewed" && $state[$i]['object']==="resource" && $state[$i]['user']->name!="Admin User"){
+                $stmt_arr[$count]['user'] = $state[$i]['user']->account->name ;
+                $stmt_arr[$count]['note'] = $state[$i]['title'] ;
+                $count+=1;
+            }
+        }
+        // foreach($stmt_arr->unique('note') as $note){
+        //     $lectNotes[$note]['count']=0;
+        //     $lectNotes[$note]['enrolled']=0;
+        //   }
+          $sub_count = 1; 
+          $s = 0;
+          $distinct_arr[$s]['user'] = $stmt_arr[$s]['user'] ;
+          $distinct_arr[$s]['note'] = $stmt_arr[$s]['note'] ;
+          for ( $i = 1; $i < $count; $i++) 
+          { 
+              for ($j = 0; $j < $i; $j++) {
+                  if ($stmt_arr[$i]['user'] == $stmt_arr[$j]['user'] && $stmt_arr[$i]['note'] == $stmt_arr[$j]['note'] ) 
+                     break; 
+              }
+              if ($i == $j){ 
+                  $sub_count++;
+                  $s++;
+                  $distinct_arr[$s]['user'] = $stmt_arr[$i]['user'] ;
+                  $distinct_arr[$s]['note'] = $stmt_arr[$i]['note'] ; 
+              }
+          }
+          //get distinct completed assignment list
+          $ass_count = 1; 
+          $s = 0;
+        //   $distinctass_arr[$s]['note'] = $stmt_arr[$s]['note'] ;
+        // $distinctass_arr[$stmt_arr[$s]['note']]['enrolled'] = $enrollCount ; 
+        $distinctass_arr[$stmt_arr[$s]['note']]['count'] = 0 ; 
+          for ( $i = 1; $i < $count; $i++) 
+          { 
+              for ($j = 0; $j < $i; $j++) {
+                  if ($stmt_arr[$i]['note'] == $stmt_arr[$j]['note']) 
+                     break; 
+              }
+              if ($i == $j){ 
+                  $ass_count++;
+                  $s++;
+                //   $distinctass_arr[$stmt_arr[$i]['note']]['enrolled'] = $enrollCount ; 
+                  $distinctass_arr[$stmt_arr[$i]['note']]['count'] = 0 ; 
+                //   $distinctass_arr[$s]['note'] = $stmt_arr[$i]['note'] ; 
+              }
+          }
+          foreach($distinct_arr as $us){
+            foreach($distinctass_arr as $key => $value){
+                if($key==$us["note"] && $us['user']==$student){ $distinctass_arr[$key]['count']++; } 
+            }
+         }
+        // dd($distinct_arr,$distinctass_arr);
+        return($distinctass_arr);
     }
 
     public function risk(){
@@ -38,6 +279,7 @@ class StudentRiskController extends Controller{
                 $stmt_arr[$count]['assignment'] = $state[$i]->object->definition->name->en ;
                 $stmt_arr[$count]['amarks'] = $state[$i]->result->score->raw ;
                 $stmt_arr[$count]['amax'] = $state[$i]->result->score->max ;
+                $stmt_arr[$count]['qmax'] = 0 ;
                 $stmt_arr[$count]['qmarks'] = 0 ;
                 $count+=1;
             }
@@ -51,6 +293,7 @@ class StudentRiskController extends Controller{
                     $stmt_arr[$count]['quiz'] = $state[$i]->object->definition->name->en;
                     $stmt_arr[$count]['qmarks'] = $state[$i]->result->score->raw ;
                     $stmt_arr[$count]['qmax'] = $state[$i]->result->score->max ;
+                    $stmt_arr[$count]['amax'] = 0 ;
                     $stmt_arr[$count]['amarks'] = 0 ;
                     $count+=1;
                 }
