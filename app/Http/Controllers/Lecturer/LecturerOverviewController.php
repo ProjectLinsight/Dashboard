@@ -201,6 +201,7 @@ class LecturerOverviewController extends Controller{
         $lectNotes = array();
         $distinct_arr = array();
         $distinctass_arr = array();
+        $stmt_arr = array();
         $gr = DB::table('stu_enrollments')->where('cid','SCS3209')->get();
         $enrollCount = count($gr);
         for($i=0;$i<$stmt_count;$i++){            
