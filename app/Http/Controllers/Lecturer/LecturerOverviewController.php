@@ -30,7 +30,6 @@ class LecturerOverviewController extends Controller{
         $stat=$this->assignmentStat();
         $risk=$this->risk();
         $quizstat=$this->quizStat();
-        $note=$this->noteCount();
         return view('lecturer/overview',[
             'crs'=>$crs[0],
             'stu'=>$stu,
@@ -41,8 +40,7 @@ class LecturerOverviewController extends Controller{
             ->with('risks', $risk)
             ->with('user', $user)
             ->with('course',$course)
-            ->with('quizstats', $quizstat)
-            ->with('notes', $note);
+            ->with('quizstats', $quizstat);
         return view('lecturer/student_risk',[
             'crs'=>$crs[0],
             'stu'=>$stu,
@@ -192,73 +190,6 @@ class LecturerOverviewController extends Controller{
         dd($state);
     }
 
-    public function noteCount()
-    {
-        $data = new sharedCourseXapi();
-        $state = $data->getData('SCS3209');
-        $stmt_count = count($state);
-        $count=0;
-        $lectNotes = array();
-        $distinct_arr = array();
-        $distinctass_arr = array();
-        $gr = DB::table('stu_enrollments')->where('cid','SCS3209')->get();
-        $enrollCount = count($gr);
-        for($i=0;$i<$stmt_count;$i++){            
-            if($state[$i]['verb']==="viewed" && $state[$i]['object']==="resource" && $state[$i]['user']->name!="Admin User"){
-                $stmt_arr[$count]['user'] = $state[$i]['user']->account->name ;
-                $stmt_arr[$count]['note'] = $state[$i]['title'] ;
-                $count+=1;
-            }
-        }
-        // foreach($stmt_arr->unique('note') as $note){
-        //     $lectNotes[$note]['count']=0;
-        //     $lectNotes[$note]['enrolled']=0;
-        //   }
-          $sub_count = 1; 
-          $s = 0;
-          $distinct_arr[$s]['user'] = $stmt_arr[$s]['user'] ;
-          $distinct_arr[$s]['note'] = $stmt_arr[$s]['note'] ;
-          for ( $i = 1; $i < $count; $i++) 
-          { 
-              for ($j = 0; $j < $i; $j++) {
-                  if ($stmt_arr[$i]['user'] == $stmt_arr[$j]['user'] && $stmt_arr[$i]['note'] == $stmt_arr[$j]['note'] ) 
-                     break; 
-              }
-              if ($i == $j){ 
-                  $sub_count++;
-                  $s++;
-                  $distinct_arr[$s]['user'] = $stmt_arr[$i]['user'] ;
-                  $distinct_arr[$s]['note'] = $stmt_arr[$i]['note'] ; 
-              }
-          }
-          //get distinct completed assignment list
-          $ass_count = 1; 
-          $s = 0;
-        //   $distinctass_arr[$s]['note'] = $stmt_arr[$s]['note'] ;
-        $distinctass_arr[$stmt_arr[$s]['note']]['enrolled'] = $enrollCount ; 
-        $distinctass_arr[$stmt_arr[$s]['note']]['count'] = 0 ; 
-          for ( $i = 1; $i < $count; $i++) 
-          { 
-              for ($j = 0; $j < $i; $j++) {
-                  if ($stmt_arr[$i]['note'] == $stmt_arr[$j]['note']) 
-                     break; 
-              }
-              if ($i == $j){ 
-                  $ass_count++;
-                  $s++;
-                  $distinctass_arr[$stmt_arr[$i]['note']]['enrolled'] = $enrollCount ; 
-                  $distinctass_arr[$stmt_arr[$i]['note']]['count'] = 0 ; 
-                //   $distinctass_arr[$s]['note'] = $stmt_arr[$i]['note'] ; 
-              }
-          }
-          foreach($distinct_arr as $us){
-            foreach($distinctass_arr as $key => $value){
-                if($key==$us["note"]){ $distinctass_arr[$key]['count']++; } 
-            }
-         }
-        // dd($distinct_arr,$distinctass_arr);
-        return($distinctass_arr);
-    }
 
 
     public function assignmentComp()
@@ -488,6 +419,7 @@ class LecturerOverviewController extends Controller{
         $sum=0;
         $t=0;
         $cr = DB::table('users')->where('utype','Student')->get();
+        //dont we have to change scs3209 to get the subject code automatically?????????????
         $gr = DB::table('stu_enrollments')->where('cid','SCS3209')->get();
         $assignment = array();
         $reg_no = array();
@@ -545,7 +477,7 @@ class LecturerOverviewController extends Controller{
             
         }
         return ($assignment);
-        // dd($cr,$count,$stmt_arr,$assignment);
+        // dd($cr,$count,$stmt_arr,$assignment,$reg_no);
 
 
 

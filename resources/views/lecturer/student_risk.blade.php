@@ -58,10 +58,78 @@
                     </div>
                 </div>
             </nav>
-            <h6>{{$crs}},{{$stu}},{{$user}}</h6>
-            @foreach ($risks as $key => $value)
-                <h6>{{$key}} -> {{$value['assavg']}} -> {{$value['risklevel']}}</h6>
-            @endforeach
+            <div class="container-fluid">
+                <div class="pb-3">
+                    <div class="card shadow-sm">
+                    @foreach ($stuDetails as $key => $value)
+                        <div class="card-body row">
+                            <div class="col-md-5 px-4 row">
+                                <div class="col-3">
+                                    <img class="rounded-circle" style="max-width: 100%;height:auto"src="https://mdbootstrap.com/img/Photos/Avatars/img (27).jpg" alt="Generic placeholder image">
+                                </div>
+                                <div class="col-9">
+                                    <div class="">
+                                        <h4 style="font-size:calc(1.3em + 0.4vw)"> <strong>{{$value['name']}}</strong> </h4>
+                                        <h6 class="text-muted" style="font-size:calc(0.8em + 0.2vw)"> {{$value['email']}}</h6>
+                                        <hr class="m-0 p-0">
+                                        <h6 class="mt-1" style="font-size:calc(0.8em + 0.2vw)"><strong> B.Sc. in {{$value['degree']}} &ensp; | &ensp; {{$value['year']}}</strong></h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-7 row d-flex justify-content-end pt-3">
+                                <div class="border-right border-left  px-5">
+                                    <div class="d-flex justify-content-end">
+                                        <h1><strong> {{$value['rlevel']}} </strong></h1>
+                                    </div>
+                                    <div class="d-flex justify-content-end">
+                                        <h6 style="font-size:calc(0.8em + 0.2vw)"><strong> Risk Level </strong></h6>
+                                    </div>
+                                </div>
+                                <div class="border-right  px-3">
+                                    <div class="d-flex justify-content-end">
+                                        <h1><strong> {{$value['aavg']}} </strong></h1>
+                                    </div>
+                                    <div class="d-flex justify-content-end">
+                                        <h6 style="font-size:calc(0.8em + 0.2vw)"><strong> Average Assignment Marks </strong></h6>
+                                    </div>
+                                </div>
+                                <div class="border-right  px-3">
+                                    <div class="d-flex justify-content-end">
+                                        <h1><strong> {{$value['qavg']}} </strong></h1>
+                                    </div>
+                                    <div class="d-flex justify-content-end">
+                                        <h6 style="font-size:calc(0.8em + 0.2vw)"><strong> Average Quiz Marks </strong></h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                    </div>
+                </div>
+                <div class="pb-3">
+                    <div class="card shadow-sm">
+                        <div class="card-header pb-0 bg-primary text-white">
+                            <h4> Overall Activity Distribution </h4>
+                        </div>
+                        <div class="card-body row">
+                            <div class="col-md-5">
+                                <div class="card p-2" style="background: #fefefe">
+                                    <canvas id="activityGraphPie" height="400" width="600"></canvas>
+                                </div>
+                            </div>
+                            <div class="col-md-7 ">
+                                <div class="card p-2" style="background: #fefefe">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body">
+                                            <canvas id="activityGraph"  height="280" width="600"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

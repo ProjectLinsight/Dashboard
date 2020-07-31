@@ -16,12 +16,43 @@ class StudentRiskController extends Controller{
     public function index($user,$course,$student){
         $crs = DB::table('courses')->where('cid',$course)->get();
         $risk=$this->risk();
+        $cr = DB::table('users')->where('utype','Student')->get();
+        $gr = DB::table('stu_enrollments')->where('cid',$course)->get();
+        $reg_no = array();
+        foreach ($cr as $key => $value) { 
+            foreach($gr as $stu){
+                if($stu->index==$value->index){
+                    $reg=explode("@",$value->email);
+                    $r= $reg[0];
+                    if($r==$student){
+                        $reg_no[$r]['index']=$value->index;
+                        $reg_no[$r]['name']=$value->name;
+                        $reg_no[$r]['email']=$value->email;
+                        $reg_no[$r]['year']=$value->year;
+                        $reg_no[$r]['degree']=$value->degree;
+                        $reg_no[$r]['asum']=$risk[$r]['asssum'];
+                        $reg_no[$r]['aavg']=$risk[$r]['assavg'];
+                        $reg_no[$r]['acount']=$risk[$r]['asscount'];
+                        $reg_no[$r]['amax']=$risk[$r]['assmax'];
+                        $reg_no[$r]['qsum']=$risk[$r]['quizsum'];
+                        $reg_no[$r]['qavg']=$risk[$r]['quizavg'];
+                        $reg_no[$r]['qcount']=$risk[$r]['quizcount'];
+                        $reg_no[$r]['qmax']=$risk[$r]['quizmax'];
+                        $reg_no[$r]['rlevel']=$risk[$r]['risklevel'];
+                    }
+                }
+            }  
+        }
+
+        // dd($reg_no,$risk);
+
         return view('lecturer/student_risk',[
             'crs'=>$course,
             'stu'=>$student,
             'user'=>$user,
             ])
-            ->with('risks', $risk);
+            ->with('risks', $risk)
+            ->with('stuDetails', $reg_no);
     }
 
     public function risk(){
