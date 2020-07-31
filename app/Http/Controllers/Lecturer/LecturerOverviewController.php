@@ -190,6 +190,74 @@ class LecturerOverviewController extends Controller{
         dd($state);
     }
 
+    public function noteCount()
+    {
+        $data = new sharedCourseXapi();
+        $state = $data->getData('SCS3209');
+        $stmt_count = count($state);
+        $count=0;
+        $lectNotes = array();
+        $distinct_arr = array();
+        $distinctass_arr = array();
+        $stmt_arr = array();
+        $gr = DB::table('stu_enrollments')->where('cid','SCS3209')->get();
+        $enrollCount = count($gr);
+        for($i=0;$i<$stmt_count;$i++){            
+            if($state[$i]['verb']==="viewed" && $state[$i]['object']==="resource" && $state[$i]['user']->name!="Admin User"){
+                $stmt_arr[$count]['user'] = $state[$i]['user']->account->name ;
+                $stmt_arr[$count]['note'] = $state[$i]['title'] ;
+                $count+=1;
+            }
+        }
+        // foreach($stmt_arr->unique('note') as $note){
+        //     $lectNotes[$note]['count']=0;
+        //     $lectNotes[$note]['enrolled']=0;
+        //   }
+          $sub_count = 1; 
+          $s = 0;
+          $distinct_arr[$s]['user'] = $stmt_arr[$s]['user'] ;
+          $distinct_arr[$s]['note'] = $stmt_arr[$s]['note'] ;
+          for ( $i = 1; $i < $count; $i++) 
+          { 
+              for ($j = 0; $j < $i; $j++) {
+                  if ($stmt_arr[$i]['user'] == $stmt_arr[$j]['user'] && $stmt_arr[$i]['note'] == $stmt_arr[$j]['note'] ) 
+                     break; 
+              }
+              if ($i == $j){ 
+                  $sub_count++;
+                  $s++;
+                  $distinct_arr[$s]['user'] = $stmt_arr[$i]['user'] ;
+                  $distinct_arr[$s]['note'] = $stmt_arr[$i]['note'] ; 
+              }
+          }
+          //get distinct completed assignment list
+          $ass_count = 1; 
+          $s = 0;
+        //   $distinctass_arr[$s]['note'] = $stmt_arr[$s]['note'] ;
+        $distinctass_arr[$stmt_arr[$s]['note']]['enrolled'] = $enrollCount ; 
+        $distinctass_arr[$stmt_arr[$s]['note']]['count'] = 0 ; 
+          for ( $i = 1; $i < $count; $i++) 
+          { 
+              for ($j = 0; $j < $i; $j++) {
+                  if ($stmt_arr[$i]['note'] == $stmt_arr[$j]['note']) 
+                     break; 
+              }
+              if ($i == $j){ 
+                  $ass_count++;
+                  $s++;
+                  $distinctass_arr[$stmt_arr[$i]['note']]['enrolled'] = $enrollCount ; 
+                  $distinctass_arr[$stmt_arr[$i]['note']]['count'] = 0 ; 
+                //   $distinctass_arr[$s]['note'] = $stmt_arr[$i]['note'] ; 
+              }
+          }
+          foreach($distinct_arr as $us){
+            foreach($distinctass_arr as $key => $value){
+                if($key==$us["note"]){ $distinctass_arr[$key]['count']++; } 
+            }
+         }
+        // dd($distinct_arr,$distinctass_arr);
+        return($distinctass_arr);
+    }
 
 
     public function assignmentComp()
@@ -397,6 +465,7 @@ class LecturerOverviewController extends Controller{
                 $stmt_arr[$count]['assignment'] = $state[$i]->object->definition->name->en ;
                 $stmt_arr[$count]['amarks'] = $state[$i]->result->score->raw ;
                 $stmt_arr[$count]['amax'] = $state[$i]->result->score->max ;
+                $stmt_arr[$count]['qmax'] = 0 ;
                 $stmt_arr[$count]['qmarks'] = 0 ;
                 $count+=1;
             }
@@ -410,6 +479,7 @@ class LecturerOverviewController extends Controller{
                     $stmt_arr[$count]['quiz'] = $state[$i]->object->definition->name->en;
                     $stmt_arr[$count]['qmarks'] = $state[$i]->result->score->raw ;
                     $stmt_arr[$count]['qmax'] = $state[$i]->result->score->max ;
+                    $stmt_arr[$count]['amax'] = 0 ;
                     $stmt_arr[$count]['amarks'] = 0 ;
                     $count+=1;
                 }
@@ -448,7 +518,7 @@ class LecturerOverviewController extends Controller{
             for($i=0;$i<$count;$i++){
                 if($key==$stmt_arr[$i]['user'] && $stmt_arr[$i]['qmarks']==0){
                     $assignment[$key]['asscount']++;
-                    $assignment[$key]['assmax']+=$stmt_arr[$i]['amax'];
+                    $assignment[$key]['assmax']+= $stmt_arr[$i]['amax'];
                     $assignment[$key]['asssum']+= $stmt_arr[$i]['amarks'];
                 }
                 if($key==$stmt_arr[$i]['user'] && $stmt_arr[$i]['amarks']==0){
