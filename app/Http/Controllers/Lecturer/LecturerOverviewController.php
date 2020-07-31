@@ -217,8 +217,11 @@ class LecturerOverviewController extends Controller{
         //   }
           $sub_count = 1; 
           $s = 0;
-          $distinct_arr[$s]['user'] = $stmt_arr[$s]['user'] ;
-          $distinct_arr[$s]['note'] = $stmt_arr[$s]['note'] ;
+          if(isset($stmt_arr[$s]['user'])){
+            $distinct_arr[$s]['user'] = $stmt_arr[$s]['user'] ;
+            $distinct_arr[$s]['note'] = $stmt_arr[$s]['note'] ;
+          }
+
           for ( $i = 1; $i < $count; $i++) 
           { 
               for ($j = 0; $j < $i; $j++) {
