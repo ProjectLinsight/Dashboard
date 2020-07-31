@@ -167,10 +167,14 @@
                                     </div>
                                     <div class="d-flex justify-content-end">
                                         <h6 style="font-size:calc(0.8em + 0.2vw)"><strong> Average Quiz Marks </strong></h6>
-            <h6>{{$crs}},{{$stu}},{{$user}}</h6>
-            @foreach ($risks as $key => $value)
-                <h6>{{$key}} -> {{$value['assavg']}} -> {{$value['risklevel']}}</h6>
+           
             @endforeach
+            </div>
+            </div>
+
+        </div>
+    </div>
+</div>
 
             <!-- new stuff -->
 
@@ -510,9 +514,4 @@
                     </div>
                 </div>
             </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div>
+                
