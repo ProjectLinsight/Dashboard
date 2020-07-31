@@ -29,6 +29,7 @@ class LecturerOverviewController extends Controller{
         $q_arr=$this->quizComp();
         $stat=$this->assignmentStat();
         $risk=$this->risk();
+        $note=$this->noteCount();
         $quizstat=$this->quizStat();
         return view('lecturer/overview',[
             'crs'=>$crs[0],
@@ -40,7 +41,8 @@ class LecturerOverviewController extends Controller{
             ->with('risks', $risk)
             ->with('user', $user)
             ->with('course',$course)
-            ->with('quizstats', $quizstat);
+            ->with('quizstats', $quizstat)
+            ->with('notes', $note);
         return view('lecturer/student_risk',[
             'crs'=>$crs[0],
             'stu'=>$stu,
@@ -258,7 +260,6 @@ class LecturerOverviewController extends Controller{
         // dd($distinct_arr,$distinctass_arr);
         return($distinctass_arr);
     }
-
 
     public function assignmentComp()
     {
