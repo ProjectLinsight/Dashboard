@@ -197,6 +197,7 @@ class StudentRiskController extends Controller{
         }
 
         $note=$this->noteCount($course,$student);
+        $link=$this->getLinks($student);
 
         return view('lecturer/student_risk',[
             'crs'=>$course,
@@ -217,7 +218,8 @@ class StudentRiskController extends Controller{
             ->with('date_counts', json_encode($date_counts))
             ->with('week_counts', json_encode($weeklyFig))
             ->with('notes', $note)
-            ->with('risks', $risk);
+            ->with('risks', $risk)
+            ->with('links', $link);
     }
 
     public function datediffInWeeks($date1, $date2)
@@ -430,13 +432,13 @@ class StudentRiskController extends Controller{
         dd($create_arr,$reply_arr);
     }
 
-    public function getLinks()
+    public function getLinks($student)
     {
         $data = new sharedXapi();
         $state = $data->getData();
         $stmt_count = count($state);
         $stmt_arr = array();
-        $student = '2017cs039';
+        // $student = '2017cs039';
         $count=0;
         for($i=0;$i<$stmt_count;$i++){
                 if(isset($state[$i]->verb->display->en)){
@@ -451,7 +453,7 @@ class StudentRiskController extends Controller{
                         }
                 }             
         }
-        dd($stmt_arr) ; 
+        return($stmt_arr) ; 
     }
 
 }

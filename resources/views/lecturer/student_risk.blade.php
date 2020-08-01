@@ -286,13 +286,10 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @foreach($risks as $key => $value)
+                                                            @foreach($links as $key => $value)
                                                             <tr >
-                                                                @if ($value['risklevel']=='High' || $value['risklevel']=='Low')
-                                                                    <td>{{$key}}</td>
-                                                                    <td>{{$value['risklevel']}}</td>
-
-                                                                @endif
+                                                                    <td>{{$value['title']}}</td>
+                                                                    <td>{{$value['url']}}</td>
                                                             </tr>
                                                             @endforeach
 
