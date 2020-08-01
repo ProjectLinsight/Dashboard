@@ -56,6 +56,7 @@ Route::get('/lecturer/{user}/{course}/note', 'Lecturer\LecturerOverviewControlle
 Route::get('/lecturer/{user}/{course}/assignmentcomplete', 'Lecturer\LecturerOverviewController@assignmentComp')->middleware('lecturer');
 Route::get('/lecturer/{user}/{course}/quizcomplete', 'Lecturer\LecturerOverviewController@quizComp')->middleware('lecturer');
 Route::get('/lecturer/{user}/{course}/forum', 'Lecturer\StudentRiskController@getForum')->middleware('lecturer');
+Route::get('/lecturer/{user}/{course}/link', 'Lecturer\StudentRiskController@getLinks')->middleware('lecturer');
 Route::post('/lecturer/{user}/{course}/courses/enroll', 'Lecturer\LecturerCoursesController@enrollStudents')->middleware('lecturer');
 Route::post('/lecturer/courses/{course}/update', 'Lecturer\LecturerCoursesController@updateCourse')->middleware('lecturer');
 Route::post('/lecturer/courses/{course}/addAssignment', 'Lecturer\LecturerCoursesController@addAssignment')->middleware('lecturer');

@@ -403,9 +403,10 @@ class StudentRiskController extends Controller{
         $reply_arr=array();
         $countc=0;
         $countr=0;
+        $key = "https://w3id.org/learning-analytics/learning-management-system/short-id";
         for($i=0;$i<$stmt_count;$i++){            
             $logArray=explode("/",$state[$i]->verb->id);
-            if($logArray[sizeof($logArray)-1]==="create"){
+            if($logArray[sizeof($logArray)-1]==="create" && $state[$i]->context->contextActivities->grouping[1]->definition->extensions->$key==='SCS3209'){
                 $create_arr[$countc]['userName'] = $state[$i]->actor->name ;
                 $create_arr[$countc]['user'] = $state[$i]->actor->account->name;
                 $create_arr[$countc]['forumTopic'] = $state[$i]->context->contextActivities->grouping[2]->definition->name->en;
@@ -416,7 +417,7 @@ class StudentRiskController extends Controller{
         }
         for($i=0;$i<$stmt_count;$i++){            
             $logArray=explode("/",$state[$i]->verb->id);
-            if($logArray[sizeof($logArray)-1]==="replied"){
+            if($logArray[sizeof($logArray)-1]==="replied" && $state[$i]->context->contextActivities->grouping[1]->definition->extensions->$key==='SCS3209'){
                 $reply_arr[$countr]['userName'] = $state[$i]->actor->name ;
                 $reply_arr[$countr]['user'] = $state[$i]->actor->account->name;
                 $reply_arr[$countr]['forumTopic'] = $state[$i]->context->contextActivities->grouping[2]->definition->name->en;
@@ -428,4 +429,29 @@ class StudentRiskController extends Controller{
         }
         dd($create_arr,$reply_arr);
     }
+
+    public function getLinks()
+    {
+        $data = new sharedXapi();
+        $state = $data->getData();
+        $stmt_count = count($state);
+        $stmt_arr = array();
+        $student = '2017cs039';
+        $count=0;
+        for($i=0;$i<$stmt_count;$i++){
+                if(isset($state[$i]->verb->display->en)){
+                        if($state[$i]->verb->display->en==="Visited"){
+                            if($state[$i]->actor->name=== $student){
+                                $stmt_arr[$count]['user'] = $state[$i]->actor->name ;
+                                $stmt_arr[$count]['title'] = $state[$i]->object->definition->name->en ;
+                                $stmt_arr[$count]['url'] = $state[$i]->object->definition->description->en ;                            
+                                $stmt_arr[$count]['timestamp'] = $state[$i]->timestamp ;
+                                $count++;
+                            }                   
+                        }
+                }             
+        }
+        dd($stmt_arr) ; 
+    }
+
 }
