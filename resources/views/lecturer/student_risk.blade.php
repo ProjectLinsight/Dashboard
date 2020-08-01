@@ -168,13 +168,13 @@
                                     <div class="d-flex justify-content-end">
                                         <h6 style="font-size:calc(0.8em + 0.2vw)"><strong> Average Quiz Marks </strong></h6>
            
-            @endforeach
+                        @endforeach
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
             </div>
-            </div>
-
-        </div>
-    </div>
-</div>
 
             <!-- new stuff -->
 
