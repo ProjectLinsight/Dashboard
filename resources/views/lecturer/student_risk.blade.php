@@ -272,7 +272,7 @@
                         <div class="pb-3">
                             <div class="card shadow">
                                 <div class="card-header bg-info pb-1">
-                                    <h4 class="text-white text-center"> Risk of failure </h4>
+                                    <h4 class="text-white text-center"> Outside VLE Actions </h4>
                                 </div>
                                 <div class="card-body p-0">
                                     <div class="panel panel-default">
@@ -281,10 +281,8 @@
                                                     <table class="table table-hover mb-0 text-center" style="border-collapse: collapse;">
                                                         <thead>
                                                             <tr>
-                                                                <th>Registration Number</th>
-                                                                <!-- <th>Name</th>   -->
-                                                                <th>Risk Level</th> 
-                                                                <th>Risk Level</th> 
+                                                                <th>Title</th>
+                                                                <th>URL</th> 
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -293,23 +291,54 @@
                                                                 @if ($value['risklevel']=='High' || $value['risklevel']=='Low')
                                                                     <td>{{$key}}</td>
                                                                     <td>{{$value['risklevel']}}</td>
-                                                                    @if ($value['risklevel']=='High')
-                                                                        <?php
-                                                                            $color = "bg-danger";
-                                                                            $percentage = 100;
-                                                                        ?>
-                                                                        @endif
-                                                                    @if ($value['risklevel']=='Low')
-                                                                        <?php
-                                                                            $color = "bg-warning";
-                                                                            $percentage = 50;
-                                                                        ?>
-                                                                        @endif
-                                                                    <td>
-                                                                    <div class="progress">
-                                                                        <div class="progress-bar progress-bar-striped {{$color}} progress-bar-animated" role="progressbar" aria-valuenow="{{$percentage}}" aria-valuemin="0" aria-valuemax="100" style="width: {{$percentage}}%"></div>
-                                                                    </div>
-                                                                    </td>
+
+                                                                @endif
+                                                            </tr>
+                                                            @endforeach
+
+                                                        </tbody>
+                                                    </table>
+                                                    <script>
+                                                    document.addEventListener("DOMContentLoaded", ()=>{
+                                                        const rows = document.querySelectorAll("tr[data-href]");
+                                                        rows.forEach(row => {
+                                                            row.addEventListener("click", () =>{
+                                                                window.location.href = row.dataset.href;
+                                                            });
+                                                        });
+                                                    });
+                                                    </script>
+                                                </div>
+                                        </div>
+                                        <div class="panel-body">
+                                            <canvas id="canvas" height="280" width="600"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pb-3">
+                            <div class="card shadow">
+                                <div class="card-header bg-info pb-1">
+                                    <h4 class="text-white text-center"> Forum Participation </h4>
+                                </div>
+                                <div class="card-body p-0">
+                                    <div class="panel panel-default">
+                                        <div class="tab-content">
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover mb-0 text-center" style="border-collapse: collapse;">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Title</th>
+                                                                <th>URL</th> 
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach($risks as $key => $value)
+                                                            <tr >
+                                                                @if ($value['risklevel']=='High' || $value['risklevel']=='Low')
+                                                                    <td>{{$key}}</td>
+                                                                    <td>{{$value['risklevel']}}</td>
 
                                                                 @endif
                                                             </tr>

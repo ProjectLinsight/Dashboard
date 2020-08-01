@@ -392,8 +392,40 @@ class StudentRiskController extends Controller{
         }
         return ($assignment);
         // dd($cr,$count,$stmt_arr,$assignment);
+    }
 
 
-
+    public function getForum(){
+        $data = new sharedXapi();
+        $state = $data->getData();
+        $stmt_count = count($state);
+        $create_arr = array();
+        $reply_arr=array();
+        $countc=0;
+        $countr=0;
+        for($i=0;$i<$stmt_count;$i++){            
+            $logArray=explode("/",$state[$i]->verb->id);
+            if($logArray[sizeof($logArray)-1]==="create"){
+                $create_arr[$countc]['userName'] = $state[$i]->actor->name ;
+                $create_arr[$countc]['user'] = $state[$i]->actor->account->name;
+                $create_arr[$countc]['forumTopic'] = $state[$i]->context->contextActivities->grouping[2]->definition->name->en;
+                $create_arr[$countc]['thread'] = $state[$i]->object->definition->name->en ;
+                $create_arr[$countc]['timestamp'] = $state[$i]->stored ;
+                $countc+=1;
+            }
+        }
+        for($i=0;$i<$stmt_count;$i++){            
+            $logArray=explode("/",$state[$i]->verb->id);
+            if($logArray[sizeof($logArray)-1]==="replied"){
+                $reply_arr[$countr]['userName'] = $state[$i]->actor->name ;
+                $reply_arr[$countr]['user'] = $state[$i]->actor->account->name;
+                $reply_arr[$countr]['forumTopic'] = $state[$i]->context->contextActivities->grouping[2]->definition->name->en;
+                $reply_arr[$countr]['thread'] = $state[$i]->object->definition->name->en ;
+                $reply_arr[$countr]['timestamp'] = $state[$i]->stored ;
+                $reply_arr[$countr]['response'] = $state[$i]->result->response ;
+                $countr+=1;
+            }
+        }
+        dd($create_arr,$reply_arr);
     }
 }
