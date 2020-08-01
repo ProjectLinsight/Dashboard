@@ -442,15 +442,16 @@ class StudentRiskController extends Controller{
         $count=0;
         for($i=0;$i<$stmt_count;$i++){
                 if(isset($state[$i]->verb->display->en)){
-                        if($state[$i]->verb->display->en==="Visited"){
-                            if($state[$i]->actor->name=== $student){
+                    if(isset($state[$i]->object->definition->description->en)){
+                        if($state[$i]->verb->display->en==="Visited" && $state[$i]->actor->name=== $student){
                                 $stmt_arr[$count]['user'] = $state[$i]->actor->name ;
                                 $stmt_arr[$count]['title'] = $state[$i]->object->definition->name->en ;
                                 $stmt_arr[$count]['url'] = $state[$i]->object->definition->description->en ;                            
                                 $stmt_arr[$count]['timestamp'] = $state[$i]->timestamp ;
-                                $count++;
-                            }                   
+                                $count++;               
                         }
+                    }
+                        
                 }             
         }
         return($stmt_arr) ; 
