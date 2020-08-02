@@ -62,7 +62,7 @@
             <div class="container-fluid">
                 <hr><h1 class="text-center text-dark">Analytics</h1><hr>
                 <!-- <div class="row"> -->
-                <div class="pb-4">
+                <div class="col-md-12 pb-4">
                 <div class="card shadow">
                                 <div class="card-header bg-primary">
                                     <h4 class="my-0 text-white text-center"> Lecture Note Completion </h4>
@@ -206,7 +206,7 @@
                                                 </div>
                                         </div>
                                         <div class="panel-body">
-                                            <canvas id="canvas" height="480" width="600"></canvas>
+                                            <canvas id="canvas" height="180" width="600"></canvas>
                                         </div>
                                     </div>
                                 </div>
@@ -341,7 +341,7 @@
                                             </div>
                                         </div>
                                         <div class="panel-body">
-                                            <canvas id="canvas" height="480" width="600"></canvas>
+                                            <canvas id="canvas" height="280" width="600"></canvas>
                                         </div>
                                     </div>
                                 </div>

@@ -326,18 +326,19 @@
                                                     <table class="table table-hover mb-0 text-center" style="border-collapse: collapse;">
                                                         <thead>
                                                             <tr>
-                                                                <th>Title</th>
-                                                                <th>URL</th> 
+                                                                <th>Forum Topic</th>
+                                                                <th>Thread</th> 
+                                                                <th>Action</th> 
+                                                                <th>Response</th> 
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @foreach($risks as $key => $value)
+                                                            @foreach($forums as $key => $value)
                                                             <tr >
-                                                                @if ($value['risklevel']=='High' || $value['risklevel']=='Low')
-                                                                    <td>{{$key}}</td>
-                                                                    <td>{{$value['risklevel']}}</td>
-
-                                                                @endif
+                                                                    <td>{{$value['forumTopic']}}</td>
+                                                                    <td>{{$value['thread']}}</td>
+                                                                    <td>{{$value['action']}}</td>
+                                                                    <td>{{$value['response']}}</td>
                                                             </tr>
                                                             @endforeach
 

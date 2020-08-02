@@ -16,6 +16,7 @@ class StudentRiskController extends Controller{
     public function index($user,$course,$student){
         $crs = DB::table('courses')->where('cid',$course)->get();
         $risk=$this->risk();
+        $forum=$this->getForum($student);
         $cr = DB::table('users')->where('utype','Student')->get();
         $gr = DB::table('stu_enrollments')->where('cid',$course)->get();
         $reg_no = array();
@@ -219,6 +220,7 @@ class StudentRiskController extends Controller{
             ->with('week_counts', json_encode($weeklyFig))
             ->with('notes', $note)
             ->with('risks', $risk)
+            ->with('forums', $forum)
             ->with('links', $link);
     }
 
@@ -397,12 +399,13 @@ class StudentRiskController extends Controller{
     }
 
 
-    public function getForum(){
+    public function getForum($student){
         $data = new sharedXapi();
         $state = $data->getData();
         $stmt_count = count($state);
         $create_arr = array();
         $reply_arr=array();
+        $arr=array();
         $countc=0;
         $countr=0;
         $key = "https://w3id.org/learning-analytics/learning-management-system/short-id";
@@ -414,6 +417,8 @@ class StudentRiskController extends Controller{
                 $create_arr[$countc]['forumTopic'] = $state[$i]->context->contextActivities->grouping[2]->definition->name->en;
                 $create_arr[$countc]['thread'] = $state[$i]->object->definition->name->en ;
                 $create_arr[$countc]['timestamp'] = $state[$i]->stored ;
+                $create_arr[$countc]['action'] = "Created" ;
+                $create_arr[$countc]['response'] = "-" ;
                 $countc+=1;
             }
         }
@@ -426,10 +431,26 @@ class StudentRiskController extends Controller{
                 $reply_arr[$countr]['thread'] = $state[$i]->object->definition->name->en ;
                 $reply_arr[$countr]['timestamp'] = $state[$i]->stored ;
                 $reply_arr[$countr]['response'] = $state[$i]->result->response ;
+                $reply_arr[$countr]['action'] = "Replied" ;
                 $countr+=1;
             }
         }
-        dd($create_arr,$reply_arr);
+        $c=0;
+        foreach($create_arr as $key => $value){
+            if($create_arr[$key]['user']==$student){
+                $arr[$c]=$create_arr[$key];
+                $c++;
+            }
+        }
+        foreach($reply_arr as $key => $value){
+            if($reply_arr[$key]['user']==$student){
+                $arr[$c]=$reply_arr[$key];
+                $c++;
+            }
+        }
+        
+        // dd($create_arr,$reply_arr,$student,$arr);
+        return($arr);
     }
 
     public function getLinks($student)
