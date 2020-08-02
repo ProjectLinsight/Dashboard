@@ -32,11 +32,7 @@
                     <hr class="content-center" style="width:75%;background : #555">
                 </li>
                 <li>
-                <a href="/profile/{{Auth::user()->id}}/{{Auth::user()->name}}"><i class="fas fa-user pr-2"></i>Profile</a>
-                    <hr class="content-center" style="width:75%;background : #555">
-                </li>
-                <li>
-                    <a href="/student_enrollment"><i class="fas fa-id-card pr-2"></i>Student Entrollment</a>
+                    <a href="/student_enrollment"><i class="fas fa-id-card pr-2"></i>Student Data</a>
                     <hr class="content-center" style="width:75%;background : #555">
                 </li>
                 <li>
