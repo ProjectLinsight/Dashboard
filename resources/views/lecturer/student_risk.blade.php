@@ -73,6 +73,28 @@
                     }]
                 }
             });
+
+            var assGraph = <?php echo $assGraph; ?>;
+            var ass_act = new Array();
+            var ass_countx = new Array();
+            for (var key in assGraph) {
+                ass_act.push(key);
+                ass_countx.push(assGraph[key]);
+            }
+            var assignmentgraph = document.getElementById("assignmentGraph");
+            var myChart = new Chart(assignmentgraph, {
+                type: 'line',
+                data: {
+                    labels:ass_act,
+                    datasets: [{
+                        label: 'Assignment Marks',
+                        data: ass_countx,
+                        borderWidth: 1,
+                        borderColor : "#0074D9",
+                        backgroundColor : ['rgba(0, 116, 217, 0.4)' ]
+                    }]
+                }
+            });
         }
     </script>
 
@@ -221,7 +243,7 @@
                         </div>
                 <div class="row">
                     <div class="col-md-7">
-                        <div class="pb-4">
+                        <div class="pb-4 py-3">
                             <div class="card shadow">
                                 <div class="card-header bg-primary">
                                     <h4 class="text-white my-0"> Activity Distribution </h4>
@@ -252,7 +274,7 @@
                         </div>
                     </div>
                     <div class="col-md-5">
-                        <div class="pb-4">
+                        <div class="pb-4 py-3">
                             <div class="card shadow">
                                 <div class="card-header bg-primary">
                                     <h4 class="text-white my-0 py-0"> Contribution to the Course </h4>
@@ -260,16 +282,18 @@
                                 <div class="card-body">
                                     <div class="panel panel-default">
                                         <div class="panel-body">
-                                            <canvas id="activityGraph" height="380px" width="600"></canvas>
+                                            <canvas id="activityGraph" height="480px" width="600"></canvas>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                </div>
+                    
+                <div class="row">
                     <div class="col-md-7">
-                        <div class="pb-3">
+                        <div class="pb-3 py-3">
                             <div class="card shadow">
                                 <div class="card-header bg-info pb-1">
                                     <h4 class="text-white text-center"> Outside VLE Actions </h4>
@@ -314,7 +338,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="pb-3">
+                        <div class="pb-3 py-3">
                             <div class="card shadow">
                                 <div class="card-header bg-info pb-1">
                                     <h4 class="text-white text-center"> Forum Participation </h4>
@@ -357,7 +381,7 @@
                                                 </div>
                                         </div>
                                         <div class="panel-body">
-                                            <canvas id="canvas" height="480" width="600"></canvas>
+                                            <canvas id="canvas" height="280" width="600"></canvas>
                                         </div>
                                     </div>
                                 </div>
@@ -365,7 +389,7 @@
                         </div>
                     </div>
                     <div class="col-md-5">
-                        <div class="pb-3">
+                        <div class="pb-3 py-3">
                             <div class="card shadow">
                                 <div class="card-header bg-success pb-1">
                                     <h4 class="text-white text-center"> Assignments & Quizzes </h4>
@@ -532,7 +556,21 @@
                                             </div>
                                         </div>
                                         <div class="panel-body">
-                                            <canvas id="canvas" height="480" width="600"></canvas>
+                                            <canvas id="canvas" height="230" width="600"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pb-4 py-3">
+                            <div class="card shadow">
+                                <div class="card-header bg-primary">
+                                    <h4 class="text-white my-0 py-0"> Contribution to the Course </h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body">
+                                            <canvas id="assignmentGraph" height="380px" width="600"></canvas>
                                         </div>
                                     </div>
                                 </div>

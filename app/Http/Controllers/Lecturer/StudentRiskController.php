@@ -17,6 +17,7 @@ class StudentRiskController extends Controller{
         $crs = DB::table('courses')->where('cid',$course)->get();
         $risk=$this->risk();
         $forum=$this->getForum($student);
+        $graph_arr=$this->graph($course,$student);
         $cr = DB::table('users')->where('utype','Student')->get();
         $gr = DB::table('stu_enrollments')->where('cid',$course)->get();
         $reg_no = array();
@@ -218,6 +219,7 @@ class StudentRiskController extends Controller{
             ->with('activity', json_encode($activity))
             ->with('date_counts', json_encode($date_counts))
             ->with('week_counts', json_encode($weeklyFig))
+            ->with('assGraph', json_encode($graph_arr))
             ->with('notes', $note)
             ->with('risks', $risk)
             ->with('forums', $forum)
@@ -476,6 +478,51 @@ class StudentRiskController extends Controller{
                 }             
         }
         return($stmt_arr) ; 
+    }
+
+    public function graph($course,$student){
+        $data = new sharedXapi();
+        $state = $data->getData();
+        $stmt_count = count($state);
+        $count=0;
+        for($i=0;$i<$stmt_count;$i++){
+            $logArray=explode("/",$state[$i]->verb->id);
+            if($logArray[sizeof($logArray)-1]==="scored"){
+                $stmt_arr[$count]['marks'] = $state[$i]->result->score->raw ;
+                $stmt_arr[$count]['user'] = $state[$i]->actor->account->name ;
+                $stmt_arr[$count]['userName'] = $state[$i]->actor->name ;
+                $stmt_arr[$count]['assignment'] = $state[$i]->object->definition->name->en ;
+                $stmt_arr[$count]['id'] = $state[$i]->id ;
+                $count+=1;
+            }
+        }
+        $st_arr=array();
+        $assignment=array();
+        $i=0;
+        foreach($stmt_arr as $key => $value){
+            if ($stmt_arr[$key]['user']==$student){
+                
+                $st_arr[$i]['user']=$stmt_arr[$key]['user'];
+                $st_arr[$i]['mark']=$stmt_arr[$key]['marks'];
+                $st_arr[$i]['assignment']=$stmt_arr[$key]['assignment'];
+                $i++;
+            }
+        }
+        $asmnts = DB::table('assignments')->where('cid',$course)->get();
+        $ass=array();
+        foreach ($asmnts as $key => $value) { 
+            $ass[$value->title]=0; 
+        }
+        foreach($st_arr as $us => $as){
+            foreach($ass as $key => $value){
+                if($key==$st_arr[$us]['assignment']){ 
+                    $ass[$key]=$st_arr[$us]['mark']; } 
+            }
+        }
+        return($ass);
+
+        // dd($stmt_arr,$st_arr,$asmnts,$ass,$student,$course);
+
     }
 
 }
