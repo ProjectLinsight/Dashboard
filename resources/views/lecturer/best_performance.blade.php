@@ -1,10 +1,12 @@
 @extends('layouts.app')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/home.css') }}" >
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="https://kit.fontawesome.com/d43d952765.js" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="{{ URL::asset('js/home.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+
 @section('content')
-<div class="container-fluid pt-4">
+<div class="container-fluid pt-5">
     <div id="wrapper" class="wrapper-content" >
         <div id="sidebar-wrapper" class="bg-dark">
             <ul class="sidebar-nav">
@@ -19,14 +21,14 @@
                     <a data-toggle="collapse" href="#courses" ><i class="fas fa-user pr-2"></i>Courses</a>
                     <div class="collapse pt-3 pl-5" id="courses">
                         @foreach (Auth::user()->lecAssigning as $item)
-                            <h6 class="text-white">
-                                <a data-toggle="collapse" href="#{{$item->cid}}"  href="/lecturer/{{Auth::user()->id}}/{{$item->cid}}/courses">{{$item->cid}}</a>
-                            </h6>
-                            <div class="collapse pt-0 pl-3" id="{{$item->cid}}">
-                                <h6 class="text-white"> <a href="/lecturer/{{Auth::user()->id}}/{{$item->cid}}/courses">Update</a></h6>
-                                <h6 class="text-white"> <a  href="/lecturer/{{Auth::user()->id}}/{{$item->cid}}/overview">Analytics</a></h6>
+                        <h6 class="text-white">
+                            <a data-toggle="collapse" href="#{{$item->cid}}"  href="/lecturer/{{Auth::user()->id}}/{{$item->cid}}/courses">{{$item->cid}}</a>
+                        </h6>
+                        <div class="collapse pt-0 pl-3" id="{{$item->cid}}">
+                            <h6 class="text-white"> <a href="/lecturer/{{Auth::user()->id}}/{{$item->cid}}/courses">Update</a></h6>
+                            <h6 class="text-white"> <a  href="/lecturer/{{Auth::user()->id}}/{{$item->cid}}/overview">Analytics</a></h6>
                                 <h6 class="text-white"> <a  href="/lecturer/{{Auth::user()->id}}/{{$item->cid}}/best_performance">Best Performances</a></h6>
-                            </div>     
+                        </div>
                         @endforeach
                     </div>
                     <hr class="content-center" style="width:75%;background : #555">
@@ -35,6 +37,7 @@
                     <a href="/student_enrollment"><i class="fas fa-id-card pr-2"></i>Student Data</a>
                     <hr class="content-center" style="width:75%;background : #555">
                 </li>
+
             </ul>
         </div>
 
@@ -51,5 +54,4 @@
         </div>
     </div>
 </div>
-
-@endsection
+                

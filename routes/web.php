@@ -50,6 +50,7 @@ Route::get('/lecturer/lecturer_home', 'Lecturer\HomeController@index')->middlewa
 Route::get('/lecturer/{user}/{course}/courses', 'Lecturer\LecturerCoursesController@index')->middleware('lecturer');
 Route::get('/lecturer/{user}/{course}/overview', 'Lecturer\LecturerOverviewController@index')->middleware('lecturer');
 Route::get('/lecturer/{user}/{course}/{student}/studentrisk', 'Lecturer\StudentRiskController@index')->middleware('lecturer');
+Route::get('/lecturer/{user}/{course}/best_performance', 'Lecturer\BestController@index')->middleware('lecturer');
 Route::get('/lecturer/{user}/{course}/assignment', 'Lecturer\LecturerOverviewController@assignmentStat')->middleware('lecturer');
 Route::get('/lecturer/{user}/{course}/test', 'Lecturer\LecturerOverviewController@xapitest')->middleware('lecturer');
 Route::get('/lecturer/{user}/{course}/note', 'Lecturer\LecturerOverviewController@noteCount')->middleware('lecturer');
