@@ -51,6 +51,51 @@
                     </div>
                 </div>
             </nav>
+
+            <div class="col-md-12">
+                        <div class="pb-3">
+                            <div class="card shadow">
+                                <div class="card-header bg-info pb-1">
+                                    <h4 class="text-white text-center"> Top Performances </h4>
+                                </div>
+                                <div class="card-body p-0">
+                                    <div class="panel panel-default">
+                                        <div class="tab-content">
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover mb-0 text-center" style="border-collapse: collapse;">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Registration Number</th>
+                                                                <!-- <th>Name</th>   -->
+                                                                <th>Name</th> 
+                                                                <th>Degree</th> 
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                           
+
+                                                        </tbody>
+                                                    </table>
+                                                    <script>
+                                                    document.addEventListener("DOMContentLoaded", ()=>{
+                                                        const rows = document.querySelectorAll("tr[data-href]");
+                                                        rows.forEach(row => {
+                                                            row.addEventListener("click", () =>{
+                                                                window.location.href = row.dataset.href;
+                                                            });
+                                                        });
+                                                    });
+                                                    </script>
+                                                </div>
+                                        </div>
+                                        <div class="panel-body">
+                                            <canvas id="canvas" height="180" width="600"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
         </div>
     </div>
 </div>
