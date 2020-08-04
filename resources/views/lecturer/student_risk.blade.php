@@ -93,7 +93,16 @@
                         borderColor : "#0074D9",
                         backgroundColor : ['rgba(0, 116, 217, 0.4)' ]
                     }]
-                }
+                },
+                options:{
+                scales: {
+                     yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                            }
+                        }]
+                    }
+            }
             });
         }
     </script>

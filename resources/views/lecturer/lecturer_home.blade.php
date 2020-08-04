@@ -2,7 +2,117 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/home.css') }}" >
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="https://kit.fontawesome.com/d43d952765.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+
     <script type="text/javascript" src="{{ URL::asset('js/home.js') }}"></script>
+
+    <script type="text/javascript">
+    window.onload = function () {
+        var date_counts = <?php echo $activityCount; ?>;
+        var date_act = new Array();
+        var date_countx = new Array();
+        for (var key in date_counts) {
+            date_act.push(key);
+            date_countx.push(date_counts[key]);
+        }
+        var dategraph = document.getElementById("activityGraphPie");
+        var myChart = new Chart(dategraph, {
+            type: 'doughnut',
+            data:{
+                labels:date_act,
+                datasets: [{
+                    label: 'Activity Distribution',
+                    data: date_countx,
+                    borderWidth: 1,
+                    backgroundColor: ["#0074D9", "#FF4136", "#2ECC40", "#FF851B", "#7FDBFF", "#B10DC9", "#FFDC00", "#001f3f", "#39CCCC", "#01FF70", "#85144b", "#F012BE", "#3D9970", "#111111", "#AAAAAA"]
+                }],
+            },
+            options:{
+                responsive: true,
+                title:{
+                    display: true,
+                    text: "Activity Distribution"
+                }
+            }
+        });
+
+        var actOverall = <?php echo $activityOverall; ?>;
+        var colors = [ '#2685CB', '#4AD95A', '#FEC81B', '#FD8D14', '#CE00E6', '#4B4AD3', '#FC3026', '#B8CCE3', '#6ADC88', '#FEE45F'  ];
+        var courseName = new Array();
+        var courseCount = new Array();
+        var datasetdata = new Array();
+        var i = 0 ;
+        for (var key in actOverall) {
+            eval('var ' + key + '= new Array();');
+            for (var key2 in actOverall[key]) {
+                eval(key).push(actOverall[key][key2]);
+            }
+            datasetdata[i] = {
+                label: key,
+                data: eval(key),
+                borderColor: colors[i],
+                hoverBackgroundColor: colors[i],
+                borderStyle: 'solid',
+                borderWidth: 2,
+                fill : false
+            }
+            i++;
+        }
+
+        var actgraph = document.getElementById("activityGraph");
+        var myChart = new Chart(actgraph, {
+            type: 'line',
+            data:{
+                labels:['w1', 'w2', 'w3', 'w4', 'w5','w6', 'w7', 'w8', 'w9', 'w10', 'w11', 'w12', 'w13', 'w14', 'w15'],
+                datasets: datasetdata
+            },
+            options:{
+                responsive: true,
+                title:{
+                    display: true,
+                    text: "Activity Distribution"
+                }
+            }
+        });
+
+        var risk = <?php echo $risk; ?>;
+        var qarr = new Array();
+        var countq = new Array();
+        for (var k in risk) {
+            qarr.push(k);
+            countq.push(risk[k]);
+        }
+        console.log(countq);
+        console.log(qarr);
+        var riskgraph = document.getElementById("riskGraph");
+        var myChart = new Chart(riskgraph, {
+            type: 'bar',
+            data: {
+                labels:qarr,
+                datasets: [{
+                    label: 'Risk of students',
+                    data: countq,
+                    borderColor: '#2685CB',
+                    hoverBackgroundColor: '#2685CB',
+                    borderStyle: 'solid',
+                    borderWidth: 2,
+                    fill : true
+                }]
+            },
+            options:{
+                scales: {
+                     yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                            }
+                        }]
+                    }
+            }
+        });
+    }
+    </script>
+
+
 @section('content')
 <div class="container-fluid pt-4">
     <div id="wrapper" class="wrapper-content" >
@@ -57,6 +167,153 @@
                 </div>
             </nav>
 
+            <div class="container-fluid">
+                <div class="pb-3">
+                    <div class="card shadow-sm">
+                        <div class="card-body row">
+                            <div class="col-md-5 px-4 row">
+                                <div class="col-3">
+                                    <img class="rounded-circle" style="max-width: 100%;height:auto"src="https://mdbootstrap.com/img/Photos/Avatars/img (27).jpg" alt="Generic placeholder image">
+                                </div>
+                                <div class="col-9">
+                                    <div class="">
+                                        <h4 style="font-size:calc(1.3em + 0.4vw)"> <strong>{{Auth::user()->name}}</strong> </h4>
+                                        <h6 class="text-muted" style="font-size:calc(0.8em + 0.2vw)"> {{Auth::user()->email}}</h6>
+                                        </div>
+                                </div>
+                            </div>
+                            <div class="col-md-7 row d-flex justify-content-end pt-3">
+                                <div class="border-right border-left  px-5">
+                                    <div class="d-flex justify-content-end">
+                                        <h1><strong> {{Auth::user()->lecAssigning->count()}} </strong></h1>
+                                    </div>
+                                    <div class="d-flex justify-content-end">
+                                        <h6 style="font-size:calc(0.8em + 0.2vw)"><strong> Enrolled Courses </strong></h6>
+                                    </div>
+                                </div>
+                                <div class="border-right  px-5">
+                                    <div class="d-flex justify-content-end">
+                                    @foreach (Auth::user()->lecAssigning as $item)
+                                        <a href="/lecturer/{{Auth::user()->id}}/{{$item->cid}}/courses">{{$item->cid}}</a> <br>
+                                    @endforeach
+                                        <h1></h1>
+                                    </div>
+                                    <div class="d-flex justify-content-end">
+                                        <h6 style="font-size:calc(0.8em + 0.2vw)"><strong> Courses </strong></h6>
+                                    </div>
+                                </div>
+                                <!-- <div class="border-right  px-5">
+                                    <div class="d-flex justify-content-end">
+                                        <h1><strong> {{Auth::user()->posts->count()}} </strong></h1>
+                                    </div>
+                                    <div class="d-flex justify-content-end">
+                                        <h6 style="font-size:calc(0.8em + 0.2vw)"><strong> Interactions </strong></h6>
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pb-3">
+                    <div class="card shadow-sm">
+                        <div class="card-header pb-0 bg-primary text-white">
+                            <h4> Overall Activity Distribution </h4>
+                        </div>
+                        <div class="card-body row">
+                            <div class="col-md-5">
+                                <div class="card p-2" style="background: #fefefe">
+                                    <canvas id="activityGraphPie" height="400" width="600"></canvas>
+                                </div>
+                            </div>
+                            <div class="col-md-7 ">
+                                <div class="card p-2" style="background: #fefefe">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body">
+                                            <canvas id="activityGraph"  height="280" width="600"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-fluid row m-0 changeList"  >
+            <div class="col-md-7">
+                        <div class="pb-4 py-3">
+                            <div class="card shadow">
+                                <div class="card-header bg-primary">
+                                    <h4 class="text-white my-0"> Risk of failure Distribution </h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="tab-content">
+                                        <div id="dailyTab" class="tab-pane fade show active">
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    <canvas id="riskGraph" height="300px" width="600"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <div class="col-md-5 py-3">
+                    <div class="pb-3">
+                        <div class="card shadow-sm">
+                            <div class="card-header bg-primary">
+                                <h4 class="text-white my-0"> Assignment reminder</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="panel panel-default">
+
+                                    <div class="tab-content">
+                                        <div id="assignment" class="tab-pane fade show active">
+                                            @foreach($assignment as $subid => $value)
+                                                @foreach($value as $keyassign)
+                                                    <?php 
+                                                        if($keyassign->flag == 'completed'){
+                                                            $icon = "check-circle";
+                                                            $col = "success";
+                                                            $flag = "Graded all submited";
+                                                        }
+                                                        else{
+                                                            $icon = "exclamation-circle";
+                                                            $col = "danger";  
+                                                            $flag = "Not graded";
+                                                        }
+                                                    ?>
+                                                    <div class="p-0">
+                                                        <div class="card">
+                                                            <div class="row p-2">
+                                                                <div class="col-1">
+                                                                    <h1 class="pt-2 text-{{$col}}"> <i class="fa fa-{{$icon}}" aria-hidden="true"></i> </h1>
+                                                                </div>
+                                                                <div class="col-8 pl-4 pr-0 mx-0 pt-2">
+                                                                    <h6><strong>{{$keyassign->title}} </strong> </h6>
+                                                                    <h6 style="font-size: 0.9em" class="text-muted"><strong>{{$subid}}</strong></h6>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            @endforeach
+                                        </div>
+                                       
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- old stuff -->
+
             <div class="container-fluid row m-0 changeList"  >
                 <div class="col-md-8 py-3">
                     <hr>
@@ -97,41 +354,7 @@
                     </div>
                     @endforeach
                 </div>
-                <div class="col-md-4 pb-3">
-                    <div class="p-3 row rounded d-flex justify-content-center shadow" style="background:white">
-                        <div class="col-4 pt-4 ">
-                            <img class="rounded-circle"  style="max-width: 140px;width:100%;height:auto" src="https://mdbootstrap.com/img/Photos/Avatars/img (27).jpg" alt="">    
-                            @if (Auth::user()->id === Auth::user()->id)
-                                <p class="pt-2 text-center"><a href="" style="font-size:calc(0.8em + 0.1vw)"> Edit Photo</a></p>
-                                @if (Auth::user()->name==="Anonymous User")
-                                    <p class="text-center" style="margin-top:-10px"><a href="/user/{{$user->id}}/edit" style="font-size:calc(0.8em + 0.1vw);"> Setup Username </a></p>
-                                @endif
-                            @endif
-                        </div>  
-                        <div class="col-8 pl-3 pt-4">
-                            <h3 style="font-size:calc(1.3em + 0.4vw)"> <strong> {{Auth::user()->name}}</strong> </h3>
-                            <h6 class="text-muted" style="font-size:calc(0.8em + 0.2vw)"> {{Auth::user()->email}}</h6>
-                            <hr>
-                            <h6 style="font-size:calc(0.8em + 0.2vw)"><strong> {{Auth::user()->posts->count()}} interactions </strong></h6>
-                            <hr>
-                            <div class="row">
-                                <div class="col-12">
-                              <!--   <h6 style="font-size:calc(0.8em + 0.2vw)"><strong> B.Sc. in {{Auth::user()->degree}}</strong></h6>
-                                    <h6 style="font-size:calc(0.8em + 0.2vw)"><strong> {{Auth::user()->year}}</strong></h6> -->
-                                </div>
-                            </div>
-                        </div>
-                        <hr style="width: 93%">
-                        <div class="col-md-12">
-                            <h4 style="font-size:calc(1.1em + 0.4vw)"> <strong>Currently Assigned Courses </strong></h4>
-                        </div>
-                        <div class="col-12 pl-4">
-                        @foreach (Auth::user()->lecAssigning as $item)
-                            <a href="/lecturer/{{Auth::user()->id}}/{{$item->cid}}/courses">{{$item->cid}}</a> <br>
-                        @endforeach
-                        </div> 
-                    </div>
-                </div>
+               
                 
             </div>
         </div>
