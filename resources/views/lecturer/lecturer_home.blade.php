@@ -130,7 +130,6 @@
         var myChart = new Chart(riskgraph, {
             type: 'bar',
             data:{
-                labels:risk,
                 datasets: datasetdata
             },
             options:{
@@ -232,7 +231,7 @@
                                         <h6 style="font-size:calc(0.8em + 0.2vw)"><strong> Enrolled Courses </strong></h6>
                                     </div>
                                 </div>
-                                <div class="border-right  px-5">
+                                <!-- <div class="border-right  px-5">
                                     <div class="d-flex justify-content-end">
                                     @foreach (Auth::user()->lecAssigning as $item)
                                         <a href="/lecturer/{{Auth::user()->id}}/{{$item->cid}}/courses">{{$item->cid}}</a> <br>
@@ -242,7 +241,7 @@
                                     <div class="d-flex justify-content-end">
                                         <h6 style="font-size:calc(0.8em + 0.2vw)"><strong> Courses </strong></h6>
                                     </div>
-                                </div>
+                                </div> -->
                                 <!-- <div class="border-right  px-5">
                                     <div class="d-flex justify-content-end">
                                         <h1><strong> {{Auth::user()->posts->count()}} </strong></h1>
