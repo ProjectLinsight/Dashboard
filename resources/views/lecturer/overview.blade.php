@@ -56,9 +56,56 @@
             </nav>
 
             <div class="container-fluid">
+            
                 <hr><h1 class="text-center text-dark">Analytics</h1><hr>
                 <!-- <div class="row"> -->
                 <div class="col-md-12 pb-4">
+                <div class="pb-3">
+                    <div class="card shadow-sm">
+                        <div class="card-body row">
+                            <div class="col-md-6 px-4 row">
+                                <!-- <div class="col-3">
+                                    <img class="rounded-circle" style="max-width: 100%;height:auto"src="https://mdbootstrap.com/img/Photos/Avatars/img (27).jpg" alt="Generic placeholder image">
+                                </div> -->
+                                <div class="col-9">
+                                    <div class="">
+                                        <h4 style="font-size:calc(1.3em + 0.4vw)"> <strong>{{$crs->cName}}</strong> </h4>
+                                        <h6 class="text-muted" style="font-size:calc(0.8em + 0.2vw)"> {{$crs->cid}}</h6>
+                                        </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 row d-flex justify-content-end pt-3">
+                                <div class="border-right border-left  px-4">
+                                    <div class="d-flex justify-content-end">
+                                        <h1><strong> {{$enrolled}} </strong></h1>
+                                    </div>
+                                    <div class="d-flex justify-content-end">
+                                        <h6 style="font-size:calc(0.8em + 0.2vw)"><strong> Enrolled students </strong></h6>
+                                    </div>
+                                </div>
+                                <!-- <div class="border-right  px-5">
+                                    <div class="d-flex justify-content-end">
+                                    @foreach (Auth::user()->lecAssigning as $item)
+                                        <a href="/lecturer/{{Auth::user()->id}}/{{$item->cid}}/courses">{{$item->cid}}</a> <br>
+                                    @endforeach
+                                        <h1></h1>
+                                    </div>
+                                    <div class="d-flex justify-content-end">
+                                        <h6 style="font-size:calc(0.8em + 0.2vw)"><strong> Courses </strong></h6>
+                                    </div>
+                                </div> -->
+                                <!-- <div class="border-right  px-5">
+                                    <div class="d-flex justify-content-end">
+                                        <h1><strong> {{Auth::user()->posts->count()}} </strong></h1>
+                                    </div>
+                                    <div class="d-flex justify-content-end">
+                                        <h6 style="font-size:calc(0.8em + 0.2vw)"><strong> Interactions </strong></h6>
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="card shadow">
                                 <div class="card-header bg-primary">
                                     <h4 class="my-0 text-white text-center"> Lecture Note Completion </h4>

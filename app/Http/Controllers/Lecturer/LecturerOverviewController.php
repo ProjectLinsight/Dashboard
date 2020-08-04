@@ -25,6 +25,7 @@ class LecturerOverviewController extends Controller{
         } 
 
         $stu = DB::table('users')->where('utype','Student')->where('degree',$degree)->get();
+        $enrolled = count(DB::table('stu_enrollments')->where('cid',$course)->get());
         $stmt_arr=$this->assignmentComp();
         $q_arr=$this->quizComp();
         $stat=$this->assignmentStat();
@@ -34,6 +35,7 @@ class LecturerOverviewController extends Controller{
         return view('lecturer/overview',[
             'crs'=>$crs[0],
             'stu'=>$stu,
+            'enrolled'=>$enrolled,
             ])
             ->with('assignment', json_encode($stmt_arr))
             ->with('quiz', json_encode($q_arr))

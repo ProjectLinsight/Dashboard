@@ -75,29 +75,70 @@
             }
         });
 
-        var risk = <?php echo $risk; ?>;
-        var qarr = new Array();
-        var countq = new Array();
-        for (var k in risk) {
-            qarr.push(k);
-            countq.push(risk[k]);
+        var risk_count = <?php echo $risk; ?>;
+        var date_risk = new Array();
+        var date_riskx = new Array();
+        for (var key in risk_count) {
+            date_risk.push(key);
+            date_riskx.push(risk_count[key]);
         }
-        console.log(countq);
-        console.log(qarr);
+        var dategraph = document.getElementById("riskGraphPie");
+        var myChart = new Chart(dategraph, {
+            type: 'doughnut',
+            data:{
+                labels:date_risk,
+                datasets: [{
+                    label: 'Risk Distribution',
+                    data: date_riskx,
+                    borderWidth: 1,
+                    backgroundColor: ["#0074D9", "#FF4136", "#2ECC40", "#FF851B", "#7FDBFF", "#B10DC9", "#FFDC00", "#001f3f", "#39CCCC", "#01FF70", "#85144b", "#F012BE", "#3D9970", "#111111", "#AAAAAA"]
+                }],
+            },
+            options:{
+                responsive: true,
+                title:{
+                    display: true,
+                    text: "Risk Distribution"
+                }
+            }
+        });
+
+        var riskOverall = <?php echo $risk; ?>;
+        var colors = [ '#2685CB', '#4AD95A', '#FEC81B', '#FD8D14', '#CE00E6', '#4B4AD3', '#FC3026', '#B8CCE3', '#6ADC88', '#FEE45F'  ];
+        var riskcourseName = new Array();
+        var riskCount = new Array();
+        var datasetdata = new Array();
+        var risk = new Array();
+        var i = 0 ;
+        for (var key in riskOverall) {
+            eval('var ' + key + '= new Array();');
+            eval(key).push(riskOverall[key]);
+            risk.push(key);
+            datasetdata[i] = {
+                label: key,
+                data: eval(key),
+                borderColor: colors[i],
+                hoverBackgroundColor: colors[i],
+                borderStyle: 'solid',
+                borderWidth: 2,
+                fill : true
+            }
+            i++;
+        }
+
         var riskgraph = document.getElementById("riskGraph");
         var myChart = new Chart(riskgraph, {
             type: 'bar',
-            data: {
-                labels:qarr,
-                datasets: [{
-                    label: 'Risk of students',
-                    data: countq,
-                    borderColor: '#2685CB',
-                    hoverBackgroundColor: '#2685CB',
-                    borderStyle: 'solid',
-                    borderWidth: 2,
-                    fill : true
-                }]
+            data:{
+                labels:risk,
+                datasets: datasetdata
+            },
+            options:{
+                responsive: true,
+                title:{
+                    display: true,
+                    text: "risk Distribution"
+                }
             },
             options:{
                 scales: {
@@ -240,8 +281,8 @@
             </div>
 
             <div class="container-fluid row m-0 changeList"  >
-            <div class="col-md-7">
-                        <div class="pb-4 py-3">
+            <div class="pb-3">
+                        <!-- <div class="pb-4 py-3">
                             <div class="card shadow">
                                 <div class="card-header bg-primary">
                                     <h4 class="text-white my-0"> Risk of failure Distribution </h4>
@@ -259,9 +300,125 @@
                                     </div>
                                 </div>
                             </div>
+                        </div> -->
+                        <div class="pb-3">
+                            <div class="card shadow-sm">
+                                <div class="card-header pb-0 bg-primary text-white">
+                                    <h4> Risk of failure Distribution </h4>
+                                </div>
+                                <div class="card-body row">
+                                    <div class="col-md-5">
+                                        <div class="card p-2" style="background: #fefefe">
+                                            <canvas id="riskGraphPie" height="400" width="600"></canvas>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7 ">
+                                        <div class="card p-2" style="background: #fefefe">
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    <canvas id="riskGraph"  height="280" width="600"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                <div class="col-md-5 py-3">
+                <!-- <div class="col-md-5 py-3">
+                    <div class="pb-3">
+                        <div class="card shadow-sm">
+                            <div class="card-header bg-primary">
+                                <h4 class="text-white my-0"> Assignment reminder</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="panel panel-default">
+
+                                    <div class="tab-content">
+                                        <div id="assignment" class="tab-pane fade show active">
+                                            @foreach($assignment as $subid => $value)
+                                                @foreach($value as $keyassign)
+                                                    <?php 
+                                                        if($keyassign->flag == 'completed'){
+                                                            $icon = "check-circle";
+                                                            $col = "success";
+                                                            $flag = "Graded all submited";
+                                                        }
+                                                        else{
+                                                            $icon = "exclamation-circle";
+                                                            $col = "danger";  
+                                                            $flag = "Not graded";
+                                                        }
+                                                    ?>
+                                                    <div class="p-0">
+                                                        <div class="card">
+                                                            <div class="row p-2">
+                                                                <div class="col-1">
+                                                                    <h1 class="pt-2 text-{{$col}}"> <i class="fa fa-{{$icon}}" aria-hidden="true"></i> </h1>
+                                                                </div>
+                                                                <div class="col-8 pl-4 pr-0 mx-0 pt-2">
+                                                                    <h6><strong>{{$keyassign->title}} </strong> </h6>
+                                                                    <h6 style="font-size: 0.9em" class="text-muted"><strong>{{$subid}}</strong></h6>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            @endforeach
+                                        </div>
+                                       
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+
+            <!-- old stuff -->
+
+            <div class="container-fluid row m-0 changeList"  >
+                <div class="col-md-7 py-3">
+                    <hr>
+                    <h1 class="text-center text-dark"> <strong>Timeline </strong> </h1>
+                    <hr>
+                    <?php $post = App\Post::all() ?>
+                    @foreach ($post as $post)
+                    <div class="pb-4">
+                        <div class="p-3 rounded shadow" style="background:white;">
+                            <div class="row d-flex justify-content-between">
+                                <div class=" col-10 d-flex">
+                                    <div class="p-2">
+                                        <img class="rounded-circle" style="max-width: 60px;height:60px"src="https://mdbootstrap.com/img/Photos/Avatars/img (27).jpg" alt="Generic placeholder image">
+                                    </div>
+                                    <div class="col-8">
+                                        <div class="row d-flex justify-content-between align-items-baseline">
+                                            <div>
+                                                <h5 class="pt-3" style="font-size:calc(1em + 0.4vw)"><strong>{{$post->user->name}}</strong></h5>
+                                                @if ($post->created_at!==$post->updated_at)
+                                                    <h6 class="text-muted " style="font-size:calc(0.6em + 0.1vw)" data-toggle="tooltip" title="post created : {{$post->created_at}}">  {{$post->updated_at}}</h6>     
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="p-3 border rounded" style="background: #fefefe">
+                                <h5  style="font-size:calc(1.2em + 0.2vw)"><strong>{{ $post->title}}</strong></h5>
+                                <hr>
+                                <p style="font-size:calc(0.9em + 0.1vw);text-align: justify">{{$post->description}}</p>
+                                <div class="d-flex justify-content-center">
+                                <img style="max-height: 400px;" src="uploads/post/{{ $post->image }}" alt="">
+                               
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+               <div class="col-md-5 py-3">
                     <div class="pb-3">
                         <div class="card shadow-sm">
                             <div class="card-header bg-primary">
@@ -310,51 +467,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <!-- old stuff -->
-
-            <div class="container-fluid row m-0 changeList"  >
-                <div class="col-md-8 py-3">
-                    <hr>
-                    <h1 class="text-center text-dark"> <strong>Timeline </strong> </h1>
-                    <hr>
-                    <?php $post = App\Post::all() ?>
-                    @foreach ($post as $post)
-                    <div class="pb-4">
-                        <div class="p-3 rounded shadow" style="background:white;">
-                            <div class="row d-flex justify-content-between">
-                                <div class=" col-10 d-flex">
-                                    <div class="p-2">
-                                        <img class="rounded-circle" style="max-width: 60px;height:60px"src="https://mdbootstrap.com/img/Photos/Avatars/img (27).jpg" alt="Generic placeholder image">
-                                    </div>
-                                    <div class="col-8">
-                                        <div class="row d-flex justify-content-between align-items-baseline">
-                                            <div>
-                                                <h5 class="pt-3" style="font-size:calc(1em + 0.4vw)"><strong>{{$post->user->name}}</strong></h5>
-                                                @if ($post->created_at!==$post->updated_at)
-                                                    <h6 class="text-muted " style="font-size:calc(0.6em + 0.1vw)" data-toggle="tooltip" title="post created : {{$post->created_at}}">  {{$post->updated_at}}</h6>     
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="p-3 border rounded" style="background: #fefefe">
-                                <h5  style="font-size:calc(1.2em + 0.2vw)"><strong>{{ $post->title}}</strong></h5>
-                                <hr>
-                                <p style="font-size:calc(0.9em + 0.1vw);text-align: justify">{{$post->description}}</p>
-                                <div class="d-flex justify-content-center">
-                                <img style="max-height: 400px;" src="uploads/post/{{ $post->image }}" alt="">
-                               
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    @endforeach
-                </div>
-               
                 
             </div>
         </div>
