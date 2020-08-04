@@ -144,7 +144,8 @@
                                 </div>
                             </div>
                         </div>
-                    <div class="col-md-12 py-3">
+                <div class="row">
+                    <div class="col-md-6 py-3">
                         <div class="pb-3">
                             <div class="card shadow">
                                 <div class="card-header bg-primary pb-1">
@@ -156,14 +157,14 @@
                                     <!-- chart comes here -->
 
                                         <div class="panel-body">
-                                            <canvas id="assignmentGraph" height="150" width="600"></canvas>
+                                            <canvas id="assignmentGraph" height="380" width="600"></canvas>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-12 py-3">
+                    <div class="col-md-6 py-3">
                         <div class="pb-3">
                             <div class="card shadow">
                                 <div class="card-header bg-primary pb-1">
@@ -175,15 +176,14 @@
                                     <!-- chart comes here -->
 
                                         <div class="panel-body">
-                                            <canvas id="quizGraph" height="150" width="600"></canvas>
+                                            <canvas id="quizGraph" height="380" width="600"></canvas>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                <!-- </div> -->
-                <br>
+                </div>
 
                 <div class="row">
                     <div class="col-md-7">
