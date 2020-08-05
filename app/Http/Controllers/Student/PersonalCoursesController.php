@@ -14,7 +14,7 @@ use App\User ;
 class PersonalCoursesController extends Controller{
     public function __construct(){
         $this->middleware('auth');
-        
+
     }
 
     public function index($course){
@@ -42,7 +42,7 @@ class PersonalCoursesController extends Controller{
         $quizArray = $this->getQuizData($user_stmts);
 
         //Viewed Resources
- 
+
         $viewed_stmts = $this->getViewedData($user_stmts);
 
         $today = date("Y-m-d");
@@ -116,7 +116,11 @@ class PersonalCoursesController extends Controller{
         }
         //End of Results Overview
 
-        // dd($gradedAssignments);
+        $asMarks = Array();
+        foreach($assignmentMarks as $as){
+            $asMarks[$as["title"]]= $as["marksObtained"];
+        }
+        // dd($asMarks);
 
 
         return view('student.courses.personal',[
@@ -132,6 +136,7 @@ class PersonalCoursesController extends Controller{
             ->with('activity', json_encode($activity))
             ->with('date_counts', json_encode($date_counts))
             ->with('week_counts', json_encode($weeklyFig))
+            ->with('assignmentMarks', json_encode($asMarks))
             ;
     }
 
