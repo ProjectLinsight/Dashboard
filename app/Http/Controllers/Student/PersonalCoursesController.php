@@ -157,6 +157,7 @@ class PersonalCoursesController extends Controller{
         }
         //End of Results Overview
 
+        // dd($gradedAssignments);
 
         return view('student.courses.personal',[
             'crs'=> $course_name[0],
