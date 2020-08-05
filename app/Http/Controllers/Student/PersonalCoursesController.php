@@ -14,6 +14,7 @@ use App\User ;
 class PersonalCoursesController extends Controller{
     public function __construct(){
         $this->middleware('auth');
+        
     }
 
     public function index($course){
@@ -33,10 +34,16 @@ class PersonalCoursesController extends Controller{
         }
 
         //Assignments Data
-        list($activity,$submittedAssignments,$gradedAssignments) = $this->getAssignmentData($user_stmts);
+        list($activity,$submittedAssignments,$gradedAssignments,$assignmentMarks) = $this->getAssignmentData($user_stmts);
+
+        //dd($activity,$submittedAssignments,$gradedAssignments,$assignmentMarks);
 
         //Quiz Data
         $quizArray = $this->getQuizData($user_stmts);
+
+        //Viewed Resources
+ 
+        $viewed_stmts = $this->getViewedData($user_stmts);
 
         $today = date("Y-m-d");
         $sDate = (DB::table('assign_lecturers')->where('cid',$course)->first())->startDate;
@@ -109,16 +116,6 @@ class PersonalCoursesController extends Controller{
         }
         //End of Results Overview
 
-        //Viewed Resources
-        $viewed_stmts = Array();
-        foreach($user_stmts as $vs){
-            if($vs['verb']==="viewed" && $vs['object'] != "course"){
-                array_push($viewed_stmts,$vs);
-            }
-        }
-
-        //dd($viewed_stmts);
-
 
 
         return view('student.courses.personal',[
@@ -149,6 +146,7 @@ class PersonalCoursesController extends Controller{
         $activity[] = ['activity', 'Number'];
         $submittedAssignments = array();
         $gradedAssignments = array();
+        $assignmentMarks = array();
         $activity = array(
             // "Visited" => 0,
             "Viewed" => 0,
@@ -186,7 +184,14 @@ class PersonalCoursesController extends Controller{
             // else{ $activity["Other"]++; }
         }
 
-        return array($activity,$submittedAssignments,$gradedAssignments);
+        foreach($gradedAssignments as $graded_stmt){
+            $temp = Array();
+            $temp['title'] = $graded_stmt['title'];
+            $temp['marksObtained'] = $graded_stmt['marks']/$graded_stmt['maxMarks']*100;
+            array_push($assignmentMarks,$temp);
+        }
+
+        return array($activity,$submittedAssignments,$gradedAssignments,$assignmentMarks);
     }
 
     public function getQuizData($user_statements){
@@ -199,5 +204,16 @@ class PersonalCoursesController extends Controller{
 
         return $quizArray;
 
+    }
+
+    public function getViewedData($user_statements)
+    {
+        $viewed_stmts = Array();
+        foreach($user_statements as $vs){
+            if($vs['verb']==="viewed" && $vs['object'] != "course"){
+                array_push($viewed_stmts,$vs);
+            }
+        }
+        return $viewed_stmts;
     }
 }
