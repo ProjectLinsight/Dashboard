@@ -25,20 +25,24 @@ class LecturerOverviewController extends Controller{
         } 
 
         $stu = DB::table('users')->where('utype','Student')->where('degree',$degree)->get();
-        $stmt_arr=$this->assignmentComp();
-        $q_arr=$this->quizComp();
-        $stat=$this->assignmentStat();
-        $risk=$this->risk();
-        $quizstat=$this->quizStat();
-        $note=$this->noteCount();
+        $enrolled = count(DB::table('stu_enrollments')->where('cid',$course)->get());
+        $stmt_arr=$this->assignmentComp($course);
+        $q_arr=$this->quizComp($course);
+        $stat=$this->assignmentStat($course);
+        $risk=$this->risk($course);
+        $bestp=$this->best($course);
+        $note=$this->noteCount($course);
+        $quizstat=$this->quizStat($course);
         return view('lecturer/overview',[
             'crs'=>$crs[0],
             'stu'=>$stu,
+            'enrolled'=>$enrolled,
             ])
             ->with('assignment', json_encode($stmt_arr))
             ->with('quiz', json_encode($q_arr))
             ->with('stats', $stat)
             ->with('risks', $risk)
+            ->with('best', $bestp)
             ->with('user', $user)
             ->with('course',$course)
             ->with('quizstats', $quizstat)
@@ -48,15 +52,24 @@ class LecturerOverviewController extends Controller{
             'stu'=>$stu,
             ])
             ->with('risks', $risk)
+            ->with('best', $bestp)
+            ->with('user', $user)
+            ->with('course',$course);
+        return view('lecturer/best_performance',[
+            'crs'=>$crs[0],
+            'stu'=>$stu,
+            ])
+            ->with('best', $bestp)
             ->with('user', $user)
             ->with('course',$course);
     }
 
+
    
-    public function assignmentStat()
+    public function assignmentStat($course)
     {
-        $data = new sharedXapi();
-        $state = $data->getData();
+        $data = new sharedCourseXapi();
+        $state = $data->getData($course);
         $stmt_count = count($state);
         $stmt_arr = array();
         $max_arr = array();
@@ -66,8 +79,9 @@ class LecturerOverviewController extends Controller{
         $avg=0;
         $sum=0;
         $count=0;
-        $cr = DB::table('assignments')->get();
+        $cr = DB::table('assignments')->where('cid',$course)->get();
         $assignment = array();
+        $key = "https://w3id.org/learning-analytics/learning-management-system/short-id";
         foreach ($cr as $key => $value) { 
             $assignment[$value->title]['sum']=0; 
             $assignment[$value->title]['max']=0; 
@@ -76,13 +90,12 @@ class LecturerOverviewController extends Controller{
             $assignment[$value->title]['count']=0;  
         }
         for($i=0;$i<$stmt_count;$i++){            
-            $logArray=explode("/",$state[$i]->verb->id);
-            if($logArray[sizeof($logArray)-1]==="scored"){
-                $stmt_arr[$count]['user'] = $state[$i]->actor->account->name ;
-                $stmt_arr[$count]['assignment'] = $state[$i]->object->definition->name->en ;
-                $stmt_arr[$count]['marks'] = $state[$i]->result->score->raw ;
-                $stmt_arr[$count]['group'] = $state[$i]->context->contextActivities->grouping ;
-                $sum+=$state[$i]->result->score->raw;
+            // $logArray=explode("/",$state[$i]->verb->id);
+            if($state[$i]['type']=='assignment'){
+                $stmt_arr[$count]['user'] = $state[$i]['user']->account->name ;
+                $stmt_arr[$count]['assignment'] = $state[$i]['title'] ;
+                $stmt_arr[$count]['marks'] = $state[$i]['marks'] ;
+                $sum+=$state[$i]['marks'];
                 if($stmt_arr[$count]['marks']>$max){
                     $max=$stmt_arr[$count]['marks'];
                 }
@@ -102,7 +115,7 @@ class LecturerOverviewController extends Controller{
                 $min_arr[$i]['marks'] = $stmt_arr[$i]['marks'] ;
             }
         }
-        $avg=$sum/$count;
+        // $avg=$sum/$count;
 
         foreach($assignment as $key => $value){
             for($i=0;$i<$count;$i++){
@@ -128,10 +141,10 @@ class LecturerOverviewController extends Controller{
         // dd($state2);
     }
 
-    public function quizStat()
+    public function quizStat($course)
     {
         $data = new sharedCourseXapi();
-        $state = $data->getData('SCS3209');
+        $state = $data->getData($course);
         $stmt_count = count($state);
         $stmt_arr = array();
         $max_arr = array();
@@ -141,7 +154,7 @@ class LecturerOverviewController extends Controller{
         $avg=0;
         $sum=0;
         $count=0;
-        $cr = DB::table('quiz')->get();
+        $cr = DB::table('quiz')->where('cid',$course)->get();
         $quiz = array();
         foreach ($cr as $key => $value) { 
             $quiz[$value->title]['sum']=0; 
@@ -192,16 +205,17 @@ class LecturerOverviewController extends Controller{
         dd($state);
     }
 
-    public function noteCount()
+    public function noteCount($course)
     {
         $data = new sharedCourseXapi();
-        $state = $data->getData('SCS3209');
+        $state = $data->getData($course);
         $stmt_count = count($state);
         $count=0;
         $lectNotes = array();
         $distinct_arr = array();
         $distinctass_arr = array();
-        $gr = DB::table('stu_enrollments')->where('cid','SCS3209')->get();
+        $stmt_arr = array();
+        $gr = DB::table('stu_enrollments')->where('cid',$course)->get();
         $enrollCount = count($gr);
         for($i=0;$i<$stmt_count;$i++){            
             if($state[$i]['verb']==="viewed" && $state[$i]['object']==="resource" && $state[$i]['user']->name!="Admin User"){
@@ -216,52 +230,54 @@ class LecturerOverviewController extends Controller{
         //   }
           $sub_count = 1; 
           $s = 0;
-          $distinct_arr[$s]['user'] = $stmt_arr[$s]['user'] ;
-          $distinct_arr[$s]['note'] = $stmt_arr[$s]['note'] ;
-          for ( $i = 1; $i < $count; $i++) 
-          { 
-              for ($j = 0; $j < $i; $j++) {
-                  if ($stmt_arr[$i]['user'] == $stmt_arr[$j]['user'] && $stmt_arr[$i]['note'] == $stmt_arr[$j]['note'] ) 
-                     break; 
-              }
-              if ($i == $j){ 
-                  $sub_count++;
-                  $s++;
-                  $distinct_arr[$s]['user'] = $stmt_arr[$i]['user'] ;
-                  $distinct_arr[$s]['note'] = $stmt_arr[$i]['note'] ; 
-              }
-          }
-          //get distinct completed assignment list
-          $ass_count = 1; 
-          $s = 0;
-        //   $distinctass_arr[$s]['note'] = $stmt_arr[$s]['note'] ;
-        $distinctass_arr[$stmt_arr[$s]['note']]['enrolled'] = $enrollCount ; 
-        $distinctass_arr[$stmt_arr[$s]['note']]['count'] = 0 ; 
-          for ( $i = 1; $i < $count; $i++) 
-          { 
-              for ($j = 0; $j < $i; $j++) {
-                  if ($stmt_arr[$i]['note'] == $stmt_arr[$j]['note']) 
-                     break; 
-              }
-              if ($i == $j){ 
-                  $ass_count++;
-                  $s++;
-                  $distinctass_arr[$stmt_arr[$i]['note']]['enrolled'] = $enrollCount ; 
-                  $distinctass_arr[$stmt_arr[$i]['note']]['count'] = 0 ; 
-                //   $distinctass_arr[$s]['note'] = $stmt_arr[$i]['note'] ; 
-              }
-          }
-          foreach($distinct_arr as $us){
-            foreach($distinctass_arr as $key => $value){
-                if($key==$us["note"]){ $distinctass_arr[$key]['count']++; } 
+          if($count!=0){
+            $distinct_arr[$s]['user'] = $stmt_arr[$s]['user'] ;
+            $distinct_arr[$s]['note'] = $stmt_arr[$s]['note'] ;
+            for ( $i = 1; $i < $count; $i++) 
+            { 
+                for ($j = 0; $j < $i; $j++) {
+                    if ($stmt_arr[$i]['user'] == $stmt_arr[$j]['user'] && $stmt_arr[$i]['note'] == $stmt_arr[$j]['note'] ) 
+                       break; 
+                }
+                if ($i == $j){ 
+                    $sub_count++;
+                    $s++;
+                    $distinct_arr[$s]['user'] = $stmt_arr[$i]['user'] ;
+                    $distinct_arr[$s]['note'] = $stmt_arr[$i]['note'] ; 
+                }
             }
-         }
+            //get distinct completed assignment list
+            $ass_count = 1; 
+            $s = 0;
+          //   $distinctass_arr[$s]['note'] = $stmt_arr[$s]['note'] ;
+          $distinctass_arr[$stmt_arr[$s]['note']]['enrolled'] = $enrollCount ; 
+          $distinctass_arr[$stmt_arr[$s]['note']]['count'] = 0 ; 
+            for ( $i = 1; $i < $count; $i++) 
+            { 
+                for ($j = 0; $j < $i; $j++) {
+                    if ($stmt_arr[$i]['note'] == $stmt_arr[$j]['note']) 
+                       break; 
+                }
+                if ($i == $j){ 
+                    $ass_count++;
+                    $s++;
+                    $distinctass_arr[$stmt_arr[$i]['note']]['enrolled'] = $enrollCount ; 
+                    $distinctass_arr[$stmt_arr[$i]['note']]['count'] = 0 ; 
+                  //   $distinctass_arr[$s]['note'] = $stmt_arr[$i]['note'] ; 
+                }
+            }
+            foreach($distinct_arr as $us){
+              foreach($distinctass_arr as $key => $value){
+                  if($key==$us["note"]){ $distinctass_arr[$key]['count']++; } 
+              }
+           }
+          }
+          
         // dd($distinct_arr,$distinctass_arr);
         return($distinctass_arr);
     }
 
-
-    public function assignmentComp()
+    public function assignmentComp($course)
     {
         $data = new sharedXapi();
         $state = $data->getData();
@@ -276,9 +292,10 @@ class LecturerOverviewController extends Controller{
         $result = 0;
         $crs = DB::table('users')->get();
         $all_count = count($crs);
+        $key = "https://w3id.org/learning-analytics/learning-management-system/short-id";
         for($i=0;$i<$stmt_count;$i++){
             $logArray=explode("/",$state[$i]->verb->id);
-            if($logArray[sizeof($logArray)-1]==="submit"){
+            if($logArray[sizeof($logArray)-1]==="submit" && $state[$i]->context->contextActivities->grouping[1]->definition->extensions->$key===$course){
                 $stmt_arr[$count]['user'] = $state[$i]->actor->account->name ;
                 $stmt_arr[$count]['assignment'] = $state[$i]->object->definition->name->en;
                 $count+=1;
@@ -289,81 +306,68 @@ class LecturerOverviewController extends Controller{
             // }
         }
         //get distinct assignment completed users
-        $sub_count = 1; 
-        $s = 0;
-        $distinct_arr[$s]['user'] = $stmt_arr[$s]['user'] ;
-        $distinct_arr[$s]['assignment'] = $stmt_arr[$s]['assignment'] ;
-        for ( $i = 1; $i < $count; $i++) 
-        { 
-            for ($j = 0; $j < $i; $j++) {
-                if ($stmt_arr[$i]['user'] == $stmt_arr[$j]['user'] && $stmt_arr[$i]['assignment'] == $stmt_arr[$j]['assignment'] ) 
-                   break; 
+        if($count!=0){
+            $sub_count = 1; 
+            $s = 0;
+            $distinct_arr[$s]['user'] = $stmt_arr[$s]['user'] ;
+            $distinct_arr[$s]['assignment'] = $stmt_arr[$s]['assignment'] ;
+            for ( $i = 1; $i < $count; $i++) 
+            { 
+                for ($j = 0; $j < $i; $j++) {
+                    if ($stmt_arr[$i]['user'] == $stmt_arr[$j]['user'] && $stmt_arr[$i]['assignment'] == $stmt_arr[$j]['assignment'] ) 
+                       break; 
+                }
+                if ($i == $j){ 
+                    $sub_count++;
+                    $s++;
+                    $distinct_arr[$s]['user'] = $stmt_arr[$i]['user'] ;
+                    $distinct_arr[$s]['assignment'] = $stmt_arr[$i]['assignment'] ; 
+                }
             }
-            if ($i == $j){ 
-                $sub_count++;
-                $s++;
-                $distinct_arr[$s]['user'] = $stmt_arr[$i]['user'] ;
-                $distinct_arr[$s]['assignment'] = $stmt_arr[$i]['assignment'] ; 
+            //get distinct completed assignment list
+            $ass_count = 1; 
+            $s = 0;
+            $distinctass_arr[$s]['assignment'] = $stmt_arr[$s]['assignment'] ;
+            for ( $i = 1; $i < $count; $i++) 
+            { 
+                for ($j = 0; $j < $i; $j++) {
+                    if ($stmt_arr[$i]['assignment'] == $stmt_arr[$j]['assignment']) 
+                       break; 
+                }
+                if ($i == $j){ 
+                    $ass_count++;
+                    $s++;
+                    $distinctass_arr[$s]['assignment'] = $stmt_arr[$i]['assignment'] ; 
+                }
             }
+            // for ( $i = 0; $i < $ass_count; $i++){
+            //     array_push($ass_list,$distinctass_arr[$i]['assignment']);
+            //     // $ass_list[$i]['Number'] = 0;
+            // }
+            // $assignment[] = ['name', 'Number'];
+            // foreach($distinctass_arr as $key => $value){
+            //     $assignment[++$key] = [$value->name, $value->Number];
+            // }
+            $cr = DB::table('assignments')->where('cid',$course)->get();
+            $assignment = array();
+            foreach ($cr as $key => $value) { 
+                $assignment[$value->title]=0; 
+            }
+            foreach($distinct_arr as $us){
+                foreach($assignment as $key => $value){
+                    if($key==$us["assignment"]){ $assignment[$key]++; } 
+                }
+            }
+    
         }
-        //get distinct completed assignment list
-        $ass_count = 1; 
-        $s = 0;
-        $distinctass_arr[$s]['assignment'] = $stmt_arr[$s]['assignment'] ;
-        for ( $i = 1; $i < $count; $i++) 
-        { 
-            for ($j = 0; $j < $i; $j++) {
-                if ($stmt_arr[$i]['assignment'] == $stmt_arr[$j]['assignment']) 
-                   break; 
-            }
-            if ($i == $j){ 
-                $ass_count++;
-                $s++;
-                $distinctass_arr[$s]['assignment'] = $stmt_arr[$i]['assignment'] ; 
-            }
-        }
-        // for ( $i = 0; $i < $ass_count; $i++){
-        //     array_push($ass_list,$distinctass_arr[$i]['assignment']);
-        //     // $ass_list[$i]['Number'] = 0;
-        // }
-        // $assignment[] = ['name', 'Number'];
-        // foreach($distinctass_arr as $key => $value){
-        //     $assignment[++$key] = [$value->name, $value->Number];
-        // }
-        $cr = DB::table('assignments')->get();
-        $assignment = array();
-        foreach ($cr as $key => $value) { 
-            $assignment[$value->title]=0; 
-        }
-        // $assignment = array(
-        //     'Assignment 1' => 0,
-        //     'Assignment 2' => 0,
-        //     'Assignment 3' => 0,
-        //     'Assignment 4' => 0,
-        //     'Assignment 5' => 0,
-        //     'Assignment 6' => 0
-        //  );
-        //  foreach($distinct_arr as $us){
-        //     if("Assignment 1"==$us["assignment"]){ $assignment["Assignment 1"]++; }
-        //     else if("Assignment 2"==$us["assignment"]){ $assignment["Assignment 2"]++; }
-        //     else if("Assignment 3"==$us["assignment"]){ $assignment["Assignment 3"]++; }
-        //     else if("Assignment 4"==$us["assignment"]){ $assignment["Assignment 4"]++; }
-        //     else if("Assignment 5"==$us["assignment"]){ $assignment["Assignment 5"]++; }
-        //     else if("Assignment 6"==$us["assignment"]){ $assignment["Assignment 6"]++; }
-        // }
-        foreach($distinct_arr as $us){
-            foreach($assignment as $key => $value){
-                if($key==$us["assignment"]){ $assignment[$key]++; } 
-            }
-        }
-
+        
        
         
         return($assignment);
         // dd($count,$stmt_arr,$crs,$sub_count,$distinct_arr,$distinctass_arr,$ass_count,$assignment,$cr);
     }
 
-    public function quizComp()
+    public function quizComp($course)
     {
         $data = new sharedXapi();
         $state = $data->getData();
@@ -375,11 +379,12 @@ class LecturerOverviewController extends Controller{
         $distinct_arr = array();
         $notcom_array = array();
         $result = 0;
+        $key = "https://w3id.org/learning-analytics/learning-management-system/short-id";
         for($i=0;$i<$stmt_count;$i++){
             $logArray=explode("/",$state[$i]->object->id);
             if($logArray[sizeof($logArray)-2]==="quiz"){  
                 $general=explode("/",$state[$i]->verb->id);
-                if($general[sizeof($general)-1]==="completed"){
+                if($general[sizeof($general)-1]==="completed" && $state[$i]->context->contextActivities->grouping[1]->definition->extensions->$key===$course){
                     $stmt_arr[$count]['user'] = $state[$i]->actor->account->name ; 
                     $stmt_arr[$count]['quiz'] = $state[$i]->object->definition->name->en;
                     // $stmt_arr[$count]['id'] = $state[$i]->id;
@@ -390,82 +395,71 @@ class LecturerOverviewController extends Controller{
          //get distinct quiz completed users
          $sub_count = 1; 
          $s = 0;
-         $distinct_arr[$s]['user'] = $stmt_arr[$s]['user'] ;
-         $distinct_arr[$s]['quiz'] = $stmt_arr[$s]['quiz'] ;
-         for ( $i = 1; $i < $count; $i++) 
-         { 
-             for ($j = 0; $j < $i; $j++) {
-                 if ($stmt_arr[$i]['user'] == $stmt_arr[$j]['user'] && $stmt_arr[$i]['quiz'] == $stmt_arr[$j]['quiz'] ) 
-                    break; 
-             }
-             if ($i == $j){ 
-                 $sub_count++;
-                 $s++;
-                 $distinct_arr[$s]['user'] = $stmt_arr[$i]['user'] ;
-                 $distinct_arr[$s]['quiz'] = $stmt_arr[$i]['quiz'] ; 
-             }
+         $quiz = array();
+
+         if($count!=0){
+            $distinct_arr[$s]['user'] = $stmt_arr[$s]['user'] ;
+            $distinct_arr[$s]['quiz'] = $stmt_arr[$s]['quiz'] ;
+            for ( $i = 1; $i < $count; $i++) 
+            { 
+                for ($j = 0; $j < $i; $j++) {
+                    if ($stmt_arr[$i]['user'] == $stmt_arr[$j]['user'] && $stmt_arr[$i]['quiz'] == $stmt_arr[$j]['quiz'] ) 
+                       break; 
+                }
+                if ($i == $j){ 
+                    $sub_count++;
+                    $s++;
+                    $distinct_arr[$s]['user'] = $stmt_arr[$i]['user'] ;
+                    $distinct_arr[$s]['quiz'] = $stmt_arr[$i]['quiz'] ; 
+                }
+            }
+           //get distinct completed quiz list
+           $quiz_count = 1; 
+           $s = 0;
+           $distinctquiz_arr[$s]['quiz'] = $stmt_arr[$s]['quiz'] ;
+           for ( $i = 1; $i < $count; $i++) 
+           { 
+               for ($j = 0; $j < $i; $j++) {
+                   if ($stmt_arr[$i]['quiz'] == $stmt_arr[$j]['quiz']) 
+                      break; 
+               }
+               if ($i == $j){ 
+                   $quiz_count++;
+                   $s++;
+                   $distinctquiz_arr[$s]['quiz'] = $stmt_arr[$i]['quiz'] ; 
+               }
+           }
+           $cr = DB::table('quiz')->where('cid',$course)->get();
+           foreach ($cr as $key => $value) { 
+               $quiz[$value->title]=0; 
+           }
+           foreach($distinct_arr as $us){
+               foreach($quiz as $key => $value){
+                   if($key==$us["quiz"]){ $quiz[$key]++; } 
+               }
+           }
          }
-        //get distinct completed quiz list
-        $quiz_count = 1; 
-        $s = 0;
-        $distinctquiz_arr[$s]['quiz'] = $stmt_arr[$s]['quiz'] ;
-        for ( $i = 1; $i < $count; $i++) 
-        { 
-            for ($j = 0; $j < $i; $j++) {
-                if ($stmt_arr[$i]['quiz'] == $stmt_arr[$j]['quiz']) 
-                   break; 
-            }
-            if ($i == $j){ 
-                $quiz_count++;
-                $s++;
-                $distinctquiz_arr[$s]['quiz'] = $stmt_arr[$i]['quiz'] ; 
-            }
-        }
-        $cr = DB::table('quiz')->get();
-        $quiz = array();
-        foreach ($cr as $key => $value) { 
-            $quiz[$value->title]=0; 
-        }
-        // $quiz = array(
-        //     'Quiz 1' => 0,
-        //     'Quiz 2' => 0,
-        //     'Quiz 3' => 0,
-        //     'Quiz 4' => 0,
-        //     'Quiz 5' => 0,
-        //     'IT General Quiz' => 0
-        //  );
-        //  foreach($distinct_arr as $us){
-        //     if("Quiz 1"==$us["quiz"]){ $quiz["Quiz 1"]++; }
-        //     else if("Quiz 2"==$us["quiz"]){ $quiz["Quiz 2"]++; }
-        //     else if("Quiz 3"==$us["quiz"]){ $quiz["Quiz 3"]++; }
-        //     else if("Quiz 4"==$us["quiz"]){ $quiz["Quiz 4"]++; }
-        //     else if("Quiz 5"==$us["quiz"]){ $quiz["Quiz 5"]++; }
-        //     else if("IT General Quiz"==$us["quiz"]){ $quiz["IT General Quiz"]++; }
-        // }
-        foreach($distinct_arr as $us){
-            foreach($quiz as $key => $value){
-                if($key==$us["quiz"]){ $quiz[$key]++; } 
-            }
-        }
         
         return ($quiz);
         // dd($count,$stmt_arr,$distinctquiz_arr,$quiz_count);
     }
 
-    public function risk(){
+    public function risk($course){
         $data = new sharedXapi();
         $state = $data->getData();
         $stmt_count = count($state);
         $stmt_arr = array();
         $sum_arr = array();
         $count=0;
+        $key = "https://w3id.org/learning-analytics/learning-management-system/short-id";
         for($i=0;$i<$stmt_count;$i++){            
             $logArray=explode("/",$state[$i]->verb->id);
-            if($logArray[sizeof($logArray)-1]==="scored"){
+            if($logArray[sizeof($logArray)-1]==="scored" && $state[$i]->context->contextActivities->grouping[1]->definition->extensions->$key===$course){
                 $stmt_arr[$count]['user'] = $state[$i]->actor->account->name ;
                 $stmt_arr[$count]['assignment'] = $state[$i]->object->definition->name->en ;
                 $stmt_arr[$count]['amarks'] = $state[$i]->result->score->raw ;
                 $stmt_arr[$count]['amax'] = $state[$i]->result->score->max ;
+                $stmt_arr[$count]['qmax'] = 0 ;
                 $stmt_arr[$count]['qmarks'] = 0 ;
                 $count+=1;
             }
@@ -474,11 +468,12 @@ class LecturerOverviewController extends Controller{
             $logArray=explode("/",$state[$i]->object->id);
             if($logArray[sizeof($logArray)-2]==="quiz"){  
                 $general=explode("/",$state[$i]->verb->id);
-                if($general[sizeof($general)-1]==="completed"){
+                if($general[sizeof($general)-1]==="completed" && $state[$i]->context->contextActivities->grouping[1]->definition->extensions->$key===$course){
                     $stmt_arr[$count]['user'] = $state[$i]->actor->account->name ; 
                     $stmt_arr[$count]['quiz'] = $state[$i]->object->definition->name->en;
                     $stmt_arr[$count]['qmarks'] = $state[$i]->result->score->raw ;
                     $stmt_arr[$count]['qmax'] = $state[$i]->result->score->max ;
+                    $stmt_arr[$count]['amax'] = 0 ;
                     $stmt_arr[$count]['amarks'] = 0 ;
                     $count+=1;
                 }
@@ -488,7 +483,8 @@ class LecturerOverviewController extends Controller{
         $sum=0;
         $t=0;
         $cr = DB::table('users')->where('utype','Student')->get();
-        $gr = DB::table('stu_enrollments')->where('cid','SCS3209')->get();
+        //dont we have to change scs3209 to get the subject code automatically?????????????
+        $gr = DB::table('stu_enrollments')->where('cid',$course)->get();
         $assignment = array();
         $reg_no = array();
         foreach ($cr as $key => $value) { 
@@ -516,7 +512,7 @@ class LecturerOverviewController extends Controller{
             for($i=0;$i<$count;$i++){
                 if($key==$stmt_arr[$i]['user'] && $stmt_arr[$i]['qmarks']==0){
                     $assignment[$key]['asscount']++;
-                    $assignment[$key]['assmax']+=$stmt_arr[$i]['amax'];
+                    $assignment[$key]['assmax']+= $stmt_arr[$i]['amax'];
                     $assignment[$key]['asssum']+= $stmt_arr[$i]['amarks'];
                 }
                 if($key==$stmt_arr[$i]['user'] && $stmt_arr[$i]['amarks']==0){
@@ -545,9 +541,117 @@ class LecturerOverviewController extends Controller{
             
         }
         return ($assignment);
-        // dd($cr,$count,$stmt_arr,$assignment);
-
-
-
+        // dd($cr,$count,$stmt_arr,$assignment,$reg_no);
     }
+
+    
+    public function best($course){
+        $data = new sharedXapi();
+        $state = $data->getData();
+        $stmt_count = count($state);
+        $stmt_arr = array();
+        $sum_arr = array();
+        $count=0;
+        for($i=0;$i<$stmt_count;$i++){            
+            $logArray=explode("/",$state[$i]->verb->id);
+            if($logArray[sizeof($logArray)-1]==="scored"){
+                $stmt_arr[$count]['user'] = $state[$i]->actor->account->name ;
+                $stmt_arr[$count]['name'] = $state[$i]->actor->name ;
+                $stmt_arr[$count]['assignment'] = $state[$i]->object->definition->name->en ;
+                $stmt_arr[$count]['amarks'] = $state[$i]->result->score->raw ;
+                $stmt_arr[$count]['amax'] = $state[$i]->result->score->max ;
+                $stmt_arr[$count]['qmax'] = 0 ;
+                $stmt_arr[$count]['qmarks'] = 0 ;
+                $count+=1;
+            }
+        }
+        for($i=0;$i<$stmt_count;$i++){
+            $logArray=explode("/",$state[$i]->object->id);
+            if($logArray[sizeof($logArray)-2]==="quiz"){  
+                $general=explode("/",$state[$i]->verb->id);
+                if($general[sizeof($general)-1]==="completed"){
+                    $stmt_arr[$count]['user'] = $state[$i]->actor->account->name ; 
+                    $stmt_arr[$count]['name'] = $state[$i]->actor->name ;
+                    $stmt_arr[$count]['quiz'] = $state[$i]->object->definition->name->en;
+                    $stmt_arr[$count]['qmarks'] = $state[$i]->result->score->raw ;
+                    $stmt_arr[$count]['qmax'] = $state[$i]->result->score->max ;
+                    $stmt_arr[$count]['amax'] = 0 ;
+                    $stmt_arr[$count]['amarks'] = 0 ;
+                    $count+=1;
+                }
+            }
+        }
+        $avg=0;
+        $sum=0;
+        $t=0;
+        $cr = DB::table('users')->where('utype','Student')->get();
+        //dont we have to change scs3209 to get the subject code automatically?????????????
+        $gr = DB::table('stu_enrollments')->where('cid',$course)->get();
+        $assignment = array();
+        $list = array();
+        $bestlist = array();
+        $reg_no = array();
+        foreach ($cr as $key => $value) { 
+            foreach($gr as $stu){
+                if($stu->index==$value->index){
+                    $reg=explode("@",$value->email);
+                    $reg_no[$t]= $reg[0];
+                     $t++;
+                }
+            }
+             
+        }
+        foreach ($reg_no as $key => $value) { 
+            $assignment[$value]['asssum']=0; 
+            $assignment[$value]['assavg']=0;
+            $assignment[$value]['asscount']=0;  
+            $assignment[$value]['assmax']=0;
+            $assignment[$value]['quizsum']=0; 
+            $assignment[$value]['quizavg']=0;
+            $assignment[$value]['quizcount']=0;
+            $assignment[$value]['quizmax']=0;
+
+        }
+        foreach($assignment as $key => $value){
+            for($i=0;$i<$count;$i++){
+                if($key==$stmt_arr[$i]['user'] && $stmt_arr[$i]['qmarks']==0){
+                    $assignment[$key]['asscount']++;
+                    $assignment[$key]['assmax']+= $stmt_arr[$i]['amax'];
+                    $assignment[$key]['asssum']+= $stmt_arr[$i]['amarks'];
+                    $assignment[$key]['name']= $stmt_arr[$i]['name'];
+                }
+                if($key==$stmt_arr[$i]['user'] && $stmt_arr[$i]['amarks']==0){
+                    $assignment[$key]['quizcount']++;
+                    $assignment[$key]['quizmax']+=$stmt_arr[$i]['qmax'];
+                    $assignment[$key]['quizsum']+= $stmt_arr[$i]['qmarks'];
+                    $assignment[$key]['name']= $stmt_arr[$i]['name'];
+                }
+            }
+            if($assignment[$key]['assmax']!=0){
+                $assignment[$key]['assavg']=($assignment[$key]['asssum']/$assignment[$key]['assmax'])*100;
+            }
+            if($assignment[$key]['quizmax']!=0){
+                $assignment[$key]['quizavg']=($assignment[$key]['quizsum']/$assignment[$key]['quizmax'])*100;
+            }
+        }
+        foreach($assignment as $key => $value){
+                if($assignment[$key]['assavg']>=60 && $assignment[$key]['quizavg']>=60 ){
+                    $list[$key]['assavg']= $assignment[$key]['assavg'];
+                    $list[$key]['quizavg']= $assignment[$key]['quizavg'];
+                    $list[$key]['name']= $assignment[$key]['name'];
+                }
+            
+        }
+        foreach ($list as $key => $row) {
+            $assavg[$key]  = $row['assavg'];
+            $quizavg[$key] = $row['quizavg'];
+        }
+        array_multisort($assavg, SORT_ASC, $quizavg, SORT_ASC, $list);
+        $bestlist = array_slice($list, 0, 20);
+
+        return ($bestlist);
+        // dd($cr,$count,$stmt_arr,$assignment,$list,$bestlist);
+    }
+
+
 }

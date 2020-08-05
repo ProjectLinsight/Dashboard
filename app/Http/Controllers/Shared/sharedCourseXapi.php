@@ -55,6 +55,7 @@ class sharedCourseXapi extends Controller{
                             $state[$count]['type'] = "assignment";
                             $state[$count]['object'] = $objArray[sizeof($objArray)-2];
                             $state[$count]['marks'] = $temp->result->score->raw ;
+                            $state[$count]['maxMarks'] = $temp->result->score->max;
                             $start_date = explode("T",$temp->timestamp);
                             $state[$count]['date'] = $start_date[0] ; 
                             $count++;

@@ -171,14 +171,6 @@
                                 </div>
                             </div>
                             <div class="col-md-7 row d-flex justify-content-end pt-3">
-                                <div class="border-right border-left  px-5">
-                                    <div class="d-flex justify-content-end">
-                                        <h1><strong> {{$value['rlevel']}} </strong></h1>
-                                    </div>
-                                    <div class="d-flex justify-content-end">
-                                        <h6 style="font-size:calc(0.8em + 0.2vw)"><strong> Risk Level </strong></h6>
-                                    </div>
-                                </div>
                                 <div class="border-right  px-3">
                                     <div class="d-flex justify-content-end">
                                         <h1><strong> {{$value['aavg']}} </strong></h1>
@@ -583,4 +575,6 @@
                     </div>
                 </div>
             </div>
+    </div>
+</div>
                 

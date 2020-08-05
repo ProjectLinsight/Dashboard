@@ -14,6 +14,7 @@ use App\User ;
 class PersonalCoursesController extends Controller{
     public function __construct(){
         $this->middleware('auth');
+        
     }
 
     public function index($course){
@@ -33,58 +34,16 @@ class PersonalCoursesController extends Controller{
         }
 
         //Assignments Data
+        list($activity,$submittedAssignments,$gradedAssignments,$assignmentMarks) = $this->getAssignmentData($user_stmts);
 
-        $activity[] = ['activity', 'Number'];
-        $submittedAssignments = array();
-        $gradedAssignments = array();
-        $activity = array(
-            // "Visited" => 0,
-            "Viewed" => 0,
-            // "Started" => 0,
-            "Completed" => 0,
-            "Submitted" => 0,
-            "Graded" => 0,
-            // "Logged in" => 0,
-            // "Logged out" => 0,
-            "Received" => 0,
-            // "Created" => 0,
-            // "Other" => 0,
-        );
+        //dd($activity,$submittedAssignments,$gradedAssignments,$assignmentMarks);
 
-        foreach($user_stmts as $us){
-            if("viewed"==$us["verb"]){ $activity["Viewed"]++; }
-            // else if("visited"==$us["verb"]){ $activity["Visited"]++; }
-            // else if("started"==$us["verb"]){ $activity["Started"]++; }
-            else if("completed"==$us["verb"]){
-                $activity["Completed"]++;
-                // array_push($submittedAssignments,$us);
-            }
-            else if("submitted"==$us["verb"]){
-                $activity["Submitted"]++;
-                array_push($submittedAssignments,$us);
-            }
-            else if("attained grade for"==$us["verb"]){
-                $activity["Graded"]++;
-                array_push($gradedAssignments,$us);
-            }
-            // else if("logged into"==$us["verb"]){ $activity["Logged In"]++; }
-            // else if("logged out of"==$us["verb"]){ $activity["Logged Out"]++; }
-            else if("received"==$us["verb"]){ $activity["Received"]++; }
-            // else if("enrolled to"==$us["verb"]){ $activity["Created"]++; }
-            // else{ $activity["Other"]++; }
-        }
+        //Quiz Data
+        $quizArray = $this->getQuizData($user_stmts);
 
-        // dd($gradedAssignments);
-
-        //Quiz Results
-        $quizArray = Array();
-        foreach($user_stmts as $quiz_stmt){
-            if($quiz_stmt['type']=="quiz"){
-                array_push($quizArray,$quiz_stmt);
-            }
-        }
-
-        //dd($quizArray);
+        //Viewed Resources
+ 
+        $viewed_stmts = $this->getViewedData($user_stmts);
 
         $today = date("Y-m-d");
         $sDate = (DB::table('assign_lecturers')->where('cid',$course)->first())->startDate;
@@ -159,6 +118,7 @@ class PersonalCoursesController extends Controller{
 
         // dd($gradedAssignments);
 
+
         return view('student.courses.personal',[
             'crs'=> $course_name[0],
             'gradedAssignments' => $gradedAssignments,
@@ -180,5 +140,81 @@ class PersonalCoursesController extends Controller{
         $first = DateTime::createFromFormat('Y-m-d', $date1);
         $second = DateTime::createFromFormat('Y-m-d', $date2);
         return floor($first->diff($second)->days/7);
+    }
+
+    public function getAssignmentData($user_statements)
+    {
+        $activity[] = ['activity', 'Number'];
+        $submittedAssignments = array();
+        $gradedAssignments = array();
+        $assignmentMarks = array();
+        $activity = array(
+            // "Visited" => 0,
+            "Viewed" => 0,
+            // "Started" => 0,
+            "Completed" => 0,
+            "Submitted" => 0,
+            "Graded" => 0,
+            // "Logged in" => 0,
+            // "Logged out" => 0,
+            "Received" => 0,
+            // "Created" => 0,
+            // "Other" => 0,
+        );
+
+        foreach($user_statements as $us){
+            if("viewed"==$us["verb"]){ $activity["Viewed"]++; }
+            // else if("visited"==$us["verb"]){ $activity["Visited"]++; }
+            // else if("started"==$us["verb"]){ $activity["Started"]++; }
+            else if("completed"==$us["verb"]){
+                $activity["Completed"]++;
+                // array_push($submittedAssignments,$us);
+            }
+            else if("submitted"==$us["verb"]){
+                $activity["Submitted"]++;
+                array_push($submittedAssignments,$us);
+            }
+            else if("attained grade for"==$us["verb"]){
+                $activity["Graded"]++;
+                array_push($gradedAssignments,$us);
+            }
+            // else if("logged into"==$us["verb"]){ $activity["Logged In"]++; }
+            // else if("logged out of"==$us["verb"]){ $activity["Logged Out"]++; }
+            else if("received"==$us["verb"]){ $activity["Received"]++; }
+            // else if("enrolled to"==$us["verb"]){ $activity["Created"]++; }
+            // else{ $activity["Other"]++; }
+        }
+
+        foreach($gradedAssignments as $graded_stmt){
+            $temp = Array();
+            $temp['title'] = $graded_stmt['title'];
+            $temp['marksObtained'] = $graded_stmt['marks']/$graded_stmt['maxMarks']*100;
+            array_push($assignmentMarks,$temp);
+        }
+
+        return array($activity,$submittedAssignments,$gradedAssignments,$assignmentMarks);
+    }
+
+    public function getQuizData($user_statements){
+        $quizArray = Array();
+        foreach($user_statements as $quiz_stmt){
+            if($quiz_stmt['type']=="quiz"){
+                array_push($quizArray,$quiz_stmt);
+            }
+        }
+
+        return $quizArray;
+
+    }
+
+    public function getViewedData($user_statements)
+    {
+        $viewed_stmts = Array();
+        foreach($user_statements as $vs){
+            if($vs['verb']==="viewed" && $vs['object'] != "course"){
+                array_push($viewed_stmts,$vs);
+            }
+        }
+        return $viewed_stmts;
     }
 }

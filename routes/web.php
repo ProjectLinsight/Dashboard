@@ -50,12 +50,14 @@ Route::get('/lecturer/lecturer_home', 'Lecturer\HomeController@index')->middlewa
 Route::get('/lecturer/{user}/{course}/courses', 'Lecturer\LecturerCoursesController@index')->middleware('lecturer');
 Route::get('/lecturer/{user}/{course}/overview', 'Lecturer\LecturerOverviewController@index')->middleware('lecturer');
 Route::get('/lecturer/{user}/{course}/{student}/studentrisk', 'Lecturer\StudentRiskController@index')->middleware('lecturer');
+Route::get('/lecturer/{user}/{course}/{student}/bestperformance', 'Lecturer\BestController@index')->middleware('lecturer');
 Route::get('/lecturer/{user}/{course}/assignment', 'Lecturer\LecturerOverviewController@assignmentStat')->middleware('lecturer');
 Route::get('/lecturer/{user}/{course}/test', 'Lecturer\LecturerOverviewController@xapitest')->middleware('lecturer');
 Route::get('/lecturer/{user}/{course}/note', 'Lecturer\LecturerOverviewController@noteCount')->middleware('lecturer');
 Route::get('/lecturer/{user}/{course}/assignmentcomplete', 'Lecturer\LecturerOverviewController@assignmentComp')->middleware('lecturer');
 Route::get('/lecturer/{user}/{course}/quizcomplete', 'Lecturer\LecturerOverviewController@quizComp')->middleware('lecturer');
-Route::get('/lecturer/{user}/{course}/risk', 'Lecturer\LecturerOverviewController@risk')->middleware('lecturer');
+Route::get('/lecturer/{user}/{course}/graph', 'Lecturer\StudentRiskController@graph')->middleware('lecturer');
+Route::get('/lecturer/{user}/{course}/link', 'Lecturer\StudentRiskController@getLinks')->middleware('lecturer');
 Route::post('/lecturer/{user}/{course}/courses/enroll', 'Lecturer\LecturerCoursesController@enrollStudents')->middleware('lecturer');
 Route::post('/lecturer/courses/{course}/update', 'Lecturer\LecturerCoursesController@updateCourse')->middleware('lecturer');
 Route::post('/lecturer/courses/{course}/addAssignment', 'Lecturer\LecturerCoursesController@addAssignment')->middleware('lecturer');

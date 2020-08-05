@@ -12,10 +12,10 @@ use App\Http\Controllers\Shared\sharedCourseXapi ;
 
 // use App\Stu_enrollment;
 
-class StudentRiskController extends Controller{
+class BestController extends Controller{
     public function index($user,$course,$student){
         $crs = DB::table('courses')->where('cid',$course)->get();
-        $risk=$this->risk($course);
+        $bestp=$this->best($course);
         $forum=$this->getForum($student,$course);
         $graph_arr=$this->graph($course,$student);
         $cr = DB::table('users')->where('utype','Student')->get();
@@ -28,19 +28,12 @@ class StudentRiskController extends Controller{
                     $r= $reg[0];
                     if($r==$student){
                         $reg_no[$r]['index']=$value->index;
-                        $reg_no[$r]['name']=$value->name;
+                        $reg_no[$r]['name']=$bestp[$r]['name'];
                         $reg_no[$r]['email']=$value->email;
                         $reg_no[$r]['year']=$value->year;
                         $reg_no[$r]['degree']=$value->degree;
-                        $reg_no[$r]['asum']=$risk[$r]['asssum'];
-                        $reg_no[$r]['aavg']=$risk[$r]['assavg'];
-                        $reg_no[$r]['acount']=$risk[$r]['asscount'];
-                        $reg_no[$r]['amax']=$risk[$r]['assmax'];
-                        $reg_no[$r]['qsum']=$risk[$r]['quizsum'];
-                        $reg_no[$r]['qavg']=$risk[$r]['quizavg'];
-                        $reg_no[$r]['qcount']=$risk[$r]['quizcount'];
-                        $reg_no[$r]['qmax']=$risk[$r]['quizmax'];
-                        $reg_no[$r]['rlevel']=$risk[$r]['risklevel'];
+                        $reg_no[$r]['aavg']=$bestp[$r]['assavg'];
+                        $reg_no[$r]['qavg']=$bestp[$r]['quizavg'];
                     }
                 }
             }  
@@ -201,7 +194,7 @@ class StudentRiskController extends Controller{
         $note=$this->noteCount($course,$student);
         $link=$this->getLinks($student);
 
-        return view('lecturer/student_risk',[
+        return view('lecturer/best_performance',[
             'crs'=>$course,
             'crs2'=> $course_name[0],
             'stu'=>$student,
@@ -213,7 +206,7 @@ class StudentRiskController extends Controller{
             'quizzes'=>$quizArray,
             'duration'=> $duration
             ])
-            ->with('risks', $risk)
+            ->with('best', $bestp)
             ->with('stuDetails', $reg_no)
             ->with('grade', json_encode($array))
             ->with('activity', json_encode($activity))
@@ -221,7 +214,6 @@ class StudentRiskController extends Controller{
             ->with('week_counts', json_encode($weeklyFig))
             ->with('assGraph', json_encode($graph_arr))
             ->with('notes', $note)
-            ->with('risks', $risk)
             ->with('forums', $forum)
             ->with('links', $link);
     }
@@ -303,105 +295,6 @@ class StudentRiskController extends Controller{
           
         // dd($distinct_arr,$distinctass_arr);
         return($distinctass_arr);
-    }
-
-    public function risk($course){
-        $data = new sharedXapi();
-        $state = $data->getData();
-        $stmt_count = count($state);
-        $stmt_arr = array();
-        $sum_arr = array();
-        $count=0;
-        $key = "https://w3id.org/learning-analytics/learning-management-system/short-id";
-        for($i=0;$i<$stmt_count;$i++){            
-            $logArray=explode("/",$state[$i]->verb->id);
-            if($logArray[sizeof($logArray)-1]==="scored" && $state[$i]->context->contextActivities->grouping[1]->definition->extensions->$key===$course){
-                $stmt_arr[$count]['user'] = $state[$i]->actor->account->name ;
-                $stmt_arr[$count]['assignment'] = $state[$i]->object->definition->name->en ;
-                $stmt_arr[$count]['amarks'] = $state[$i]->result->score->raw ;
-                $stmt_arr[$count]['amax'] = $state[$i]->result->score->max ;
-                $stmt_arr[$count]['qmax'] = 0 ;
-                $stmt_arr[$count]['qmarks'] = 0 ;
-                $count+=1;
-            }
-        }
-        for($i=0;$i<$stmt_count;$i++){
-            $logArray=explode("/",$state[$i]->object->id);
-            if($logArray[sizeof($logArray)-2]==="quiz"){  
-                $general=explode("/",$state[$i]->verb->id);
-                if($general[sizeof($general)-1]==="completed" && $state[$i]->context->contextActivities->grouping[1]->definition->extensions->$key===$course){
-                    $stmt_arr[$count]['user'] = $state[$i]->actor->account->name ; 
-                    $stmt_arr[$count]['quiz'] = $state[$i]->object->definition->name->en;
-                    $stmt_arr[$count]['qmarks'] = $state[$i]->result->score->raw ;
-                    $stmt_arr[$count]['qmax'] = $state[$i]->result->score->max ;
-                    $stmt_arr[$count]['amax'] = 0 ;
-                    $stmt_arr[$count]['amarks'] = 0 ;
-                    $count+=1;
-                }
-            }
-        }
-        $avg=0;
-        $sum=0;
-        $t=0;
-        $cr = DB::table('users')->where('utype','Student')->get();
-        $gr = DB::table('stu_enrollments')->where('cid',$course)->get();
-        $assignment = array();
-        $reg_no = array();
-        foreach ($cr as $key => $value) { 
-            foreach($gr as $stu){
-                if($stu->index==$value->index){
-                    $reg=explode("@",$value->email);
-                    $reg_no[$t]= $reg[0];
-                     $t++;
-                }
-            }
-             
-        }
-        foreach ($reg_no as $key => $value) { 
-            $assignment[$value]['asssum']=0; 
-            $assignment[$value]['assavg']=0;
-            $assignment[$value]['asscount']=0;  
-            $assignment[$value]['assmax']=0;
-            $assignment[$value]['quizsum']=0; 
-            $assignment[$value]['quizavg']=0;
-            $assignment[$value]['quizcount']=0;
-            $assignment[$value]['quizmax']=0;
-
-        }
-        foreach($assignment as $key => $value){
-            for($i=0;$i<$count;$i++){
-                if($key==$stmt_arr[$i]['user'] && $stmt_arr[$i]['qmarks']==0){
-                    $assignment[$key]['asscount']++;
-                    $assignment[$key]['assmax']+=$stmt_arr[$i]['amax'];
-                    $assignment[$key]['asssum']+= $stmt_arr[$i]['amarks'];
-                }
-                if($key==$stmt_arr[$i]['user'] && $stmt_arr[$i]['amarks']==0){
-                    $assignment[$key]['quizcount']++;
-                    $assignment[$key]['quizmax']+=$stmt_arr[$i]['qmax'];
-                    $assignment[$key]['quizsum']+= $stmt_arr[$i]['qmarks'];
-                }
-            }
-            if($assignment[$key]['assmax']!=0){
-                $assignment[$key]['assavg']=($assignment[$key]['asssum']/$assignment[$key]['assmax'])*100;
-            }
-            if($assignment[$key]['quizmax']!=0){
-                $assignment[$key]['quizavg']=($assignment[$key]['quizsum']/$assignment[$key]['quizmax'])*100;
-            }
-        }
-        foreach($assignment as $key => $value){
-                if($assignment[$key]['assavg']<=50 && $assignment[$key]['quizavg']<=50 ){
-                    $assignment[$key]['risklevel']= "High";
-                }
-                if($assignment[$key]['assavg']>50 && $assignment[$key]['quizavg']<=50 || $assignment[$key]['assavg']<=50 && $assignment[$key]['quizavg']>50){
-                    $assignment[$key]['risklevel']= "Low";
-                }
-                if($assignment[$key]['assavg']>50 && $assignment[$key]['quizavg']>50 ){
-                    $assignment[$key]['risklevel']= "No";
-                }
-            
-        }
-        return ($assignment);
-        // dd($cr,$count,$stmt_arr,$assignment);
     }
 
 
@@ -533,5 +426,114 @@ class StudentRiskController extends Controller{
         // dd($stmt_arr,$st_arr,$asmnts,$ass,$student,$course);
 
     }
+
+    public function best($course){
+        $data = new sharedXapi();
+        $state = $data->getData();
+        $stmt_count = count($state);
+        $stmt_arr = array();
+        $sum_arr = array();
+        $count=0;
+        for($i=0;$i<$stmt_count;$i++){            
+            $logArray=explode("/",$state[$i]->verb->id);
+            if($logArray[sizeof($logArray)-1]==="scored"){
+                $stmt_arr[$count]['user'] = $state[$i]->actor->account->name ;
+                $stmt_arr[$count]['name'] = $state[$i]->actor->name ;
+                $stmt_arr[$count]['assignment'] = $state[$i]->object->definition->name->en ;
+                $stmt_arr[$count]['amarks'] = $state[$i]->result->score->raw ;
+                $stmt_arr[$count]['amax'] = $state[$i]->result->score->max ;
+                $stmt_arr[$count]['qmax'] = 0 ;
+                $stmt_arr[$count]['qmarks'] = 0 ;
+                $count+=1;
+            }
+        }
+        for($i=0;$i<$stmt_count;$i++){
+            $logArray=explode("/",$state[$i]->object->id);
+            if($logArray[sizeof($logArray)-2]==="quiz"){  
+                $general=explode("/",$state[$i]->verb->id);
+                if($general[sizeof($general)-1]==="completed"){
+                    $stmt_arr[$count]['user'] = $state[$i]->actor->account->name ; 
+                    $stmt_arr[$count]['name'] = $state[$i]->actor->name ;
+                    $stmt_arr[$count]['quiz'] = $state[$i]->object->definition->name->en;
+                    $stmt_arr[$count]['qmarks'] = $state[$i]->result->score->raw ;
+                    $stmt_arr[$count]['qmax'] = $state[$i]->result->score->max ;
+                    $stmt_arr[$count]['amax'] = 0 ;
+                    $stmt_arr[$count]['amarks'] = 0 ;
+                    $count+=1;
+                }
+            }
+        }
+        $avg=0;
+        $sum=0;
+        $t=0;
+        $cr = DB::table('users')->where('utype','Student')->get();
+        //dont we have to change scs3209 to get the subject code automatically?????????????
+        $gr = DB::table('stu_enrollments')->where('cid',$course)->get();
+        $assignment = array();
+        $list = array();
+        $bestlist = array();
+        $reg_no = array();
+        foreach ($cr as $key => $value) { 
+            foreach($gr as $stu){
+                if($stu->index==$value->index){
+                    $reg=explode("@",$value->email);
+                    $reg_no[$t]= $reg[0];
+                     $t++;
+                }
+            }
+             
+        }
+        foreach ($reg_no as $key => $value) { 
+            $assignment[$value]['asssum']=0; 
+            $assignment[$value]['assavg']=0;
+            $assignment[$value]['asscount']=0;  
+            $assignment[$value]['assmax']=0;
+            $assignment[$value]['quizsum']=0; 
+            $assignment[$value]['quizavg']=0;
+            $assignment[$value]['quizcount']=0;
+            $assignment[$value]['quizmax']=0;
+
+        }
+        foreach($assignment as $key => $value){
+            for($i=0;$i<$count;$i++){
+                if($key==$stmt_arr[$i]['user'] && $stmt_arr[$i]['qmarks']==0){
+                    $assignment[$key]['asscount']++;
+                    $assignment[$key]['assmax']+= $stmt_arr[$i]['amax'];
+                    $assignment[$key]['asssum']+= $stmt_arr[$i]['amarks'];
+                    $assignment[$key]['name']= $stmt_arr[$i]['name'];
+                }
+                if($key==$stmt_arr[$i]['user'] && $stmt_arr[$i]['amarks']==0){
+                    $assignment[$key]['quizcount']++;
+                    $assignment[$key]['quizmax']+=$stmt_arr[$i]['qmax'];
+                    $assignment[$key]['quizsum']+= $stmt_arr[$i]['qmarks'];
+                    $assignment[$key]['name']= $stmt_arr[$i]['name'];
+                }
+            }
+            if($assignment[$key]['assmax']!=0){
+                $assignment[$key]['assavg']=($assignment[$key]['asssum']/$assignment[$key]['assmax'])*100;
+            }
+            if($assignment[$key]['quizmax']!=0){
+                $assignment[$key]['quizavg']=($assignment[$key]['quizsum']/$assignment[$key]['quizmax'])*100;
+            }
+        }
+        foreach($assignment as $key => $value){
+                if($assignment[$key]['assavg']>=60 && $assignment[$key]['quizavg']>=60 ){
+                    $list[$key]['assavg']= $assignment[$key]['assavg'];
+                    $list[$key]['quizavg']= $assignment[$key]['quizavg'];
+                    $list[$key]['name']= $assignment[$key]['name'];
+                }
+            
+        }
+        foreach ($list as $key => $row) {
+            $assavg[$key]  = $row['assavg'];
+            $quizavg[$key] = $row['quizavg'];
+        }
+        array_multisort($assavg, SORT_ASC, $quizavg, SORT_ASC, $list);
+        $bestlist = array_slice($list, 0, 20);
+
+        return ($bestlist);
+        // dd($cr,$count,$stmt_arr,$assignment,$list,$bestlist);
+    }
+
 
 }

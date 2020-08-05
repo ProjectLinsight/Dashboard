@@ -26,18 +26,13 @@
                             <div class="collapse pt-0 pl-3" id="{{$item->cid}}">
                                 <h6 class="text-white"> <a href="/lecturer/{{Auth::user()->id}}/{{$item->cid}}/courses">Update</a></h6>
                                 <h6 class="text-white"> <a  href="/lecturer/{{Auth::user()->id}}/{{$item->cid}}/overview">Analytics</a></h6>
-                                <!-- <h6 class="text-white"> <a  href="/lecturer/{{Auth::user()->id}}/{{$item->cid}}/overview">Assignment & Quiz</a></h6> -->
                             </div>
                         @endforeach
                     </div>
                     <hr class="content-center" style="width:75%;background : #555">
                 </li>
                 <li>
-                <a href="/profile/{{Auth::user()->id}}/{{Auth::user()->name}}"><i class="fas fa-user pr-2"></i>Profile</a>
-                    <hr class="content-center" style="width:75%;background : #555">
-                </li>
-                <li>
-                    <a href="/student_enrollment"><i class="fas fa-id-card pr-2"></i>Student Entrollment</a>
+                    <a href="/student_enrollment"><i class="fas fa-id-card pr-2"></i>Student Data</a>
                     <hr class="content-center" style="width:75%;background : #555">
                 </li>
 

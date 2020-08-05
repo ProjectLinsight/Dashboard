@@ -30,18 +30,13 @@
                         <div class="collapse pt-0 pl-3" id="{{$item->cid}}">
                             <h6 class="text-white"> <a href="/lecturer/{{Auth::user()->id}}/{{$item->cid}}/courses">Update</a></h6>
                             <h6 class="text-white"> <a  href="/lecturer/{{Auth::user()->id}}/{{$item->cid}}/overview">Analytics</a></h6>
-                            <!-- <h6 class="text-white"> <a  href="/lecturer/{{Auth::user()->id}}/{{$item->cid}}/overview">Assignment & Quiz</a></h6> -->
                         </div>
                         @endforeach
                     </div>
                     <hr class="content-center" style="width:75%;background : #555">
                 </li>
                 <li>
-                <a href="/profile/{{Auth::user()->id}}/{{Auth::user()->name}}"><i class="fas fa-user pr-2"></i>Profile</a>
-                    <hr class="content-center" style="width:75%;background : #555">
-                </li>
-                <li>
-                    <a href="/student_enrollment"><i class="fas fa-id-card pr-2"></i>Student Entrollment</a>
+                    <a href="/student_enrollment"><i class="fas fa-id-card pr-2"></i>Student Data</a>
                     <hr class="content-center" style="width:75%;background : #555">
                 </li>
 
@@ -60,10 +55,57 @@
             </nav>
 
             <div class="container-fluid">
+            
                 <hr><h1 class="text-center text-dark">Analytics</h1><hr>
                 <!-- <div class="row"> -->
-                <div class="pb-4">
-                            <div class="card shadow">
+                <div class="col-md-12 pb-4">
+                <div class="pb-3">
+                    <div class="card shadow-sm">
+                        <div class="card-body row">
+                            <div class="col-md-6 px-4 row">
+                                <!-- <div class="col-3">
+                                    <img class="rounded-circle" style="max-width: 100%;height:auto"src="https://mdbootstrap.com/img/Photos/Avatars/img (27).jpg" alt="Generic placeholder image">
+                                </div> -->
+                                <div class="col-9">
+                                    <div class="">
+                                        <h4 style="font-size:calc(1.3em + 0.4vw)"> <strong>{{$crs->cName}}</strong> </h4>
+                                        <h6 class="text-muted" style="font-size:calc(0.8em + 0.2vw)"> {{$crs->cid}}</h6>
+                                        </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 row d-flex justify-content-end pt-3">
+                                <div class="border-right border-left  px-4">
+                                    <div class="d-flex justify-content-end">
+                                        <h1><strong> {{$enrolled}} </strong></h1>
+                                    </div>
+                                    <div class="d-flex justify-content-end">
+                                        <h6 style="font-size:calc(0.8em + 0.2vw)"><strong> Enrolled students </strong></h6>
+                                    </div>
+                                </div>
+                                <!-- <div class="border-right  px-5">
+                                    <div class="d-flex justify-content-end">
+                                    @foreach (Auth::user()->lecAssigning as $item)
+                                        <a href="/lecturer/{{Auth::user()->id}}/{{$item->cid}}/courses">{{$item->cid}}</a> <br>
+                                    @endforeach
+                                        <h1></h1>
+                                    </div>
+                                    <div class="d-flex justify-content-end">
+                                        <h6 style="font-size:calc(0.8em + 0.2vw)"><strong> Courses </strong></h6>
+                                    </div>
+                                </div> -->
+                                <!-- <div class="border-right  px-5">
+                                    <div class="d-flex justify-content-end">
+                                        <h1><strong> {{Auth::user()->posts->count()}} </strong></h1>
+                                    </div>
+                                    <div class="d-flex justify-content-end">
+                                        <h6 style="font-size:calc(0.8em + 0.2vw)"><strong> Interactions </strong></h6>
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card shadow">
                                 <div class="card-header bg-primary">
                                     <h4 class="my-0 text-white text-center"> Lecture Note Completion </h4>
                                 </div>
@@ -102,7 +144,8 @@
                                 </div>
                             </div>
                         </div>
-                    <div class="col-md-12 py-3">
+                <div class="row">
+                    <div class="col-md-6 py-3">
                         <div class="pb-3">
                             <div class="card shadow">
                                 <div class="card-header bg-primary pb-1">
@@ -114,14 +157,14 @@
                                     <!-- chart comes here -->
 
                                         <div class="panel-body">
-                                            <canvas id="assignmentGraph" height="150" width="600"></canvas>
+                                            <canvas id="assignmentGraph" height="380" width="600"></canvas>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-12 py-3">
+                    <div class="col-md-6 py-3">
                         <div class="pb-3">
                             <div class="card shadow">
                                 <div class="card-header bg-primary pb-1">
@@ -133,15 +176,14 @@
                                     <!-- chart comes here -->
 
                                         <div class="panel-body">
-                                            <canvas id="quizGraph" height="150" width="600"></canvas>
+                                            <canvas id="quizGraph" height="380" width="600"></canvas>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                <!-- </div> -->
-                <br>
+                </div>
 
                 <div class="row">
                     <div class="col-md-7">
@@ -206,7 +248,7 @@
                                                 </div>
                                         </div>
                                         <div class="panel-body">
-                                            <canvas id="canvas" height="480" width="600"></canvas>
+                                            <canvas id="canvas" height="180" width="600"></canvas>
                                         </div>
                                     </div>
                                 </div>
@@ -341,7 +383,58 @@
                                             </div>
                                         </div>
                                         <div class="panel-body">
-                                            <canvas id="canvas" height="480" width="600"></canvas>
+                                            <canvas id="canvas" height="180" width="600"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="col-md-7">
+                        <div class="pb-3">
+                            <div class="card shadow">
+                                <div class="card-header bg-info pb-1">
+                                    <h4 class="text-white text-center"> Top Performances </h4>
+                                </div>
+                                <div class="card-body p-0">
+                                    <div class="panel panel-default">
+                                        <div class="tab-content">
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover mb-0 text-center" style="border-collapse: collapse;">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Registration Number</th>
+                                                                <!-- <th>Name</th>   -->
+                                                                <th>Name</th> 
+                                                                <!-- <th>Degree</th>  -->
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach($best as $key => $value)
+                                                            <tr data-href="/lecturer/{{Auth::user()->id}}/{{$course}}/{{$key}}/bestperformance">
+                                                                    <td>{{$key}}</td>
+                                                                    <td>{{$value['name']}}</td>
+                                                                
+                                                            </tr>
+                                                            @endforeach
+
+                                                        </tbody>
+                                                    </table>
+                                                    <script>
+                                                    document.addEventListener("DOMContentLoaded", ()=>{
+                                                        const rows = document.querySelectorAll("tr[data-href]");
+                                                        rows.forEach(row => {
+                                                            row.addEventListener("click", () =>{
+                                                                window.location.href = row.dataset.href;
+                                                            });
+                                                        });
+                                                    });
+                                                    </script>
+                                                </div>
+                                        </div>
+                                        <div class="panel-body">
+                                            <canvas id="canvas" height="180" width="600"></canvas>
                                         </div>
                                     </div>
                                 </div>
