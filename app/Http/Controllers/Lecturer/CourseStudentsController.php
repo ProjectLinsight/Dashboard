@@ -111,6 +111,7 @@ class CourseStudentsController extends Controller{
              
         }
         foreach ($reg_no as $key => $value) { 
+            $assignment[$value]['name']='-';
             $assignment[$value]['asssum']=0; 
             $assignment[$value]['assavg']=0;
             $assignment[$value]['asscount']=0;  
