@@ -438,6 +438,7 @@
                                                                 $flag = "Your assignment is Submitted and Graded";
                                                                 $color = "bg-success";
                                                                 $icon = "check-circle";
+                                                                $mark = $graded['marks'];
                                                             ?>
                                                         @endif
                                                     @endforeach
@@ -484,7 +485,7 @@
                                                                     </td>
                                                                     <td>
                                                                     @if($flag == "Your assignment is Submitted and Graded")
-                                                                            <h6> <strong>{{$graded['marks']}} out of {{$assignment->maxMarks}} </h6>
+                                                                            <h6> <strong>{{$mark}} out of {{$assignment->maxMarks}} </h6>
                                                                         @endif
                                                                     @if($flag == "You haven't submitted this assignment")    
                                                                         <h6> Not Completed</h6>
@@ -525,6 +526,7 @@
                                                                 $flag = "Your assignment is Submitted and Graded";
                                                                 $color = "bg-success";
                                                                 $icon = "check-circle";
+                                                                $mark = $completed['marks'];
                                                             ?>
                                                         @endif
                                                     @endforeach
@@ -542,7 +544,7 @@
                                                                     </td>
                                                                     <td>
                                                                     @if($flag == "Your assignment is Submitted and Graded")
-                                                                            <h6> <strong>{{$completed['marks']}} out of {{$quiz->maxMarks}} </h6>
+                                                                            <h6> <strong>{{$mark}} out of {{$quiz->maxMarks}} </h6>
                                                                         @endif
                                                                     @if($flag == "You haven't submitted this assignment")    
                                                                         <h6> Not Completed</h6>
