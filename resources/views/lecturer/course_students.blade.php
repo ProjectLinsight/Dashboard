@@ -87,26 +87,30 @@
                                                                     <td>{{$value['risklevel']}}</td>
                                                                     @if ($value['risklevel']=='High')
                                                                         <?php
-                                                                            $color = "bg-danger";
+                                                                            $color = "danger";
                                                                             $percentage = 100;
+                                                                            $icon = "times-circle";
                                                                         ?>
                                                                         @endif
                                                                     @if ($value['risklevel']=='Low')
                                                                         <?php
-                                                                            $color = "bg-warning";
+                                                                            $color = "warning";
                                                                             $percentage = 50;
+                                                                            $icon = "exclamation-circle";
                                                                         ?>
                                                                         @endif
                                                                     @if ($value['risklevel']=='No')
                                                                         <?php
-                                                                            $color = "bg-success";
+                                                                            $color = "success";
                                                                             $percentage = 100;
+                                                                            $icon = "check-circle";
                                                                         ?>
                                                                         @endif
                                                                     <td>
-                                                                    <div class="progress">
-                                                                        <div class="progress-bar progress-bar-striped {{$color}} progress-bar-animated" role="progressbar" aria-valuenow="{{$percentage}}" aria-valuemin="0" aria-valuemax="100" style="width: {{$percentage}}%"></div>
-                                                                    </div>
+                                                                    <!-- <div class="progress">
+                                                                        <div class="progress-bar progress-bar-striped bg-{{$color}} progress-bar-animated" role="progressbar" aria-valuenow="{{$percentage}}" aria-valuemin="0" aria-valuemax="100" style="width: {{$percentage}}%"></div>
+                                                                    </div> -->
+                                                                    <h3 class="pt-6 text-{{$color}}"> <i class="fa fa-{{$icon}}" aria-hidden="true"></i> </h1>
                                                                     </td>
 
                                                                
