@@ -569,7 +569,7 @@
                         <div class="pb-4 py-3">
                             <div class="card shadow">
                                 <div class="card-header bg-primary">
-                                    <h4 class="text-white my-0 py-0"> Contribution to the Course </h4>
+                                    <h4 class="text-white my-0 py-0"> Assignment Analysis </h4>
                                 </div>
                                 <div class="card-body">
                                     <div class="panel panel-default">
