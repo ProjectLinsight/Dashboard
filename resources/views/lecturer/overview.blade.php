@@ -187,6 +187,7 @@
 
                 <div class="row">
                     <div class="col-md-7">
+                    <!-- <div class="col-md-7"> -->
                         <div class="pb-3">
                             <div class="card shadow">
                                 <div class="card-header bg-info pb-1">
@@ -254,6 +255,57 @@
                                 </div>
                             </div>
                         </div>
+                    <!-- </div> -->
+                    <!-- <div class="col-md-7"> -->
+                        <div class="pb-3">
+                            <div class="card shadow">
+                                <div class="card-header bg-info pb-1">
+                                    <h4 class="text-white text-center"> Top Performances </h4>
+                                </div>
+                                <div class="card-body p-0">
+                                    <div class="panel panel-default">
+                                        <div class="tab-content">
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover mb-0 text-center" style="border-collapse: collapse;">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Registration Number</th>
+                                                                <!-- <th>Name</th>   -->
+                                                                <th>Name</th> 
+                                                                <!-- <th>Degree</th>  -->
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach($best as $key => $value)
+                                                            <tr data-href="/lecturer/{{Auth::user()->id}}/{{$course}}/{{$key}}/bestperformance">
+                                                                    <td>{{$key}}</td>
+                                                                    <td>{{$value['name']}}</td>
+                                                                
+                                                            </tr>
+                                                            @endforeach
+
+                                                        </tbody>
+                                                    </table>
+                                                    <script>
+                                                    document.addEventListener("DOMContentLoaded", ()=>{
+                                                        const rows = document.querySelectorAll("tr[data-href]");
+                                                        rows.forEach(row => {
+                                                            row.addEventListener("click", () =>{
+                                                                window.location.href = row.dataset.href;
+                                                            });
+                                                        });
+                                                    });
+                                                    </script>
+                                                </div>
+                                        </div>
+                                        <div class="panel-body">
+                                            <canvas id="canvas" height="180" width="600"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <!-- </div> -->
                     </div>
                     <div class="col-md-5">
                         <div class="pb-3">
@@ -391,56 +443,7 @@
                         </div>
                     </div>
                 
-                    <div class="col-md-7">
-                        <div class="pb-3">
-                            <div class="card shadow">
-                                <div class="card-header bg-info pb-1">
-                                    <h4 class="text-white text-center"> Top Performances </h4>
-                                </div>
-                                <div class="card-body p-0">
-                                    <div class="panel panel-default">
-                                        <div class="tab-content">
-                                                <div class="table-responsive">
-                                                    <table class="table table-hover mb-0 text-center" style="border-collapse: collapse;">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Registration Number</th>
-                                                                <!-- <th>Name</th>   -->
-                                                                <th>Name</th> 
-                                                                <!-- <th>Degree</th>  -->
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            @foreach($best as $key => $value)
-                                                            <tr data-href="/lecturer/{{Auth::user()->id}}/{{$course}}/{{$key}}/bestperformance">
-                                                                    <td>{{$key}}</td>
-                                                                    <td>{{$value['name']}}</td>
-                                                                
-                                                            </tr>
-                                                            @endforeach
-
-                                                        </tbody>
-                                                    </table>
-                                                    <script>
-                                                    document.addEventListener("DOMContentLoaded", ()=>{
-                                                        const rows = document.querySelectorAll("tr[data-href]");
-                                                        rows.forEach(row => {
-                                                            row.addEventListener("click", () =>{
-                                                                window.location.href = row.dataset.href;
-                                                            });
-                                                        });
-                                                    });
-                                                    </script>
-                                                </div>
-                                        </div>
-                                        <div class="panel-body">
-                                            <canvas id="canvas" height="180" width="600"></canvas>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
 
