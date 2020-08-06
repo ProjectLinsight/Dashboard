@@ -646,7 +646,9 @@ class LecturerOverviewController extends Controller{
             $assavg[$key]  = $row['assavg'];
             $quizavg[$key] = $row['quizavg'];
         }
-        array_multisort($assavg, SORT_ASC, $quizavg, SORT_ASC, $list);
+        if(count($list)!=0){
+            array_multisort($assavg, SORT_ASC, $quizavg, SORT_ASC, $list);
+        }
         $bestlist = array_slice($list, 0, 20);
 
         return ($bestlist);

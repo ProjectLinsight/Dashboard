@@ -100,7 +100,7 @@
                                                                     @if ($value['risklevel']=='No')
                                                                         <?php
                                                                             $color = "bg-success";
-                                                                            $percentage = 0;
+                                                                            $percentage = 100;
                                                                         ?>
                                                                         @endif
                                                                     <td>
