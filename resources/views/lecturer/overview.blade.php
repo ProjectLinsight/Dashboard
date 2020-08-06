@@ -36,7 +36,14 @@
                     <hr class="content-center" style="width:75%;background : #555">
                 </li>
                 <li>
-                    <a href="/student_enrollment"><i class="fas fa-id-card pr-2"></i>Student Data</a>
+                <a data-toggle="collapse" href="#coursesdata"><i class="fas fa-id-card pr-2"></i>Student Data</a>
+                    <div class="collapse pt-3 pl-5" id="coursesdata">
+                        @foreach (Auth::user()->lecAssigning as $item)
+                            <h6 class="text-white">
+                                <a href="/lecturer/{{Auth::user()->id}}/{{$item->cid}}/students">{{$item->cid}}</a>
+                            </h6>
+                        @endforeach
+                    </div>
                     <hr class="content-center" style="width:75%;background : #555">
                 </li>
 
