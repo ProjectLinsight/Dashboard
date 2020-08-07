@@ -26,7 +26,7 @@ class LecturerOverviewController extends Controller{
 
         $stu = DB::table('users')->where('utype','Student')->where('degree',$degree)->get();
         $enrolled = count(DB::table('stu_enrollments')->where('cid',$course)->get());
-        $stmt_arr=$this->assignmentComp($course);
+        list($stmt_arr,$list)=$this->assignmentComp($course);
         $q_arr=$this->quizComp($course);
         $stat=$this->assignmentStat($course);
         $risk=$this->risk($course);
@@ -40,6 +40,7 @@ class LecturerOverviewController extends Controller{
             ])
             ->with('assignment', json_encode($stmt_arr))
             ->with('quiz', json_encode($q_arr))
+            ->with('lists', $list)
             ->with('stats', $stat)
             ->with('risks', $risk)
             ->with('best', $bestp)
@@ -350,12 +351,18 @@ class LecturerOverviewController extends Controller{
             // }
             $cr = DB::table('assignments')->where('cid',$course)->get();
             $assignment = array();
+            $list = array();
+            $cnt=0;
             foreach ($cr as $key => $value) { 
                 $assignment[$value->title]=0; 
             }
             foreach($distinct_arr as $us){
                 foreach($assignment as $key => $value){
-                    if($key==$us["assignment"]){ $assignment[$key]++; } 
+                    if($key==$us["assignment"]){ 
+                        $assignment[$key]++;
+                        $list[$key][$cnt]=$us["user"];
+                        $cnt++;
+                     } 
                 }
             }
     
@@ -363,7 +370,7 @@ class LecturerOverviewController extends Controller{
         
        
         
-        return($assignment);
+        return array($assignment,$list);
         // dd($count,$stmt_arr,$crs,$sub_count,$distinct_arr,$distinctass_arr,$ass_count,$assignment,$cr);
     }
 
