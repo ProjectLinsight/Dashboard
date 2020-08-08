@@ -135,7 +135,14 @@
                     <hr class="content-center" style="width:75%;background : #555">
                 </li>
                 <li>
-                    <a href="/student_enrollment"><i class="fas fa-id-card pr-2"></i>Student Data</a>
+                <a data-toggle="collapse" href="#coursesdata"><i class="fas fa-id-card pr-2"></i>Student Data</a>
+                    <div class="collapse pt-3 pl-5" id="coursesdata">
+                        @foreach (Auth::user()->lecAssigning as $item)
+                            <h6 class="text-white">
+                                <a href="/lecturer/{{Auth::user()->id}}/{{$item->cid}}/students">{{$item->cid}}</a>
+                            </h6>
+                        @endforeach
+                    </div>
                     <hr class="content-center" style="width:75%;background : #555">
                 </li>
 
@@ -438,6 +445,7 @@
                                                                 $flag = "Your assignment is Submitted and Graded";
                                                                 $color = "bg-success";
                                                                 $icon = "check-circle";
+                                                                $mark = $graded['marks'];
                                                             ?>
                                                         @endif
                                                     @endforeach
@@ -484,7 +492,7 @@
                                                                     </td>
                                                                     <td>
                                                                     @if($flag == "Your assignment is Submitted and Graded")
-                                                                            <h6> <strong>{{$graded['marks']}} out of {{$assignment->maxMarks}} </h6>
+                                                                            <h6> <strong>{{$mark}} out of {{$assignment->maxMarks}} </h6>
                                                                         @endif
                                                                     @if($flag == "You haven't submitted this assignment")    
                                                                         <h6> Not Completed</h6>
@@ -525,6 +533,7 @@
                                                                 $flag = "Your assignment is Submitted and Graded";
                                                                 $color = "bg-success";
                                                                 $icon = "check-circle";
+                                                                $mark = $completed['marks'];
                                                             ?>
                                                         @endif
                                                     @endforeach
@@ -542,7 +551,7 @@
                                                                     </td>
                                                                     <td>
                                                                     @if($flag == "Your assignment is Submitted and Graded")
-                                                                            <h6> <strong>{{$completed['marks']}} out of {{$quiz->maxMarks}} </h6>
+                                                                            <h6> <strong>{{$mark}} out of {{$quiz->maxMarks}} </h6>
                                                                         @endif
                                                                     @if($flag == "You haven't submitted this assignment")    
                                                                         <h6> Not Completed</h6>
