@@ -5,72 +5,75 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container-fluid">
-        <div class="row justify-content-center"  style="padding-top:100px;">
-            <div class="col-md-4">
-                <div class="card" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
-                    <div class="card-header bg-primary text-center text-white pt-3">
-                        <h3>Get Started<h3>
-                    </div>
-                    <div class="card-body p-5">
-                        <div class="d-flex justify-content-center" style="margin-top: -70px;margin-bottom:-40px">
-                            <img src="images/logo/logo1.png" style="max-width: 250px;height:auto" alt="logo">
+    <div class="container-fluid" style="display: table;position: absolute;top: 0;left: 0;height: 100%;width: 100%;">
+        <div class=""  style="display: table-cell;vertical-align: middle;">
+            <div class="row justify-content-center">
+                <div class="col-md-3">
+                    <div class="card shadow">
+                        <div class="card-header bg-primary text-center text-white pb-0">
+                            <h4>Get Started<h4>
                         </div>
-                        <form method="POST" action="{{ route('login') }}">
-                            @csrf
-
-                            <div class="form-group row  d-flex justify-content-center">
-                                <div class="col-md-10">
-                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="Email Address">
-                                    @error('email')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
+                        <div class="card-body pt-5">
+                            <div class="d-flex justify-content-center" style="margin-top: -70px;margin-bottom:-40px">
+                                <img src="images/logo/logo1.png" style="max-width: 250px;height:auto" alt="logo">
                             </div>
+                            <form method="POST" action="{{ route('login') }}">
+                                @csrf
 
-                            <div class="form-group row  d-flex justify-content-center">
-                                <div class="col-md-10">
-                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="Password">
-
-                                    @error('password')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="form-group row  d-flex justify-content-center">
-                                <div class="col-md-10 d-flex justify-content-center ">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="remember">
-                                            {{ __('Remember Me') }}
-                                        </label>
+                                <div class="form-group row  d-flex justify-content-center">
+                                    <div class="col-md-10">
+                                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="Email Address">
+                                        @error('email')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group d-flex justify-content-center">
-                                <div class="col-md-6">
-                                    <button type="submit" class="btn btn-info btn-block text-white">Login</button>
+                                <div class="form-group row  d-flex justify-content-center">
+                                    <div class="col-md-10">
+                                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="Password">
+
+                                        @error('password')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group d-flex justify-content-center">
-                                <div class="col-md-10 d-flex justify-content-center">
-                                    @if (Route::has('password.request'))
-                                        <a class="btn btn-link" href="{{ route('password.request') }}">
-                                            {{ __('Forgot Your Password?') }}
-                                        </a>
-                                    @endif
+
+                                <div class="form-group row  d-flex justify-content-center">
+                                    <div class="col-md-10 d-flex justify-content-center ">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="remember">
+                                                {{ __('Remember Me') }}
+                                            </label>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </form>
+
+                                <div class="form-group d-flex justify-content-center">
+                                    <div class="col-md-6">
+                                        <button type="submit" class="btn btn-info btn-block text-white">Login</button>
+                                    </div>
+                                </div>
+                                <div class="form-group d-flex justify-content-center">
+                                    <div class="col-md-10 d-flex justify-content-center">
+                                        @if (Route::has('password.request'))
+                                            <a class="btn btn-link" href="{{ route('password.request') }}">
+                                                {{ __('Forgot Your Password?') }}
+                                            </a>
+                                        @endif
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
+
         </div>
-    </div>    
+    </div>
 @endsection

@@ -76,6 +76,10 @@
     }
 </script>
 @section('content')
+<div style="background-image:url('https://www.creativeclique.co.za/wp-content/uploads/2019/01/Ridge-Design-Website-Design-Background.jpg');position: fixed;background-repeat: no-repeat;background-position: center;background-attachment: fixed;background-size: cover;height:100vh">
+    <div style="background: rgba(255,255, 255, 0.75);width:100vw;height:100vh">
+    </div>
+</div>
 <div class="container-fluid pt-4" style="font-size: 12px">
     <div id="wrapper" class="wrapper-content" >
         <div id="sidebar-wrapper" class="bg-dark">
@@ -263,14 +267,14 @@
                                         <div id="assignment" class="tab-pane fade show active">
                                             @foreach($assignment as $subid => $value)
                                                 @foreach($value as $keyassign)
-                                                    <?php 
+                                                    <?php
                                                         if($keyassign->submitted == 'true'){
                                                             $icon = "check-circle";
                                                             $col = "success";
                                                         }
                                                         else{
                                                             $icon = "exclamation-circle";
-                                                            $col = "danger";    
+                                                            $col = "danger";
                                                         }
                                                     ?>
                                                     <div class="p-0">
@@ -296,14 +300,14 @@
                                         <div id="quiz" class="tab-pane fade show">
                                         @foreach($quiz as $subid => $value)
                                             @foreach($value as $keyquiz)
-                                                <?php 
+                                                <?php
                                                     if($keyquiz->submitted == 'true'){
                                                         $icon = "check-circle";
                                                         $col = "success";
                                                     }
                                                     else{
                                                         $icon = "exclamation-circle";
-                                                        $col = "danger";    
+                                                        $col = "danger";
                                                     }
                                                 ?>
                                                 <div class="p-0">
@@ -325,10 +329,10 @@
                                                 </div>
                                             @endforeach
                                         @endforeach
-                                        
+
                                     </div>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                         </div>

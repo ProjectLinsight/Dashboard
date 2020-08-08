@@ -41,9 +41,14 @@ class PersonalCoursesController extends Controller{
         }
 
         $currentStuData = new sharedStudentCourseData();
-        
+
         //Assignments Data
-       list($activity,$submittedAssignments,$gradedAssignments,$asMarks) = $currentStuData->getAssignmentData($user_stmts);
+        list($activity,$submittedAssignments,$gradedAssignments,$asMarks) = $currentStuData->getAssignmentData($user_stmts);
+        $asNames = array();
+        $i=1;
+        foreach($asMarks as $key => $val){
+            $asNames['AS'.$i++]= $key;
+        }
 
         //Quiz Data
         $quizArray = $currentStuData->getQuizData($user_stmts);
@@ -67,7 +72,8 @@ class PersonalCoursesController extends Controller{
             'weeklyAssignments' => $pendAssignments,
             'subAssignments' => $subAssignments,
             'quizzes'=>$quizArray,
-            'duration'=> $duration
+            'duration'=> $duration,
+            'assignmentNames'=> $asNames
             ])
             ->with('grade', json_encode($prevResults))
             ->with('activity', json_encode($activity))

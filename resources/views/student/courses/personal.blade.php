@@ -55,11 +55,12 @@
             var asMarks_counts = <?php echo $assignmentMarks; ?>;
             var asMarks_act = new Array();
             var asMarks_countx = new Array();
+            var arrayAsNames = new Array();
+            var i = 1 ;
             for (var key in asMarks_counts) {
-                asMarks_act.push(key);
+                asMarks_act.push("AS"+ i++);
                 asMarks_countx.push(asMarks_counts[key]);
             }
-            console.log(asMarks_act);
             var asMarksgraph = document.getElementById("asMarksGraph");
             var myChart = new Chart(asMarksgraph, {
                 type: 'line',
@@ -93,7 +94,6 @@
                 week_act.push("W"+key);
                 week_countx.push(week_counts[key]);
             }
-            console.log(week_countx);
             var weekgraph = document.getElementById("weekGraph");
             var myChart = new Chart(weekgraph, {
                 type: 'line',
@@ -113,6 +113,10 @@
 
 
 @section('content')
+<div style="background-image:url('https://www.creativeclique.co.za/wp-content/uploads/2019/01/Ridge-Design-Website-Design-Background.jpg');position: fixed;background-repeat: no-repeat;background-position: center;background-attachment: fixed;background-size: cover;height:100vh">
+    <div style="background: rgba(255,255, 255, 0.75);width:100vw;height:100vh">
+    </div>
+</div>
 <div class="container-fluid pt-5" style="font-size: 12px">
     <div id="wrapper" class="wrapper-content" >
         <div id="sidebar-wrapper" class="bg-dark">
@@ -233,12 +237,14 @@
                                 </div>
                             </div>
                         </div>
+                        <?php $collapseId = 0 ;?>
                         @foreach ($crs->assignment as $assignment)
                             <div class="pb-3">
                                 <?php
                                     $flag = "You haven't submitted this assignment";
                                     $color = "bg-danger";
-                                    $icon = "exclamation-circle"
+                                    $icon = "exclamation-circle";
+                                    $collapseId++ ;
                                 ?>
                                 @foreach ($submittedAssignments as $submitted)
                                     @if($assignment->title==$submitted['title'])
@@ -259,7 +265,7 @@
                                     @endif
                                 @endforeach
                                 <div class="card shadow">
-                                    <div class="card-header text-white {{$color}}  d-flex justify-content-between" style="cursor: pointer;" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                    <div class="card-header text-white {{$color}}  d-flex justify-content-between py-0 my-0" style="cursor: pointer;" data-toggle="collapse" href="#{{$color}}">
                                         <div class="row pt-1">
                                             <h1 class="px-4 pt-1">
                                                 <i class="fa fa-{{$icon}}" aria-hidden="true"></i>
@@ -268,10 +274,10 @@
                                                 {{$assignment->title}}
                                             </h4>
                                         </div>
-                                        <h4 class="pt-2"><i class="fa fa-angle-down" aria-hidden="true"></i></h4>
+                                        <h4 class="pt-3"><i class="fa fa-angle-down" aria-hidden="true"></i></h4>
                                     </div>
                                     <div class="card-body">
-                                        <div class="collapse" id="collapseExample">
+                                        <div class="collapse" id="{{$color}}">
                                             <div class="card card-body">
                                                 <h4> <strong> {{$flag}} </strong></h4>
                                                 <hr>
@@ -312,6 +318,11 @@
                                         <div class="panel-body">
                                             <canvas id="asMarksGraph" height="380px" width="600"></canvas>
                                         </div>
+                                    </div>
+                                    <div class="pl-5 pt-2">
+                                        @foreach($assignmentNames as $key => $asNames)
+                                            <h6>{{$key}} - {{$asNames}}</h6>
+                                        @endforeach
                                     </div>
                                 </div>
                             </div>

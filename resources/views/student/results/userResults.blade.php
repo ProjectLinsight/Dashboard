@@ -8,7 +8,10 @@
     var list = <?php echo $graph; ?>;
 </script>
 @section('content')
-
+<div style="background-image:url('https://www.creativeclique.co.za/wp-content/uploads/2019/01/Ridge-Design-Website-Design-Background.jpg');position: fixed;background-repeat: no-repeat;background-position: center;background-attachment: fixed;background-size: cover;height:100vh">
+    <div style="background: rgba(255,255, 255, 0.75);width:100vw;height:100vh">
+    </div>
+</div>
 <div class="container-fluid pt-5">
     <div id="wrapper" class="wrapper-content" >
         <div id="sidebar-wrapper" class="bg-dark">
@@ -74,7 +77,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card bg-primary shadow">
+                        <div class="card shadow" style="background: rgba(52, 58, 64, 0.90)">
                             <div class="p-3 row rounded">
                                 <div class="col-md-1 pb-2">
                                     <img class="rounded-circle border" style="max-width: 60px"src="https://mdbootstrap.com/img/Photos/Avatars/img (27).jpg" alt="Generic placeholder image">
@@ -93,28 +96,28 @@
                             </div>
                             <div class="row px-4 pb-2 d-flex justify-content-center"  style="font-family:Helvetica;">
                                 <div class="px-2 pb-2 col-md-3 ">
-                                    <div class="p-3 card border shadow text-white bg-primary rounded" style="background: #fefefe">
+                                    <div class="p-3 card border shadow bg-transparent text-white rounded">
                                         <h1 class="text-center" style="font-size: calc(2em + 1.5vw);"><strong>{{$data["GPA"]}}</strong></h1>
                                         <hr style="background: #fefefe">
                                         <p class="text-center text-white" style="font-size: calc(0.6em + 0.4vw);">Current GPA</p>
                                     </div>
                                 </div>
                                 <div class="px-2 pb-2 col-md-3 ">
-                                    <div class="p-3 card border shadow text-white bg-primary rounded" style="background: #fefefe">
+                                    <div class="p-3 card border shadow text-white bg-transparent rounded" style="background: #fefefe">
                                         <h1 class="text-center" style="font-size: calc(2em + 1.5vw)"><strong>#{{$data["rank"]}}</strong></h1>
                                         <hr style="background: #fefefe">
                                         <p class="text-center text-white" style="font-size: calc(0.6em + 0.4vw);">Current Rank</p>
                                     </div>
                                 </div>
                                 <div class="px-2 pb-2 col-md-3 ">
-                                    <div class="p-3 card border shadow text-white bg-primary rounded" style="background: #fefefe">
+                                    <div class="p-3 card border shadow text-white bg-transparent rounded" style="background: #fefefe">
                                         <h1 class="text-center" style="font-size: calc(2em + 1.5vw)"><strong>{{$data["credits"]}}</strong></h1>
                                         <hr style="background: #fefefe">
                                         <p class="text-center text-white" style="font-size: calc(0.6em + 0.4vw);">Total Credits</p>
                                     </div>
                                 </div>
                                 <div class="px-2 pb-2 col-md-3 ">
-                                <div class="p-3 card border shadow text-white bg-primary rounded">
+                                <div class="p-3 card border shadow text-white bg-transparent rounded">
                                         <h3 class="text-center" style="font-size: calc(2em + 1.5vw)"><strong>{{$data["sclass"]}}</strong></h3>
                                         <hr style="background: #fefefe">
                                 <p class="text-center text-white" style="font-size: calc(0.6em + 0.4vw);">{{$data["class"]}}</p>
