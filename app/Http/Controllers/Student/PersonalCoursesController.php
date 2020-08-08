@@ -50,6 +50,20 @@ class PersonalCoursesController extends Controller{
             $asNames['AS'.$i++]= $key;
         }
 
+        //calculating progress on assignments
+        $assignmentPosted = DB::table('assignments')->where('cid',$course)->get();
+        $totalMarks = 0 ;
+        $obtainedMarks = 0 ;
+        foreach ($assignmentPosted as $ap) {
+            foreach ($gradedAssignments as $ga) {
+                if($ap->title==$ga['title']){
+                    $totalMarks+=$ap->maxMarks;
+                    $obtainedMarks += ($ga['marks']/$ga['maxMarks'])*($ap->maxMarks) ;
+                }
+            }
+        }
+        //end of calculating progress on assignments
+
         //Quiz Data
         $quizArray = $currentStuData->getQuizData($user_stmts);
 
@@ -73,7 +87,9 @@ class PersonalCoursesController extends Controller{
             'subAssignments' => $subAssignments,
             'quizzes'=>$quizArray,
             'duration'=> $duration,
-            'assignmentNames'=> $asNames
+            'assignmentNames'=> $asNames,
+            'totalMarks' => $totalMarks,
+            'obtainedMarks' => $obtainedMarks,
             ])
             ->with('grade', json_encode($prevResults))
             ->with('activity', json_encode($activity))

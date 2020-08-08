@@ -309,6 +309,57 @@
                             </div>
                         </div>
                         <div class="pb-4">
+                            <?php
+                                $gap = $totalMarks-$obtainedMarks;
+                                $percentage = (($obtainedMarks/$totalMarks)*100);
+                                if($percentage>=70){
+                                    $note = 'Great! You are doing good!';
+                                    $icon = 'check-circle' ;
+                                    $color = 'success';
+                                }else if($percentage>=50){
+                                    $note = 'You are doing okay! Try more!';
+                                    $icon = 'check-circle' ;
+                                    $color = 'primary';
+                                }else{
+                                    $note = 'You really need to work hard!';
+                                    $icon = 'exclamation-circle' ;
+                                    $color = 'danger';
+                                }
+
+                            ?>
+                            <div class="card shadow">
+                                <div class="card-header bg-{{$color}}">
+                                    <h4 class="text-white my-0 py-0"> Grade Progress </h4>
+                                </div>
+
+                                <div class="card-body">
+                                    <div class="py-3">
+                                        <div class="progress" style="height:12px"  data-toggle="tooltip" data-placement="top"  title="{{$obtainedMarks}} marks out of {{$totalMarks}} obtained">
+                                            <div class="progress-bar bg-success" style="width: {{$obtainedMarks}}%;"> {{$obtainedMarks}}%  </div>
+                                            <div class="progress-bar bg-secondary" style="width: {{$gap}}%;"></div>
+                                        </div>
+                                        <div class="pt-3">
+                                            <div class="border rounded pt-1 text-center">
+                                                <div class="row">
+                                                    <div class="col-1">
+                                                    <h1 class="px-4 pt-2 text-{{$color}}">
+                                                            <i class="fa fa-{{$icon}}" aria-hidden="true"></i>
+                                                        </h1>
+                                                    </div>
+                                                    <div class="col-11 pt-1">
+                                                        <h4><strong> {{$note}}</strong></h4>
+                                                        <h6 class="text-muted" style="font-size: 12px"> A total of {{$obtainedMarks}} out of {{$totalMarks}} achieved so far </h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pb-4">
                             <div class="card shadow">
                                 <div class="card-header bg-primary">
                                     <h4 class="text-white my-0 py-0"> Assignment Marks </h4>
