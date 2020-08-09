@@ -88,7 +88,9 @@ class LecturerOverviewController extends Controller{
             $assignment[$value->title]['max']=0; 
             $assignment[$value->title]['min']=100; 
             $assignment[$value->title]['avg']=0;
-            $assignment[$value->title]['count']=0;  
+            $assignment[$value->title]['count']=0; 
+            $assignment[$value->title]['totmax']=0;  
+ 
         }
         for($i=0;$i<$stmt_count;$i++){            
             // $logArray=explode("/",$state[$i]->verb->id);
@@ -96,6 +98,7 @@ class LecturerOverviewController extends Controller{
                 $stmt_arr[$count]['user'] = $state[$i]['user']->account->name ;
                 $stmt_arr[$count]['assignment'] = $state[$i]['title'] ;
                 $stmt_arr[$count]['marks'] = $state[$i]['marks'] ;
+                $stmt_arr[$count]['maxMarks'] = $state[$i]['maxMarks'] ;
                 $sum+=$state[$i]['marks'];
                 if($stmt_arr[$count]['marks']>$max){
                     $max=$stmt_arr[$count]['marks'];
@@ -123,6 +126,7 @@ class LecturerOverviewController extends Controller{
                 if($key==$stmt_arr[$i]['assignment']){
                     $assignment[$key]['count']++;
                     $assignment[$key]['sum']+= $stmt_arr[$i]['marks'];
+                    $assignment[$key]['totmax']+= $stmt_arr[$i]['maxMarks'];
                     if($stmt_arr[$i]['marks']>$assignment[$key]['max']){
                         $assignment[$key]['max']=$stmt_arr[$i]['marks'];
                     }
@@ -132,7 +136,7 @@ class LecturerOverviewController extends Controller{
                 }
             }
             if($assignment[$key]['count']!=0){
-                $assignment[$key]['avg']=$assignment[$key]['sum']/$assignment[$key]['count'];
+                $assignment[$key]['avg']=$assignment[$key]['sum']/$assignment[$key]['totmax']*100;
             }
         }
         return($assignment);

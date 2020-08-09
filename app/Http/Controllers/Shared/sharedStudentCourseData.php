@@ -154,4 +154,142 @@ class sharedStudentCourseData extends Controller
         }
         return array($subAssignments,$pendAssignments);
     }
+
+    public function assignmentStat($course)
+    {
+        $data = new sharedCourseXapi();
+        $state = $data->getData($course);
+        $stmt_count = count($state);
+        $stmt_arr = array();
+        $max_arr = array();
+        $min_arr = array();
+        $min=100;
+        $max=0;
+        $avg=0;
+        $sum=0;
+        $count=0;
+        $cr = DB::table('assignments')->where('cid',$course)->get();
+        $assignment = array();
+        foreach ($cr as $key => $value) { 
+            $assignment[$value->title]['sum']=0; 
+            $assignment[$value->title]['max']=0; 
+            $assignment[$value->title]['min']=100; 
+            $assignment[$value->title]['avg']=0;
+            $assignment[$value->title]['count']=0; 
+            $assignment[$value->title]['totmax']=0;  
+ 
+        }
+        for($i=0;$i<$stmt_count;$i++){            
+            // $logArray=explode("/",$state[$i]->verb->id);
+            if($state[$i]['type']=='assignment'){
+                $stmt_arr[$count]['user'] = $state[$i]['user']->account->name ;
+                $stmt_arr[$count]['assignment'] = $state[$i]['title'] ;
+                $stmt_arr[$count]['marks'] = $state[$i]['marks'] ;
+                $stmt_arr[$count]['maxMarks'] = $state[$i]['maxMarks'] ;
+                $sum+=$state[$i]['marks'];
+                if($stmt_arr[$count]['marks']>$max){
+                    $max=$stmt_arr[$count]['marks'];
+                }
+                if($stmt_arr[$count]['marks']<$min){
+                    $min=$stmt_arr[$count]['marks'];
+                }
+                $count+=1;
+            }
+        }
+        for($i=0;$i<$count;$i++){
+            if($stmt_arr[$i]['marks']===$max){
+                $max_arr[$i]['user'] = $stmt_arr[$i]['user'] ;
+                $max_arr[$i]['marks'] = $stmt_arr[$i]['marks'] ;
+            }
+            if($stmt_arr[$i]['marks']===$min){
+                $min_arr[$i]['user'] = $stmt_arr[$i]['user'] ;
+                $min_arr[$i]['marks'] = $stmt_arr[$i]['marks'] ;
+            }
+        }
+
+        foreach($assignment as $key => $value){
+            for($i=0;$i<$count;$i++){
+                if($key==$stmt_arr[$i]['assignment']){
+                    $assignment[$key]['count']++;
+                    $assignment[$key]['sum']+= $stmt_arr[$i]['marks'];
+                    $assignment[$key]['totmax']+= $stmt_arr[$i]['maxMarks'];
+                    if($stmt_arr[$i]['marks']>$assignment[$key]['max']){
+                        $assignment[$key]['max']=$stmt_arr[$i]['marks'];
+                    }
+                    if($stmt_arr[$i]['marks']<$assignment[$key]['min']){
+                        $assignment[$key]['min']=$stmt_arr[$i]['marks'];
+                    }
+                }
+            }
+            if($assignment[$key]['count']!=0){
+                $assignment[$key]['avg']=$assignment[$key]['sum']/$assignment[$key]['totmax']*100;
+            }
+        }
+        return($assignment);
+    }
+
+    public function noteCount($course,$student)
+    {
+        $data = new sharedCourseXapi();
+        $state = $data->getData($course);
+        $stmt_count = count($state);
+        $count=0;
+        $lectNotes = array();
+        $distinct_arr = array();
+        $distinctass_arr = array();
+        $stmt_arr = array();
+        $gr = DB::table('stu_enrollments')->where('cid',$course)->get();
+        $enrollCount = count($gr);
+        for($i=0;$i<$stmt_count;$i++){            
+            if($state[$i]['verb']==="viewed" && $state[$i]['object']==="resource" && $state[$i]['user']->name!="Admin User"){
+                $stmt_arr[$count]['user'] = $state[$i]['user']->account->name ;
+                $stmt_arr[$count]['note'] = $state[$i]['title'] ;
+                $count+=1;
+            }
+        }
+          $sub_count = 1; 
+          $s = 0;
+          if($count!=0){
+            $distinct_arr[$s]['user'] = $stmt_arr[$s]['user'] ;
+            $distinct_arr[$s]['note'] = $stmt_arr[$s]['note'] ;
+            for ( $i = 1; $i < $count; $i++) 
+            { 
+                for ($j = 0; $j < $i; $j++) {
+                    if ($stmt_arr[$i]['user'] == $stmt_arr[$j]['user'] && $stmt_arr[$i]['note'] == $stmt_arr[$j]['note'] ) 
+                       break; 
+                }
+                if ($i == $j){ 
+                    $sub_count++;
+                    $s++;
+                    $distinct_arr[$s]['user'] = $stmt_arr[$i]['user'] ;
+                    $distinct_arr[$s]['note'] = $stmt_arr[$i]['note'] ; 
+                }
+            }
+            //get distinct completed assignment list
+            $ass_count = 1; 
+            $s = 0; 
+            $distinctass_arr[$stmt_arr[$s]['note']]['count'] = 0 ; 
+            for ( $i = 1; $i < $count; $i++) 
+            { 
+                for ($j = 0; $j < $i; $j++) {
+                    if ($stmt_arr[$i]['note'] == $stmt_arr[$j]['note']) 
+                       break; 
+                }
+                if ($i == $j){ 
+                    $ass_count++;
+                    $s++;
+                  //   $distinctass_arr[$stmt_arr[$i]['note']]['enrolled'] = $enrollCount ; 
+                    $distinctass_arr[$stmt_arr[$i]['note']]['count'] = 0 ; 
+                  //   $distinctass_arr[$s]['note'] = $stmt_arr[$i]['note'] ; 
+                }
+            }
+            foreach($distinct_arr as $us){
+              foreach($distinctass_arr as $key => $value){
+                  if($key==$us["note"] && $us['user']==$student){ $distinctass_arr[$key]['count']++; } 
+              }
+           }
+          }
+          
+        return($distinctass_arr);
+    }
 }
