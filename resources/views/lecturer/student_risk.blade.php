@@ -304,10 +304,10 @@
                     
                 <div class="row">
                     <div class="col-md-7">
-                        <div class="pb-3 py-3">
+                    <div class="pb-3 py-3">
                             <div class="card shadow">
                                 <div class="card-header bg-info pb-1">
-                                    <h4 class="text-white text-center"> Outside VLE Actions </h4>
+                                    <h4 class="text-white text-center"> Forum Participation </h4>
                                 </div>
                                 <div class="card-body p-0">
                                     <div class="panel panel-default">
@@ -316,15 +316,19 @@
                                                     <table class="table table-hover mb-0 text-center" style="border-collapse: collapse;">
                                                         <thead>
                                                             <tr>
-                                                                <th>Title</th>
-                                                                <th>URL</th> 
+                                                                <th>Forum Topic</th>
+                                                                <th>Thread</th> 
+                                                                <th>Action</th> 
+                                                                <th>Response</th> 
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @foreach($links as $key => $value)
+                                                            @foreach($forums as $key => $value)
                                                             <tr >
-                                                                    <td>{{$value['title']}}</td>
-                                                                    <td>{{$value['url']}}</td>
+                                                                    <td>{{$value['forumTopic']}}</td>
+                                                                    <td>{{$value['thread']}}</td>
+                                                                    <td>{{$value['action']}}</td>
+                                                                    <td>{{$value['response']}}</td>
                                                             </tr>
                                                             @endforeach
 
@@ -352,7 +356,7 @@
                         <div class="pb-3 py-3">
                             <div class="card shadow">
                                 <div class="card-header bg-info pb-1">
-                                    <h4 class="text-white text-center"> Forum Participation </h4>
+                                    <h4 class="text-white text-center"> Outside VLE Actions </h4>
                                 </div>
                                 <div class="card-body p-0">
                                     <div class="panel panel-default">
@@ -361,19 +365,15 @@
                                                     <table class="table table-hover mb-0 text-center" style="border-collapse: collapse;">
                                                         <thead>
                                                             <tr>
-                                                                <th>Forum Topic</th>
-                                                                <th>Thread</th> 
-                                                                <th>Action</th> 
-                                                                <th>Response</th> 
+                                                                <th>Title</th>
+                                                                <th>URL</th> 
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @foreach($forums as $key => $value)
+                                                            @foreach($links as $key => $value)
                                                             <tr >
-                                                                    <td>{{$value['forumTopic']}}</td>
-                                                                    <td>{{$value['thread']}}</td>
-                                                                    <td>{{$value['action']}}</td>
-                                                                    <td>{{$value['response']}}</td>
+                                                                    <td>{{$value['title']}}</td>
+                                                                    <td>{{$value['url']}}</td>
                                                             </tr>
                                                             @endforeach
 
