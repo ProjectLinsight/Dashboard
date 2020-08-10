@@ -292,4 +292,98 @@ class sharedStudentCourseData extends Controller
           
         return($distinctass_arr);
     }
+
+    public function risk($course){
+        $data = new sharedCourseXapi();
+        $state = $data->getData($course);
+        $stmt_count = count($state);
+        $stmt_arr = array();
+        $sum_arr = array();
+        $count=0;
+        for($i=0;$i<$stmt_count;$i++){            
+            if($state[$i]['type']=='assignment'){
+                $stmt_arr[$count]['user'] = $state[$i]['user']->account->name ;
+                $stmt_arr[$count]['assignment'] = $state[$i]['title'] ;
+                $stmt_arr[$count]['amarks'] = $state[$i]['marks'] ;
+                $stmt_arr[$count]['amax'] = $state[$i]['maxMarks'] ;
+                $stmt_arr[$count]['qmax'] = 0 ;
+                $stmt_arr[$count]['qmarks'] = 0 ;
+                $count+=1;
+            }
+        }
+        for($i=0;$i<$stmt_count;$i++){
+            if($state[$i]['type']=='quiz'){  
+                    $stmt_arr[$count]['user'] = $state[$i]['user']->account->name ; 
+                    $stmt_arr[$count]['quiz'] = $state[$i]['title'];
+                    $stmt_arr[$count]['qmarks'] = $state[$i]['marks'] ;
+                    $stmt_arr[$count]['qmax'] = $state[$i]['maxmarks'] ;
+                    $stmt_arr[$count]['amax'] = 0 ;
+                    $stmt_arr[$count]['amarks'] = 0 ;
+                    $count+=1;
+                
+            }
+        }
+        $avg=0;
+        $sum=0;
+        $t=0;
+        $cr = DB::table('users')->where('utype','Student')->get();
+        $gr = DB::table('stu_enrollments')->where('cid',$course)->get();
+        $assignment = array();
+        $reg_no = array();
+        foreach ($cr as $key => $value) { 
+            foreach($gr as $stu){
+                if($stu->index==$value->index){
+                    $reg=explode("@",$value->email);
+                    $reg_no[$t]= $reg[0];
+                     $t++;
+                }
+            }
+             
+        }
+        foreach ($reg_no as $key => $value) { 
+            $assignment[$value]['asssum']=0; 
+            $assignment[$value]['assavg']=0;
+            $assignment[$value]['asscount']=0;  
+            $assignment[$value]['assmax']=0;
+            $assignment[$value]['quizsum']=0; 
+            $assignment[$value]['quizavg']=0;
+            $assignment[$value]['quizcount']=0;
+            $assignment[$value]['quizmax']=0;
+
+        }
+        foreach($assignment as $key => $value){
+            for($i=0;$i<$count;$i++){
+                if($key==$stmt_arr[$i]['user'] && $stmt_arr[$i]['qmarks']==0){
+                    $assignment[$key]['asscount']++;
+                    $assignment[$key]['assmax']+= $stmt_arr[$i]['amax'];
+                    $assignment[$key]['asssum']+= $stmt_arr[$i]['amarks'];
+                }
+                if($key==$stmt_arr[$i]['user'] && $stmt_arr[$i]['amarks']==0){
+                    $assignment[$key]['quizcount']++;
+                    $assignment[$key]['quizmax']+=$stmt_arr[$i]['qmax'];
+                    $assignment[$key]['quizsum']+= $stmt_arr[$i]['qmarks'];
+                }
+            }
+            if($assignment[$key]['assmax']!=0){
+                $assignment[$key]['assavg']=($assignment[$key]['asssum']/$assignment[$key]['assmax'])*100;
+            }
+            if($assignment[$key]['quizmax']!=0){
+                $assignment[$key]['quizavg']=($assignment[$key]['quizsum']/$assignment[$key]['quizmax'])*100;
+            }
+        }
+        foreach($assignment as $key => $value){
+                if($assignment[$key]['assavg']<=50 && $assignment[$key]['quizavg']<=50 ){
+                    $assignment[$key]['risklevel']= "High";
+                }
+                if($assignment[$key]['assavg']>50 && $assignment[$key]['quizavg']<=50 || $assignment[$key]['assavg']<=50 && $assignment[$key]['quizavg']>50){
+                    $assignment[$key]['risklevel']= "Low";
+                }
+                if($assignment[$key]['assavg']>50 && $assignment[$key]['quizavg']>50 ){
+                    $assignment[$key]['risklevel']= "No";
+                }
+            
+        }
+        return ($assignment);
+    }
+
 }
