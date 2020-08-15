@@ -298,6 +298,60 @@ class BestController extends Controller{
     }
 
 
+    public function getForum($student,$course){
+        $data = new sharedXapi();
+        $state = $data->getData();
+        $stmt_count = count($state);
+        $create_arr = array();
+        $reply_arr=array();
+        $arr=array();
+        $countc=0;
+        $countr=0;
+        $key = "https://w3id.org/learning-analytics/learning-management-system/short-id";
+        for($i=0;$i<$stmt_count;$i++){            
+            $logArray=explode("/",$state[$i]->verb->id);
+            if($logArray[sizeof($logArray)-1]==="create" && $state[$i]->context->contextActivities->grouping[1]->definition->extensions->$key===$course){
+                $create_arr[$countc]['userName'] = $state[$i]->actor->name ;
+                $create_arr[$countc]['user'] = $state[$i]->actor->account->name;
+                $create_arr[$countc]['forumTopic'] = $state[$i]->context->contextActivities->grouping[2]->definition->name->en;
+                $create_arr[$countc]['thread'] = $state[$i]->object->definition->name->en ;
+                $create_arr[$countc]['timestamp'] = $state[$i]->stored ;
+                $create_arr[$countc]['action'] = "Created" ;
+                $create_arr[$countc]['response'] = "-" ;
+                $countc+=1;
+            }
+        }
+        for($i=0;$i<$stmt_count;$i++){            
+            $logArray=explode("/",$state[$i]->verb->id);
+            if($logArray[sizeof($logArray)-1]==="replied" && $state[$i]->context->contextActivities->grouping[1]->definition->extensions->$key===$course){
+                $reply_arr[$countr]['userName'] = $state[$i]->actor->name ;
+                $reply_arr[$countr]['user'] = $state[$i]->actor->account->name;
+                $reply_arr[$countr]['forumTopic'] = $state[$i]->context->contextActivities->grouping[2]->definition->name->en;
+                $reply_arr[$countr]['thread'] = $state[$i]->object->definition->name->en ;
+                $reply_arr[$countr]['timestamp'] = $state[$i]->stored ;
+                $reply_arr[$countr]['response'] = $state[$i]->result->response ;
+                $reply_arr[$countr]['action'] = "Replied" ;
+                $countr+=1;
+            }
+        }
+        $c=0;
+        foreach($create_arr as $key => $value){
+            if($create_arr[$key]['user']==$student){
+                $arr[$c]=$create_arr[$key];
+                $c++;
+            }
+        }
+        foreach($reply_arr as $key => $value){
+            if($reply_arr[$key]['user']==$student){
+                $arr[$c]=$reply_arr[$key];
+                $c++;
+            }
+        }
+        
+        // dd($create_arr,$reply_arr,$student,$arr);
+        return($arr);
+    }
+
     public function getLinks($student)
     {
         $data = new sharedXapi();
