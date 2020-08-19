@@ -30,6 +30,18 @@ class PersonalCoursesController extends Controller{
         $duration = 15 ;
         // $duration = intval(date("oW",strtotime($today))) - intval(date("oW", strtotime($sDate))) + 1;
 
+        //Week data
+        $newDate = $sDate ;
+        $weeks = Array();
+        $datePos = 0 ;
+        for($i = 0; $i<15 ; $i++){
+            if($newDate<=$today){
+                $datePos =  $i;
+            }
+            $newDate= date("Y-m-d", strtotime("$newDate +1 week"));
+            $weeks[$i]= $newDate;
+        }
+
         //Importing xApi Data
         $data = new sharedCourseXapi();
         $cur_course_stmts = $data->getData($course);
@@ -90,6 +102,8 @@ class PersonalCoursesController extends Controller{
             'assignmentNames'=> $asNames,
             'totalMarks' => $totalMarks,
             'obtainedMarks' => $obtainedMarks,
+            'weeks' => $weeks,
+            'datePosition'=>$datePos
             ])
             ->with('grade', json_encode($prevResults))
             ->with('activity', json_encode($activity))

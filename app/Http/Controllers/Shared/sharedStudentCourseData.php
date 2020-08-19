@@ -6,8 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class sharedStudentCourseData extends Controller
-{
+class sharedStudentCourseData extends Controller{
     public function getAssignmentData($user_statements){
         $activity[] = ['activity', 'Number'];
         $submittedAssignments = array();
@@ -155,8 +154,7 @@ class sharedStudentCourseData extends Controller
         return array($subAssignments,$pendAssignments);
     }
 
-    public function assignmentStat($course)
-    {
+    public function assignmentStat($course){
         $data = new sharedCourseXapi();
         $state = $data->getData($course);
         $stmt_count = count($state);
@@ -170,16 +168,16 @@ class sharedStudentCourseData extends Controller
         $count=0;
         $cr = DB::table('assignments')->where('cid',$course)->get();
         $assignment = array();
-        foreach ($cr as $key => $value) { 
-            $assignment[$value->title]['sum']=0; 
-            $assignment[$value->title]['max']=0; 
-            $assignment[$value->title]['min']=100; 
+        foreach ($cr as $key => $value) {
+            $assignment[$value->title]['sum']=0;
+            $assignment[$value->title]['max']=0;
+            $assignment[$value->title]['min']=100;
             $assignment[$value->title]['avg']=0;
-            $assignment[$value->title]['count']=0; 
-            $assignment[$value->title]['totmax']=0;  
- 
+            $assignment[$value->title]['count']=0;
+            $assignment[$value->title]['totmax']=0;
+
         }
-        for($i=0;$i<$stmt_count;$i++){            
+        for($i=0;$i<$stmt_count;$i++){
             // $logArray=explode("/",$state[$i]->verb->id);
             if($state[$i]['type']=='assignment'){
                 $stmt_arr[$count]['user'] = $state[$i]['user']->account->name ;
@@ -228,8 +226,7 @@ class sharedStudentCourseData extends Controller
         return($assignment);
     }
 
-    public function noteCount($course,$student)
-    {
+    public function noteCount($course,$student){
         $data = new sharedCourseXapi();
         $state = $data->getData($course);
         $stmt_count = count($state);
@@ -240,56 +237,56 @@ class sharedStudentCourseData extends Controller
         $stmt_arr = array();
         $gr = DB::table('stu_enrollments')->where('cid',$course)->get();
         $enrollCount = count($gr);
-        for($i=0;$i<$stmt_count;$i++){            
+        for($i=0;$i<$stmt_count;$i++){
             if($state[$i]['verb']==="viewed" && $state[$i]['object']==="resource" && $state[$i]['user']->name!="Admin User"){
                 $stmt_arr[$count]['user'] = $state[$i]['user']->account->name ;
                 $stmt_arr[$count]['note'] = $state[$i]['title'] ;
                 $count+=1;
             }
         }
-          $sub_count = 1; 
+          $sub_count = 1;
           $s = 0;
           if($count!=0){
             $distinct_arr[$s]['user'] = $stmt_arr[$s]['user'] ;
             $distinct_arr[$s]['note'] = $stmt_arr[$s]['note'] ;
-            for ( $i = 1; $i < $count; $i++) 
-            { 
+            for ( $i = 1; $i < $count; $i++)
+            {
                 for ($j = 0; $j < $i; $j++) {
-                    if ($stmt_arr[$i]['user'] == $stmt_arr[$j]['user'] && $stmt_arr[$i]['note'] == $stmt_arr[$j]['note'] ) 
-                       break; 
+                    if ($stmt_arr[$i]['user'] == $stmt_arr[$j]['user'] && $stmt_arr[$i]['note'] == $stmt_arr[$j]['note'] )
+                       break;
                 }
-                if ($i == $j){ 
+                if ($i == $j){
                     $sub_count++;
                     $s++;
                     $distinct_arr[$s]['user'] = $stmt_arr[$i]['user'] ;
-                    $distinct_arr[$s]['note'] = $stmt_arr[$i]['note'] ; 
+                    $distinct_arr[$s]['note'] = $stmt_arr[$i]['note'] ;
                 }
             }
             //get distinct completed assignment list
-            $ass_count = 1; 
-            $s = 0; 
-            $distinctass_arr[$stmt_arr[$s]['note']]['count'] = 0 ; 
-            for ( $i = 1; $i < $count; $i++) 
-            { 
+            $ass_count = 1;
+            $s = 0;
+            $distinctass_arr[$stmt_arr[$s]['note']]['count'] = 0 ;
+            for ( $i = 1; $i < $count; $i++)
+            {
                 for ($j = 0; $j < $i; $j++) {
-                    if ($stmt_arr[$i]['note'] == $stmt_arr[$j]['note']) 
-                       break; 
+                    if ($stmt_arr[$i]['note'] == $stmt_arr[$j]['note'])
+                       break;
                 }
-                if ($i == $j){ 
+                if ($i == $j){
                     $ass_count++;
                     $s++;
-                  //   $distinctass_arr[$stmt_arr[$i]['note']]['enrolled'] = $enrollCount ; 
-                    $distinctass_arr[$stmt_arr[$i]['note']]['count'] = 0 ; 
-                  //   $distinctass_arr[$s]['note'] = $stmt_arr[$i]['note'] ; 
+                  //   $distinctass_arr[$stmt_arr[$i]['note']]['enrolled'] = $enrollCount ;
+                    $distinctass_arr[$stmt_arr[$i]['note']]['count'] = 0 ;
+                  //   $distinctass_arr[$s]['note'] = $stmt_arr[$i]['note'] ;
                 }
             }
             foreach($distinct_arr as $us){
               foreach($distinctass_arr as $key => $value){
-                  if($key==$us["note"] && $us['user']==$student){ $distinctass_arr[$key]['count']++; } 
+                  if($key==$us["note"] && $us['user']==$student){ $distinctass_arr[$key]['count']++; }
               }
            }
           }
-          
+
         return($distinctass_arr);
     }
 
@@ -300,7 +297,7 @@ class sharedStudentCourseData extends Controller
         $stmt_arr = array();
         $sum_arr = array();
         $count=0;
-        for($i=0;$i<$stmt_count;$i++){            
+        for($i=0;$i<$stmt_count;$i++){
             if($state[$i]['type']=='assignment'){
                 $stmt_arr[$count]['user'] = $state[$i]['user']->account->name ;
                 $stmt_arr[$count]['assignment'] = $state[$i]['title'] ;
@@ -312,15 +309,15 @@ class sharedStudentCourseData extends Controller
             }
         }
         for($i=0;$i<$stmt_count;$i++){
-            if($state[$i]['type']=='quiz'){  
-                    $stmt_arr[$count]['user'] = $state[$i]['user']->account->name ; 
+            if($state[$i]['type']=='quiz'){
+                    $stmt_arr[$count]['user'] = $state[$i]['user']->account->name ;
                     $stmt_arr[$count]['quiz'] = $state[$i]['title'];
                     $stmt_arr[$count]['qmarks'] = $state[$i]['marks'] ;
                     $stmt_arr[$count]['qmax'] = $state[$i]['maxmarks'] ;
                     $stmt_arr[$count]['amax'] = 0 ;
                     $stmt_arr[$count]['amarks'] = 0 ;
                     $count+=1;
-                
+
             }
         }
         $avg=0;
@@ -330,7 +327,7 @@ class sharedStudentCourseData extends Controller
         $gr = DB::table('stu_enrollments')->where('cid',$course)->get();
         $assignment = array();
         $reg_no = array();
-        foreach ($cr as $key => $value) { 
+        foreach ($cr as $key => $value) {
             foreach($gr as $stu){
                 if($stu->index==$value->index){
                     $reg=explode("@",$value->email);
@@ -338,18 +335,17 @@ class sharedStudentCourseData extends Controller
                      $t++;
                 }
             }
-             
+
         }
-        foreach ($reg_no as $key => $value) { 
-            $assignment[$value]['asssum']=0; 
+        foreach ($reg_no as $key => $value) {
+            $assignment[$value]['asssum']=0;
             $assignment[$value]['assavg']=0;
-            $assignment[$value]['asscount']=0;  
+            $assignment[$value]['asscount']=0;
             $assignment[$value]['assmax']=0;
-            $assignment[$value]['quizsum']=0; 
+            $assignment[$value]['quizsum']=0;
             $assignment[$value]['quizavg']=0;
             $assignment[$value]['quizcount']=0;
             $assignment[$value]['quizmax']=0;
-
         }
         foreach($assignment as $key => $value){
             for($i=0;$i<$count;$i++){
@@ -381,7 +377,6 @@ class sharedStudentCourseData extends Controller
                 if($assignment[$key]['assavg']>50 && $assignment[$key]['quizavg']>50 ){
                     $assignment[$key]['risklevel']= "No";
                 }
-            
         }
         return ($assignment);
     }

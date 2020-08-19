@@ -178,10 +178,13 @@
                             <h4 class="my-0 text-white"> Your Progress </h4>
                         </div>
                         <div class="card-body py-5">
-                            <div class="progress" style="height:4px">
+                            <div class="progress" style="height:12px">
                                 <?php
                                     $count = 15 ;
                                     $temp = 0 ;
+                                    if($datePosition==0){$percentage=0;}
+                                    else{$percentage = ($datePosition/15)*100;}
+
                                     for($i=1;$i<=$count;$i++){
                                         $temp = $temp + 100/($count + 1);
                                         $padding = strval($temp)."%" ;
@@ -189,19 +192,20 @@
                                             <div class="py-3">
                                                 <div class="milestone2" style="left:{{$padding}};cursor: pointer;" >
                                                     <h5 class="text-success" data-toggle="modal" data-target="#assignmentModel">
-                                                        <i class="fa fa-address-book-o" aria-hidden="true"  data-toggle="tooltip" data-placement="top"  title="{{count($weeklyAssignments[$i])}} Assignment/s"></i>
+                                                        <i class="fa fa-address-book-o" aria-hidden="true" data-toggle="tooltip" data-placement="top"  title="{{count($weeklyAssignments[$i])}} Assignment/s"></i>
                                                     </h5>
                                                 </div>
                                             </div>
                                         <?php } ?>
                                             <div class="py-3">
                                                 <div class="milestone3 d-flex justify-content-center" style="left:{{$padding}};cursor: pointer;" data-toggle="tooltip" data-placement="top"  title="Week {{$i+1}} of 15 " >
-                                                    <p class="text-primary"> <strong> W{{$i}} </strong> </p>
+                                                <p class="text-primary" style="margin-top:10px;margin-left:7px"  data-toggle="tooltip" data-placement="bottom"  title="{{$weeks[$i-1]}}" > <strong> W{{$i}} </strong> </p>
                                                 </div>
                                             </div>
-                                        <div class="milestone bg-primary" style="left:{{$padding}};cursor: pointer;" data-toggle="tooltip" data-placement="top"  title="Week {{$i+1}} of 15 " > </div>
+                                            <?php if(($i)<=$datePosition){$color = "#0275d8";}else{ $color = "#e9ecef";} ?>
+                                        <div class="milestone" style="background:{{$color}} ;left:{{$padding}};cursor: pointer;" data-toggle="tooltip" data-placement="top"  title="Week {{$i+1}} of 15 " > </div>
                                 <?php } ?>
-                                <div class="progress-bar bg-primary" style="width: 30%;"></div>
+                                        <div class="progress-bar" style="width: {{$percentage}}%;background: #0275d8 "></div>
                             </div>
                         </div>
                     </div>
