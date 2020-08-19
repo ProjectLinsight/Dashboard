@@ -188,18 +188,50 @@
                                     for($i=1;$i<=$count;$i++){
                                         $temp = $temp + 100/($count + 1);
                                         $padding = strval($temp)."%" ;
-                                        if($i< $duration && $subAssignments[$i]){  ?>
+                                        if($i<$duration && $subAssignments[$i]){  ?>
+                                            <div class="py-3">
+                                                <div class="milestone4" style="left:{{$padding}};cursor: pointer;" >
+                                                    <h4 class="text-success" data-toggle="modal" data-target="#assignmentModel">
+                                                        <i class="fa fa-check-circle" aria-hidden="true" data-toggle="tooltip" data-placement="top"  title="{{count($subAssignments[$i])}} Assignment/s"></i>
+                                                    </h4>
+                                                </div>
+                                                <div class="milestone5" style="left:{{$padding}};cursor: pointer;" >
+                                                    <h4 class="text-success" data-toggle="modal" data-target="#assignmentModel">
+                                                        <i class="fa fa-address-book-o" aria-hidden="true" data-toggle="tooltip" data-placement="top"  title="{{count($subAssignments[$i])}} Assignment/s"></i>
+                                                    </h4>
+                                                </div>
+                                            </div>
+                                        <?php } else if($i<$datePosition && $weeklyAssignments[$i]){  ?>
                                             <div class="py-3">
                                                 <div class="milestone2" style="left:{{$padding}};cursor: pointer;" >
-                                                    <h5 class="text-success" data-toggle="modal" data-target="#assignmentModel">
-                                                        <i class="fa fa-address-book-o" aria-hidden="true" data-toggle="tooltip" data-placement="top"  title="{{count($weeklyAssignments[$i])}} Assignment/s"></i>
-                                                    </h5>
+                                                    <h4 class="text-danger" data-toggle="modal" data-target="#assignmentModel">
+                                                        <i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-placement="top"  title="{{count($subAssignments[$i])}} Assignment/s"></i>
+                                                    </h4>
+                                                </div>
+                                                <div class="milestone4" style="left:{{$padding}};cursor: pointer;" >
+                                                    <h4 class="text-danger" data-toggle="modal" data-target="#assignmentModel">
+                                                        <i class="fa fa-address-book-o" aria-hidden="true" data-toggle="tooltip" data-placement="top"  title="{{count($subAssignments[$i])}} Assignment/s"></i>
+                                                    </h4>
+                                                </div>
+                                            </div>
+                                        <?php } else if($i<$duration && $weeklyAssignments[$i]){  ?>
+                                            <div class="py-3">
+                                                <div class="milestone2" style="left:{{$padding}};cursor: pointer;" >
+                                                    <h4 class="text-info" data-toggle="modal" data-target="#assignmentModel">
+                                                        <i class="fa fa-clock-o" aria-hidden="true" data-toggle="tooltip" data-placement="top"  title="{{count($weeklyAssignments[$i])}} Assignment/s"></i>
+                                                    </h4>
+                                                </div>
+                                                <div class="milestone4" style="left:{{$padding}};cursor: pointer;" >
+                                                    <h4 class="text-info" data-toggle="modal" data-target="#assignmentModel">
+                                                        <i class="fa fa-address-book-o" aria-hidden="true" data-toggle="tooltip" data-placement="top"  title="{{count($subAssignments[$i])}} Assignment/s"></i>
+                                                    </h4>
                                                 </div>
                                             </div>
                                         <?php } ?>
                                             <div class="py-3">
                                                 <div class="milestone3 d-flex justify-content-center" style="left:{{$padding}};cursor: pointer;" data-toggle="tooltip" data-placement="top"  title="Week {{$i+1}} of 15 " >
                                                 <p class="text-primary" style="margin-top:10px;margin-left:7px"  data-toggle="tooltip" data-placement="bottom"  title="{{$weeks[$i-1]}}" > <strong> W{{$i}} </strong> </p>
+                                                <p class="text-muted" style="margin-top:22px;margin-left:-35px" > <small> {{$weeks[$i-1]}} </small> </p>
                                                 </div>
                                             </div>
                                             <?php if(($i)<=$datePosition){$color = "#0275d8";}else{ $color = "#e9ecef";} ?>
@@ -315,7 +347,14 @@
                         <div class="pb-4">
                             <?php
                                 $gap = $totalMarks-$obtainedMarks;
-                                $percentage = (($obtainedMarks/$totalMarks)*100);
+                                if($totalMarks==0){
+                                    $percentage = 0 ;
+                                    $flag = false ;
+                                }
+                                else{
+                                    $percentage = (($obtainedMarks/$totalMarks)*100);
+                                    $flag = true ;
+                                }
                                 if($percentage>=70){
                                     $note = 'Great! You are doing good!';
                                     $icon = 'check-circle' ;
@@ -324,10 +363,14 @@
                                     $note = 'You are doing okay! Try more!';
                                     $icon = 'check-circle' ;
                                     $color = 'primary';
-                                }else{
+                                }else if($flag==true){
                                     $note = 'You really need to work hard!';
                                     $icon = 'exclamation-circle' ;
                                     $color = 'danger';
+                                }else{
+                                    $note = 'Not enough data!';
+                                    $icon = 'exclamation-circle' ;
+                                    $color = 'dark';
                                 }
 
                             ?>

@@ -75,7 +75,6 @@ class PersonalCoursesController extends Controller{
             }
         }
         //end of calculating progress on assignments
-
         //Quiz Data
         $quizArray = $currentStuData->getQuizData($user_stmts);
 

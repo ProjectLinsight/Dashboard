@@ -141,17 +141,37 @@
 
 .milestone2{
     position:absolute;
-    margin-top:-40px;
-    margin-left:2px;
-	z-index:1;
+    margin-top:-22px;
+    margin-left:-1px;
+	z-index:4;
 	height:10px;
 	width:10px;
 	border-radius:10px;
 }
+
 
 .milestone3{
     margin-left:-5px;
     position:absolute;
 	z-index:1;
     font-size: 1em;
+}
+
+.milestone4{
+    position:absolute;
+    margin-top:-50px;
+    margin-left:1px;
+	z-index:4;
+	height:10px;
+	width:10px;
+	border-radius:10px;
+}
+.milestone5{
+    position:absolute;
+    margin-top:-50px;
+    margin-left:-22px;
+	z-index:4;
+	height:10px;
+	width:10px;
+	border-radius:10px;
 }
