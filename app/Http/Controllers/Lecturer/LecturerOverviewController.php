@@ -293,6 +293,7 @@ class LecturerOverviewController extends Controller{
         $distinctass_arr = array();
         $ass_list = array();
         $assignment = array();
+        $list = array();
         $notcom_array = array();
         $result = 0;
         $crs = DB::table('users')->get();
