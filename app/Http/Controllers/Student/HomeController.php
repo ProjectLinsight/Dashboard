@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Shared\sharedCourseXapi ;
+use App\Http\Controllers\Shared\sharedOut_side_dataXapi ;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -50,7 +51,7 @@ class HomeController extends Controller{
         }
         //dd($activityNested);
 
-        //Assignemt Reminders 
+        //Assignemt Reminders
 
         $all_assignments = Array();
         foreach($enrolled_courses as $subject){
@@ -74,7 +75,7 @@ class HomeController extends Controller{
                 }
                 $all_quizzes[$subject] = $subject_quiz;
             }
-            
+
         }
 
         $enrolled_xapi = Array();
@@ -94,21 +95,21 @@ class HomeController extends Controller{
 
         foreach($all_assignments as $assignment=>$assignment_data){
             foreach($enrolled_xapi as $exapi=>$exapi_data){
-                
+
                 if($assignment===$exapi){
                     foreach($assignment_data as $ad){
-                
+
                         foreach($exapi_data as $ed){
-                            
+
                             if($ad->title== $ed['title'] && $ed['verb']==="submitted"){
                                 $ad->submitted=true;
                             }
                             else{
                                 $ad->submitted=false;
                             }
-                            
+
                         }
-                        
+
                     }
                 }
             }
@@ -143,13 +144,17 @@ class HomeController extends Controller{
                             }
                         }
                     }
-                } 
+                }
             }
         }
 
+        //Outside Data
+        $data = new sharedOut_side_dataXapi();
+        $state = $data->getData();
+
         //dd($all_quizzes);
 
-        return view('home')
+        return view('home',['xapi'=>$state])
             ->with('activityCount', json_encode($enrolled_courses_xapi))
             ->with('activityOverall', json_encode($activityNested))
             ->with('quiz',$all_quizzes)

@@ -88,7 +88,11 @@
                     <h6 class="h6-sized pl-3">{{Auth::user()->email}}<h6>
                 </li>
                 <li class="pt-3">
-                    <a href="/home"><i class="fas fa-home pr-2"></i>Feed</a>
+                    <a href="/home"><i class="fas fa-chart-bar pr-2"></i>Overview</a>
+                    <hr class="content-center" style="width:75%;background : #555">
+                </li>
+                <li>
+                    <a href="/student/analysis"><i class="fas fa-home pr-2"></i>Timeline</a>
                     <hr class="content-center" style="width:75%;background : #555">
                 </li>
                 <li>
@@ -112,16 +116,11 @@
                     <a href="/courses"><i class="fas fa-id-card pr-2"></i>Course Data</a>
                     <hr class="content-center" style="width:75%;background : #555">
                 </li>
-                <li>
-                    <a href="/student/analysis"><i class="fas fa-chart-bar pr-2"></i>Analysis</a>
-                    <hr class="content-center" style="width:75%;background : #555">
-                </li>
-                <li>
-                    <div class="p-3">
-                        <button type="button" class="btn btn-outline-primary btn-block" data-toggle="modal" data-target="#exampleModalCenter">
-                            <h6 class="pt-2"> <i class="far fa-edit pr-2"></i> write post <h6>
-                        </button>
-                    </div>
+                <div class="p-3">
+                    <button type="button" class="btn btn-outline-primary btn-block" data-toggle="modal" data-target="#exampleModalCenter">
+                        <h6 class="pt-2"> <i class="far fa-edit pr-2"></i> write post <h6>
+                    </button>
+                </div>
 
                 </li>
             </ul>
@@ -211,6 +210,40 @@
 
             <div class="container-fluid row m-0 changeList"  >
                 <div class="col-md-7 py-3">
+                    <div class="card shadow-sm">
+                            <div class="card-header bg-primary">
+                                <h4 class="text-white my-0"> Outside-VLE Data Management </h4>
+                            </div>
+                            <div class="card-body">
+
+
+                                <div class="table-responsive">
+                                    <table class="table table-hover mb-0 text-center" style="border-collapse: collapse;">
+                                        <thead>
+                                            <tr>
+                                                <th colspan="7">Title</th>
+                                                <th colspan="3">Date</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($xapi as $stmt)
+                                            <tr>
+                                                <td colspan="7"> <a href="{{$stmt['url']}}">  {{$stmt['title']}} </a></td>
+                                                <td colspan="3">{{$stmt['date']}}</td>
+                                                <td class="py-1">
+                                                    <a type="button" class="btn btn-s" data-toggle="modal" data-target="#exampleModalCenter" onclick="getId({{$stmt['title'] }})"> <i class="fas fa-share-square pr-2"></i></a>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+
                     <hr>
                     <h1 class="text-center text-dark"> <strong>Timeline </strong> </h1>
                     <hr>
@@ -329,8 +362,7 @@
                                                 </div>
                                             @endforeach
                                         @endforeach
-
-                                    </div>
+                                        </div>
                                     </div>
 
                                 </div>
