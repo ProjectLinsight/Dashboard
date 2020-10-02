@@ -233,7 +233,7 @@
                                                 }
                                                 ?>
                                                     <div class="py-3">
-                                                        <div class="milestone2" style="left:{{$padding}};cursor: pointer;" >
+                                                        <div class="milestone4" style="left:{{$padding}};cursor: pointer;" >
                                                             <h5 class="text-{{$color}}" data-toggle="modal" data-target="#assignmentModel">
                                                                 <i class="fa fa-address-book-o" aria-hidden="true"  data-toggle="tooltip" data-placement="top"  title="Assignment/s"></i>
                                                             </h5>
@@ -242,8 +242,7 @@
                                                 
                                                     <div class="py-3">
                                                         <div class="milestone3 d-flex justify-content-center" style="left:{{$padding}};cursor: pointer;" data-toggle="tooltip" data-placement="top"  title="{{$key}}" >
-                                                           <p class="text-primary"> <strong> {{$key}} </strong> </p>
-                                                        </div>
+                                                        <p class="text-primary" style="margin-top:10px;margin-left:-5px"> <strong> {{$key}} </strong> </p>                                                        </div>
                                                     </div>
                                                 <div class="milestone bg-{{$color}}" style="left:{{$padding}};cursor: pointer;" data-toggle="tooltip" data-placement="top"  title="{{$key}}" > </div>
                                         <?php } ?>

@@ -4,7 +4,11 @@ namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Shared\sharedCourseXapi ;
+<<<<<<< HEAD
 use App\Http\Controllers\Shared\sharedOut_side_dataXapi ;
+=======
+use App\Http\Controllers\Shared\sharedStudentCourseData;
+>>>>>>> 8b7946a1f2b7b299ff1bbb34edfdd92a4bf67758
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -152,7 +156,6 @@ class HomeController extends Controller{
         $data = new sharedOut_side_dataXapi();
         $state = $data->getData();
 
-        //dd($all_quizzes);
 
         return view('home',['xapi'=>$state])
             ->with('activityCount', json_encode($enrolled_courses_xapi))

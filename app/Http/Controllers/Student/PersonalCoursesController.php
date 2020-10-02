@@ -90,6 +90,18 @@ class PersonalCoursesController extends Controller{
         //Previous Results Overview
         $prevResults = $currentStuData->getPrevResults($my_course[0]->cid);
 
+
+        //Average Assignment Marks
+        $averageMarksData = new sharedStudentCourseData();
+        $assignmentAvgMarks = $averageMarksData->assignmentStat($course);
+
+
+        //me deka
+        //dd($gradedAssignments);
+        //dd($assignmentAvgMarks);
+
+
+
         return view('student.courses.personal',[
             'crs'=> $course_name[0],
             'gradedAssignments' => $gradedAssignments,
