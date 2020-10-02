@@ -667,5 +667,56 @@ class LecturerOverviewController extends Controller{
         // dd($cr,$count,$stmt_arr,$assignment,$list,$bestlist);
     }
 
+    public function getForum($user,$course){
+        $data = new sharedXapi();
+        $state = $data->getData();
+        $stmt_count = count($state);
+        $create_arr = array();
+        $reply_arr=array();
+        $arr=array();
+        $cr = DB::table('users')->where('id',$user)->get();
+        $reg=explode("@",$cr->email);
+        $reg_no= $reg[0];
+        $countc=0;
+        $countr=0;
+        $key = "https://w3id.org/learning-analytics/learning-management-system/short-id";
+        for($i=0;$i<$stmt_count;$i++){            
+            $logArray=explode("/",$state[$i]->verb->id);
+            if($logArray[sizeof($logArray)-1]==="create" && $state[$i]->context->contextActivities->grouping[1]->definition->extensions->$key===$course){
+                    $create_arr[$countc]['userName'] = $state[$i]->actor->name ;
+                    $create_arr[$countc]['user'] = $state[$i]->actor->account->name;
+                    $create_arr[$countc]['forumTopic'] = $state[$i]->context->contextActivities->grouping[2]->definition->name->en;
+                    $create_arr[$countc]['thread'] = $state[$i]->object->definition->name->en ;
+                    $create_arr[$countc]['timestamp'] = $state[$i]->stored ;
+                    $create_arr[$countc]['action'] = "Created" ;
+                    $create_arr[$countc]['response'] = "No" ;
+                    $create_arr[$countc]['replyCount'] = 0 ;
+                    $countc+=1;
+                
+            }
+        }
+        for($i=0;$i<$stmt_count;$i++){            
+            $logArray=explode("/",$state[$i]->verb->id);
+            if($logArray[sizeof($logArray)-1]==="replied" && $state[$i]->context->contextActivities->grouping[1]->definition->extensions->$key===$course){
+                for($j=0;$j<$countc;$j++){
+                    if($create_arr[$j]['thread']==$state[$i]->object->definition->name->en && $create_arr[$j]['forumTopic'] = $state[$i]->context->contextActivities->grouping[2]->definition->name->en){
+                        if($state[$i]->actor->account->name==$reg_no){
+                            $create_arr[$countc]['response'] = "Yes" ;
+                        }
+                        else{
+                            $create_arr[$j]['replyCount']+=1;
+                        }
+                        
+                    }
+
+                }
+            }
+        }
+        
+        
+        // dd($create_arr,$reply_arr,$student,$arr);
+        return($create_arr);
+    }
+
 
 }

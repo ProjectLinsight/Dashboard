@@ -427,7 +427,7 @@
                     <div class="pb-3">
                         <div class="card shadow-sm">
                             <div class="card-header bg-primary">
-                                <h4 class="text-white my-0"> Assignment reminder</h4>
+                                <h4 class="text-white my-0"> Assignments to be marked</h4>
                             </div>
                             <div class="card-body">
                                 <div class="panel panel-default">
