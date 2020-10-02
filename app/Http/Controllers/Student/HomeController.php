@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Shared\sharedCourseXapi ;
+use App\Http\Controllers\Shared\sharedStudentCourseData;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -147,7 +148,10 @@ class HomeController extends Controller{
             }
         }
 
-        //dd($all_quizzes);
+        dd($activityNested);
+
+        
+
 
         return view('home')
             ->with('activityCount', json_encode($enrolled_courses_xapi))
