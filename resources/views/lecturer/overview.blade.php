@@ -451,9 +451,76 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-12">
+                        <div class="pb-3">
+                        <div class="card shadow">
+                                <div class="card-header bg-info pb-1">
+                                    <h4 class="text-white text-center"> Forum Participation </h4>
+                                </div>
+                                <div class="card-body p-0">
+                                    <div class="panel panel-default">
+                                        <div class="tab-content">
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover mb-0 text-center" style="border-collapse: collapse;">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Forum Topic</th>
+                                                                <th>Thread</th> 
+                                                                <th>Created by</th> 
+                                                                <th>No of replies</th> 
+                                                                <th>Response</th> 
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach($forum as $key => $value)
+                                                            <tr >
+                                                                    <td>{{$value['forumTopic']}}</td>
+                                                                    <td>{{$value['thread']}}</td>
+                                                                    <td>{{$value['user']}}</td>
+                                                                    <td>{{$value['replyCount']}}</td>
+                                                                    @if ($value['response']=='No')
+                                                                        <?php
+                                                                            $color = "warning";
+                                                                            $icon = "exclamation-circle";
+                                                                        ?>
+                                                                        @endif
+                                                                    @if ($value['response']=='Yes')
+                                                                        <?php
+                                                                            $color = "success";
+                                                                            $icon = "check-circle";
+                                                                        ?>
+                                                                        @endif
+                                                                    <td><h3 class="pt-6 text-{{$color}}"> <i class="fa fa-{{$icon}}" aria-hidden="true"></i> </h3></td>
+                                                            </tr>
+                                                            @endforeach
+
+                                                        </tbody>
+                                                    </table>
+                                                    <script>
+                                                    document.addEventListener("DOMContentLoaded", ()=>{
+                                                        const rows = document.querySelectorAll("tr[data-href]");
+                                                        rows.forEach(row => {
+                                                            row.addEventListener("click", () =>{
+                                                                window.location.href = row.dataset.href;
+                                                            });
+                                                        });
+                                                    });
+                                                    </script>
+                                                </div>
+                                        </div>
+                                        <div class="panel-body">
+                                            <canvas id="canvas" height="280" width="600"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 
                     
                 </div>
+
+
             </div>
 
         </div>
