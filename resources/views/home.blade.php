@@ -221,17 +221,9 @@
                             </div>
                             @foreach($xapi as $stmt)
                                 <hr>
-<<<<<<< HEAD
-                                <button class="btn btn-info text-white"><a style="text-align:center;">{{$post->course_code}}</a></button>
-                                <p style="font-size:calc(0.9em + 0.1vw);text-align: justify">{{$post->description}}</p>
-                                @if ($post->image)
-                                    <div class="d-flex justify-content-center">
-                                        <img style="width:100%;height:auto;" src="uploads/post/{{ $post->image }}" alt="">
-=======
                                 <div class="row">
                                     <div class="col-8">
                                         <a href="{{$stmt['url']}}">  {{$stmt['title']}} </a>
->>>>>>> fd5c0a920d48eb8831aff00509fe25b0027f5838
                                     </div>
                                     <div class="col-2"> {{$stmt['date']}} </div>
                                     <div class="col-2">
