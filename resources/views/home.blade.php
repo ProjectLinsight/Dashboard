@@ -211,79 +211,38 @@
             <div class="container-fluid row m-0 changeList"  >
                 <div class="col-md-7 py-3">
                     <div class="card shadow-sm">
-                            <div class="card-header bg-primary">
-                                <h4 class="text-white my-0"> Outside-VLE Data Management </h4>
-                            </div>
-                            <div class="card-body">
-
-
-                                <div class="table-responsive">
-                                    <table class="table table-hover mb-0 text-center" style="border-collapse: collapse;">
-                                        <thead>
-                                            <tr>
-                                                <th colspan="7">Title</th>
-                                                <th colspan="3">Date</th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach($xapi as $stmt)
-                                            <tr>
-                                                <td colspan="7"> <a href="{{$stmt['url']}}">  {{$stmt['title']}} </a></td>
-                                                <td colspan="3">{{$stmt['date']}}</td>
-                                                <td class="py-1">
-                                                    <a type="button" class="btn btn-s" data-toggle="modal" data-target="#exampleModalCenter" onclick="getId({{$stmt['title'] }})"> <i class="fas fa-share-square pr-2"></i></a>
-                                                </td>
-                                            </tr>
-                                            @endforeach
-
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+                        <div class="card-header bg-primary">
+                            <h4 class="text-white my-0"> Outside-VLE Data Management </h4>
                         </div>
-
-
-                    <hr>
-                    <h1 class="text-center text-dark"> <strong>Timeline </strong> </h1>
-                    <hr>
-                    <?php $post = App\Post::all() ?>
-                    @foreach ($post as $post)
-                    <div class="pb-4">
-                        <div class="p-3 rounded shadow" style="background:white;">
-                            <div class="row d-flex justify-content-between">
-                                <div class=" col-10 d-flex">
-                                    <div class="p-2">
-                                        <img class="rounded-circle" style="max-width: 60px;height:60px"src="https://mdbootstrap.com/img/Photos/Avatars/img (27).jpg" alt="Generic placeholder image">
-                                    </div>
-                                    <div class="col-8">
-                                        <div class="row d-flex justify-content-between align-items-baseline">
-                                            <div>
-                                                <h5 class="pt-3" style="font-size:calc(1em + 0.4vw)"><strong>{{$post->user->name}}</strong></h5>
-                                                @if ($post->created_at!==$post->updated_at)
-                                                    <h6 class="text-muted " style="font-size:calc(0.6em + 0.1vw)" data-toggle="tooltip" title="post created : {{$post->created_at}}">  {{$post->updated_at}}</h6>
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-8"><strong> Title </strong></div>
+                                <div class="col-2"><strong> Date </strong></div>
                             </div>
-                            <hr>
-                            <div class="p-3 border rounded" style="background: #fefefe">
-                                <h5 style="font-size:calc(1.2em + 0.2vw)"><strong>{{ $post->title}}</strong></h5>
+                            @foreach($xapi as $stmt)
                                 <hr>
+<<<<<<< HEAD
                                 <button class="btn btn-info text-white"><a style="text-align:center;">{{$post->course_code}}</a></button>
                                 <p style="font-size:calc(0.9em + 0.1vw);text-align: justify">{{$post->description}}</p>
                                 @if ($post->image)
                                     <div class="d-flex justify-content-center">
                                         <img style="width:100%;height:auto;" src="uploads/post/{{ $post->image }}" alt="">
+=======
+                                <div class="row">
+                                    <div class="col-8">
+                                        <a href="{{$stmt['url']}}">  {{$stmt['title']}} </a>
+>>>>>>> fd5c0a920d48eb8831aff00509fe25b0027f5838
                                     </div>
-                                @endif
-                            </div>
+                                    <div class="col-2"> {{$stmt['date']}} </div>
+                                    <div class="col-2">
+                                        <a type="button" class="btn btn-s" data-toggle="modal" data-target="#exampleModalCenter" onclick="getId({{$stmt['title'] }})"> <i class="fas fa-share-square pr-2"></i></a>
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
-                    @endforeach
                 </div>
+
                 <div class="col-md-5 py-3">
                     <div class="pb-3">
                         <div class="card shadow-sm">
