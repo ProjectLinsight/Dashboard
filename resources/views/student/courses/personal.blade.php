@@ -27,6 +27,82 @@
                 },
             });
 
+            var obtMarks = <?php echo $obtMarks; ?>;
+            var avgMarks = <?php echo $avgMarks; ?>;
+            var colors = [ '#d9534f', '#4285F4'];
+            var combMarks = new Array();
+            var avg = new Array('0');
+            var marks = new Array('0');
+            var labelPtr = new Array('');
+            var label = new Array();
+            var head = new Array('Obtained Marks','Average Marks');
+            var i = 1 ;
+            for(var key in obtMarks){
+                avg.push(obtMarks[key]);
+            }
+            for(var key in obtMarks){
+                marks.push(obtMarks[key]);
+                label.push(key);
+                labelPtr.push('As' + i);
+                i++;
+            }
+            marks.push('0');
+            avg.push('0');
+            labelPtr.push('');
+            combMarks.push(avg);
+            combMarks.push(marks);
+
+            // for(int x=0;x<i;x++){
+            //     datasetdata[x] = {
+            //         label: head,
+            //         data: combMarks[x],
+            //         borderColor: colors[x],
+            //         hoverBackgroundColor: colors[x],
+            //         borderStyle: 'solid',
+            //         borderWidth: 2,
+            //         fill : false
+            //     }
+            // }
+
+
+            datasetdata = [{
+                label: 'Obtained Marks',
+                data: marks,
+                borderWidth: 1,
+                borderColor : colors[1],
+                borderStyle: 'solid',
+                borderWidth: 2,
+                fill : false
+            },{
+                label: 'Average Marks',
+                data: avg,
+                borderWidth: 1,
+                borderColor : colors[0],
+                borderStyle: 'solid',
+                borderWidth: 2,
+                fill : false
+            }];
+
+            var asMarksgraph = document.getElementById("asMarksGraph");
+            var myChart = new Chart(asMarksgraph, {
+                type: 'line',
+                data: {
+                    labels:labelPtr,
+                    datasets: datasetdata
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                min :0 ,
+                                max: 100,
+                                stepSize : 10
+                            }
+                        }]
+                    },
+                }
+            });
+
             var date_counts = <?php echo $date_counts; ?>;
             var date_act = new Array();
             var date_countx = new Array();
@@ -50,41 +126,6 @@
                         max : 100
                     }]
                 },
-            });
-
-            var asMarks_counts = <?php echo $assignmentMarks; ?>;
-            var asMarks_act = new Array();
-            var asMarks_countx = new Array();
-            var arrayAsNames = new Array();
-            var i = 1 ;
-            for (var key in asMarks_counts) {
-                asMarks_act.push("AS"+ i++);
-                asMarks_countx.push(asMarks_counts[key]);
-            }
-            var asMarksgraph = document.getElementById("asMarksGraph");
-            var myChart = new Chart(asMarksgraph, {
-                type: 'line',
-                data: {
-                    labels:asMarks_act,
-                    datasets: [{
-                        label: 'Assignment Marks',
-                        data: asMarks_countx,
-                        borderWidth: 1,
-                        borderColor : "#0074D9",
-                        backgroundColor : ['rgba(0, 116, 217, 0.4)' ]
-                    }]
-                },
-                options: {
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                min :0 ,
-                                max: 100,
-                                stepSize : 10
-                            }
-                        }]
-                    },
-                }
             });
 
             var week_counts = <?php echo $week_counts; ?>;
@@ -198,39 +239,45 @@
                                         if($i<$duration && $subAssignments[$i]){  ?>
                                             <div class="py-3">
                                                 <div class="milestone4" style="left:{{$padding}};cursor: pointer;" >
-                                                    <h4 class="text-success" data-toggle="modal" data-target="#assignmentModel">
+                                                    <h4 class="text-success" data-toggle="modal"> <a href="#assignmentSection" style="text-decoration: none;color:inherit">
                                                         <i class="fa fa-check-circle" aria-hidden="true" data-toggle="tooltip" data-placement="top"  title="{{count($subAssignments[$i])}} Assignment/s"></i>
+                                                    </a>
                                                     </h4>
                                                 </div>
                                                 <div class="milestone5" style="left:{{$padding}};cursor: pointer;" >
-                                                    <h4 class="text-success" data-toggle="modal" data-target="#assignmentModel">
-                                                        <i class="fa fa-address-book-o" aria-hidden="true" data-toggle="tooltip" data-placement="top"  title="{{count($subAssignments[$i])}} Assignment/s"></i>
+                                                    <h4 class="text-success" data-toggle="modal"> <a href="#assignmentSection" style="text-decoration: none;color:inherit">
+                                                        <i class="fas fa-book" aria-hidden="true" data-toggle="tooltip" data-placement="top"  title="{{count($subAssignments[$i])}} Assignment/s"></i>
+                                                    </a>
                                                     </h4>
                                                 </div>
                                             </div>
                                         <?php } else if($i<$datePosition && $weeklyAssignments[$i]){  ?>
                                             <div class="py-3">
                                                 <div class="milestone2" style="left:{{$padding}};cursor: pointer;" >
-                                                    <h4 class="text-danger" data-toggle="modal" data-target="#assignmentModel">
+                                                    <h4 class="text-danger" data-toggle="modal"> <a href="#assignmentSection" style="text-decoration: none;color:inherit">
                                                         <i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-placement="top"  title="{{count($subAssignments[$i])}} Assignment/s"></i>
+                                                    </a>
                                                     </h4>
                                                 </div>
                                                 <div class="milestone4" style="left:{{$padding}};cursor: pointer;" >
-                                                    <h4 class="text-danger" data-toggle="modal" data-target="#assignmentModel">
-                                                        <i class="fa fa-address-book-o" aria-hidden="true" data-toggle="tooltip" data-placement="top"  title="{{count($subAssignments[$i])}} Assignment/s"></i>
+                                                    <h4 class="text-danger" data-toggle="modal"> <a href="#assignmentSection" style="text-decoration: none;color:inherit">
+                                                        <i class="fas fa-book" aria-hidden="true" data-toggle="tooltip" data-placement="top"  title="{{count($subAssignments[$i])}} Assignment/s"></i>
+                                                    </a>
                                                     </h4>
                                                 </div>
                                             </div>
                                         <?php } else if($i<$duration && $weeklyAssignments[$i]){  ?>
                                             <div class="py-3">
                                                 <div class="milestone2" style="left:{{$padding}};cursor: pointer;" >
-                                                    <h4 class="text-info" data-toggle="modal" data-target="#assignmentModel">
+                                                    <h4 class="text-info" data-toggle="modal"> <a href="#assignmentSection" style="text-decoration: none;color:inherit">
                                                         <i class="fa fa-clock-o" aria-hidden="true" data-toggle="tooltip" data-placement="top"  title="{{count($weeklyAssignments[$i])}} Assignment/s"></i>
+                                                    </a>
                                                     </h4>
                                                 </div>
                                                 <div class="milestone4" style="left:{{$padding}};cursor: pointer;" >
-                                                    <h4 class="text-info" data-toggle="modal" data-target="#assignmentModel">
-                                                        <i class="fa fa-address-book-o" aria-hidden="true" data-toggle="tooltip" data-placement="top"  title="{{count($subAssignments[$i])}} Assignment/s"></i>
+                                                    <h4 class="text-info" data-toggle="modal"> <a href="#assignmentSection" style="text-decoration: none;color:inherit">
+                                                        <i class="fas fa-book" aria-hidden="true" data-toggle="tooltip" data-placement="top"  title="{{count($subAssignments[$i])}} Assignment/s"></i>
+                                                    </a>
                                                     </h4>
                                                 </div>
                                             </div>
@@ -281,60 +328,62 @@
                             </div>
                         </div>
                         <?php $collapseId = 0 ;?>
-                        @foreach ($crs->assignment as $assignment)
-                            <div class="pb-3">
-                                <?php
-                                    $flag = "You haven't submitted this assignment";
-                                    $color = "bg-danger";
-                                    $icon = "exclamation-circle";
-                                    $collapseId++ ;
-                                ?>
-                                @foreach ($submittedAssignments as $submitted)
-                                    @if($assignment->title==$submitted['title'])
-                                        <?php
-                                            $flag = "You have submitted this assignment and grades pending" ;
-                                            $color = "bg-primary";
-                                            $icon = "clock-o";
-                                        ?>
-                                    @endif
-                                @endforeach
-                                @foreach ($gradedAssignments as $graded)
-                                    @if($assignment->title==$graded['title'])
-                                        <?php
-                                            $flag = "Your assignment is Submitted and Graded";
-                                            $color = "bg-success";
-                                            $icon = "check-circle";
-                                        ?>
-                                    @endif
-                                @endforeach
-                                <div class="card shadow">
-                                    <div class="card-header text-white {{$color}}  d-flex justify-content-between py-0 my-0" style="cursor: pointer;" data-toggle="collapse" href="#{{$color}}">
-                                        <div class="row pt-1">
-                                            <h1 class="px-4 pt-1">
-                                                <i class="fa fa-{{$icon}}" aria-hidden="true"></i>
-                                            </h1>
-                                            <h4 class="pt-2">
-                                                {{$assignment->title}}
-                                            </h4>
+                        <div id="assignmentSection">
+                            @foreach ($crs->assignment as $assignment)
+                                <div class="pb-3">
+                                    <?php
+                                        $flag = "You haven't submitted this assignment";
+                                        $color = "bg-danger";
+                                        $icon = "exclamation-circle";
+                                        $collapseId++ ;
+                                    ?>
+                                    @foreach ($submittedAssignments as $submitted)
+                                        @if($assignment->title==$submitted['title'])
+                                            <?php
+                                                $flag = "You have submitted this assignment and grades pending" ;
+                                                $color = "bg-primary";
+                                                $icon = "clock-o";
+                                            ?>
+                                        @endif
+                                    @endforeach
+                                    @foreach ($gradedAssignments as $graded)
+                                        @if($assignment->title==$graded['title'])
+                                            <?php
+                                                $flag = "Your assignment is Submitted and Graded";
+                                                $color = "bg-success";
+                                                $icon = "check-circle";
+                                            ?>
+                                        @endif
+                                    @endforeach
+                                    <div class="card shadow">
+                                        <div class="card-header text-white {{$color}}  d-flex justify-content-between py-0 my-0" style="cursor: pointer;" data-toggle="collapse" href="#{{$color}}">
+                                            <div class="row pt-1">
+                                                <h1 class="px-4 pt-1">
+                                                    <i class="fa fa-{{$icon}}" aria-hidden="true"></i>
+                                                </h1>
+                                                <h4 class="pt-2">
+                                                    {{$assignment->title}}
+                                                </h4>
+                                            </div>
+                                            <h4 class="pt-3"><i class="fa fa-angle-down" aria-hidden="true"></i></h4>
                                         </div>
-                                        <h4 class="pt-3"><i class="fa fa-angle-down" aria-hidden="true"></i></h4>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="collapse" id="{{$color}}">
-                                            <div class="card card-body">
-                                                <h4> <strong> {{$flag}} </strong></h4>
-                                                <hr>
-                                                @if($flag == "Your assignment is Submitted and Graded")
-                                                    <h6> <strong> Assignment Weight  &ensp; : &ensp; </strong> {{$assignment->weight}} out of 100  </h6>
-                                                    <h6> <strong> Marks Obtained  &emsp;  &emsp; : &ensp; </strong> {{$graded['marks']}} out of {{$assignment->maxMarks}} </h6>
-                                                    <br>
-                                                @endif
+                                        <div class="card-body">
+                                            <div class="collapse" id="{{$color}}">
+                                                <div class="card card-body">
+                                                    <h4> <strong> {{$flag}} </strong></h4>
+                                                    <hr>
+                                                    @if($flag == "Your assignment is Submitted and Graded")
+                                                        <h6> <strong> Assignment Weight  &ensp; : &ensp; </strong> {{$assignment->weight}} out of 100  </h6>
+                                                        <h6> <strong> Marks Obtained  &emsp;  &emsp; : &ensp; </strong> {{$graded['marks']}} out of {{$assignment->maxMarks}} </h6>
+                                                        <br>
+                                                    @endif
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        @endforeach
+                            @endforeach
+                        </div>
                     </div>
                     <div class="col-md-5">
                         <div class="pb-4">
@@ -426,7 +475,7 @@
                                     </div>
                                     <div class="pl-5 pt-2">
                                         @foreach($assignmentNames as $key => $asNames)
-                                            <h6>{{$key}} - {{$asNames}}</h6>
+                                            <h6 class="text-muted" style="font-size: 12px"> <strong>{{$key}} - {{$asNames}} </strong></h6>
                                         @endforeach
                                     </div>
                                 </div>

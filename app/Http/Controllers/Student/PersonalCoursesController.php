@@ -56,11 +56,6 @@ class PersonalCoursesController extends Controller{
 
         //Assignments Data
         list($activity,$submittedAssignments,$gradedAssignments,$asMarks) = $currentStuData->getAssignmentData($user_stmts);
-        $asNames = array();
-        $i=1;
-        foreach($asMarks as $key => $val){
-            $asNames['AS'.$i++]= $key;
-        }
 
         //calculating progress on assignments
         $assignmentPosted = DB::table('assignments')->where('cid',$course)->get();
@@ -94,12 +89,18 @@ class PersonalCoursesController extends Controller{
         //Average Assignment Marks
         $averageMarksData = new sharedStudentCourseData();
         $assignmentAvgMarks = $averageMarksData->assignmentStat($course);
+        foreach($assignmentAvgMarks as $key => $value) {
+            $avgMarks[$key] = $value['avg'];
+            $obtMarks[$key] = 0;
+            $asNames['AS'.$i++]= $key;
+        }
+        foreach($gradedAssignments as $key => $value) {
+            $obtMarks[$value['title']] = $value['marks'];
+        }
 
-
-        //me deka
-        //dd($gradedAssignments);
-        //dd($assignmentAvgMarks);
-
+        $combinedAssignments["Obtained Marks"] = $obtMarks;
+        $combinedAssignments["Average Marks"] = $avgMarks;
+        // dd($combinedAssignments);
 
 
         return view('student.courses.personal',[
@@ -121,6 +122,8 @@ class PersonalCoursesController extends Controller{
             ->with('date_counts', json_encode($date_counts))
             ->with('week_counts', json_encode($week_counts))
             ->with('assignmentMarks', json_encode($asMarks))
+            ->with('obtMarks', json_encode($obtMarks))
+            ->with('avgMarks', json_encode($avgMarks))
             ;
     }
 

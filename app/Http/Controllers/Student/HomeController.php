@@ -50,7 +50,7 @@ class HomeController extends Controller{
         foreach($enrolled_courses as $ec){
             $activityNested["$ec"] = ${"$ec"} ;
         }
-        //dd($activityNested);
+        // dd($activityNested);
 
         //Assignemt Reminders
 
