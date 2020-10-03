@@ -272,6 +272,7 @@
                             <div class="p-3 border rounded" style="background: #fefefe">
                                 <h5 style="font-size:calc(1.2em + 0.2vw)"><strong>{{ $post->title}}</strong></h5>
                                 <hr>
+                                <button class="btn btn-info text-white"><a style="text-align:center;">{{$post->course_code}}</a></button>
                                 <p style="font-size:calc(0.9em + 0.1vw);text-align: justify">{{$post->description}}</p>
                                 @if ($post->image)
                                     <div class="d-flex justify-content-center">
@@ -406,6 +407,24 @@
                         </div>
                     </div>
 
+                    <div class="form-check">
+                    <div class="col-md-12 px-0">
+
+                        @foreach (Auth::user()->stu_enrollment as $sub)
+                            <input id="course_code" type="radio" class="form-check-input" name="course_code" value="&emsp; {{$sub->cid}}" required autocomplete="course_code" autofocus placeholder="Course code">
+                            <label class="form-check-label" for="inlineRadio1">&emsp; {{$sub->cid}}</label>
+                            <br>
+                        @endforeach
+               
+                            @error('title')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+
+                   
                     <div class="form-group row  d-flex justify-content-center">
                         <div class="col-md-12">
                             <textarea id="description" type="text" style="height: 110px;" class="form-control @error('description') is-invalid @enderror" name="description" value="{{ old('description') }}" required autocomplete="description" autofocus placeholder="Description"></textarea>

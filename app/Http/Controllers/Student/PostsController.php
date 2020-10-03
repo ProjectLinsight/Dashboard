@@ -13,6 +13,7 @@ class PostsController extends Controller{
     public function store(){
        $data = request()->validate([
             'title' => 'required',
+            'course_code' => 'required',
             'description' => 'required',
             'image' => ''
         ]);
@@ -27,6 +28,7 @@ class PostsController extends Controller{
           
             auth()->user()->posts()->create([
                 'title' => $data['title'],
+                'course_code' => $data['course_code'],
                 'description' => $data['description'],
                 'image' => $imagepath 
             ]);   
@@ -52,6 +54,7 @@ class PostsController extends Controller{
         // $this->authorize('update',$post);
         $data = request()->validate([
             'title' => 'required',
+            'course_code' => 'required',
             'description' => 'required',
             'image' => ''
         ]);
@@ -63,6 +66,7 @@ class PostsController extends Controller{
           
             auth()->user()->posts()->where('id', $post->id)->update([
                 'title' => $data['title'],
+                'course_code' => $data['course_code'],
                 'description' => $data['description'],
                 'image' => $imagepath
             ]);   
