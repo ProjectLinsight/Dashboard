@@ -13,10 +13,14 @@
         <div id="sidebar-wrapper" class="bg-dark">
             <ul class="sidebar-nav">
                 <li class="sidebar-brand pl-0">
-                    <h6>{{Auth::user()->email}}<h6>
+                    <h6 class="h6-sized pl-3">{{Auth::user()->email}}<h6>
                 </li>
                 <li class="pt-3">
-                    <a href="/home"><i class="fas fa-home pr-2"></i>Feed</a>
+                    <a href="/home"><i class="fas fa-chart-bar pr-2"></i>Overview</a>
+                    <hr class="content-center" style="width:75%;background : #555">
+                </li>
+                <li>
+                    <a href="/student/analysis"><i class="fas fa-home pr-2"></i>Timeline</a>
                     <hr class="content-center" style="width:75%;background : #555">
                 </li>
                 <li>
@@ -40,9 +44,12 @@
                     <a href="/courses"><i class="fas fa-id-card pr-2"></i>Course Data</a>
                     <hr class="content-center" style="width:75%;background : #555">
                 </li>
-                <li>
-                    <a href="/student/analysis"><i class="fas fa-chart-bar pr-2"></i>Analysis</a>
-                    <hr class="content-center" style="width:75%;background : #555">
+                <div class="p-3">
+                    <button type="button" class="btn btn-outline-primary btn-block" data-toggle="modal" data-target="#exampleModalCenter">
+                        <h6 class="pt-2"> <i class="far fa-edit pr-2"></i> write post <h6>
+                    </button>
+                </div>
+
                 </li>
             </ul>
         </div>
