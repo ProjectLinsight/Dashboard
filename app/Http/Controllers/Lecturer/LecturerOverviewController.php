@@ -33,6 +33,7 @@ class LecturerOverviewController extends Controller{
         $bestp=$this->best($course);
         $note=$this->noteCount($course);
         $quizstat=$this->quizStat($course);
+        $formdata=$this->getForum($user,$course);
         return view('lecturer/overview',[
             'crs'=>$crs[0],
             'stu'=>$stu,
@@ -47,7 +48,8 @@ class LecturerOverviewController extends Controller{
             ->with('user', $user)
             ->with('course',$course)
             ->with('quizstats', $quizstat)
-            ->with('notes', $note);
+            ->with('notes', $note)
+            ->with('forum',$formdata);
         return view('lecturer/student_risk',[
             'crs'=>$crs[0],
             'stu'=>$stu,
@@ -675,8 +677,13 @@ class LecturerOverviewController extends Controller{
         $reply_arr=array();
         $arr=array();
         $cr = DB::table('users')->where('id',$user)->get();
-        $reg=explode("@",$cr->email);
-        $reg_no= $reg[0];
+        foreach ($cr as $key => $value) { 
+                    $reg=explode("@",$value->email);
+                    $reg_no= $reg[0];
+             
+        }
+        // $reg=explode("@",$cr->email);
+        // $reg_no= $reg[0];
         $countc=0;
         $countr=0;
         $key = "https://w3id.org/learning-analytics/learning-management-system/short-id";
@@ -701,7 +708,7 @@ class LecturerOverviewController extends Controller{
                 for($j=0;$j<$countc;$j++){
                     if($create_arr[$j]['thread']==$state[$i]->object->definition->name->en && $create_arr[$j]['forumTopic'] = $state[$i]->context->contextActivities->grouping[2]->definition->name->en){
                         if($state[$i]->actor->account->name==$reg_no){
-                            $create_arr[$countc]['response'] = "Yes" ;
+                            $create_arr[$j]['response'] = "Yes" ;
                         }
                         else{
                             $create_arr[$j]['replyCount']+=1;
