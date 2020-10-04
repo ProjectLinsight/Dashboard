@@ -317,14 +317,14 @@
                         </div>
                     </div>
 
-                    <div class="form-check">
-                    <div class="col-md-12 px-0">
-
-                        @foreach (Auth::user()->stu_enrollment as $sub)
-                            <input id="course_code" type="radio" class="form-check-input" name="course_code" value="&emsp; {{$sub->cid}}" required autocomplete="course_code" autofocus placeholder="Course code">
-                            <label class="form-check-label" for="inlineRadio1">&emsp; {{$sub->cid}}</label>
-                            <br>
-                        @endforeach
+                    <div class="form-group d-flex justify-content-center">
+                    <div class="col-md-12 px-0"> 
+                            <label for="sel1">Select course:</label>
+                                <select class="form-control" id="sel1" name="course_code" required autocomplete="course_code" autofocus placeholder="Course code">
+                                    @foreach (Auth::user()->stu_enrollment as $sub)
+                                         <option>&emsp; {{$sub->cid}}</option>
+                                     @endforeach
+                                 </select>
                
                             @error('title')
                                 <span class="invalid-feedback" role="alert">
@@ -333,6 +333,7 @@
                             @enderror
                         </div>
                     </div>
+                    
 
 
                     <div class="form-group row  d-flex justify-content-center">

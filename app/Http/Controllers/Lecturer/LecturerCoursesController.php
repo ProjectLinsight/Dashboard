@@ -24,10 +24,17 @@ class LecturerCoursesController extends Controller{
         }
 
         $stu = DB::table('users')->where('utype','Student')->where('degree',$degree)->get();
+
+        $ent =  DB::table('stu_enrollments')->where('cid',$course)->get();
+
         return view('lecturer/courses',[
             'crs'=>$crs[0],
             'stu'=>$stu,
+            'ent'=>$ent,
             ]);
+
+           
+           
     }
 
     public function enrollStudents(Request $request){

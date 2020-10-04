@@ -778,6 +778,23 @@
                         </div>
                     </div>
 
+                    <div class="form-group d-flex justify-content-center">
+                    <div class="col-md-12 px-0"> 
+                            <label for="sel1">Select course:</label>
+                                <select class="form-control" id="sel1" name="course_code" required autocomplete="course_code" autofocus placeholder="Course code">
+                                    @foreach (Auth::user()->stu_enrollment as $sub)
+                                         <option>&emsp; {{$sub->cid}}</option>
+                                     @endforeach
+                                 </select>
+               
+                            @error('title')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+
                     <div class="form-group row  d-flex justify-content-center">
                         <div class="col-md-12">
                         <textarea id="description" type="text" style="height: 110px;" class="form-control @error('description') is-invalid @enderror" name="description" value="{{ old('description') }}" required autocomplete="description" autofocus placeholder="Description">{{ $post->title}}</textarea>

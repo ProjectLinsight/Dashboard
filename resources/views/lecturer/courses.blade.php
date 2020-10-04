@@ -294,6 +294,15 @@
                                                     ?>
                                                 </tr>
                                                 @foreach ($stu as $st)
+                                                 @if ($ent->index == $st->index ) {
+
+                                                <tr>
+                                                    <td>{{$st->index}}</td>
+                                                    <td>{{$st->email}}</td>
+                                                </tr>
+
+                                                 }
+                                                @else{
                                                 <tr>
                                                     <td>
                                                         <div class="custom-control custom-checkbox">
@@ -304,6 +313,8 @@
                                                     <td>{{$st->index}}</td>
                                                     <td>{{$st->email}}</td>
                                                 </tr>
+                                                }
+                                                @endif
                                                 @endforeach
                                             </tbody>
                                         </table>
