@@ -151,7 +151,9 @@ class HomeController extends Controller{
 
         //Outside Data
         $outsideData = new sharedOut_side_dataXapi();
+        $state = $outsideData->getData();
         $outsideXapi = $outsideData->getData();
+
 
         $outsideActionsCount = Array();
 
