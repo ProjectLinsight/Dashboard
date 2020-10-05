@@ -24,17 +24,32 @@ class LecturerCoursesController extends Controller{
         }
 
         $stu = DB::table('users')->where('utype','Student')->where('degree',$degree)->get();
-
         $ent =  DB::table('stu_enrollments')->where('cid',$course)->get();
+        $stuNew = array();
+        $stuEn = array();
+        for($i=0;$i<sizeof($stu);$i++){
+            $flag = 1 ;
+            for($j=0;$j<sizeof($ent);$j++){
+                if($stu[$i]->index===$ent[$j]->index){
+                    $flag=0;
+                }
+            }
+            if($flag==1){
+                array_push($stuNew,$stu[$i]);
+            }else{
+                array_push($stuEn,$stu[$i]);
+            }
+        }
 
         return view('lecturer/courses',[
             'crs'=>$crs[0],
-            'stu'=>$stu,
-            'ent'=>$ent,
+            'stu'=>$stuNew,
+            'stuEn'=>$stuEn,
+            // 'ent'=>$ent,
             ]);
 
-           
-           
+
+
     }
 
     public function enrollStudents(Request $request){
@@ -75,7 +90,7 @@ class LecturerCoursesController extends Controller{
         //Notifications
         //$enrolled_students = DB::table('stu_enrollments')->where('cid',$course)->get('index');
 
-        
+
         //dd($enrolled_students);
         // foreach($enrolled_students as $student){
         //     $user = User::where('index',$student->index);

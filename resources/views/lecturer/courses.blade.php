@@ -56,11 +56,11 @@
                 <hr>
 
                 <div class="row">
-                    <div class="col-md-8">
+                    <div class="col-md-7">
                         <div class="pb-4">
                             <div class="card shadow">
-                                <div class="card-header bg-info pb-0">
-                                    <h4 class="text-white text-center"> Course Information </h4>
+                                <div class="card-header bg-primary pb-0">
+                                    <h4 class="text-white"> Course Information </h4>
                                 </div>
                                 <div class="card-body">
                                     <form method="POST" action="/lecturer/courses/{{$crs->cid}}/update" enctype="multipart/form-data">
@@ -110,7 +110,7 @@
                                                         </td>
                                                         <td class="text-justify">
                                                             <div class="form-group d-flex justify-content-center">
-                                                                <button type="submit" class="btn btn-info btn-block text-white">Update Course Data</button>
+                                                                <button type="submit" class="btn btn-primary btn-block text-white">Update Course Data</button>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -123,8 +123,8 @@
                         </div>
                         <div class="pb-3">
                             <div class="card shadow">
-                                <div class="card-header bg-info pb-0">
-                                    <h4 class="text-white text-center"> Add New Assignment </h4>
+                                <div class="card-header bg-primary pb-0">
+                                    <h4 class="text-white"> Add New Assignment </h4>
                                 </div>
                                 <div class="card-body">
                                     <form method="POST" action="/lecturer/courses/{{$crs->cid}}/addAssignment" enctype="multipart/form-data">
@@ -162,7 +162,7 @@
                                             <div class="form-group content-center">
                                                 <div class="form-group d-flex justify-content-center">
                                                     <div class="row col-md-12">
-                                                        <button type="submit" class="btn btn-info btn-block text-white">Add Assignment </button>
+                                                        <button type="submit" class="btn btn-primary btn-block text-white">Add Assignment </button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -172,8 +172,8 @@
                         </div>
                         <div class="pb-3">
                             <div class="card shadow">
-                                <div class="card-header bg-info pb-0">
-                                    <h4 class="text-white text-center"> Add New Quiz </h4>
+                                <div class="card-header bg-primary pb-0">
+                                    <h4 class="text-white"> Add New Quiz </h4>
                                 </div>
                                 <div class="card-body">
                                     <form method="POST" action="/lecturer/courses/{{$crs->cid}}/addQuiz" enctype="multipart/form-data">
@@ -211,7 +211,7 @@
                                             <div class="form-group content-center">
                                                 <div class="form-group d-flex justify-content-center">
                                                     <div class="row col-md-12">
-                                                        <button type="submit" class="btn btn-info btn-block text-white">Add Quiz </button>
+                                                        <button type="submit" class="btn btn-primary btn-block text-white">Add Quiz </button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -219,17 +219,51 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-5">
+                        <div class="pb-3">
+                            <div class="card shadow">
+                                <div class="card-header bg-primary pb-0">
+                                    <h4 class="text-white">Already Enrolled Students </h4>
+                                </div>
+                                <div class="card-body">
+                                    <p><strong> Course Code &emsp; &emsp; : </strong> {{$crs->cid}}</p>
+                                    <p><strong> Course Name &emsp; &emsp;: </strong> {{$crs->cName}}</p>
+                                    <p><strong> Year of Lecturing &ensp; : </strong> 2020</p>
+                                    <div class="col-md-12 pb-2">
+                                        <input type="text" class="form-control" id="task-table-filter" data-action="filter" data-filters="#task-table" placeholder="Search for students..." />
+                                    </div>
+                                    <div class="table-responsive">
+                                        <form method="POST" action="/lecturer/{{Auth::user()->id}}/{{$item->cid}}/courses/enroll" enctype="multipart/form-data">
+                                            @csrf
+                                            <input hidden id="ccid" type="text" class="form-control" name="cid" value="{{$crs->cid}}"  >
+                                            <table id=task-table class="table table-hover mb-0" style="border-collapse: collapse;">
+                                                <thead class="text-center" style="background: #eee;">
+                                                    <tr style="display:block;">
+                                                        <th scope="col">Index &ensp; &ensp; </th>
+                                                        <th scope="col">Email</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody style="overflow-y:auto;display:block;height:250px;font-size:14px">
+                                                    @foreach ($stuEn as $st)
+                                                    <tr>
+                                                        <td>{{$st->index}}</td>
+                                                        <td>{{$st->email}}</td>
+                                                    </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="card shadow">
-                            <div class="card-header bg-info pb-0">
-                                <h4 class="text-white text-center"> Course Information </h4>
+                            <div class="card-header bg-primary pb-0">
+                                <h4 class="text-white"> Enroll New Students </h4>
                             </div>
                             <div class="card-body">
-                                <p><strong> Course Code &emsp; &emsp; : </strong> {{$crs->cid}}</p>
-                                <p><strong> Course Name &emsp; &emsp;: </strong> {{$crs->cName}}</p>
-                                <p><strong> Year of Lecturing &ensp; : </strong> 2020</p>
                                 <script type="application/javascript">
                                     (function(){
                                         'use strict';
@@ -275,7 +309,7 @@
                                                     <th scope="col">Email</th>
                                                 </tr>
                                             </thead>
-                                            <tbody style="overflow-y:auto;display:block;height:400px">
+                                            <tbody style="overflow-y:auto;display:block;height:250px;font-size:14px">
                                                 <tr>
                                                     <td>
                                                         <div class="custom-control custom-checkbox">
@@ -294,15 +328,6 @@
                                                     ?>
                                                 </tr>
                                                 @foreach ($stu as $st)
-                                                 @if ($ent->index == $st->index ) {
-
-                                                <tr>
-                                                    <td>{{$st->index}}</td>
-                                                    <td>{{$st->email}}</td>
-                                                </tr>
-
-                                                 }
-                                                @else{
                                                 <tr>
                                                     <td>
                                                         <div class="custom-control custom-checkbox">
@@ -313,13 +338,11 @@
                                                     <td>{{$st->index}}</td>
                                                     <td>{{$st->email}}</td>
                                                 </tr>
-                                                }
-                                                @endif
                                                 @endforeach
                                             </tbody>
                                         </table>
-                                        <div class="form-group d-flex justify-content-center">
-                                            <button type="submit" class="btn btn-info btn-block text-white">Enroll</button>
+                                        <div class="form-group d-flex justify-content-center mt-2">
+                                            <button type="submit" class="btn btn-primary btn-block text-white">Enroll</button>
                                         </div>
                                     </form>
                                 </div>
