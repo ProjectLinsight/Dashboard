@@ -150,8 +150,27 @@ class HomeController extends Controller{
         }
 
         //Outside Data
-        $data = new sharedOut_side_dataXapi();
-        $state = $data->getData();
+        $outsideData = new sharedOut_side_dataXapi();
+        $outsideXapi = $outsideData->getData();
+
+        $outsideActionsCount = Array();
+
+        $startDate = (DB::table('assign_lecturers')->where('cid',$ec)->first())->startDate;
+        $startWeek = date("oW", strtotime($startDate));
+
+        for($i=1;$i<16;$i++){
+            $outsideActionsCount[$i]= 0 ;
+        }
+        foreach($outsideXapi as $outstmt){
+            $weekNum = intval(date("oW",strtotime($outstmt["date"]))) - intval(date("oW", strtotime($startDate))) + 1;
+            $outsideActionsCount[$weekNum] = $outsideActionsCount[$weekNum] + 1 ;
+        }
+
+
+
+        dd($outsideActionsCount);
+
+        
 
 
         return view('home',['xapi'=>$state])
