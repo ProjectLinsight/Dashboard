@@ -163,7 +163,10 @@ class HomeController extends Controller{
         }
         foreach($outsideXapi as $outstmt){
             $weekNum = intval(date("oW",strtotime($outstmt["date"]))) - intval(date("oW", strtotime($startDate))) + 1;
-            $outsideActionsCount[$weekNum] = $outsideActionsCount[$weekNum] + 1 ;
+            if ($weekNum>0){
+                $outsideActionsCount[$weekNum] = $outsideActionsCount[$weekNum] + 1 ;
+            }
+            
         }
 
 
@@ -178,6 +181,7 @@ class HomeController extends Controller{
             ->with('activityOverall', json_encode($activityNested))
             ->with('quiz',$all_quizzes)
             ->with('assignment',$all_assignments)
+            ->with('outsideData',$outsideActionsCount)
 
         ;
     }
