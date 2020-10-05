@@ -34,6 +34,7 @@ class LecturerOverviewController extends Controller{
         $note=$this->noteCount($course);
         $quizstat=$this->quizStat($course);
         $formdata=$this->getForum($user,$course);
+        $a_Avg=$this->AssignementAvg($course);
         return view('lecturer/overview',[
             'crs'=>$crs[0],
             'stu'=>$stu,
@@ -49,6 +50,7 @@ class LecturerOverviewController extends Controller{
             ->with('course',$course)
             ->with('quizstats', $quizstat)
             ->with('notes', $note)
+            ->with('AsAvg', json_encode($a_Avg))
             ->with('forum',$formdata);
         return view('lecturer/student_risk',[
             'crs'=>$crs[0],
@@ -146,6 +148,15 @@ class LecturerOverviewController extends Controller{
         // $data2 = new sharedCourseXapi();
         // $state2 = $data2->getData();
         // dd($state2);
+    }
+    public function AssignementAvg($course)
+    {
+        $avgMarks = array();
+        $assignmentAvgMarks = $this->assignmentStat($course);
+        foreach($assignmentAvgMarks as $key => $value) {
+            $avgMarks[$key] = $value['avg'];
+        }
+        return($avgMarks);
     }
 
     public function quizStat($course)

@@ -113,6 +113,9 @@
                     </div>
                 </div>
                 <div class="pb-4">
+                    <hr>
+                    <h3 class="text-center text-dark">Completions</h3>
+                    <hr>
                     <div class="card shadow">
                                 <div class="card-header bg-primary">
                                     <h4 class="my-0 text-white text-center"> Lecture Note Completion </h4>
@@ -193,72 +196,21 @@
                         </div>
                     </div>
                 </div>
-
+                <hr>
+                    <h3 class="text-center text-dark">Assignments & Quizzes Analysis</h3>
+                <hr>
                 <div class="row">
-                    <div class="col-md-7">
+                    <div class="col-md-7 py-3">
                     <!-- <div class="col-md-7"> -->
                         <div class="pb-3">
                             <div class="card shadow">
                                 <div class="card-header bg-info pb-1">
-                                    <h4 class="text-white text-center"> Risk of failure </h4>
+                                    <h4 class="text-white text-center"> Assignment Average </h4>
                                 </div>
-                                <div class="card-body p-0">
+                                <div class="card-body">
                                     <div class="panel panel-default">
-                                        <div class="tab-content">
-                                                <div class="table-responsive">
-                                                    <table class="table table-hover mb-0 text-center" style="border-collapse: collapse;">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Registration Number</th>
-                                                                <!-- <th>Name</th>   -->
-                                                                <th>Risk Level</th> 
-                                                                <th>Risk Level</th> 
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            @foreach($risks as $key => $value)
-                                                            <tr data-href="/lecturer/{{Auth::user()->id}}/{{$course}}/{{$key}}/studentrisk">
-                                                                @if ($value['risklevel']=='High' || $value['risklevel']=='Low')
-                                                                    <td>{{$key}}</td>
-                                                                    <td>{{$value['risklevel']}}</td>
-                                                                    @if ($value['risklevel']=='High')
-                                                                        <?php
-                                                                            $color = "bg-danger";
-                                                                            $percentage = 100;
-                                                                        ?>
-                                                                        @endif
-                                                                    @if ($value['risklevel']=='Low')
-                                                                        <?php
-                                                                            $color = "bg-warning";
-                                                                            $percentage = 50;
-                                                                        ?>
-                                                                        @endif
-                                                                    <td>
-                                                                    <div class="progress">
-                                                                        <div class="progress-bar progress-bar-striped {{$color}} progress-bar-animated" role="progressbar" aria-valuenow="{{$percentage}}" aria-valuemin="0" aria-valuemax="100" style="width: {{$percentage}}%"></div>
-                                                                    </div>
-                                                                    </td>
-
-                                                                @endif
-                                                            </tr>
-                                                            @endforeach
-
-                                                        </tbody>
-                                                    </table>
-                                                    <script>
-                                                    document.addEventListener("DOMContentLoaded", ()=>{
-                                                        const rows = document.querySelectorAll("tr[data-href]");
-                                                        rows.forEach(row => {
-                                                            row.addEventListener("click", () =>{
-                                                                window.location.href = row.dataset.href;
-                                                            });
-                                                        });
-                                                    });
-                                                    </script>
-                                                </div>
-                                        </div>
                                         <div class="panel-body">
-                                            <canvas id="canvas" height="180" width="600"></canvas>
+                                            <canvas id="statGraph" height="300" width="600"></canvas>
                                         </div>
                                     </div>
                                 </div>
@@ -266,57 +218,10 @@
                         </div>
                     <!-- </div> -->
                     <!-- <div class="col-md-7"> -->
-                        <div class="pb-3">
-                            <div class="card shadow">
-                                <div class="card-header bg-info pb-1">
-                                    <h4 class="text-white text-center"> Top Performances </h4>
-                                </div>
-                                <div class="card-body p-0">
-                                    <div class="panel panel-default">
-                                        <div class="tab-content">
-                                                <div class="table-responsive">
-                                                    <table class="table table-hover mb-0 text-center" style="border-collapse: collapse;">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Registration Number</th>
-                                                                <!-- <th>Name</th>   -->
-                                                                <th>Name</th> 
-                                                                <!-- <th>Degree</th>  -->
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            @foreach($best as $key => $value)
-                                                            <tr data-href="/lecturer/{{Auth::user()->id}}/{{$course}}/{{$key}}/bestperformance">
-                                                                    <td>{{$key}}</td>
-                                                                    <td>{{$value['name']}}</td>
-                                                                
-                                                            </tr>
-                                                            @endforeach
-
-                                                        </tbody>
-                                                    </table>
-                                                    <script>
-                                                    document.addEventListener("DOMContentLoaded", ()=>{
-                                                        const rows = document.querySelectorAll("tr[data-href]");
-                                                        rows.forEach(row => {
-                                                            row.addEventListener("click", () =>{
-                                                                window.location.href = row.dataset.href;
-                                                            });
-                                                        });
-                                                    });
-                                                    </script>
-                                                </div>
-                                        </div>
-                                        <div class="panel-body">
-                                            <canvas id="canvas" height="180" width="600"></canvas>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        
                     <!-- </div> -->
                     </div>
-                    <div class="col-md-5">
+                    <div class="col-md-5 py-3">
                         <div class="pb-3">
                             <div class="card shadow">
                                 <div class="card-header bg-success pb-1">
@@ -451,11 +356,149 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-12">
+                
+                    
+                </div>
+                <hr>
+                    <h3 class="text-center text-dark">Student Performence Analysis</h3>
+                <hr>
+                <!-- new row -->
+                <div class="row">
+                    <div class="col-md-7">
+                    <!-- <div class="col-md-7"> -->
+                        <div class="pb-3">
+                            <div class="card shadow">
+                                <div class="card-header bg-info pb-1">
+                                    <h4 class="text-white text-center"> Risk of failure </h4>
+                                </div>
+                                <div class="card-body p-0">
+                                    <div class="panel panel-default">
+                                        <div class="tab-content">
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover mb-0 text-center" style="border-collapse: collapse;">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Registration Number</th>
+                                                                <!-- <th>Name</th>   -->
+                                                                <th>Risk Level</th> 
+                                                                <th>Risk Level</th> 
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach($risks as $key => $value)
+                                                            <tr data-href="/lecturer/{{Auth::user()->id}}/{{$course}}/{{$key}}/studentrisk">
+                                                                @if ($value['risklevel']=='High' || $value['risklevel']=='Low')
+                                                                    <td>{{$key}}</td>
+                                                                    <td>{{$value['risklevel']}}</td>
+                                                                    @if ($value['risklevel']=='High')
+                                                                        <?php
+                                                                            $color = "bg-danger";
+                                                                            $percentage = 100;
+                                                                        ?>
+                                                                        @endif
+                                                                    @if ($value['risklevel']=='Low')
+                                                                        <?php
+                                                                            $color = "bg-warning";
+                                                                            $percentage = 50;
+                                                                        ?>
+                                                                        @endif
+                                                                    <td>
+                                                                    <div class="progress">
+                                                                        <div class="progress-bar progress-bar-striped {{$color}} progress-bar-animated" role="progressbar" aria-valuenow="{{$percentage}}" aria-valuemin="0" aria-valuemax="100" style="width: {{$percentage}}%"></div>
+                                                                    </div>
+                                                                    </td>
+
+                                                                @endif
+                                                            </tr>
+                                                            @endforeach
+
+                                                        </tbody>
+                                                    </table>
+                                                    <script>
+                                                    document.addEventListener("DOMContentLoaded", ()=>{
+                                                        const rows = document.querySelectorAll("tr[data-href]");
+                                                        rows.forEach(row => {
+                                                            row.addEventListener("click", () =>{
+                                                                window.location.href = row.dataset.href;
+                                                            });
+                                                        });
+                                                    });
+                                                    </script>
+                                                </div>
+                                        </div>
+                                        <div class="panel-body">
+                                            <canvas id="canvas" height="180" width="600"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="pb-3">
+                            <div class="card shadow">
+                                <div class="card-header bg-info pb-1">
+                                    <h4 class="text-white text-center"> Top Performances </h4>
+                                </div>
+                                <div class="card-body p-0">
+                                    <div class="panel panel-default">
+                                        <div class="tab-content">
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover mb-0 text-center" style="border-collapse: collapse;">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Registration Number</th>
+                                                                <!-- <th>Name</th>   -->
+                                                                <th>Name</th> 
+                                                                <!-- <th>Degree</th>  -->
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach($best as $key => $value)
+                                                            <tr data-href="/lecturer/{{Auth::user()->id}}/{{$course}}/{{$key}}/bestperformance">
+                                                                    <td>{{$key}}</td>
+                                                                    <td>{{$value['name']}}</td>
+                                                                
+                                                            </tr>
+                                                            @endforeach
+
+                                                        </tbody>
+                                                    </table>
+                                                    <script>
+                                                    document.addEventListener("DOMContentLoaded", ()=>{
+                                                        const rows = document.querySelectorAll("tr[data-href]");
+                                                        rows.forEach(row => {
+                                                            row.addEventListener("click", () =>{
+                                                                window.location.href = row.dataset.href;
+                                                            });
+                                                        });
+                                                    });
+                                                    </script>
+                                                </div>
+                                        </div>
+                                        <div class="panel-body">
+                                            <canvas id="canvas" height="225" width="600"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <!-- </div> -->
+                    
+                    
+                
+                   
+                </div>
+
+        </div>
+        <hr>
+             <h3 class="text-center text-dark">Forum Analysis</h3>
+         <hr>
+        <div class="col-md-14">
                         <div class="pb-3">
                         <div class="card shadow">
                                 <div class="card-header bg-info pb-1">
-                                    <h4 class="text-white text-center"> Forum Participation </h4>
+                                    <h4 class="text-white text-center"> Forum reminders </h4>
                                 </div>
                                 <div class="card-body p-0">
                                     <div class="panel panel-default">
@@ -468,7 +511,7 @@
                                                                 <th>Thread</th> 
                                                                 <th>Created by</th> 
                                                                 <th>No of replies</th> 
-                                                                <th>Response</th> 
+                                                                <th>Responsed</th> 
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -516,14 +559,8 @@
                             </div>
                         </div>
                     </div>
-                
-                    
-                </div>
-
 
             </div>
-
-        </div>
     </div>
 </div>
 
@@ -599,8 +636,40 @@
                     }
             }
         });
-        var stat = $stats;
-        console.log(stat)
+        var stat = <?php echo $AsAvg; ?>;
+        var sarr = new Array();
+        var counts = new Array();
+        for (var x in stat) {
+            sarr.push(x);
+            counts.push(stat[x]);
+        }
+        console.log(counts);
+        console.log(sarr);
+        var statgraph = document.getElementById("statGraph");
+        var myChart = new Chart(statgraph, {
+            type: 'line',
+            data: {
+                labels:sarr,
+                datasets: [{
+                    label: 'Assignment average',
+                    data: counts,
+                    borderColor: '#2685CB',
+                    hoverBackgroundColor: '#2685CB',
+                    borderStyle: 'solid',
+                    borderWidth: 2,
+                    fill : false
+                }]
+            },
+            options:{
+                scales: {
+                     yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                            }
+                        }]
+                    }
+            }
+        });
 
 </script>
 
