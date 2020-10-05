@@ -163,7 +163,7 @@ class HomeController extends Controller{
         }
         foreach($outsideXapi as $outstmt){
             $weekNum = intval(date("oW",strtotime($outstmt["date"]))) - intval(date("oW", strtotime($startDate))) + 1;
-            if ($weekNum>0){
+            if ($weekNum>0 && $weekNum<16){
                 $outsideActionsCount[$weekNum] = $outsideActionsCount[$weekNum] + 1 ;
             }
             
@@ -171,7 +171,7 @@ class HomeController extends Controller{
 
 
 
-        dd($outsideActionsCount);
+        //dd($outsideActionsCount);
 
         
 
