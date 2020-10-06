@@ -9,6 +9,10 @@
 
 
 @section('content')
+<div style="background-image:url('https://www.creativeclique.co.za/wp-content/uploads/2019/01/Ridge-Design-Website-Design-Background.jpg');position: fixed;background-repeat: no-repeat;background-position: center;background-attachment: fixed;background-size: cover;height:100vh">
+    <div style="background: rgba(255,255, 255, 0.75);width:100vw;height:100vh">
+    </div>
+</div>
 <div class="container-fluid pt-5">
     <div id="wrapper" class="wrapper-content" >
         <div id="sidebar-wrapper" class="bg-dark">
@@ -455,7 +459,7 @@
                                                         </thead>
                                                         <tbody>
                                                             @foreach($best as $key => $value)
-                                                            <tr data-href="/lecturer/{{Auth::user()->id}}/{{$course}}/{{$key}}/bestperformance">
+                                                            <tr data-href="/lecturer/{{Auth::user()->id}}/{{$course}}/{{$key}}/studentrisk">
                                                                     <td>{{$key}}</td>
                                                                     <td>{{$value['name']}}</td>
                                                                 
@@ -597,6 +601,10 @@
                      yAxes: [{
                         ticks: {
                             beginAtZero: true
+                            },
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'No of Students'
                             }
                         }]
                     }
@@ -631,6 +639,10 @@
                      yAxes: [{
                         ticks: {
                             beginAtZero: true
+                            },
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'No of Students'
                             }
                         }]
                     }
@@ -665,6 +677,10 @@
                      yAxes: [{
                         ticks: {
                             beginAtZero: true
+                            },
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Average Mark'
                             }
                         }]
                     }

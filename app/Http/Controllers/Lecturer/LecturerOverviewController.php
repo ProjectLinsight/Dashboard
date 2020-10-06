@@ -577,9 +577,10 @@ class LecturerOverviewController extends Controller{
         $stmt_arr = array();
         $sum_arr = array();
         $count=0;
+        $key = "https://w3id.org/learning-analytics/learning-management-system/short-id";
         for($i=0;$i<$stmt_count;$i++){            
             $logArray=explode("/",$state[$i]->verb->id);
-            if($logArray[sizeof($logArray)-1]==="scored"){
+            if($logArray[sizeof($logArray)-1]==="scored" && $state[$i]->context->contextActivities->grouping[1]->definition->extensions->$key===$course){
                 $stmt_arr[$count]['user'] = $state[$i]->actor->account->name ;
                 $stmt_arr[$count]['name'] = $state[$i]->actor->name ;
                 $stmt_arr[$count]['assignment'] = $state[$i]->object->definition->name->en ;
@@ -594,7 +595,7 @@ class LecturerOverviewController extends Controller{
             $logArray=explode("/",$state[$i]->object->id);
             if($logArray[sizeof($logArray)-2]==="quiz"){  
                 $general=explode("/",$state[$i]->verb->id);
-                if($general[sizeof($general)-1]==="completed"){
+                if($general[sizeof($general)-1]==="completed" && $state[$i]->context->contextActivities->grouping[1]->definition->extensions->$key===$course){
                     $stmt_arr[$count]['user'] = $state[$i]->actor->account->name ; 
                     $stmt_arr[$count]['name'] = $state[$i]->actor->name ;
                     $stmt_arr[$count]['quiz'] = $state[$i]->object->definition->name->en;
