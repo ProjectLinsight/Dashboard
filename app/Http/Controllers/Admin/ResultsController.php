@@ -16,6 +16,10 @@ class ResultsController extends Controller{
 
     public function index(){
         $results = Results::all();
+        // $res = Results::select('subjectCode')->distinct()->get();
+        $res = DB::table('results')->select('subjectCode')->distinct()->get();
+
+        dd($res);
         return view('admin.results',['results'=>$results]);
     }
 
@@ -54,7 +58,7 @@ class ResultsController extends Controller{
         foreach($importData_arr as $importData){
             if(substr($importData[2],0,1)==='I'){
                 $year = substr($importData[2],2,1);
-            }                
+            }
             else if(substr($importData[2],0,1)==='S'){
                  $year = substr($importData[2],3,1);
             }
@@ -75,27 +79,27 @@ class ResultsController extends Controller{
                 }
                 else if(substr($importData[2],0,1)==='S'){
                     $year=substr($importData[2],3,1);
-                } 
+                }
                 else{
                     $year=substr($importData[2],2,1);
                 }
                 $YearAndSem = $year.$importData[5];
-    
+
                 $sub = 'sub'.$YearAndSem;
                 $res = 'res'.$YearAndSem;
                 $credits = 'credits'.$YearAndSem;
                 $tot = 'totCredits'.$YearAndSem;
                 $gpa = 'gpa'.$YearAndSem;
-    
+
                 $stuData->$sub = $stuData->$sub.','.$importData[2];
                 $stuData->$res = $stuData->$res.','.$importData[1];
                 $stuData->$credits = $stuData->$credits.','.Courses::where('cid',$importData[2])->first()->credits;
                 $TotPts = 0 ;
                 $TotCredits = 0 ;
-    
-                $resArray = explode (",", $stuData->$res);  
+
+                $resArray = explode (",", $stuData->$res);
                 $creditArray = explode (",", $stuData->$credits);
-                
+
                 for($i=0; $i<count($resArray); $i++){
                     $TempGrade = $resArray[$i];
                     $TempCredit = (int) $creditArray[$i];
@@ -127,11 +131,11 @@ class ResultsController extends Controller{
                 }
                 $stuData->$tot = $TotCredits;
                 $stuData->$gpa = $TotPts;
-                $FinalCredit = $stuData->totCredits11 + $stuData->totCredits12  + $stuData->totCredits21 + $stuData->totCredits22 + $stuData->totCredits31 + $stuData->totCredits32 + $stuData->totCredits41 + $stuData->totCredits42 ; 
-                $FinalGP = $stuData->gpa11 + $stuData->gpa12 + $stuData->gpa21 + $stuData->gpa22 + $stuData->gpa31 + $stuData->gpa32 + $stuData->gpa41 + $stuData->gpa42 ; 
+                $FinalCredit = $stuData->totCredits11 + $stuData->totCredits12  + $stuData->totCredits21 + $stuData->totCredits22 + $stuData->totCredits31 + $stuData->totCredits32 + $stuData->totCredits41 + $stuData->totCredits42 ;
+                $FinalGP = $stuData->gpa11 + $stuData->gpa12 + $stuData->gpa21 + $stuData->gpa22 + $stuData->gpa31 + $stuData->gpa32 + $stuData->gpa41 + $stuData->gpa42 ;
                 // $stuData->GPA = $FinalGP/$FinalCredit ;
                 $stuData->save();
-            }    
+            }
         }
         return  redirect('/admin/results');
     }
@@ -154,7 +158,7 @@ class ResultsController extends Controller{
         }
         elseif(substr($course[0]->cid,0,1)==="S"){
             $temp = "00";
-        } 
+        }
         else{$temp = "11";}
 
         $bt =substr( ((string)((int)$yoe - (int)$year)),2,2).$temp ;
@@ -164,7 +168,7 @@ class ResultsController extends Controller{
                 $subjects = explode(",", $st->$sub);
                 $results = explode(",", $st->$res);
                 $credits = explode(",", $st->$cre);
-                
+
                 for($i=0;$i<count($subjects);$i++){
                     if($subjects[$i]==$subCode){
                         \array_splice($subjects,$i, 1);
@@ -175,7 +179,7 @@ class ResultsController extends Controller{
                 $subArray = implode(",",$subjects);
                 $resArray = implode(",",$results);
                 $creArray = implode(",",$credits);
-                
+
                 $TotPts = 0 ;
                 $TotCredits = 0 ;
                 for($i=0; $i<count($results); $i++){

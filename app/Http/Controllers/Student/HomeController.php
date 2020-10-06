@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use phpDocumentor\Reflection\Types\True_;
 use PhpParser\Node\Expr\Cast\Array_;
+use App\User;
 
 class HomeController extends Controller{
     public function __construct(){
@@ -18,6 +19,7 @@ class HomeController extends Controller{
     }
 
     public function index(){
+
         $reg_no = substr(Auth::user()->email,0,9);
         $my_enrolled_courses= DB::table('stu_enrollments')->select('cid')->where('index',Auth::user()->index)->get()->toArray();
         $enrolled_courses = Array();
@@ -168,14 +170,14 @@ class HomeController extends Controller{
             if ($weekNum>0 && $weekNum<16){
                 $outsideActionsCount[$weekNum] = $outsideActionsCount[$weekNum] + 1 ;
             }
-            
+
         }
 
 
 
         //dd($outsideActionsCount);
 
-        
+
 
 
         return view('home',['xapi'=>$state])

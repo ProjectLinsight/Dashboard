@@ -1,13 +1,16 @@
 @extends('layouts.app')
-
+<div style="background-image:url('https://www.creativeclique.co.za/wp-content/uploads/2019/01/Ridge-Design-Website-Design-Background.jpg');position: fixed;background-repeat: no-repeat;background-position: center;background-attachment: fixed;background-size: cover;height:100vh">
+    <div style="background: rgba(52,58, 64, 0.75);width:100vw;height:100vh">
+    </div>
+</div>
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
+<div class="container mt-5">
+    <div class="row mt-5 justify-content-center">
+        <div class="col-md-6 mt-5">
             <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
+                <div class="card-header bg-dark text-white text-center pt-4"> <h4>{{ __('Reset Your Password') }}</h4></div>
 
-                <div class="card-body">
+                <div class="card-body text-center" style="background: #eee">
                     <form method="POST" action="{{ route('password.update') }}">
                         @csrf
 

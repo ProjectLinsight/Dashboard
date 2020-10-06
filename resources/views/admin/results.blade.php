@@ -5,6 +5,14 @@
     <script type="text/javascript" src="{{ URL::asset('js/home.js') }}"></script>
 
 @section('content')
+{{-- <div style="background-image:url('https://www.creativeclique.co.za/wp-content/uploads/2019/01/Ridge-Design-Website-Design-Background.jpg');position: fixed;background-repeat: no-repeat;background-position: center;background-attachment: fixed;background-size: cover;height:100vh">
+    <div style="background: rgba(52,58, 64, 0.75);width:100vw;height:100vh">
+    </div>
+</div> --}}
+<div style="background-image:url('https://www.creativeclique.co.za/wp-content/uploads/2019/01/Ridge-Design-Website-Design-Background.jpg');position: fixed;background-repeat: no-repeat;background-position: center;background-attachment: fixed;background-size: cover;height:100vh">
+    <div style="background: rgba(255,255, 255, 0.75);width:100vw;height:100vh">
+    </div>
+</div>
 <div class="container-fluid pt-4">
     <div id="wrapper" class="wrapper-content" >
         <div id="sidebar-wrapper" class="bg-dark">
@@ -14,12 +22,12 @@
                 </li>
                 <li class="pt-3">
                     <a href="/admin/dashboard"><i class="fas fa-home pr-2"></i>Dashboard</a>
-                    <hr class="content-center" style="width:75%;background : #555">   
+                    <hr class="content-center" style="width:75%;background : #555">
                 </li>
                 <li>
                     <a href="/admin/user"><i class="fas fa-user pr-2"></i>Manage Users</a>
                     <hr class="content-center" style="width:75%;background : #555">
-                </li>                
+                </li>
                 <li>
                     <a href="/admin/results"><i class="fas fa-chart-line pr-2"></i>Manage Results</a>
                     <hr class="content-center" style="width:75%;background : #555">
@@ -49,21 +57,21 @@
             <div class="container-fluid row m-0" >
                 <div class="col-md-12 pb-5">
                     <div class="row">
-                        <div class="col-md-9 ">
-                            {{-- @foreach (Auth::user()->results as $rs)
-                                <p>{{$rs->subjectCode}} - {{$rs->course->cName}}</p>                           
+                        <div class="col-md-8 ">
+                            @foreach (Auth::user()->results as $rs)
+                                <p>{{$rs->subjectCode}} - {{$rs->course->cName}}</p>
                                 <form action="/admin/results/{{$rs->subjectCode}}/{{$rs->yoe}}" method="POST">
                                     @csrf
                                     <button type="submit" class="btn btn-danger"> delete users </button>
                                 </form>
-                            @endforeach --}}
+                            @endforeach
                         </div>
-                        <div class="col-md-3 ">
-                            <div class="card shadow">
-                                <div class="card-header bg-info pt-3">
-                                    <h3 class="text-white">Upload Results</h3>
+                        <div class="col-md-4">
+                            <div class="card shadow m-0">
+                                <div class="card-header bg-dark pt-3">
+                                    <h4 class="text-white">Upload Results</h4>
                                 </div>
-                                <div class="card-body">
+                                <div class="card-body" style="background: #eee">
                                     <p class="text-muted"> Please upload a csv file with the following pattern in it. <br>
                                     1st line - "Batch, YOE, Subject Code, Semester" <br>
                                     2nd line onwards - "Index Number, Grade"</p>
@@ -73,7 +81,7 @@
                                         <div class="form-group row  d-flex justify-content-center">
                                             <div class="col-md-12">
                                                 <div class="custom-file">
-                                                    <input type="file" id="result" class="custom-file-label form-control  @error('result') is-invalid @enderror" accept=".csv" name="result" value="{{ old('result') }}" autocomplete="result" autofocus>
+                                                    <input type="file" id="result" style="background: #eee" class="custom-file-label form-control  @error('result') is-invalid @enderror" accept=".csv" name="result" value="{{ old('result') }}" autocomplete="result" autofocus>
                                                     <label class="custom-file-label" for="result" data-browse="Bestand kiezen">Upload Result file </label>
                                                 </div>
                                                 @error('result')
@@ -83,7 +91,7 @@
                                                 @enderror
                                                 <div class="form-group d-flex justify-content-center pt-3">
                                                     <div class="col-md-6">
-                                                        <button type="submit" class="btn btn-info btn-block text-white">Upload Results</button>
+                                                        <button type="submit" class="btn btn-primary btn-block text-white">Upload Results</button>
                                                     </div>
                                                 </div>
                                             </div>
