@@ -10,7 +10,7 @@
     </div>
 </div> --}}
 <div style="background-image:url('https://www.creativeclique.co.za/wp-content/uploads/2019/01/Ridge-Design-Website-Design-Background.jpg');position: fixed;background-repeat: no-repeat;background-position: center;background-attachment: fixed;background-size: cover;height:100vh">
-    <div style="background: rgba(255,255, 255, 0.75);width:100vw;height:100vh">
+    <div style="background: rgba(225,225, 225, 0.75);width:100vw;height:100vh">
     </div>
 </div>
 <div class="container-fluid pt-4">
@@ -34,10 +34,6 @@
                 </li>
                 <li>
                 <a href="/admin/courses"><i class="fas fa-book pr-2"></i>Manage Courses</a>
-                    <hr class="content-center" style="width:75%;background : #555">
-                </li>
-                <li>
-                    <a href="/admin/analysis"><i class="fas fa-id-card pr-2"></i>Analysis</a>
                     <hr class="content-center" style="width:75%;background : #555">
                 </li>
             </ul>

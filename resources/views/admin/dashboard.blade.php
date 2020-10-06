@@ -5,6 +5,10 @@
     <script type="text/javascript" src="{{ URL::asset('js/home.js') }}"></script>
 
 @section('content')
+<div style="background-image:url('https://www.creativeclique.co.za/wp-content/uploads/2019/01/Ridge-Design-Website-Design-Background.jpg');position: fixed;background-repeat: no-repeat;background-position: center;background-attachment: fixed;background-size: cover;height:100vh">
+    <div style="background: rgba(225,225, 225, 0.75);width:100vw;height:100vh">
+    </div>
+</div>
 <div class="container-fluid pt-4">
     <div id="wrapper" class="wrapper-content" >
         <div id="sidebar-wrapper" class="bg-dark">
@@ -28,10 +32,6 @@
                 <a href="/admin/courses"><i class="fas fa-book pr-2"></i>Manage Courses</a>
                     <hr class="content-center" style="width:75%;background : #555">
                 </li>
-                <li>
-                    <a href="/admin/analysis"><i class="fas fa-id-card pr-2"></i>Analysis</a>
-                    <hr class="content-center" style="width:75%;background : #555">
-                </li>
             </ul>
         </div>
 
@@ -47,48 +47,48 @@
             </nav>
 
             <div class="container-fluid row m-0" >
-                <div class="col-md-7">
-                <div class="pb-3">
-                    <div class="card table-card shadow">
-                        <div class="card-header bg-info pt-3">
-                            <h3 class="text-white"> Assigned Lecturers</h3>
-                        </div>
-                        <div class="card-body p-0">
-                            <div class="table-responsive">
-                                <table class="table table-hover mb-0" style="border-collapse: collapse;">
-                                    <thead>
-                                        <tr>
-                                            <th>Course Code</th>
-                                            <th>Course Name</th>
-                                            <th>Year</th>
-                                            <th>Lecturer Name</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach ($assigned_lecturers as $lecturer)
-                                        <tr>
-                                            <td>{{$lecturer->cid}}</td>
-                                            <td>{{$lecturer->cName}}</td>
-                                            <td>{{$lecturer->year}}</td>
-                                            <td>{{$lecturer->lecturer_name}}</td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>                
+                <div class="col-md-8">
+                    <div class="pb-3">
+                        <div class="card table-card shadow">
+                            <div class="card-header bg-dark pt-3">
+                                <h4 class="text-white m-0 p-0"> Assigned Lecturers</h4>
+                            </div>
+                            <div class="card-body p-0" style="background: #eee">
+                                <div class="table-responsive">
+                                    <table class="table table-hover mb-0" style="border-collapse: collapse;">
+                                        <thead>
+                                            <tr>
+                                                <th>Course Code</th>
+                                                <th>Course Name</th>
+                                                <th>Year</th>
+                                                <th>Lecturer Name</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody style="font-size: 14px">
+                                        @foreach ($assigned_lecturers as $lecturer)
+                                            <tr>
+                                                <td>{{$lecturer->cid}}</td>
+                                                <td>{{$lecturer->cName}}</td>
+                                                <td>{{$lecturer->year}}</td>
+                                                <td>{{$lecturer->lecturer_name}}</td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                </div>
-                <div class="col-md-5 pb-5">
+                <div class="col-md-4 pb-5">
                     <div class="pb-3">
-                        <div class="card table-card shadow">
-                            <div class="card-header bg-info pt-3">
-                                <h3 class="text-white"> Assign Lecturers</h3>
+                        <div class="card table-card shadow" style="margin-right: -40px">
+                            <div class="card-header bg-dark pt-3">
+                                <h4 class="text-white p-0 m-0"> Assign Lecturers</h4>
                             </div>
-                            <div class="card-body p-0">
+                            <div class="card-body p-0" style="background: #eee;">
                                 <script  type="application/javascript">
-                                    function getId(course) {
+                                    function getId(course){
                                         console.log(course.cid);
                                         document.getElementById("ccid").value=course.cid;
                                         document.getElementById("ccName").value=course.cName;
@@ -125,7 +125,7 @@
                                                                 <th>Semester</th>
                                                             </tr>
                                                         </thead>
-                                                        <tbody>
+                                                        <tbody style="font-size:14px">
                                                             @foreach(${$tag} as $c)
                                                             <tr>
                                                                 <td data-toggle="modal" data-target="#exampleModalCenter" onclick="getId({{$c}})"> {{$c->cName}} </td>
@@ -166,7 +166,7 @@
                                                                 <th>Semester</th>
                                                             </tr>
                                                         </thead>
-                                                        <tbody>
+                                                        <tbody style="font-size:14px">
                                                             @foreach (${$tag} as $c)
                                                             <tr>
                                                                 <td data-toggle="modal" data-target="#exampleModalCenter" onclick="getId({{$c}})"> {{$c->cName}} </td>

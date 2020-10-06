@@ -6,12 +6,8 @@
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="{{ URL::asset('js/home.js') }}"></script>
 @section('content')
-{{-- <div style="background-image:url('https://www.creativeclique.co.za/wp-content/uploads/2019/01/Ridge-Design-Website-Design-Background.jpg');position: fixed;background-repeat: no-repeat;background-position: center;background-attachment: fixed;background-size: cover;height:100vh">
-    <div style="background: rgba(52,58, 64, 0.75);width:100vw;height:100vh">
-    </div>
-</div> --}}
 <div style="background-image:url('https://www.creativeclique.co.za/wp-content/uploads/2019/01/Ridge-Design-Website-Design-Background.jpg');position: fixed;background-repeat: no-repeat;background-position: center;background-attachment: fixed;background-size: cover;height:100vh">
-    <div style="background: rgba(255,255, 255, 0.75);width:100vw;height:100vh">
+    <div style="background: rgba(225,225, 225, 0.75);width:100vw;height:100vh">
     </div>
 </div>
 <div class="container-fluid pt-4">
@@ -35,10 +31,6 @@
                 </li>
                 <li>
                 <a href="/admin/courses"><i class="fas fa-book pr-2"></i>Manage Courses</a>
-                    <hr class="content-center" style="width:75%;background : #555">
-                </li>
-                <li>
-                    <a href="/admin/analysis"><i class="fas fa-id-card pr-2"></i>Analysis</a>
                     <hr class="content-center" style="width:75%;background : #555">
                 </li>
             </ul>
@@ -93,7 +85,7 @@
                             <div class="card-header bg-dark pt-3">
                                 <div class="row d-flex justify-content-between m-0">
                                     <div class="col-md-8 m-0">
-                                        <h4 class="text-white mt-1"> User Information </h4>
+                                        <h4 class="text-white m-2 p-0"> User Information </h4>
                                     </div>
                                     <div class="col-md-4 m-0">
                                         <input type="text" class="form-control m-0" style="background: #eee" id="task-table-filter" data-action="filter" data-filters="#task-table" placeholder="Search..." />
@@ -117,7 +109,7 @@
                                         </div>
                                         <div>
                                             @foreach ($users as $user)
-                                            <tr>
+                                            <tr style="font-size: 14px">
                                                 <td>{{$user['name']}}</td>
                                                 <td>{{$user['email']}}</td>
                                                 <td>{{$user['utype']}}</td>
@@ -133,8 +125,8 @@
                     <div class="col-md-4">
                         <div class="pb-4">
                             <div class="card shadow">
-                                <div class="card-header bg-dark text-white m-0">
-                                    <h4 class="mt-2 p-0"> Bulk user upload <h4>
+                                <div class="card-header bg-dark pt-3">
+                                    <h4 class="text-white p-0 m-0"> Bulk user upload</h4>
                                 </div>
                                 <div class="card-body px-3" style="background: #eee">
                                     <h6 class="text-muted pb-2 text-justify text-center">
@@ -166,8 +158,8 @@
                         </div>
                         <div class="pb-3">
                             <div class="card shadow">
-                                <div class="card-header bg-dark text-white pt-3">
-                                    <h4> Add User Manually <h4>
+                                <div class="card-header bg-dark pt-3">
+                                    <h4 class="text-white p-0 m-0"> Add user manually</h4>
                                 </div>
                                 <div class="card-body px-2 pt-3" style="background: #eee">
                                     <form method="POST" action="{{ route('register') }}">

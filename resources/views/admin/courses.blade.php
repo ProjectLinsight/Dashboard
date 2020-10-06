@@ -5,7 +5,7 @@
     <script type="text/javascript" src="{{ URL::asset('js/home.js') }}"></script>
 @section('content')
 <div style="background-image:url('https://www.creativeclique.co.za/wp-content/uploads/2019/01/Ridge-Design-Website-Design-Background.jpg');position: fixed;background-repeat: no-repeat;background-position: center;background-attachment: fixed;background-size: cover;height:100vh">
-    <div style="background: rgba(255,255, 255, 0.75);width:100vw;height:100vh">
+    <div style="background: rgba(225,225, 225, 0.75);width:100vw;height:100vh">
     </div>
 </div>
 <div class="container-fluid pt-4">
@@ -29,10 +29,6 @@
                 </li>
                 <li>
                 <a href="/admin/courses"><i class="fas fa-book pr-2"></i>Manage Courses</a>
-                    <hr class="content-center" style="width:75%;background : #555">
-                </li>
-                <li>
-                    <a href="/admin/analysis"><i class="fas fa-id-card pr-2"></i>Analysis</a>
                     <hr class="content-center" style="width:75%;background : #555">
                 </li>
             </ul>
@@ -97,11 +93,11 @@
                                                                             <th>General</th>
                                                                         @endif
                                                                         <th>Semester</th>
-                                                                        <th></th>
-                                                                        <th></th>
+                                                                        <th>Edit</th>
+                                                                        <th>Delete</th>
                                                                     </tr>
                                                                 </thead>
-                                                                <tbody>
+                                                                <tbody style="font-size: 14px">
                                                                     @foreach(${$tag} as $c)
                                                                     <tr>
                                                                         <td> <a href="/courses/{{$c->cid}}" style="text-decoration: none;color:black"> {{$c->cid}} </a></td>
@@ -116,10 +112,10 @@
                                                                         @endif
                                                                         <td>{{$c->semester}}</td>
                                                                         <td class="py-1">
-                                                                            <button type="button" class="btn btn-secondary btn-xs" data-toggle="modal" data-target="#exampleModalCenter" onclick="getId({{$c}})"> <i class="fa fa-edit pr-2"></i> Update </button>
+                                                                            <button type="button" class="btn btn-transparent btn-xs" data-toggle="modal" data-target="#exampleModalCenter" onclick="getId({{$c}})"> <i class="fa fa-edit text-secondary"></i></button>
                                                                         </td>
                                                                         <td class="py-1">
-                                                                            <a href = "/admin/courses_delete/{{ $c->cid }}" class = "btn btn-danger btn-xs" role = "button"> <i class="fa fa-trash pr-2"></i> Delete </a>
+                                                                            <a href = "/admin/courses_delete/{{ $c->cid }}" class = "btn btn-transparent btn-xs" role = "button"> <i class="fa fa-trash text-danger"></i></a>
                                                                         </td>
                                                                     </tr>
                                                                     @endforeach
@@ -163,11 +159,11 @@
                                                                             <th>General</th>
                                                                         @endif
                                                                         <th>Semester</th>
-                                                                        <th></th>
-                                                                        <th></th>
+                                                                        <th>Edit</th>
+                                                                        <th>Delete</th>
                                                                     </tr>
                                                                 </thead>
-                                                                <tbody>
+                                                                <tbody style="font-size:14px">
                                                                     @foreach (${$tag} as $c)
                                                                     <tr>
                                                                         <td> <a href="/courses/{{$c->cid}}" style="text-decoration: none;color:black"> {{$c->cid}} </a></td>
@@ -181,10 +177,10 @@
                                                                         @endif
                                                                         <td>{{$c->semester}}</td>
                                                                         <td class="py-1">
-                                                                            <button type="button" class="btn btn-secondary btn-xs" data-toggle="modal" data-target="#exampleModalCenter" onclick="getId({{$c}})"> <i class="fa fa-edit pr-2"></i> Update </button>
+                                                                            <button type="button" class="btn btn-transparent btn-xs" data-toggle="modal" data-target="#exampleModalCenter" onclick="getId({{$c}})"> <i class="fa fa-edit text-secondary pr-2"></i></button>
                                                                         </td>
                                                                         <td class="py-1">
-                                                                            <a href = "/admin/courses_delete/{{ $c->cid }}" class = "btn btn-danger btn-xs" role = "button"> <i class="fa fa-trash pr-2"></i> Delete </a>
+                                                                            <a href = "/admin/courses_delete/{{ $c->cid }}" class = "btn btn-transparent btn-xs" role = "button"> <i class="fa fa-trash text-danger pr-2"></i></a>
                                                                         </td>
                                                                     </tr>
                                                                     @endforeach
@@ -204,7 +200,7 @@
                         </div>
                         <div class="col-md-3">
                             <div class="pb-3">
-                                <div class="card shadow"  >
+                                <div class="card shadow" style="margin-right: -40px">
                                     <div class="card-header bg-dark pt-3 text-white">
                                         <h4 class="m-0 p-0"> Add New Course</h4>
                                     </div>
