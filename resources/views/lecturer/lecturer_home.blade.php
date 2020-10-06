@@ -72,6 +72,19 @@
                     display: true,
                     text: "Activity Distribution"
                 }
+            },
+            options:{
+                scales: {
+                     yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                            },
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'No of Activities'
+                            }
+                        }]
+                    }
             }
         });
 
@@ -144,6 +157,10 @@
                      yAxes: [{
                         ticks: {
                             beginAtZero: true
+                            },
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'No of Students'
                             }
                         }]
                     }

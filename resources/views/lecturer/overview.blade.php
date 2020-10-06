@@ -597,6 +597,10 @@
                      yAxes: [{
                         ticks: {
                             beginAtZero: true
+                            },
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'No of Students'
                             }
                         }]
                     }
@@ -631,6 +635,10 @@
                      yAxes: [{
                         ticks: {
                             beginAtZero: true
+                            },
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'No of Students'
                             }
                         }]
                     }
@@ -665,6 +673,10 @@
                      yAxes: [{
                         ticks: {
                             beginAtZero: true
+                            },
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Average Mark'
                             }
                         }]
                     }
