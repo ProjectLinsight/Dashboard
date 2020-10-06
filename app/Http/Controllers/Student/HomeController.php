@@ -183,7 +183,7 @@ class HomeController extends Controller{
             ->with('activityOverall', json_encode($activityNested))
             ->with('quiz',$all_quizzes)
             ->with('assignment',$all_assignments)
-            ->with('outsideData',$outsideActionsCount)
+            ->with('outsideData',json_encode($outsideActionsCount))
 
         ;
     }

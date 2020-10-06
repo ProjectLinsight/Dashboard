@@ -34,6 +34,36 @@
                 }
             }
         });
+        var outside = <?php echo $outsideData; ?> ;
+        var out_act = new Array();
+        var out_countx = new Array();
+        for (var key in outside) {
+            out_act.push(key);
+            out_countx.push(outside[key]);
+        }
+        var outgraph = document.getElementById("outsideGraph");
+        var myChart = new Chart(outgraph, {
+            type: 'line',
+            data:{
+                labels:out_act,
+                datasets: [{
+                    label:'Outside Data Distribution',
+                    data: out_countx,
+                    borderWidth: 2,
+                    backgroundColor: ["#0074D9"],
+                    fill : false 
+                }],
+            },
+            options:{
+                responsive: true,
+                title:{
+                    display: true,
+                    text: "Outside Data Distribution"
+                }
+            }
+        });
+
+
 
         var actOverall = <?php echo $activityOverall; ?>;
         var colors = [ '#2685CB', '#4AD95A', '#FEC81B', '#FD8D14', '#CE00E6', '#4B4AD3', '#FC3026', '#B8CCE3', '#6ADC88', '#FEE45F'  ];
@@ -219,11 +249,19 @@
 
             <div class="container-fluid row m-0 changeList"  >
                 <div class="col-md-7 py-3">
-                    <div class="card shadow-sm">
+                    <div class="card shadow-sm" style="background: #fefefe">
                         <div class="card-header bg-primary">
                             <h4 class="text-white my-0"> Outside-VLE Data Management </h4>
                         </div>
-                        <div class="card-body">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <canvas id="outsideGraph"  height="280" width="600"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card shadow-sm">
+                    <div class="card-body">
                       <script  type="application/javascript">
                                      function getId(stmt) {
                                          console.log("statement" + stmt);
