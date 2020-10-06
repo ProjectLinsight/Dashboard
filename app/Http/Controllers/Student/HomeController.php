@@ -139,9 +139,6 @@ class HomeController extends Controller{
                             if($qd->title== $ed['title'] && $ed['type']==="quiz" && $ed['verb']==="completed"){
                                 $qd->submitted=true;
                             }
-                            else{
-                                $qd->submitted=false;
-                            }
                         }
                     }
                 }
