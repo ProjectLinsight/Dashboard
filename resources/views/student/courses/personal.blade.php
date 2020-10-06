@@ -38,7 +38,7 @@
             var head = new Array('Obtained Marks','Average Marks');
             var i = 1 ;
             for(var key in obtMarks){
-                avg.push(obtMarks[key]);
+                avg.push(avgMarks[key]);
             }
             for(var key in obtMarks){
                 marks.push(obtMarks[key]);
@@ -474,8 +474,10 @@
                                         </div>
                                     </div>
                                     <div class="pl-5 pt-2">
+                                        <?php $i = 0 ;?>
                                         @foreach($assignmentNames as $key => $asNames)
-                                            <h6 class="text-muted" style="font-size: 12px"> <strong>{{$key}} - {{$asNames}} </strong></h6>
+                                            <?php $i+=1; ?>
+                                            <h6 class="text-muted" style="font-size: 12px"> <strong>As{{$i}} - {{$asNames}} </strong></h6>
                                         @endforeach
                                     </div>
                                 </div>

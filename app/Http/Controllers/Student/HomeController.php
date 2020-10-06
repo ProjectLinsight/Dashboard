@@ -55,7 +55,6 @@ class HomeController extends Controller{
         // dd($activityNested);
 
         //Assignemt Reminders
-
         $all_assignments = Array();
         foreach($enrolled_courses as $subject){
             $subject_assignments = DB::table('assignments')->where('cid',$subject)->get(['title','weight','dueDate'])->toArray();
@@ -66,7 +65,6 @@ class HomeController extends Controller{
                 $all_assignments[$subject] = $subject_assignments;
             }
         }
-        //dd($all_assignments);
 
         //Quiz Reminders
         $all_quizzes = Array();
@@ -93,22 +91,16 @@ class HomeController extends Controller{
             }
         }
 
-        //dd($enrolled_xapi);
+        // dd($enrolled_xapi,$all_assignments);
 
 
         foreach($all_assignments as $assignment=>$assignment_data){
             foreach($enrolled_xapi as $exapi=>$exapi_data){
-
                 if($assignment===$exapi){
                     foreach($assignment_data as $ad){
-
                         foreach($exapi_data as $ed){
-
-                            if($ad->title== $ed['title'] && $ed['verb']==="submitted"){
+                            if($ad->title== $ed['title'] && $ed['verb']=="submitted"){
                                 $ad->submitted=true;
-                            }
-                            else{
-                                $ad->submitted=false;
                             }
 
                         }
@@ -118,7 +110,7 @@ class HomeController extends Controller{
             }
         }
 
-        //dd($all_assignments);
+        // dd($all_assignments);
 
         $enrolled_qxapi = Array();
         $xapi_qdata = new sharedCourseXapi();
@@ -174,7 +166,7 @@ class HomeController extends Controller{
         }
 
 
-
+        // dd($all_assignments);
         //dd($outsideActionsCount);
 
 

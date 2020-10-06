@@ -290,7 +290,7 @@
                                         $obj2 = $stmt['url'];
                                     ?>
                                     <div class="col-2">
-                                        <a type="button" class="btn btn-s" data-toggle="modal" data-target="#exampleModalCenter" onclick="getId({{'Title got'}});  getDoc('Description got');"   > <i class="fas fa-share-square pr-2"></i></a>
+                                        <a type="button" class="btn btn-s" data-toggle="modal" data-target="#exampleModalCenter" onclick="getId({{'Title gottttt'}});  getDoc('Description got');"   > <i class="fas fa-share-square pr-2"></i></a>
                                     </div>
                                 </div>
                             @endforeach
