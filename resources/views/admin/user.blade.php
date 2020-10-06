@@ -126,7 +126,7 @@
                         <div class="pb-4">
                             <div class="card shadow">
                                 <div class="card-header bg-info text-center text-white pt-3">
-                                    <h3> Add Users Manually <h3>
+                                    <h3> Bulk User Upload <h3>
                                 </div>
                                 <div class="card-body px-5">
                                     <h6 class="text-muted pb-4 text-justify text-center">
