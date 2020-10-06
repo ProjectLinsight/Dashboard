@@ -88,7 +88,7 @@ class ProfilesController extends Controller{
    
     }
 
-    public function reset_password(Request $request,$id){
+  /*  public function reset_password(Request $request,$id){
         $this -> validate($request,[
             'old_password' => ['required', 'string', 'min:8', ],
             'new_password' => ['required', 'string', 'min:8', ],
@@ -113,7 +113,7 @@ class ProfilesController extends Controller{
             
 
         return  redirect('/home');  
-    } 
+    }   */
 
    /* public function sendEmail(Request $request,$id)
     {
