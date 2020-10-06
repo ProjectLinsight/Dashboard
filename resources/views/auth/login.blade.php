@@ -10,10 +10,10 @@
             <div class="row justify-content-center">
                 <div class="col-md-3">
                     <div class="card shadow">
-                        <div class="card-header bg-primary text-center text-white pb-0">
+                        <div class="card-header bg-dark text-center text-white pb-0">
                             <h4>Get Started<h4>
                         </div>
-                        <div class="card-body pt-5">
+                        <div class="card-body pt-5" style="background: #eee">
                             <div class="d-flex justify-content-center" style="margin-top: -70px;margin-bottom:-40px">
                                 <img src="images/logo/logo1.png" style="max-width: 250px;height:auto" alt="logo">
                             </div>
@@ -55,8 +55,8 @@
                                 </div>
 
                                 <div class="form-group d-flex justify-content-center">
-                                    <div class="col-md-6">
-                                        <button type="submit" class="btn btn-info btn-block text-white">Login</button>
+                                    <div class="col-md-8">
+                                        <button type="submit" class="btn btn-primary btn-block text-white">Login</button>
                                     </div>
                                 </div>
                                 <div class="form-group d-flex justify-content-center">
