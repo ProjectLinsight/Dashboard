@@ -201,7 +201,7 @@
                                 </div>
                                 <div class="border-right  px-3">
                                     <div class="d-flex justify-content-end">
-                                        <h1><strong> {{$value['aavg']}} </strong></h1>
+                                        <h1><strong> {{round($value['aavg'], 2)}} </strong></h1>
                                     </div>
                                     <div class="d-flex justify-content-end">
                                         <h6 style="font-size:calc(0.8em + 0.2vw)"><strong> Average Assignment Marks </strong></h6>
@@ -209,7 +209,7 @@
                                 </div>
                                 <div class="border-right  px-3">
                                     <div class="d-flex justify-content-end">
-                                        <h1><strong> {{$value['qavg']}} </strong></h1>
+                                        <h1><strong> {{round($value['qavg'], 2)}} </strong></h1>
                                     </div>
                                     <div class="d-flex justify-content-end">
                                         <h6 style="font-size:calc(0.8em + 0.2vw)"><strong> Average Quiz Marks </strong></h6>
