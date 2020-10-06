@@ -18,6 +18,21 @@ class DashboardController extends Controller{
 
         $courses = Courses::all();
 
+        $suffix = '@ucsc.cmb.ac.lk';
+
+        $assigned_lec = DB::table('assign_lecturers')
+                            ->join('courses','assign_lecturers.cid','=','courses.cid')
+                            ->select('assign_lecturers.cid', 'assign_lecturers.lid','assign_lecturers.year','courses.cName')->get()->toArray();
+
+
+        foreach($assigned_lec as $al){
+            $lec_email = $al->lid.'@ucsc.cmb.ac.lk';
+            $lec_name = DB::table('users')->where('email','=',$lec_email)->value('name');
+            $al->lecturer_name = $lec_name;
+        }
+
+        //dd($assigned_lec);
+
         $is1 = array();
         $is2 = array();
         $is3 = array();
@@ -73,7 +88,8 @@ class DashboardController extends Controller{
             'cs2'=> $cs2,
             'cs3'=> $cs3,
             'cs4'=> $cs4,
-            'lec'=> $lec
+            'lec'=> $lec,
+            'assigned_lecturers'=>$assigned_lec
             ]);
     }
 
