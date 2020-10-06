@@ -107,9 +107,6 @@ class HomeController extends Controller{
                             if($ad->title== $ed['title'] && $ed['verb']==="submitted"){
                                 $ad->submitted=true;
                             }
-                            else{
-                                $ad->submitted=false;
-                            }
 
                         }
 
