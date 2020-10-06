@@ -126,6 +126,7 @@
                                    <a href="#"> <p class="text-center" style="margin-top:-10px" data-toggle="modal" data-target="#exampleModalCenter01"> Setup Username</p> </a>
                                 @endif
                             @endif
+                            <p class="pt-2 text-center"><a href="" style="font-size:calc(0.8em + 0.1vw)" data-toggle="modal" data-target="#exampleModalCenter03"> Reset password</a></p>
                         </div>
                         <div class="col-8 pl-3 pt-4">
                             <h3 style="font-size:calc(1.3em + 0.4vw)"> <strong>{{$user->name}}</strong> </h3>
@@ -317,4 +318,11 @@
         </div>
     </div>
 </div>
+
+<!-- ----------------------------------------------------------------------------------------------------------------------------->
+
+
+
+
+
 @endsection

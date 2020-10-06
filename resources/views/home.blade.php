@@ -75,6 +75,15 @@
         });
     }
 </script>
+
+<script>
+    var msg = '{{Session::get('alert')}}';
+    var exist = '{{Session::has('alert')}}';
+    if(exist){
+      alert(msg);
+    }
+  </script>
+
 @section('content')
 <div style="background-image:url('https://www.creativeclique.co.za/wp-content/uploads/2019/01/Ridge-Design-Website-Design-Background.jpg');position: fixed;background-repeat: no-repeat;background-position: center;background-attachment: fixed;background-size: cover;height:100vh">
     <div style="background: rgba(255,255, 255, 0.75);width:100vw;height:100vh">
@@ -215,6 +224,22 @@
                             <h4 class="text-white my-0"> Outside-VLE Data Management </h4>
                         </div>
                         <div class="card-body">
+                      <script  type="application/javascript">
+                                     function getId(stmt) {
+                                         console.log("statement" + stmt);
+                                         document.getElementById("title").value=stmt;
+                                         //document.getElementById("description").value=stmt;
+                                       
+                                     }
+
+                                     function getDoc(des) {
+                                        document.getElementById("description").innerHTML=des;
+                                       
+                                     }
+
+                                     //document.getElementById('textArea').innerHTML = "GeeksforGeeks";
+                                </script> 
+
                             <div class="row">
                                 <div class="col-8"><strong> Title </strong></div>
                                 <div class="col-2"><strong> Date </strong></div>
@@ -225,9 +250,17 @@
                                     <div class="col-8">
                                         <a href="{{$stmt['url']}}">  {{$stmt['title']}} </a>
                                     </div>
-                                    <div class="col-2"> {{$stmt['date']}} </div>
                                     <div class="col-2">
-                                        <a type="button" class="btn btn-s" data-toggle="modal" data-target="#exampleModalCenter" onclick="getId({{$stmt['title'] }})"> <i class="fas fa-share-square pr-2"></i></a>
+                                        <a href="{{$stmt['url']}}">  {{$stmt['date']}} </a>
+                                    </div>
+                                    <?php 
+                                    $obj1 = $stmt['title'];
+                                    $obj2 = $stmt['url'];
+                                    
+                                    ?>
+                                   
+                                    <div class="col-2">
+                                        <a type="button" class="btn btn-s" data-toggle="modal" data-target="#exampleModalCenter" onclick="getId('Title got');  getDoc('Description got');"   > <i class="fas fa-share-square pr-2"></i></a>
                                     </div>
                                 </div>
                             @endforeach
@@ -349,7 +382,7 @@
 
                     <div class="form-group d-flex justify-content-center">
                     <div class="col-md-12 px-0">
-                            <input id="title" type="title" class="form-control @error('title') is-invalid @enderror" name="title" value="{{ old('title') }}" required autocomplete="title" autofocus placeholder="Title">
+                            <input id="title" type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{ old('title') }}" required autocomplete="title" autofocus placeholder="Title">
                             @error('title')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -378,7 +411,7 @@
                    
                     <div class="form-group row  d-flex justify-content-center">
                         <div class="col-md-12">
-                            <textarea id="description" type="text" style="height: 110px;" class="form-control @error('description') is-invalid @enderror" name="description" value="{{ old('description') }}" required autocomplete="description" autofocus placeholder="Description"></textarea>
+                            <textarea id="description" type="text" style="height: 110px;" class="form-control @error('description') is-invalid @enderror" name="description" >  </textarea>
                             @error('description')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -390,7 +423,7 @@
                     <div class="form-group row  d-flex justify-content-center">
                         <div class="col-md-12">
                             <div class="custom-file">
-                                <input type="file" id="image" class="custom-file-label form-control  @error('image') is-invalid @enderror" name="image" value="{{ old('image') }}" autocomplete="image" autofocus>
+                                <input type="file" id="image" class="custom-file-label form-control  @error('image') is-invalid @enderror" name="image" autocomplete="image" autofocus>
                                 <label class="custom-file-label" for="image" data-browse="Bestand kiezen">Upload image (optional) </label>
                             </div>
                             @error('image')
