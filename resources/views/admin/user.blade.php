@@ -134,7 +134,7 @@
                         <div class="pb-4">
                             <div class="card shadow">
                                 <div class="card-header bg-dark text-white m-0">
-                                    <h4 class="mt-2 p-0"> Add Users as Bulk data <h4>
+                                    <h4 class="mt-2 p-0"> Bulk user upload <h4>
                                 </div>
                                 <div class="card-body px-3" style="background: #eee">
                                     <h6 class="text-muted pb-2 text-justify text-center">

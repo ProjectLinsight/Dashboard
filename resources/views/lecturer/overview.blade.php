@@ -9,6 +9,10 @@
 
 
 @section('content')
+<div style="background-image:url('https://www.creativeclique.co.za/wp-content/uploads/2019/01/Ridge-Design-Website-Design-Background.jpg');position: fixed;background-repeat: no-repeat;background-position: center;background-attachment: fixed;background-size: cover;height:100vh">
+    <div style="background: rgba(255,255, 255, 0.75);width:100vw;height:100vh">
+    </div>
+</div>
 <div class="container-fluid pt-5">
     <div id="wrapper" class="wrapper-content" >
         <div id="sidebar-wrapper" class="bg-dark">
@@ -279,7 +283,7 @@
                                                     @if($value['count'] != 0)
                                                                     <h6> <strong> Maximum &ensp; : &ensp; </strong> {{$value['max']}} </h6>
                                                                     <h6> <strong> Minimum &emsp;  : &ensp; </strong> {{$value['min']}} </h6>
-                                                                    <h6> <strong> Average &emsp;  : &ensp; </strong> {{$value['avg']}} </h6>
+                                                                    <h6> <strong> Average &emsp;  : &ensp; </strong> {{round($value['avg'], 2)}} </h6>
                                                                     
                                                     @endif
                                                     </div>
@@ -295,31 +299,6 @@
 
                                             <!-- quizzes list comes here -->
                                             @foreach($quizstats as $key => $value)
-                                            <!-- <div class="p-3">
-                                                <div class="card shadow">
-                                                    <div class="card-header text-white bg-info  d-flex justify-content-between" style="cursor: pointer;" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                                                        <div class="row pt-1">
-                                                            <h6 class="pt-1">
-                                                                &ensp; {{$key}}
-                                                            </h6>
-                                                        </div>
-                                                        <h4 class="pt-1"><i class="fa fa-angle-down" aria-hidden="true"></i></h4>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <div class="collapse" id="collapseExample">
-                                                            <div class="card card-body">
-                                                                <hr>
-                                                                @if($value['count'] != 0)
-                                                                    <h6> <strong> Maximum &ensp; : &ensp; </strong> {{$value['max']}} </h6>
-                                                                    <h6> <strong> Minimum &emsp;  : &ensp; </strong> {{$value['min']}} </h6>
-                                                                    <h6> <strong> Average &emsp;  : &ensp; </strong> {{$value['avg']}} </h6>
-                                                                    <br>
-                                                                @endif
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div> -->
                                             <div class="accordion" id="accordionExample">
                                                 <div class="card">
                                                     <div class="card-header" id="headingOne">
@@ -333,9 +312,9 @@
                                                     <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                                                     <div class="card-body">
                                                     @if($value['count'] != 0)
-                                                                    <h6> <strong> Maximum &ensp; : &ensp; </strong> {{$value['max']}} </h6>
-                                                                    <h6> <strong> Minimum &emsp;  : &ensp; </strong> {{$value['min']}} </h6>
-                                                                    <h6> <strong> Average &emsp;  : &ensp; </strong> {{$value['avg']}} </h6>
+                                                                    <h6> <strong> Maximum &ensp; : &ensp; </strong> {{round($value['max'], 2)}} </h6>
+                                                                    <h6> <strong> Minimum &emsp;  : &ensp; </strong> {{round($value['min'], 2)}} </h6>
+                                                                    <h6> <strong> Average &emsp;  : &ensp; </strong> {{round($value['avg'], 2)}} </h6>
                                                                     
                                                     @endif
                                                     </div>
@@ -455,7 +434,7 @@
                                                         </thead>
                                                         <tbody>
                                                             @foreach($best as $key => $value)
-                                                            <tr data-href="/lecturer/{{Auth::user()->id}}/{{$course}}/{{$key}}/bestperformance">
+                                                            <tr data-href="/lecturer/{{Auth::user()->id}}/{{$course}}/{{$key}}/studentrisk">
                                                                     <td>{{$key}}</td>
                                                                     <td>{{$value['name']}}</td>
                                                                 

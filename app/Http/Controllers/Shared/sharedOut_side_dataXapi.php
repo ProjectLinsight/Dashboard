@@ -27,7 +27,7 @@ class sharedOut_side_dataXapi extends Controller
             $key = "https://w3id.org/learning-analytics/learning-management-system/short-id";
             $logArray=explode("/",$temp->verb->id);
                 if(isset($temp->verb->display->en)){
-
+                    if(isset($temp->object->definition->description->en)){
                         if($temp->verb->display->en==="Visited"){
                             if($temp->actor->name=== $reg_no){
 
@@ -41,6 +41,7 @@ class sharedOut_side_dataXapi extends Controller
 
                             }
                         }
+                    }
                 }
         }
     return($state) ;

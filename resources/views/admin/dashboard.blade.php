@@ -48,7 +48,37 @@
 
             <div class="container-fluid row m-0" >
                 <div class="col-md-7">
-
+                <div class="pb-3">
+                    <div class="card table-card shadow">
+                        <div class="card-header bg-info pt-3">
+                            <h3 class="text-white"> Assigned Lecturers</h3>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0" style="border-collapse: collapse;">
+                                    <thead>
+                                        <tr>
+                                            <th>Course Code</th>
+                                            <th>Course Name</th>
+                                            <th>Year</th>
+                                            <th>Lecturer Name</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach ($assigned_lecturers as $lecturer)
+                                        <tr>
+                                            <td>{{$lecturer->cid}}</td>
+                                            <td>{{$lecturer->cName}}</td>
+                                            <td>{{$lecturer->year}}</td>
+                                            <td>{{$lecturer->lecturer_name}}</td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>                
+                        </div>
+                    </div>
+                </div>
                 </div>
                 <div class="col-md-5 pb-5">
                     <div class="pb-3">

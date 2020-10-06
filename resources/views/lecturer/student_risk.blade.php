@@ -27,6 +27,15 @@
                         backgroundColor: ["#0074D9", "#FF4136", "#2ECC40", "#FF851B", "#7FDBFF", "#B10DC9", "#FFDC00", "#001f3f", "#39CCCC", "#01FF70", "#85144b", "#F012BE", "#3D9970", "#111111", "#AAAAAA"]
                     }]
                 },
+                options:{
+                scales: {
+                     yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                            }
+                        }]
+                    }
+            }
             });
 
             var date_counts = <?php echo $date_counts; ?>;
@@ -108,6 +117,10 @@
     </script>
 
 @section('content')
+<div style="background-image:url('https://www.creativeclique.co.za/wp-content/uploads/2019/01/Ridge-Design-Website-Design-Background.jpg');position: fixed;background-repeat: no-repeat;background-position: center;background-attachment: fixed;background-size: cover;height:100vh">
+    <div style="background: rgba(255,255, 255, 0.75);width:100vw;height:100vh">
+    </div>
+</div>
 <div class="container-fluid pt-5">
     <div id="wrapper" class="wrapper-content" >
         <div id="sidebar-wrapper" class="bg-dark">
@@ -188,7 +201,7 @@
                                 </div>
                                 <div class="border-right  px-3">
                                     <div class="d-flex justify-content-end">
-                                        <h1><strong> {{$value['aavg']}} </strong></h1>
+                                        <h1><strong> {{round($value['aavg'], 2)}} </strong></h1>
                                     </div>
                                     <div class="d-flex justify-content-end">
                                         <h6 style="font-size:calc(0.8em + 0.2vw)"><strong> Average Assignment Marks </strong></h6>
@@ -196,7 +209,7 @@
                                 </div>
                                 <div class="border-right  px-3">
                                     <div class="d-flex justify-content-end">
-                                        <h1><strong> {{$value['qavg']}} </strong></h1>
+                                        <h1><strong> {{round($value['qavg'], 2)}} </strong></h1>
                                     </div>
                                     <div class="d-flex justify-content-end">
                                         <h6 style="font-size:calc(0.8em + 0.2vw)"><strong> Average Quiz Marks </strong></h6>
@@ -550,7 +563,7 @@
                                                                     </td>
                                                                     <td>
                                                                     @if($flag == "Your assignment is Submitted and Graded")
-                                                                            <h6> <strong>{{$mark}} out of {{$quiz->maxMarks}} </h6>
+                                                                            <h6> <strong>{{$mark*10}} out of {{$quiz->maxMarks}} </h6>
                                                                         @endif
                                                                     @if($flag == "You haven't submitted this assignment")    
                                                                         <h6> Not Completed</h6>

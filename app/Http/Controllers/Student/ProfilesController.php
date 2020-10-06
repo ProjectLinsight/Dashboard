@@ -1,10 +1,13 @@
 <?php
 
 namespace App\Http\Controllers\Student;
+
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Mail\Message;
+use Illuminate\Support\Facades\Password;
 
 class ProfilesController extends Controller{
     public function __construct(){
@@ -32,6 +35,10 @@ class ProfilesController extends Controller{
 
         return  redirect('/home');  
     }
+
+
+
+    
 
   /*  public function update2(Request $request,$id){
        
@@ -81,17 +88,47 @@ class ProfilesController extends Controller{
    
     }
 
-  /*  if(request('image')!=null){
-        $image = request('image');
-        $filename = $image->getClientOriginalName();
-        $image->move(public_path('uploads/post'),$filename);
-        $imagepath= request('image')->getClientOriginalName();
-      
-        auth()->user()->posts()->where('id', $post->id)->update([
-            'image' => $imagepath
-        ]);   
-    }else {
-        auth()->user()->where('id', $user->id)->update($data); 
+  /*  public function reset_password(Request $request,$id){
+        $this -> validate($request,[
+            'old_password' => ['required', 'string', 'min:8', ],
+            'new_password' => ['required', 'string', 'min:8', ],
+            're_password' => ['required', 'string', 'min:8','same:new_password'],
+
+          
+
+        ]);
+
+        if(Hash::check($old_password, $user->password)) {
+        
+
+            $user = User::find(Auth::user()->id);
+            $user->password= $request->get('new_password');  
+            $user->save(); 
+            return  redirect('/home')->with('alert', 'Password Updated!');
+
+        } else {
+           
+            return  redirect('/home')->with('alert', 'Failed to Update!');
+        }
+            
+
+        return  redirect('/home');  
+    }   */
+
+   /* public function sendEmail(Request $request,$id)
+    {
+        $user = User::find(Auth::user()->id);
+        $credentials =  $user->email;
+        $response = Password::sendResetLink($credentials, function (Message $message) {
+            $message->subject($this->getEmailSubject());
+        });
+
+        switch ($response) {
+            case Password::RESET_LINK_SENT:
+                return redirect()->back()->with('status', trans($response));
+            case Password::INVALID_USER:
+                return redirect()->back()->withErrors(['email' => trans($response)]);
+        }
     }  */
 
 

@@ -45,6 +45,7 @@ Route::get('/user/{user_id}/edit','Student\ProfilesController@edit')->name('prof
 Route::post('/user/update_name/{user_id}','Student\ProfilesController@update')->middleware('student');
 Route::post('/user/update_photo/{user_id}','Student\ProfilesController@update1')->middleware('student');
 
+
 //Lecturer
 Route::get('/lecturer/lecturer_home', 'Lecturer\HomeController@index')->middleware('lecturer');
 Route::get('/lecturer/{user}/{course}/courses', 'Lecturer\LecturerCoursesController@index')->middleware('lecturer');
