@@ -88,7 +88,32 @@ class ProfilesController extends Controller{
    
     }
 
-    
+    public function reset_password(Request $request,$id){
+        $this -> validate($request,[
+            'old_password' => ['required', 'string', 'min:8', ],
+            'new_password' => ['required', 'string', 'min:8', ],
+            're_password' => ['required', 'string', 'min:8','same:new_password'],
+
+          
+
+        ]);
+
+        if(Hash::check($old_password, $user->password)) {
+        
+
+            $user = User::find(Auth::user()->id);
+            $user->password= $request->get('new_password');  
+            $user->save(); 
+            return  redirect('/home')->with('alert', 'Password Updated!');
+
+        } else {
+           
+            return  redirect('/home')->with('alert', 'Failed to Update!');
+        }
+            
+
+        return  redirect('/home');  
+    } 
 
    /* public function sendEmail(Request $request,$id)
     {

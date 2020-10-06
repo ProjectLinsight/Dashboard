@@ -321,6 +321,65 @@
 
 <!-- ----------------------------------------------------------------------------------------------------------------------------->
 
+{{-- Modal for reset password --}}
+<div class="modal fade" style="width: 100vw;height:auto" id="exampleModalCenter03" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Reset your password </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="/user/reset_password/{{$user->id}}" enctype="multipart/form-data" method="POST">
+                    @csrf
+
+                    <div class="form-group d-flex justify-content-center">
+                    <div class="col-md-12">
+                            <input id="old_password" type="password" class="form-control @error('old_password') is-invalid @enderror" name="old_password" autofocus placeholder="Your Password" >
+                            @error('old_password')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="form-group d-flex justify-content-center">
+                    <div class="col-md-12">
+                            <input id="new_password" type="password" class="form-control @error('new_password') is-invalid @enderror" name="new_password" autofocus placeholder="New Password">
+                            @error('new_password')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="form-group d-flex justify-content-center">
+                    <div class="col-md-12">
+                            <input id="re_password" type="password" class="form-control @error('re_password') is-invalid @enderror" name="re_password"autofocus placeholder="Re type new Password" >
+                            @error('re_password')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+
+
+                    <div class="form-group d-flex justify-content-center">
+                        <div class="col-md-6">
+                            <button type="submit" class="btn btn-info btn-block text-white">Reset</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
