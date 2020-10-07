@@ -21,7 +21,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    
+
     public function stuData(){
         if($this->utype == 'Student') return $this->hasOne(StudentData::class,'index','index');
     }
@@ -39,7 +39,7 @@ class User extends Authenticatable
 
     public function courses(){
         return $this->hasMany(Courses::class);
-    }    
+    }
 
     public function results(){
         if($this->utype == 'Student') return $this->hasMany(Results::class,'index','index');

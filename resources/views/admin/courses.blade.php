@@ -4,6 +4,10 @@
     <script src="https://kit.fontawesome.com/d43d952765.js" crossorigin="anonymous"></script>
     <script type="text/javascript" src="{{ URL::asset('js/home.js') }}"></script>
 @section('content')
+<div style="background-image:url('https://www.creativeclique.co.za/wp-content/uploads/2019/01/Ridge-Design-Website-Design-Background.jpg');position: fixed;background-repeat: no-repeat;background-position: center;background-attachment: fixed;background-size: cover;height:100vh">
+    <div style="background: rgba(225,225, 225, 0.75);width:100vw;height:100vh">
+    </div>
+</div>
 <div class="container-fluid pt-4">
     <div id="wrapper" class="wrapper-content" >
         <div id="sidebar-wrapper" class="bg-dark">
@@ -13,22 +17,18 @@
                 </li>
                 <li class="pt-3">
                     <a href="/admin/dashboard"><i class="fas fa-home pr-2"></i>Dashboard</a>
-                    <hr class="content-center" style="width:75%;background : #555">   
+                    <hr class="content-center" style="width:75%;background : #555">
                 </li>
                 <li>
                     <a href="/admin/user"><i class="fas fa-user pr-2"></i>Manage Users</a>
                     <hr class="content-center" style="width:75%;background : #555">
-                </li>                
+                </li>
                 <li>
                     <a href="/admin/results"><i class="fas fa-chart-line pr-2"></i>Manage Results</a>
                     <hr class="content-center" style="width:75%;background : #555">
                 </li>
                 <li>
                 <a href="/admin/courses"><i class="fas fa-book pr-2"></i>Manage Courses</a>
-                    <hr class="content-center" style="width:75%;background : #555">
-                </li>
-                <li>
-                    <a href="/admin/analysis"><i class="fas fa-id-card pr-2"></i>Analysis</a>
                     <hr class="content-center" style="width:75%;background : #555">
                 </li>
             </ul>
@@ -51,11 +51,11 @@
                         <div class="col-md-9">
                             <div class="pb-3">
                                 <div class="card table-card shadow">
-                                    <div class="card-header bg-info pt-3  text-white">
-                                        <h3> All Courses</h3>
+                                    <div class="card-header bg-dark pt-3  text-white">
+                                        <h4 class="p-0 m-0"> All Courses</h4>
                                     </div>
-        
-                                    <div class="card-body p-0">
+
+                                    <div class="card-body p-0" style="background: #eee">
                                         <nav class="nav nav-tabs nav-fill">
                                             <a class="col-6 nav-item nav-link active" data-toggle="tab" href="#CS">Computer Science</a>
                                             <a class="col-6 nav-item nav-link" data-toggle="tab" href="#IS">Information Systems</a>
@@ -77,7 +77,7 @@
                                                         if($i==1){$show ='show active';}
                                                         else{$show = '';}
                                                     ?>
-                                                    <div id="{{$tag}}" class="tab-pane fade {{$show}} ">                 
+                                                    <div id="{{$tag}}" class="tab-pane fade {{$show}} ">
                                                         <div class="table-responsive">
                                                             <table class="table table-hover mb-0" style="border-collapse: collapse;">
                                                                 <thead>
@@ -85,7 +85,7 @@
                                                                         <th>Course Code </th>
                                                                         <th>Name</th>
                                                                         <th>Credits</th>
-                                                                        @if ($flag==0)      
+                                                                        @if ($flag==0)
                                                                             <th>Category</th>
                                                                         @else
                                                                             <th>Hons CS</th>
@@ -93,11 +93,11 @@
                                                                             <th>General</th>
                                                                         @endif
                                                                         <th>Semester</th>
-                                                                        <th></th>
-                                                                        <th></th>
+                                                                        <th>Edit</th>
+                                                                        <th>Delete</th>
                                                                     </tr>
                                                                 </thead>
-                                                                <tbody>
+                                                                <tbody style="font-size: 14px">
                                                                     @foreach(${$tag} as $c)
                                                                     <tr>
                                                                         <td> <a href="/courses/{{$c->cid}}" style="text-decoration: none;color:black"> {{$c->cid}} </a></td>
@@ -105,18 +105,18 @@
                                                                         <td>{{$c->credits}}</td>
                                                                         @if ($flag==0)
                                                                             <td>{{substr($c->type,0,1)}}</td>
-                                                                        @else 
+                                                                        @else
                                                                             <td>{{substr($c->type,0,1)}}</td>
                                                                             <td>{{substr($c->type,1,1)}}</td>
-                                                                            <td>{{substr($c->type,2,1)}}</td>        
+                                                                            <td>{{substr($c->type,2,1)}}</td>
                                                                         @endif
                                                                         <td>{{$c->semester}}</td>
                                                                         <td class="py-1">
-                                                                            <button type="button" class="btn btn-secondary btn-xs" data-toggle="modal" data-target="#exampleModalCenter" onclick="getId({{$c}})"> <i class="fa fa-edit pr-2"></i> Update </button>
-                                                                        </td>                                                                    
+                                                                            <button type="button" class="btn btn-transparent btn-xs" data-toggle="modal" data-target="#exampleModalCenter" onclick="getId({{$c}})"> <i class="fa fa-edit text-secondary"></i></button>
+                                                                        </td>
                                                                         <td class="py-1">
-                                                                            <a href = "/admin/courses_delete/{{ $c->cid }}" class = "btn btn-danger btn-xs" role = "button"> <i class="fa fa-trash pr-2"></i> Delete </a>
-                                                                        </td>        
+                                                                            <a href = "/admin/courses_delete/{{ $c->cid }}" class = "btn btn-transparent btn-xs" role = "button"> <i class="fa fa-trash text-danger"></i></a>
+                                                                        </td>
                                                                     </tr>
                                                                     @endforeach
                                                                 </tbody>
@@ -124,9 +124,9 @@
                                                         </div>
                                                     </div>
                                                     <?php
-                                                    }    
+                                                    }
                                                     ?>
-                                                </div>                                      
+                                                </div>
                                             </div>
                                             <div id="IS" class="tab-pane fade">
                                                 <nav class="nav nav-tabs nav-fill">
@@ -144,7 +144,7 @@
                                                         if($i==1){$show ='show active';}
                                                         else{$show = '';}
                                                     ?>
-                                                    <div id="{{$tag}}" class="tab-pane fade {{$show}}">                 
+                                                    <div id="{{$tag}}" class="tab-pane fade {{$show}}">
                                                         <div class="table-responsive">
                                                             <table class="table table-hover mb-0 text-center" style=" border-collapse: collapse;">
                                                                 <thead>
@@ -152,18 +152,18 @@
                                                                         <th>Course Code </th>
                                                                         <th>Name</th>
                                                                         <th>Credits</th>
-                                                                        @if ($flag==0)      
+                                                                        @if ($flag==0)
                                                                             <th>Category</th>
                                                                         @else
                                                                             <th>Honours</th>
                                                                             <th>General</th>
                                                                         @endif
                                                                         <th>Semester</th>
-                                                                        <th></th>
-                                                                        <th></th>
+                                                                        <th>Edit</th>
+                                                                        <th>Delete</th>
                                                                     </tr>
                                                                 </thead>
-                                                                <tbody>
+                                                                <tbody style="font-size:14px">
                                                                     @foreach (${$tag} as $c)
                                                                     <tr>
                                                                         <td> <a href="/courses/{{$c->cid}}" style="text-decoration: none;color:black"> {{$c->cid}} </a></td>
@@ -171,16 +171,16 @@
                                                                         <td>{{$c->credits}}</td>
                                                                         @if ($flag==0)
                                                                             <td>{{substr($c->type,0,1)}}</td>
-                                                                        @else 
+                                                                        @else
                                                                             <td>{{substr($c->type,0,1)}}</td>
-                                                                            <td>{{substr($c->type,1,1)}}</td>       
+                                                                            <td>{{substr($c->type,1,1)}}</td>
                                                                         @endif
                                                                         <td>{{$c->semester}}</td>
                                                                         <td class="py-1">
-                                                                            <button type="button" class="btn btn-secondary btn-xs" data-toggle="modal" data-target="#exampleModalCenter" onclick="getId({{$c}})"> <i class="fa fa-edit pr-2"></i> Update </button>
-                                                                        </td>                                                                    
+                                                                            <button type="button" class="btn btn-transparent btn-xs" data-toggle="modal" data-target="#exampleModalCenter" onclick="getId({{$c}})"> <i class="fa fa-edit text-secondary pr-2"></i></button>
+                                                                        </td>
                                                                         <td class="py-1">
-                                                                            <a href = "/admin/courses_delete/{{ $c->cid }}" class = "btn btn-danger btn-xs" role = "button"> <i class="fa fa-trash pr-2"></i> Delete </a>
+                                                                            <a href = "/admin/courses_delete/{{ $c->cid }}" class = "btn btn-transparent btn-xs" role = "button"> <i class="fa fa-trash text-danger pr-2"></i></a>
                                                                         </td>
                                                                     </tr>
                                                                     @endforeach
@@ -188,8 +188,8 @@
                                                             </table>
                                                         </div>
                                                     </div>
-                                                    <?php } ?>   
-                                                </div> 
+                                                    <?php } ?>
+                                                </div>
                                             </div>
                                         </div>
                                         <hr>
@@ -200,17 +200,17 @@
                         </div>
                         <div class="col-md-3">
                             <div class="pb-3">
-                                <div class="card shadow"  >
-                                    <div class="card-header bg-info pt-3 text-center text-white">
-                                        <h3> Add New Course</h3>
+                                <div class="card shadow" style="margin-right: -40px">
+                                    <div class="card-header bg-dark pt-3 text-white">
+                                        <h4 class="m-0 p-0"> Add New Course</h4>
                                     </div>
-                                    <div class="card-body">
+                                    <div class="card-body" style="background: #eee">
                                         <form method="POST" action="/admin/courses/" enctype="multipart/form-data" method="POST">
                                             @csrf
                                             <div class="form-group content-center">
                                                 <h6 class="pl-3 text-muted"> Course ID :</h6>
                                                 <div class="col-md-12">
-                                                    <input id="cid" type="text" class="form-control @error('cid') is-invalid @enderror" name="cid" value=" {{old('cid')}} " required autocomplete="cid" autofocus placeholder="Course ID">
+                                                    <input id="cid" type="text" style="background: #eee" class="form-control @error('cid') is-invalid @enderror" name="cid" value=" {{old('cid')}} " required autocomplete="cid" autofocus placeholder="Course ID">
                                                     @error('cid')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
@@ -221,7 +221,7 @@
                                             <div class="form-group content-center">
                                                 <h6 class="pl-3 text-muted"> Course Name :</h6>
                                                 <div class="col-md-12">
-                                                    <input id="cName" type="text" class="form-control @error('cName') is-invalid @enderror" name="cName" value=" {{old('cName')}} " required autocomplete="Course Name" autofocus placeholder="Course Name">
+                                                    <input id="cName" style="background: #eee" type="text" class="form-control @error('cName') is-invalid @enderror" name="cName" value=" {{old('cName')}} " required autocomplete="Course Name" autofocus placeholder="Course Name">
                                                     @error('cName')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
@@ -232,7 +232,7 @@
                                             <div class="form-group content-center">
                                                 <h6 class="pl-3 text-muted"> Course Credits :</h6>
                                                 <div class="col-md-12">
-                                                    <input id="credits" type="number" class="form-control @error('credits') is-invalid @enderror" name="credits" value=" {{old('credits')}} " required autocomplete="Course Credits" autofocus >
+                                                    <input id="credits" style="background: #eee" type="number" class="form-control @error('credits') is-invalid @enderror" name="credits" value=" {{old('credits')}} " required autocomplete="Course Credits" autofocus >
                                                     @error('credits')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
@@ -240,11 +240,11 @@
                                                     @enderror
                                                 </div>
                                             </div>
-                
+
                                             <div class="form-group content-center">
                                                 <h6 class="pl-3 text-muted"> Course Type :</h6>
                                                 <div class="col-md-12">
-                                                    <select name="type" id="type" class="form-control @error('credits') is-invalid @enderror"  value=" {{old('type')}} " required autocomplete="Course Type">
+                                                    <select name="type" id="type" style="background: #eee" class="form-control @error('credits') is-invalid @enderror"  value=" {{old('type')}} " required autocomplete="Course Type">
                                                         <option selected></option>
                                                         <option value="Compulsory">Compulsory For All</option>
                                                         <option value="Optional">Optional For All</option>
@@ -283,11 +283,11 @@
                                                     @enderror
                                                 </div>
                                             </div>
-                                            
+
                                             <div class="form-group content-center">
                                                 <h6 class="pl-3 text-muted"> Course Semester :</h6>
                                                 <div class="col-md-12">
-                                                    <select name="semester" id="semester" class="form-control @error('credits') is-invalid @enderror"  value=" {{old('semester')}} " required autocomplete="semester">
+                                                    <select name="semester" style="background: #eee" id="semester" class="form-control @error('credits') is-invalid @enderror"  value=" {{old('semester')}} " required autocomplete="semester">
                                                         <option selected></option>
                                                         <option value="One">One</option>
                                                         <option value="Two">Two</option>
@@ -300,11 +300,11 @@
                                                     @enderror
                                                 </div>
                                             </div>
-                
+
                                             <div class="form-group content-center">
                                                 <div class="form-group d-flex justify-content-center">
                                                     <div class="row col-md-12">
-                                                        <button type="submit" class="btn btn-info btn-block text-white">Add Course </button>
+                                                        <button type="submit" class="btn btn-primary btn-block text-white">Add Course </button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -313,7 +313,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>  
+                    </div>
                 </div>
             </div>
         </div>
@@ -331,7 +331,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            
+
             <div class="modal-body">
                 <form method="POST" action="/admin/courses/update/" enctype="multipart/form-data" method="POST" >
                 @csrf
@@ -408,7 +408,7 @@
                             </div>
                         </div>
                     </div>
-                </form>      
+                </form>
             </div>
         </div>
     </div>

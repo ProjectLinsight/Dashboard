@@ -34,6 +34,36 @@
                 }
             }
         });
+        var outside = <?php echo $outsideData; ?> ;
+        var out_act = new Array();
+        var out_countx = new Array();
+        for (var key in outside) {
+            out_act.push(key);
+            out_countx.push(outside[key]);
+        }
+        var outgraph = document.getElementById("outsideGraph");
+        var myChart = new Chart(outgraph, {
+            type: 'line',
+            data:{
+                labels:out_act,
+                datasets: [{
+                    label:'Outside Data Distribution',
+                    data: out_countx,
+                    borderWidth: 2,
+                    backgroundColor: ["#0074D9"],
+                    fill : false
+                }],
+            },
+            options:{
+                responsive: true,
+                title:{
+                    display: true,
+                    text: "Outside Data Distribution"
+                }
+            }
+        });
+
+
 
         var actOverall = <?php echo $activityOverall; ?>;
         var colors = [ '#2685CB', '#4AD95A', '#FEC81B', '#FD8D14', '#CE00E6', '#4B4AD3', '#FC3026', '#B8CCE3', '#6ADC88', '#FEE45F'  ];
@@ -219,26 +249,28 @@
 
             <div class="container-fluid row m-0 changeList"  >
                 <div class="col-md-7 py-3">
-                    <div class="card shadow-sm">
+                    <div class="card shadow-sm" style="background: #fefefe">
                         <div class="card-header bg-primary">
                             <h4 class="text-white my-0"> Outside-VLE Data Management </h4>
                         </div>
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <canvas id="outsideGraph"  height="280" width="600"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card shadow-sm">
                         <div class="card-body">
-                      <script  type="application/javascript">
-                                     function getId(stmt) {
-                                         console.log("statement" + stmt);
-                                         document.getElementById("title").value=stmt;
-                                         //document.getElementById("description").value=stmt;
-                                       
-                                     }
-
-                                     function getDoc(des) {
-                                        document.getElementById("description").innerHTML=des;
-                                       
-                                     }
-
-                                     //document.getElementById('textArea').innerHTML = "GeeksforGeeks";
-                                </script> 
+                            <script  type="application/javascript">
+                                function getId(stmt) {
+                                    console.log("statement" + stmt);
+                                    document.getElementById("title").value=stmt;
+                                }
+                                function getDoc(des) {
+                                    document.getElementById("description").innerHTML=des;
+                                }
+                            </script>
 
                             <div class="row">
                                 <div class="col-8"><strong> Title </strong></div>
@@ -253,14 +285,12 @@
                                     <div class="col-2">
                                         <a href="{{$stmt['url']}}">  {{$stmt['date']}} </a>
                                     </div>
-                                    <?php 
-                                    $obj1 = $stmt['title'];
-                                    $obj2 = $stmt['url'];
-                                    
+                                    <?php
+                                        $obj1 = $stmt['title'];
+                                        $obj2 = $stmt['url'];
                                     ?>
-                                   
                                     <div class="col-2">
-                                        <a type="button" class="btn btn-s" data-toggle="modal" data-target="#exampleModalCenter" onclick="getId('Title got');  getDoc('Description got');"   > <i class="fas fa-share-square pr-2"></i></a>
+                                        <a type="button" class="btn btn-s" data-toggle="modal" data-target="#exampleModalCenter" onclick="getId({{'Title gottttt'}});  getDoc('Description got');"   > <i class="fas fa-share-square pr-2"></i></a>
                                     </div>
                                 </div>
                             @endforeach
@@ -392,14 +422,14 @@
                     </div>
 
                     <div class="form-group d-flex justify-content-center">
-                    <div class="col-md-12 px-0"> 
+                    <div class="col-md-12 px-0">
                             <label for="sel1">Select course:</label>
                                 <select class="form-control" id="sel1" name="course_code" required autocomplete="course_code" autofocus placeholder="Course code">
                                     @foreach (Auth::user()->stu_enrollment as $sub)
                                          <option>&emsp; {{$sub->cid}}</option>
                                      @endforeach
                                  </select>
-               
+
                             @error('title')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -408,7 +438,7 @@
                         </div>
                     </div>
 
-                   
+
                     <div class="form-group row  d-flex justify-content-center">
                         <div class="col-md-12">
                             <textarea id="description" type="text" style="height: 110px;" class="form-control @error('description') is-invalid @enderror" name="description" >  </textarea>

@@ -94,13 +94,20 @@
                             </div>
                             <hr>
                             <div class="p-3 border rounded" style="background: #fefefe">
-                                <h5 style="font-size:calc(1.2em + 0.2vw)"><strong>{{ $post->title}}</strong></h5>
+
+                                <div class="row">
+                                    <div class="col-3 border-right">
+                                        <button class="btn btn-primary btn-sm text-white m-0" style="cursor:default "><a class="mr-4">{{$post->course_code}}</a></button>
+                                    </div>
+                                    <div class="col-9">
+                                        <h5  style="font-size:calc(1.2em + 0.2vw)"><strong>{{ $post->title}}</strong></h5>
+                                    </div>
+                                </div>
                                 <hr>
-                                <button class="btn btn-info text-white"><a style="text-align:center;">{{$post->course_code}}</a></button>
                                 <p style="font-size:calc(0.9em + 0.1vw);text-align: justify">{{$post->description}}</p>
                                 @if ($post->image)
                                     <div class="d-flex justify-content-center">
-                                        <img style="width:100%;height:auto;" src="uploads/post/{{ $post->image }}" alt="">
+                                        <img style="width:100%;height:auto;" src="/uploads/post/{{ $post->image }}" alt="">
                                     </div>
                                 @endif
                             </div>
@@ -318,14 +325,14 @@
                     </div>
 
                     <div class="form-group d-flex justify-content-center">
-                    <div class="col-md-12 px-0"> 
+                    <div class="col-md-12 px-0">
                             <label for="sel1">Select course:</label>
                                 <select class="form-control" id="sel1" name="course_code" required autocomplete="course_code" autofocus placeholder="Course code">
                                     @foreach (Auth::user()->stu_enrollment as $sub)
                                          <option>&emsp; {{$sub->cid}}</option>
                                      @endforeach
                                  </select>
-               
+
                             @error('title')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -333,7 +340,7 @@
                             @enderror
                         </div>
                     </div>
-                    
+
 
 
                     <div class="form-group row  d-flex justify-content-center">

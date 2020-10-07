@@ -73,18 +73,38 @@ class PersonalCoursesController extends Controller{
         //Assignments Data
         list($activity,$submittedAssignments,$gradedAssignments,$asMarks) = $currentStuData->getAssignmentData($user_stmts);
 
+        //eliminate duplications
+        $gradAssignments = Array();
+        foreach($gradedAssignments as $ga){
+            $flag = false ;
+            if($gradAssignments){
+                foreach($gradAssignments as $g){
+                    if($ga['title']==$g['title']){
+                        $flag = true;
+                        break;
+                    }
+                }
+            }else{
+                $flag = false ;
+            }
+            if($flag==false){
+                array_push($gradAssignments,$ga);
+            }
+        }
+
         //calculating progress on assignments
         $assignmentPosted = DB::table('assignments')->where('cid',$course)->get();
         $totalMarks = 0 ;
         $obtainedMarks = 0 ;
         foreach ($assignmentPosted as $ap) {
-            foreach ($gradedAssignments as $ga) {
+            foreach ($gradAssignments as $ga) {
                 if($ap->title==$ga['title']){
-                    $totalMarks+=$ap->maxMarks;
-                    $obtainedMarks += ($ga['marks']/$ga['maxMarks'])*($ap->maxMarks) ;
+                    $totalMarks+=$ap->weight;
+                    $obtainedMarks += ($ga['marks']/$ga['maxMarks'])*($ap->weight) ;
                 }
             }
         }
+
         //end of calculating progress on assignments
         //Quiz Data
         $quizArray = $currentStuData->getQuizData($user_stmts);
@@ -110,18 +130,15 @@ class PersonalCoursesController extends Controller{
             $obtMarks[$key] = 0;
             $asNames['AS'.$i++]= $key;
         }
-        foreach($gradedAssignments as $key => $value) {
+        foreach($gradAssignments as $key => $value) {
             $obtMarks[$value['title']] = $value['marks'];
         }
-
         $combinedAssignments["Obtained Marks"] = $obtMarks;
         $combinedAssignments["Average Marks"] = $avgMarks;
-        // dd($combinedAssignments);
-
 
         return view('student.courses.personal',[
             'crs'=> $course_name[0],
-            'gradedAssignments' => $gradedAssignments,
+            'gradedAssignments' => $gradAssignments,
             'submittedAssignments' => $submittedAssignments,
             'weeklyAssignments' => $pendAssignments,
             'subAssignments' => $subAssignments,

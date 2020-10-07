@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use phpDocumentor\Reflection\Types\True_;
 use PhpParser\Node\Expr\Cast\Array_;
+use App\User;
 
 class HomeController extends Controller{
     public function __construct(){
@@ -18,6 +19,7 @@ class HomeController extends Controller{
     }
 
     public function index(){
+
         $reg_no = substr(Auth::user()->email,0,9);
         $my_enrolled_courses= DB::table('stu_enrollments')->select('cid')->where('index',Auth::user()->index)->get()->toArray();
         $enrolled_courses = Array();
@@ -53,7 +55,6 @@ class HomeController extends Controller{
         // dd($activityNested);
 
         //Assignemt Reminders
-
         $all_assignments = Array();
         foreach($enrolled_courses as $subject){
             $subject_assignments = DB::table('assignments')->where('cid',$subject)->get(['title','weight','dueDate'])->toArray();
@@ -64,7 +65,6 @@ class HomeController extends Controller{
                 $all_assignments[$subject] = $subject_assignments;
             }
         }
-        //dd($all_assignments);
 
         //Quiz Reminders
         $all_quizzes = Array();
@@ -91,22 +91,16 @@ class HomeController extends Controller{
             }
         }
 
-        //dd($enrolled_xapi);
+        // dd($enrolled_xapi,$all_assignments);
 
 
         foreach($all_assignments as $assignment=>$assignment_data){
             foreach($enrolled_xapi as $exapi=>$exapi_data){
-
                 if($assignment===$exapi){
                     foreach($assignment_data as $ad){
-
                         foreach($exapi_data as $ed){
-
-                            if($ad->title== $ed['title'] && $ed['verb']==="submitted"){
+                            if($ad->title== $ed['title'] && $ed['verb']=="submitted"){
                                 $ad->submitted=true;
-                            }
-                            else{
-                                $ad->submitted=false;
                             }
 
                         }
@@ -116,7 +110,7 @@ class HomeController extends Controller{
             }
         }
 
-        //dd($all_assignments);
+        // dd($all_assignments);
 
         $enrolled_qxapi = Array();
         $xapi_qdata = new sharedCourseXapi();
@@ -139,9 +133,6 @@ class HomeController extends Controller{
                         foreach($qxapi_data as $ed){
                             if($qd->title== $ed['title'] && $ed['type']==="quiz" && $ed['verb']==="completed"){
                                 $qd->submitted=true;
-                            }
-                            else{
-                                $qd->submitted=false;
                             }
                         }
                     }
@@ -168,14 +159,14 @@ class HomeController extends Controller{
             if ($weekNum>0 && $weekNum<16){
                 $outsideActionsCount[$weekNum] = $outsideActionsCount[$weekNum] + 1 ;
             }
-            
+
         }
 
 
-
+        // dd($all_assignments);
         //dd($outsideActionsCount);
 
-        
+
 
 
         return view('home',['xapi'=>$state])
@@ -183,7 +174,7 @@ class HomeController extends Controller{
             ->with('activityOverall', json_encode($activityNested))
             ->with('quiz',$all_quizzes)
             ->with('assignment',$all_assignments)
-            ->with('outsideData',$outsideActionsCount)
+            ->with('outsideData',json_encode($outsideActionsCount))
 
         ;
     }

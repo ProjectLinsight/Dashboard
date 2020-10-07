@@ -12,7 +12,7 @@ class LoginController extends Controller{
 
     // protected $redirectTo = RouteServiceProvider::HOME;
     protected function redirectTo(){
-        if(Auth::user()->utype=='Student'){
+        if(Auth::user()->password=='Student'){
             return 'home' ;
         }else if(Auth::user()->utype=='Lecturer'){
             return '/lecturer/lecturer_home' ;
