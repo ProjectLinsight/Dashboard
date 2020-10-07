@@ -15,28 +15,29 @@ class PostsController extends Controller{
             'title' => 'required',
             'course_code' => 'required',
             'description' => 'required',
-            'image' => ''
+            'image' => '',
+            'link' => ''
         ]);
-        
+
        if(request('image')!=null){
-           // $imagePath = request('image')->store('uploads'); 
+           // $imagePath = request('image')->store('uploads');
            // dd($imagePath);
            $image = request('image');
            $filename = $image->getClientOriginalName();
            $image->move(public_path('uploads/post'),$filename);
            $imagepath= request('image')->getClientOriginalName();
-          
+
             auth()->user()->posts()->create([
                 'title' => $data['title'],
                 'course_code' => $data['course_code'],
                 'description' => $data['description'],
-                'image' => $imagepath 
-            ]);   
+                'image' => $imagepath
+            ]);
         }else{
             auth()->user()->posts()->create($data);
-        }  
+        }
         return  redirect('/profile/' . auth()->user()->id. '/' . auth()->user()->name);
-    
+
 
 
 
@@ -63,16 +64,16 @@ class PostsController extends Controller{
             $filename = $image->getClientOriginalName();
             $image->move(public_path('uploads/post'),$filename);
             $imagepath= request('image')->getClientOriginalName();
-          
+
             auth()->user()->posts()->where('id', $post->id)->update([
                 'title' => $data['title'],
                 'course_code' => $data['course_code'],
                 'description' => $data['description'],
                 'image' => $imagepath
-            ]);   
+            ]);
         }else {
-            auth()->user()->posts()->where('id', $post->id)->update($data); 
-        } 
-        return  redirect('/profile/' . auth()->user()->id. '/' . auth()->user()->name);   
+            auth()->user()->posts()->where('id', $post->id)->update($data);
+        }
+        return  redirect('/profile/' . auth()->user()->id. '/' . auth()->user()->name);
     }
 }

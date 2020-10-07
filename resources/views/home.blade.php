@@ -12,7 +12,7 @@
         document.getElementById("title").value=stmt;
     }
     function getDoc(des) {
-        document.getElementById("description").innerHTML=des;
+        document.getElementById("link").value=des;
     }
 
     window.onload = function () {
@@ -423,7 +423,6 @@
                             @enderror
                         </div>
                     </div>
-
                     <div class="form-group d-flex justify-content-center">
                     <div class="col-md-12 px-0">
                             <label for="sel1">Select course:</label>
@@ -441,6 +440,7 @@
                         </div>
                     </div>
 
+                    <input  id="link" type="text" class="form-control mb-3" name="link" required autocomplete="link" autofocus placeholder="Add Link">
 
                     <div class="form-group row  d-flex justify-content-center">
                         <div class="col-md-12">
