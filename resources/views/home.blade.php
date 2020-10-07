@@ -68,6 +68,27 @@
                 title:{
                     display: true,
                     text: "Outside Data Distribution"
+                },
+                scales:{
+                    xAxes :[
+                        {
+                            scaleLabel:{
+                                display : true ,
+                                labelString : "Week Number"
+                            },
+                        },
+                    ],
+                    yAxes :[
+                        {
+                            ticks :{
+                                beginAtZero : true,
+                            },
+                            scaleLabel:{
+                                display : true ,
+                                labelString : "Count"
+                            },
+                        }
+                    ]
                 }
             }
         });
@@ -109,8 +130,31 @@
                 title:{
                     display: true,
                     text: "Activity Distribution"
+                },
+
+                scales:{
+                    xAxes :[
+                        {
+                            scaleLabel:{
+                                display : true ,
+                                labelString : "Week Number"
+                            },
+                        },
+                    ],
+                    yAxes :[
+                        {
+                            ticks :{
+                                beginAtZero : true,
+                            },
+                            scaleLabel:{
+                                display : true ,
+                                labelString : "Count"
+                            },
+                        }
+                    ]
                 }
             }
+
         });
     }
 </script>

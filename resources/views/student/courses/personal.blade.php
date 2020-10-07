@@ -126,6 +126,29 @@
                         max : 100
                     }]
                 },
+                options : {
+                    scales:{
+                        xAxes :[
+                            {
+                                scaleLabel:{
+                                    display : true ,
+                                    labelString : "Date"
+                                },
+                            },
+                        ],
+                        yAxes :[
+                            {
+                                ticks :{
+                                    beginAtZero : true,
+                                },
+                                scaleLabel:{
+                                    display : true ,
+                                    labelString : "Count"
+                                },
+                            }
+                        ]
+                    }
+                }
             });
 
             var week_counts = <?php echo $week_counts; ?>;
@@ -147,6 +170,29 @@
                         borderColor : "#0074D9",
                         backgroundColor : ['rgba(0, 116, 217, 0.4)' ]
                     }]
+                },
+                options :{
+                    scales:{
+                        xAxes :[
+                            {
+                                scaleLabel:{
+                                    display : true ,
+                                    labelString : "Week Number"
+                                },
+                            },
+                        ],
+                        yAxes :[
+                            {
+                                ticks :{
+                                    beginAtZero : true,
+                                },
+                                scaleLabel:{
+                                    display : true ,
+                                    labelString : "Count"
+                                },
+                            }
+                        ]
+                    }
                 }
             });
         }
@@ -432,7 +478,7 @@
                                 <div class="card-body">
                                     <div class="py-3">
                                         <div class="progress" style="height:12px"  data-toggle="tooltip" data-placement="top"  title="{{$obtainedMarks}} marks out of {{$totalMarks}} obtained">
-                                        <div class="progress-bar bg-{{$color}}" style="width: {{$percentage}}%;"> {{$percentage}}%  </div>
+                                        <div class="progress-bar bg-{{$color}}" style="width: {{$percentage}}%;"> {{round($percentage,2)}}%  </div>
                                         </div>
                                         <div class="pt-3">
                                             <div class="border rounded pt-1 text-center">
