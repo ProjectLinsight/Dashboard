@@ -67,7 +67,7 @@
             </nav>
 
             <div class="container-fluid row m-0 changeList"  >
-                <div class="col-md-7 py-3">
+                <div class="col-md-8 py-3">
                     <hr>
                     <h1 class="text-center text-dark"> <strong>Timeline </strong> </h1>
                     <hr>
@@ -114,6 +114,40 @@
                         </div>
                     </div>
                     @endforeach
+                </div>
+                <div class="col-md-4">
+                    <div class="p-3 row rounded d-flex justify-content-center shadow" style="background:white">
+                        <div class="col-4 pt-4 ">
+                            <?php $user = Auth::user() ;?>
+                            @if ($user->image)
+                                <img class="rounded-circle"  style="max-width: 140px;width:100%;height:auto" src="/uploads/photos/{{ $user->image }}" alt="photo">
+                            @else
+                                <img class="rounded-circle"  style="max-width: 140px;width:100%;height:auto" src="https://mdbootstrap.com/img/Photos/Avatars/img (27).jpg" alt="">
+                            @endif
+                        </div>
+                        <div class="col-8 pl-3 pt-4">
+                            <h3 style="font-size:calc(1.3em + 0.4vw)"> <strong>{{$user->name}}</strong> </h3>
+                            <h6 class="text-muted" style="font-size:calc(0.8em + 0.2vw)"> {{$user->email}}</h6>
+                            <hr>
+                            <h6 style="font-size:calc(0.8em + 0.2vw)"><strong> {{$user->posts->count()}} interactions </strong></h6>
+                            <hr>
+                            <div class="row">
+                                <div class="col-12">
+                                    <h6 style="font-size:calc(0.8em + 0.2vw)"><strong> B.Sc. in {{$user->degree}}</strong></h6>
+                                    <h6 style="font-size:calc(0.8em + 0.2vw)"><strong> {{$user->year}}</strong></h6>
+                                </div>
+                            </div>
+                        </div>
+                        <hr style="width: 93%">
+                        <div class="col-md-12">
+                            <h4 style="font-size:calc(1.1em + 0.4vw)"> <strong>Currently Enrolled Courses </strong></h4>
+                        </div>
+                        <div class="col-12 pl-4">
+                            @foreach(Auth::User()->stu_enrollment as $stu_subject)
+                            <a href="/Mycourses/{{$stu_subject->cid}}" style="font-size:calc(0.7em + 0.2vw)"> {{$stu_subject->cid}} - {{$stu_subject->course->cName}}</a><br>
+                            @endforeach
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
