@@ -75,6 +75,14 @@
             },
             options:{
                 scales: {
+                    xAxes: [
+                        {
+                            scaleLabel: {
+                            display: true,
+                            labelString: "Week Number",
+                            },
+                        },
+                        ],
                      yAxes: [{
                         ticks: {
                             beginAtZero: true
