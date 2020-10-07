@@ -214,7 +214,7 @@
                                 <div class="card-body">
                                     <div class="panel panel-default">
                                         <div class="panel-body">
-                                            <canvas id="statGraph" height="300" width="600"></canvas>
+                                            <canvas id="statGraph" height="350" width="600"></canvas>
                                         </div>
                                     </div>
                                 </div>
@@ -456,7 +456,7 @@
                                                 </div>
                                         </div>
                                         <div class="panel-body">
-                                            <canvas id="canvas" height="225" width="600"></canvas>
+                                            <canvas id="canvas" height="180" width="600"></canvas>
                                         </div>
                                     </div>
                                 </div>
