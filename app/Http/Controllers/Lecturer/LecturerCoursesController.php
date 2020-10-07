@@ -23,6 +23,29 @@ class LecturerCoursesController extends Controller{
             $degree = "Computer Science";
         }
 
+        // url check
+        $cr = DB::table('users')->where('id',$user)->get();
+        foreach ($cr as $key => $value) {
+                    $reg=explode("@",$value->email);
+                    $reg_no= $reg[0];
+
+        }
+        $enrolled = DB::table('assign_lecturers')->where('lid',$reg_no)->get();
+        $course_name  = Courses::where('cid',$course)->get();
+        
+
+        // Check the student is enrolled with that course
+        $enrolledSubjects =  sizeof($enrolled);
+        $ctr = 0 ;
+         foreach($enrolled as $er){            
+            if ($er->cid != $course) {
+                $ctr++;  
+            }
+         } 
+         if($enrolledSubjects == $ctr){
+             abort(403);  //show forbiden error
+         } 
+         
         $stu = DB::table('users')->where('utype','Student')->where('degree',$degree)->get();
         $ent =  DB::table('stu_enrollments')->where('cid',$course)->get();
         $stuNew = array();
