@@ -19,8 +19,25 @@ class ResultsController extends Controller{
         // $res = Results::select('subjectCode')->distinct()->get();
         $res = DB::table('results')->select('subjectCode')->distinct()->get();
 
-        dd($res);
-        return view('admin.results',['results'=>$results]);
+        //eliminate duplications
+        $resFinal = Array();
+        foreach($results as $ga){
+            $flag = false ;
+            if($resFinal){
+                foreach($resFinal as $g){
+                    if($ga->subjectCode==$g->subjectCode){
+                        $flag = true;
+                        break;
+                    }
+                }
+            }else{
+                $flag = false ;
+            }
+            if($flag==false){
+                array_push($resFinal,$ga);
+            }
+        }
+        return view('admin.results',['results'=>$resFinal]);
     }
 
     public function store(Request $request){
