@@ -432,8 +432,7 @@
                                 <div class="card-body">
                                     <div class="py-3">
                                         <div class="progress" style="height:12px"  data-toggle="tooltip" data-placement="top"  title="{{$obtainedMarks}} marks out of {{$totalMarks}} obtained">
-                                            <div class="progress-bar bg-success" style="width: {{$obtainedMarks}}%;"> {{$obtainedMarks}}%  </div>
-                                            <div class="progress-bar bg-secondary" style="width: {{$gap}}%;"></div>
+                                        <div class="progress-bar bg-{{$color}}" style="width: {{$percentage}}%;"> {{$percentage}}%  </div>
                                         </div>
                                         <div class="pt-3">
                                             <div class="border rounded pt-1 text-center">
