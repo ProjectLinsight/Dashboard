@@ -19,9 +19,25 @@ class PersonalCoursesController extends Controller{
     }
 
     public function index($course){
+
+        $user = User::find(Auth::user()->id);
+        $enrolled = DB::table('stu_enrollments')->where('index',$user->index)->get();
         $my_course = DB::table('stu_enrollments')->where('cid',$course)->where('index',Auth::user()->index)->get();
         $course_name  = Courses::where('cid',$course)->get();
         $reg_no = substr(Auth::user()->email,0,9);
+
+        // Check the student is enrolled with that course
+        $enrolledSubjects =  sizeof($enrolled);
+        $ctr = 0 ;
+         foreach($enrolled as $er){            
+            if ($er->cid != $course) {
+                $ctr++;  
+            }
+         } 
+         if($enrolledSubjects == $ctr){
+             abort(403);  //show forbiden error
+         }  
+    
 
         //Start Date, Week and Course Duration
         $today = date("Y-m-d");
@@ -125,6 +141,7 @@ class PersonalCoursesController extends Controller{
             ->with('obtMarks', json_encode($obtMarks))
             ->with('avgMarks', json_encode($avgMarks))
             ;
+
     }
 
 }

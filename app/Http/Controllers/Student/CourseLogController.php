@@ -3,9 +3,13 @@
 namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Courses ;
+use App\User ;
+use App\Stu_enrollment;
+
 
 class CourseLogController extends Controller{
     public function __construct(){
@@ -14,6 +18,25 @@ class CourseLogController extends Controller{
 
     public function index($crs){   
         $log = Courses::where('cid',$crs)->get();
+
+        $user = User::find(Auth::user()->id);
+        $enrolled = DB::table('stu_enrollments')->where('index',$user->index)->get();
+        $my_course = DB::table('stu_enrollments')->where('cid',$crs)->where('index',Auth::user()->index)->get();
+
+       // dd($enrolled);
+       // dd($crs);
+        $enrolledSubjects =  sizeof($enrolled);
+        $ctr = 0 ;
+         foreach($enrolled as $er){
+            if (!$er->cid == $crs) {
+                $ctr++;  
+            }
+         } 
+         if($enrolledSubjects == $ctr){
+             abort(403);
+         }  
+    
+          
         
         // if(substr($log[0]->cid,0,1)=='I'){
         //     if(substr($log[0]->type,0,2)=='Op'){
@@ -101,5 +124,7 @@ class CourseLogController extends Controller{
         return view('student.courses.courseLog',[
             'log'=> $log[0],
             ])->with('grade', json_encode($array));
-    }
+
+        }
+    
 }
