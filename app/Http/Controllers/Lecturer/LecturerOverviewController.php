@@ -386,7 +386,6 @@ class LecturerOverviewController extends Controller{
 
         }
 
-       dd($list);
 
         return array($assignment,$list);
         // dd($count,$stmt_arr,$crs,$sub_count,$distinct_arr,$distinctass_arr,$ass_count,$assignment,$cr);

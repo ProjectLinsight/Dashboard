@@ -100,7 +100,8 @@
                         data: ass_countx,
                         borderWidth: 1,
                         borderColor : "#0074D9",
-                        backgroundColor : ['rgba(0, 116, 217, 0.4)' ]
+                        backgroundColor : ['rgba(0, 116, 217, 0.4)' ],
+                        fill : false
                     }]
                 },
                 options:{
