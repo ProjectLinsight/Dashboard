@@ -352,6 +352,7 @@
                                                 $flag = "Your assignment is Submitted and Graded";
                                                 $color = "bg-success";
                                                 $icon = "check-circle";
+                                                $mark = $graded['marks'];
                                             ?>
                                         @endif
                                     @endforeach
@@ -374,7 +375,7 @@
                                                     <hr>
                                                     @if($flag == "Your assignment is Submitted and Graded")
                                                         <h6> <strong> Assignment Weight  &ensp; : &ensp; </strong> {{$assignment->weight}} out of 100  </h6>
-                                                        <h6> <strong> Marks Obtained  &emsp;  &emsp; : &ensp; </strong> {{$graded['marks']}} out of {{$assignment->maxMarks}} </h6>
+                                                        <h6> <strong> Marks Obtained  &emsp;  &emsp; : &ensp; </strong> {{$mark}} out of {{$assignment->maxMarks}} </h6>
                                                         <br>
                                                     @endif
                                                 </div>
