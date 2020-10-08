@@ -34,7 +34,13 @@ class PostsController extends Controller{
                 'image' => $imagepath
             ]);
         }else{
-            auth()->user()->posts()->create($data);
+            auth()->user()->posts()->create([
+                'title' => $data['title'],
+                'course_code' => $data['course_code'],
+                'description' => $data['description'],
+                'link' => ' '
+            ]);
+            // auth()->user()->posts()->create($data);
         }
         return  redirect('/profile/' . auth()->user()->id. '/' . auth()->user()->name);
 
