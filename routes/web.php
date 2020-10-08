@@ -19,6 +19,7 @@ Route::get('/admin/results','Admin\ResultsController@index')->middleware('admin'
 Route::post('/admin/results','Admin\ResultsController@store')->middleware('admin');
 Route::post('/admin/results/{subjectCode}/{yoe}','Admin\ResultsController@destroy')->middleware('admin');
 Route::post('/admin/user','Admin\BulkRegisterController@store')->middleware('admin');
+Route::post('/admin/{id}/delete','Admin\BulkRegisterController@destroy')->middleware('admin');
 Route::get('/admin/user','Admin\BulkRegisterController@index')->middleware('admin');
 
 //Analysis

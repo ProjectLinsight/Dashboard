@@ -58,49 +58,49 @@ class BulkRegisterController extends Controller{
 
                 $stuData = new StudentData ;
                 $stuData->index =  $importData[3];
-               
+
                 $stuData->sub11 = '';
-                $stuData->res11 = ''; 
-                $stuData->credits11 = ''; 
+                $stuData->res11 = '';
+                $stuData->credits11 = '';
                 $stuData->gpa11 = 0;
                 $stuData->totCredits11 = 0;
                 $stuData->sub12 = '';
-                $stuData->res12 = ''; 
-                $stuData->credits12 = ''; 
+                $stuData->res12 = '';
+                $stuData->credits12 = '';
                 $stuData->gpa12 = 0;
-                $stuData->totCredits12 = 0; 
- 
+                $stuData->totCredits12 = 0;
+
                 $stuData->sub21 = '';
-                $stuData->res21 = ''; 
-                $stuData->credits21 = ''; 
+                $stuData->res21 = '';
+                $stuData->credits21 = '';
                 $stuData->gpa21 = 0;
                 $stuData->totCredits21 = 0;
                 $stuData->sub22 = '';
-                $stuData->res22 = ''; 
-                $stuData->credits22 = ''; 
+                $stuData->res22 = '';
+                $stuData->credits22 = '';
                 $stuData->gpa22 = 0;
                 $stuData->totCredits22 = 0;
-                
+
                 $stuData->sub31 = '';
-                $stuData->res31 = ''; 
-                $stuData->credits31 = ''; 
+                $stuData->res31 = '';
+                $stuData->credits31 = '';
                 $stuData->gpa31 = 0;
                 $stuData->totCredits31 = 0;
                 $stuData->sub32 = '';
-                $stuData->res32 = ''; 
-                $stuData->credits32 = ''; 
-                $stuData->gpa32 = 0; 
+                $stuData->res32 = '';
+                $stuData->credits32 = '';
+                $stuData->gpa32 = 0;
                 $stuData->totCredits32 = 0;
- 
+
                 $stuData->sub41 = '';
-                $stuData->res41 = ''; 
-                $stuData->credits41 = ''; 
+                $stuData->res41 = '';
+                $stuData->credits41 = '';
                 $stuData->gpa41 = 0;
                 $stuData->totCredits41 = 0;
                 $stuData->sub42 = '';
-                $stuData->res42 = ''; 
-                $stuData->credits42 = ''; 
-                $stuData->gpa42 = 0; 
+                $stuData->res42 = '';
+                $stuData->credits42 = '';
+                $stuData->gpa42 = 0;
                 $stuData->totCredits42 = 0;
 
                 $stuData->save();
@@ -113,7 +113,7 @@ class BulkRegisterController extends Controller{
                 $deg = null ;
                 $index = null ;
                 $year = null ;
-            }   
+            }
                 $us = new User ;
                 $us->name = 'Anonymous User';
                 $us->email = $importData[0];
@@ -124,8 +124,13 @@ class BulkRegisterController extends Controller{
                 $us->index =  $index;
                 $us->save();
 
-                
+
             }
         return  redirect('/admin/user');
+    }
+
+    public function destroy($user){
+        User::where('id', $user)->delete();
+        return redirect('/admin/user');
     }
 }

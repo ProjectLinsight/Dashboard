@@ -99,7 +99,7 @@
                                             <th> Name </th>
                                             <th>Email Address</th>
                                             <th> User Type </th>
-                                            <th>
+                                            <th> Delete
                                             </th>
                                         </tr>
                                     </thead>
@@ -113,6 +113,12 @@
                                                 <td>{{$user['name']}}</td>
                                                 <td>{{$user['email']}}</td>
                                                 <td>{{$user['utype']}}</td>
+                                                <td class="m-0 pb-0 pt-2">
+                                                    <form class="m-0 p-0" action="/admin/{{$user['id']}}/delete" method="POST">
+                                                        @csrf
+                                                        <button type="submit" class="btn btn-sm m-0 btn-transparent">  <i class="fa fa-trash text-danger"></i> </button>
+                                                    </form>
+                                                </td>
                                             </tr>
                                             @endforeach
                                         </div>
