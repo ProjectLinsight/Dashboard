@@ -102,6 +102,9 @@ class HomeController extends Controller{
                             if($ad->title== $ed['title'] && $ed['verb']=="submitted"){
                                 $ad->submitted=true;
                             }
+                            else{
+                                $ad->submitted=false;
+                            }
 
                         }
 
@@ -134,6 +137,9 @@ class HomeController extends Controller{
                             if($qd->title== $ed['title'] && $ed['type']==="quiz" && $ed['verb']==="completed"){
                                 $qd->submitted=true;
                             }
+                            else{
+                                $qd->submitted=false;
+                            }
                         }
                     }
                 }
@@ -165,6 +171,7 @@ class HomeController extends Controller{
 
         // dd($all_assignments);
         //dd($outsideActionsCount);
+        
 
 
 

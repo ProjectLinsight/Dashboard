@@ -312,9 +312,9 @@
                                                     <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                                                     <div class="card-body">
                                                     @if($value['count'] != 0)
-                                                                    <h6> <strong> Maximum &ensp; : &ensp; </strong> {{round($value['max'], 2)}} </h6>
-                                                                    <h6> <strong> Minimum &emsp;  : &ensp; </strong> {{round($value['min'], 2)}} </h6>
-                                                                    <h6> <strong> Average &emsp;  : &ensp; </strong> {{round($value['avg'], 2)}} </h6>
+                                                                    <h6> <strong> Maximum &ensp; : &ensp; </strong> {{round($value['max']*10, 2)}} </h6>
+                                                                    <h6> <strong> Minimum &emsp;  : &ensp; </strong> {{round($value['min']*10, 2)}} </h6>
+                                                                    <h6> <strong> Average &emsp;  : &ensp; </strong> {{round($value['avg']*10, 2)}} </h6>
                                                                     
                                                     @endif
                                                     </div>
