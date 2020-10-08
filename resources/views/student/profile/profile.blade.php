@@ -69,7 +69,7 @@
                     <hr>
                     <h1 class="text-center text-dark"> <strong>Timeline </strong> </h1>
                     <hr>
-                    @foreach ($user->posts as $post)
+                    @foreach ($user->posts->SortbyDesc('updated_at') as $post)
                     <div class="pb-4">
                         <div class="p-3 rounded shadow" style="background:white;">
                             <div class="row d-flex justify-content-between">
@@ -105,6 +105,7 @@
                                     </div>
                                 </div>
                                 <hr>
+                                <a href="{{$post->link}}">{{$post->link}}</a>
                                 <p style="font-size:calc(0.9em + 0.1vw);text-align: justify">{{$post->description}}</p>
                                 @if ($post->image)
                                     <div class="d-flex justify-content-center">
@@ -167,7 +168,7 @@
 
 
 {{-- Modal for write post --}}
-<div class="modal fade" style="width: 100vw;height:auto" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" style="width: 100%;height:auto" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -182,7 +183,7 @@
 
                     <div class="form-group d-flex justify-content-center">
                     <div class="col-md-12 px-0">
-                            <input id="title" type="title" class="form-control @error('title') is-invalid @enderror" name="title" value="{{ old('title') }}" required autocomplete="title" autofocus placeholder="Title">
+                            <input id="title" type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{ old('title') }}" required autocomplete="title" autofocus placeholder="Title">
                             @error('title')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -190,7 +191,6 @@
                             @enderror
                         </div>
                     </div>
-
                     <div class="form-group d-flex justify-content-center">
                     <div class="col-md-12 px-0">
                             <label for="sel1">Select course:</label>
@@ -208,9 +208,11 @@
                         </div>
                     </div>
 
+                    <input  id="link" type="text" class="form-control mb-3" name="link" required autocomplete="link" autofocus placeholder="Add Link">
+
                     <div class="form-group row  d-flex justify-content-center">
                         <div class="col-md-12">
-                            <textarea id="description" type="text" style="height: 110px;" class="form-control @error('description') is-invalid @enderror" name="description" value="{{ old('description') }}" required autocomplete="description" autofocus placeholder="Description"></textarea>
+                            <textarea id="description" type="text" style="height: 110px;" class="form-control @error('description') is-invalid @enderror" name="description" >  </textarea>
                             @error('description')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -222,8 +224,8 @@
                     <div class="form-group row  d-flex justify-content-center">
                         <div class="col-md-12">
                             <div class="custom-file">
-                                <input type="file" id="image" class="custom-file-label form-control  @error('image') is-invalid @enderror" name="image" value="{{ old('image') }}" autocomplete="image" autofocus>
-                                <label class="custom-file-label" for="image" data-browse="Bestand kiezen">Upload an image (optional) </label>
+                                <input type="file" id="image" class="custom-file-label form-control  @error('image') is-invalid @enderror" name="image" autocomplete="image" autofocus>
+                                <label class="custom-file-label" for="image" data-browse="Bestand kiezen">Upload image (optional) </label>
                             </div>
                             @error('image')
                                 <span class="invalid-feedback" role="alert">
@@ -244,6 +246,7 @@
         </div>
     </div>
 </div>
+
 <!-- ---------------------------------------------------------------------->
 {{-- Modal for edit user name --}}
 <div class="modal fade" style="width: 100vw;height:auto" id="exampleModalCenter01" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

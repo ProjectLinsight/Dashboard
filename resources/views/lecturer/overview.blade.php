@@ -214,7 +214,7 @@
                                 <div class="card-body">
                                     <div class="panel panel-default">
                                         <div class="panel-body">
-                                            <canvas id="statGraph" height="300" width="600"></canvas>
+                                            <canvas id="statGraph" height="350" width="600"></canvas>
                                         </div>
                                     </div>
                                 </div>
@@ -312,9 +312,9 @@
                                                     <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                                                     <div class="card-body">
                                                     @if($value['count'] != 0)
-                                                                    <h6> <strong> Maximum &ensp; : &ensp; </strong> {{round($value['max'], 2)}} </h6>
-                                                                    <h6> <strong> Minimum &emsp;  : &ensp; </strong> {{round($value['min'], 2)}} </h6>
-                                                                    <h6> <strong> Average &emsp;  : &ensp; </strong> {{round($value['avg'], 2)}} </h6>
+                                                                    <h6> <strong> Maximum &ensp; : &ensp; </strong> {{round($value['max']*10, 2)}} </h6>
+                                                                    <h6> <strong> Minimum &emsp;  : &ensp; </strong> {{round($value['min']*10, 2)}} </h6>
+                                                                    <h6> <strong> Average &emsp;  : &ensp; </strong> {{round($value['avg']*10, 2)}} </h6>
                                                                     
                                                     @endif
                                                     </div>
@@ -456,7 +456,7 @@
                                                 </div>
                                         </div>
                                         <div class="panel-body">
-                                            <canvas id="canvas" height="225" width="600"></canvas>
+                                            <canvas id="canvas" height="180" width="600"></canvas>
                                         </div>
                                     </div>
                                 </div>
@@ -575,7 +575,8 @@
                 scales: {
                      yAxes: [{
                         ticks: {
-                            beginAtZero: true
+                            beginAtZero: true,
+                            stepSize : 1
                             },
                         scaleLabel: {
                             display: true,
@@ -613,7 +614,8 @@
                 scales: {
                      yAxes: [{
                         ticks: {
-                            beginAtZero: true
+                            beginAtZero: true,
+                            stepSize : 1
                             },
                         scaleLabel: {
                             display: true,

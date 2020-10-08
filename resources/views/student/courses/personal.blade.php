@@ -38,7 +38,7 @@
             var head = new Array('Obtained Marks','Average Marks');
             var i = 1 ;
             for(var key in obtMarks){
-                avg.push(obtMarks[key]);
+                avg.push(avgMarks[key]);
             }
             for(var key in obtMarks){
                 marks.push(obtMarks[key]);
@@ -126,6 +126,29 @@
                         max : 100
                     }]
                 },
+                options : {
+                    scales:{
+                        xAxes :[
+                            {
+                                scaleLabel:{
+                                    display : true ,
+                                    labelString : "Date"
+                                },
+                            },
+                        ],
+                        yAxes :[
+                            {
+                                ticks :{
+                                    beginAtZero : true,
+                                },
+                                scaleLabel:{
+                                    display : true ,
+                                    labelString : "Count"
+                                },
+                            }
+                        ]
+                    }
+                }
             });
 
             var week_counts = <?php echo $week_counts; ?>;
@@ -147,6 +170,29 @@
                         borderColor : "#0074D9",
                         backgroundColor : ['rgba(0, 116, 217, 0.4)' ]
                     }]
+                },
+                options :{
+                    scales:{
+                        xAxes :[
+                            {
+                                scaleLabel:{
+                                    display : true ,
+                                    labelString : "Week Number"
+                                },
+                            },
+                        ],
+                        yAxes :[
+                            {
+                                ticks :{
+                                    beginAtZero : true,
+                                },
+                                scaleLabel:{
+                                    display : true ,
+                                    labelString : "Count"
+                                },
+                            }
+                        ]
+                    }
                 }
             });
         }
@@ -193,13 +239,6 @@
                 <li>
                     <a href="/courses"><i class="fas fa-id-card pr-2"></i>Course Data</a>
                     <hr class="content-center" style="width:75%;background : #555">
-                </li>
-                <div class="p-3">
-                    <button type="button" class="btn btn-outline-primary btn-block" data-toggle="modal" data-target="#exampleModalCenter">
-                        <h6 class="pt-2"> <i class="far fa-edit pr-2"></i> write post <h6>
-                    </button>
-                </div>
-
                 </li>
             </ul>
         </div>
@@ -352,6 +391,7 @@
                                                 $flag = "Your assignment is Submitted and Graded";
                                                 $color = "bg-success";
                                                 $icon = "check-circle";
+                                                $mark = $graded['marks'];
                                             ?>
                                         @endif
                                     @endforeach
@@ -374,7 +414,7 @@
                                                     <hr>
                                                     @if($flag == "Your assignment is Submitted and Graded")
                                                         <h6> <strong> Assignment Weight  &ensp; : &ensp; </strong> {{$assignment->weight}} out of 100  </h6>
-                                                        <h6> <strong> Marks Obtained  &emsp;  &emsp; : &ensp; </strong> {{$graded['marks']}} out of {{$assignment->maxMarks}} </h6>
+                                                        <h6> <strong> Marks Obtained  &emsp;  &emsp; : &ensp; </strong> {{$mark}} out of {{$assignment->maxMarks}} </h6>
                                                         <br>
                                                     @endif
                                                 </div>
@@ -438,8 +478,7 @@
                                 <div class="card-body">
                                     <div class="py-3">
                                         <div class="progress" style="height:12px"  data-toggle="tooltip" data-placement="top"  title="{{$obtainedMarks}} marks out of {{$totalMarks}} obtained">
-                                            <div class="progress-bar bg-success" style="width: {{$obtainedMarks}}%;"> {{$obtainedMarks}}%  </div>
-                                            <div class="progress-bar bg-secondary" style="width: {{$gap}}%;"></div>
+                                        <div class="progress-bar bg-{{$color}}" style="width: {{$percentage}}%;"> {{round($percentage,2)}}%  </div>
                                         </div>
                                         <div class="pt-3">
                                             <div class="border rounded pt-1 text-center">
@@ -474,8 +513,10 @@
                                         </div>
                                     </div>
                                     <div class="pl-5 pt-2">
+                                        <?php $i = 0 ;?>
                                         @foreach($assignmentNames as $key => $asNames)
-                                            <h6 class="text-muted" style="font-size: 12px"> <strong>{{$key}} - {{$asNames}} </strong></h6>
+                                            <?php $i+=1; ?>
+                                            <h6 class="text-muted" style="font-size: 12px"> <strong>As{{$i}} - {{$asNames}} </strong></h6>
                                         @endforeach
                                     </div>
                                 </div>

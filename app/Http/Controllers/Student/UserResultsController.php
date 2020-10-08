@@ -272,7 +272,6 @@ class UserResultsController extends Controller{
             else {$graph["F+"]++;}
         }
         // $graph=json_encode($graph);
-
         return view('student/results/userResults',[
             'gpaData' => $gpaData,
             'user'=>$user,

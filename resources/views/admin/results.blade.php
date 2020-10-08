@@ -54,13 +54,46 @@
                 <div class="col-md-12 pb-5">
                     <div class="row">
                         <div class="col-md-8 ">
-                            @foreach (Auth::user()->results as $rs)
+                            <div class="pb-3">
+                                <div class="card table-card shadow">
+                                    <div class="card-header bg-dark pt-3">
+                                        <h4 class="text-white m-0 p-0"> Uploaded Results</h4>
+                                    </div>
+                                    <div class="card-body p-0" style="background: #eee">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover mb-0" style="border-collapse: collapse;">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Course Code</th>
+                                                        <th>Course Name</th>
+                                                        <th>Delete</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody style="font-size: 14px">
+                                                    @foreach ($results ?? '' as $rs)
+                                                    <tr>
+                                                        <td>{{$rs->subjectCode}}</td>
+                                                        <td>{{$rs->course->cName}}</td>
+                                                        <td class="m-0 pb-0 pt-2">
+                                                            <form class="m-0 p-0" action="/admin/results/{{$rs->subjectCode}}/{{$rs->yoe}}" method="POST">
+                                                                @csrf
+                                                                <button type="submit" class="btn btn-sm m-0 btn-transparent">  <i class="fa fa-trash text-danger"></i> </button>
+                                                            </form>
+                                                        </td>
+                                                    </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            {{-- @foreach ($results ?? '' as $rs)
                                 <p>{{$rs->subjectCode}} - {{$rs->course->cName}}</p>
-                                <form action="/admin/results/{{$rs->subjectCode}}/{{$rs->yoe}}" method="POST">
-                                    @csrf
-                                    <button type="submit" class="btn btn-danger"> delete users </button>
-                                </form>
-                            @endforeach
+
+                            @endforeach --}}
                         </div>
                         <div class="col-md-4">
                             <div class="card shadow m-0">

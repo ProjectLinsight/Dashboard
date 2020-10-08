@@ -6,6 +6,15 @@
     <script type="text/javascript" src="{{ URL::asset('js/home.js') }}"></script>
 
 <script type="text/javascript">
+
+    function getId(stmt) {
+        console.log("statement" + stmt);
+        document.getElementById("title").value=stmt;
+    }
+    function getDoc(des) {
+        document.getElementById("link").value=des;
+    }
+
     window.onload = function () {
         var date_counts = <?php echo $activityCount; ?>;
         var date_act = new Array();
@@ -59,6 +68,27 @@
                 title:{
                     display: true,
                     text: "Outside Data Distribution"
+                },
+                scales:{
+                    xAxes :[
+                        {
+                            scaleLabel:{
+                                display : true ,
+                                labelString : "Week Number"
+                            },
+                        },
+                    ],
+                    yAxes :[
+                        {
+                            ticks :{
+                                beginAtZero : true,
+                            },
+                            scaleLabel:{
+                                display : true ,
+                                labelString : "Count"
+                            },
+                        }
+                    ]
                 }
             }
         });
@@ -100,8 +130,31 @@
                 title:{
                     display: true,
                     text: "Activity Distribution"
+                },
+
+                scales:{
+                    xAxes :[
+                        {
+                            scaleLabel:{
+                                display : true ,
+                                labelString : "Week Number"
+                            },
+                        },
+                    ],
+                    yAxes :[
+                        {
+                            ticks :{
+                                beginAtZero : true,
+                            },
+                            scaleLabel:{
+                                display : true ,
+                                labelString : "Count"
+                            },
+                        }
+                    ]
                 }
             }
+
         });
     }
 </script>
@@ -112,7 +165,7 @@
     if(exist){
       alert(msg);
     }
-  </script>
+</script>
 
 @section('content')
 <div style="background-image:url('https://www.creativeclique.co.za/wp-content/uploads/2019/01/Ridge-Design-Website-Design-Background.jpg');position: fixed;background-repeat: no-repeat;background-position: center;background-attachment: fixed;background-size: cover;height:100vh">
@@ -263,13 +316,7 @@
                     <div class="card shadow-sm">
                         <div class="card-body">
                             <script  type="application/javascript">
-                                function getId(stmt) {
-                                    console.log("statement" + stmt);
-                                    document.getElementById("title").value=stmt;
-                                }
-                                function getDoc(des) {
-                                    document.getElementById("description").innerHTML=des;
-                                }
+
                             </script>
 
                             <div class="row">
@@ -290,7 +337,7 @@
                                         $obj2 = $stmt['url'];
                                     ?>
                                     <div class="col-2">
-                                        <a type="button" class="btn btn-s" data-toggle="modal" data-target="#exampleModalCenter" onclick="getId({{'Title got'}});  getDoc('Description got');"   > <i class="fas fa-share-square pr-2"></i></a>
+                                        <a type="button" class="btn btn-s" data-toggle="modal" data-target="#exampleModalCenter" onclick="getId('{{$obj1}}');  getDoc('{{$obj2}}');"   > <i class="fas fa-share-square pr-2"></i></a>
                                     </div>
                                 </div>
                             @endforeach
@@ -420,7 +467,6 @@
                             @enderror
                         </div>
                     </div>
-
                     <div class="form-group d-flex justify-content-center">
                     <div class="col-md-12 px-0">
                             <label for="sel1">Select course:</label>
@@ -438,6 +484,7 @@
                         </div>
                     </div>
 
+                    <input  id="link" type="text" class="form-control mb-3" name="link" required autocomplete="link" autofocus placeholder="Add Link">
 
                     <div class="form-group row  d-flex justify-content-center">
                         <div class="col-md-12">
