@@ -100,7 +100,7 @@ class PersonalCoursesController extends Controller{
 
         $combinedAssignments["Obtained Marks"] = $obtMarks;
         $combinedAssignments["Average Marks"] = $avgMarks;
-        // dd($combinedAssignments);
+        //dd($combinedAssignments);
 
 
         return view('student.courses.personal',[
